@@ -1,0 +1,12 @@
+# .gitignore
+
+.DS_Store
+.vscode
+node_modules/
+
+.env.local
+.netlify
+.npmrc
+
+packages/
+apps/

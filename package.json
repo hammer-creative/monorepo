@@ -1,0 +1,28 @@
+{
+  "name": "hammer-monorepo",
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.12.4",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf node_modules pnpm-lock.yaml && find apps packages -type d \\( -name node_modules -o -name dist \\) -prune -exec rm -rf '{}' +",
+    "setup": "pnpm clean && pnpm install -w",
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@hmidmismi/commitlint-config": "^1.0.1",
+    "eslint": "^8.56.0",
+    "husky": "^8.0.3",
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3"
+  }
+}
