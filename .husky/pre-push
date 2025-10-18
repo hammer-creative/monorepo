@@ -1,7 +1,12 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm typecheck && {
-  pnpm test || echo "⚠️ No tests found, skipping"
-}
+pnpm typecheck || exit 1
+
+if pnpm exec jest --version >/dev/null 2>&1; then
+  pnpm test || echo "⚠️  Tests failed, but continuing push"
+else
+  echo "⚠️  No tests found, skipping"
+fi
+
 exit 0

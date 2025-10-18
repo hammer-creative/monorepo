@@ -14,7 +14,8 @@
     "format": "prettier --write \"apps/**/*.{ts,tsx,md}\" \"packages/**/*.{ts,tsx,md}\"",
     "lint": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" --cache --fix --format stylish",
     "lint:summary": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" -f summary",
-    "lint:verbose": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" --debug"
+    "lint:verbose": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" --debug",
+    "typecheck": "tsc --build --force"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
@@ -31,6 +32,7 @@
     "@types/node": "^20.19.21"
   },
   "lint-staged": {
+    "$verbose": true,
     "*.{js,ts,tsx,jsx}": ["eslint --fix", "prettier --write"]
   }
 }
