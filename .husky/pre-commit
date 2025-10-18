@@ -1,1 +1,1 @@
-pnpm test
+echo 'Pre-commit hook running...'

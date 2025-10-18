@@ -8,5 +8,4 @@ node_modules/
 .netlify
 .npmrc
 
-packages/
-apps/
+packages/eslint-config
