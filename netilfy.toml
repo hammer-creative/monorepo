@@ -1,0 +1,15 @@
+[build]
+  base = "apps/web"
+  command = "pnpm --filter @chorusworks/contentful... build && pnpm --filter hammer/web build"
+  publish = "apps/web/.next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "10.12.4"
+
+[dev]
+  command = "pnpm dev:web:netlify"
+  framework = "next"
+  targetPort = 3000
+  port = 8888
+  autoLaunch = true

@@ -7,32 +7,37 @@
   "scripts": {
     "clean": "turbo run clean && rm -rf node_modules pnpm-lock.yaml .turbo",
     "setup": "pnpm clean && pnpm install -w",
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:web": "pnpm --filter @chorusworks/contentful dev & pnpm --filter hammer/web dev",
+    "dev:web:netlify": "concurrently \"turbo run dev --filter=@chorusworks/contentful... --parallel\" \"netlify dev --cwd apps/web\"",
+    "build": "turbo run build --filter=@chorusworks/contentful... --filter=hammer/web",
+    "typecheck": "turbo run typecheck --filter=@chorusworks/contentful... --filter=hammer/web",
     "prepare": "husky install",
     "format": "prettier --write \"apps/**/*.{ts,tsx,md}\" \"packages/**/*.{ts,tsx,md}\"",
     "lint": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" --cache --fix --format stylish",
     "lint:summary": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" -f summary",
-    "lint:verbose": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" --debug",
-    "typecheck": "tsc --build --force"
+    "lint:verbose": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" --debug"
   },
   "devDependencies": {
+    "@chorusworks/eslint-config": "workspace:*",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@chorusworks/eslint-config": "workspace:*",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "@types/node": "^20.19.21",
+    "concurrently": "^9.2.1",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.2",
     "husky": "^8.0.3",
     "lint-staged": "^15.5.2",
+    "netlify-cli": "^23.9.1",
     "prettier": "^3.6.2",
     "turbo": "^2.5.8",
-    "typescript": "^5.9.3",
-    "@types/node": "^20.19.21"
+    "typescript": "^5.9.3"
   },
   "lint-staged": {
     "$verbose": true,
-    "*.{js,ts,tsx,jsx}": ["eslint --fix", "prettier --write"]
+    "*.{js,ts,tsx,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
