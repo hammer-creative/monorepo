@@ -1,28 +1,43 @@
 {
   "name": "hammer-monorepo",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "description": "Monorepo for Hammer project",
   "packageManager": "pnpm@10.12.4",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "clean": "rimraf node_modules pnpm-lock.yaml && find apps packages -type d \\( -name node_modules -o -name dist \\) -prune -exec rm -rf '{}' +",
+    "clean": "turbo run clean && rm -rf node_modules pnpm-lock.yaml .turbo",
     "setup": "pnpm clean && pnpm install -w",
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
+    "dev:web": "pnpm --filter @chorusworks/contentful dev & pnpm --filter hammer/web dev",
+    "dev:web:netlify": "concurrently \"turbo run dev --filter=@chorusworks/contentful... --parallel\" \"netlify dev --cwd apps/web\"",
+    "build": "turbo run build --filter=@chorusworks/contentful... --filter=hammer/web",
+    "typecheck": "turbo run typecheck --filter=@chorusworks/contentful... --filter=hammer/web",
+    "prepare": "husky install",
+    "format": "prettier --write \"apps/**/*.{ts,tsx,md}\" \"packages/**/*.{ts,tsx,md}\"",
+    "lint": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" --cache --fix --format stylish",
+    "lint:summary": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" -f summary",
+    "lint:verbose": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\" --debug"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@hmidmismi/commitlint-config": "^1.0.1",
-    "eslint": "^8.56.0",
+    "@chorusworks/eslint-config": "workspace:*",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "@types/node": "^20.19.21",
+    "concurrently": "^9.2.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
     "husky": "^8.0.3",
+    "lint-staged": "^15.5.2",
+    "netlify-cli": "^23.9.1",
     "prettier": "^3.6.2",
     "turbo": "^2.5.8",
     "typescript": "^5.9.3"
+  },
+  "lint-staged": {
+    "$verbose": true,
+    "*.{js,ts,tsx,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
