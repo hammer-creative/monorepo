@@ -8,7 +8,6 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "postinstall": "eslint-init react",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "eslint \"**/*.{ts,tsx}\" --cache --fix --format stylish",
     "lint:summary": "eslint \"**/*.{ts,tsx}\" -f summary",
