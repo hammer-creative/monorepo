@@ -313,8 +313,8 @@ packages:
     resolution: {integrity: sha512-bVUNBqG6aznYcYjTjnc3+Cat/iBgbgpflxbIBTnsHTX0YVpnmINPEkSRWymT2Q8aSH3Y7aKnEbunilkYe8TybA==}
     engines: {node: '>=v18'}
 
-  '@contentful/content-source-maps@0.11.37':
-    resolution: {integrity: sha512-OLvUkHjfkGLmr9UydQlRt+EgN4mZv/nGsplnQh/DstzQhOAPMiH4/3wNEnF4oiC5OxAUMKrmzKaUpEagFvP1LA==}
+  '@contentful/content-source-maps@0.11.38':
+    resolution: {integrity: sha512-JfcTaKiNo/I4MXpPPG1xLu846lUZOKpY8TQ++UHaFJInP2+Az0hikp9wAbSjaTWFGtMUsd+DgWPPQuyunfAa6g==}
 
   '@contentful/rich-text-types@16.8.5':
     resolution: {integrity: sha512-q18RJuJCOuYveGiCIjE5xLCQc5lZ3L2Qgxrlg/H2YEobDFqdtmklazRi1XwEWaK3tMg6yVXBzKKkQfLB4qW14A==}
@@ -6045,7 +6045,7 @@ snapshots:
       '@types/conventional-commits-parser': 5.0.1
       chalk: 5.6.2
 
-  '@contentful/content-source-maps@0.11.37':
+  '@contentful/content-source-maps@0.11.38':
     dependencies:
       '@vercel/stega': 0.1.2
       json-pointer: 0.6.2
@@ -8125,7 +8125,7 @@ snapshots:
 
   contentful@11.8.6:
     dependencies:
-      '@contentful/content-source-maps': 0.11.37
+      '@contentful/content-source-maps': 0.11.38
       '@contentful/rich-text-types': 16.8.5
       axios: 1.12.2
       contentful-resolve-response: 1.9.4
