@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@chorusworks/contentful": "workspace:*",
+    "@contentful/live-preview": "^4.6.50",
     "@contentful/rich-text-react-renderer": "^16.1.5",
     "next": "15.5.5",
     "react": "19.1.0",
