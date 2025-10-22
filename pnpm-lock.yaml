@@ -56,6 +56,9 @@ importers:
       '@chorusworks/contentful':
         specifier: workspace:*
         version: link:../../packages/contentful
+      '@contentful/live-preview':
+        specifier: ^4.6.50
+        version: 4.6.50(graphql@16.11.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@contentful/rich-text-react-renderer':
         specifier: ^16.1.5
         version: 16.1.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -325,6 +328,12 @@ packages:
 
   '@contentful/content-source-maps@0.11.38':
     resolution: {integrity: sha512-JfcTaKiNo/I4MXpPPG1xLu846lUZOKpY8TQ++UHaFJInP2+Az0hikp9wAbSjaTWFGtMUsd+DgWPPQuyunfAa6g==}
+
+  '@contentful/live-preview@4.6.50':
+    resolution: {integrity: sha512-kyOYkeEnDYmmECXp9lYQl22JPYFC6lhiO5Acyo/SUCMVziSvp1hMGs1wysWXG/FfCURbyG+niYqYIhG7KrfRcQ==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
 
   '@contentful/rich-text-react-renderer@16.1.5':
     resolution: {integrity: sha512-5iGG70YVH1f0zcsG7zKOCHdF5zHo38dpCXdAw5gjPpJkI5MTI200KUKU+q0B55Bdp4PzFQr6EcTSUI+k6jluyw==}
@@ -3410,6 +3419,16 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
+  graphql-tag@2.12.6:
+    resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+
+  graphql@16.11.0:
+    resolution: {integrity: sha512-mS1lbMsxgQj6hge1XZ6p7GPhbrtFwUFYi3wRzXAC/FmYnyXMTvvI3td3rjmQ2u8ewXueaSvRPWaEcgVVOT9Jnw==}
+    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
+
   h3@1.15.4:
     resolution: {integrity: sha512-z5cFQWDffyOe4vQ9xIqNfCZdV4p//vy6fBnr8Q1AWnVZ0teurKMG66rLj++TKwKPUP3u7iMUvrvKaEUiQw2QWQ==}
 
@@ -4018,6 +4037,10 @@ packages:
 
   lodash.isempty@4.4.0:
     resolution: {integrity: sha512-oKMuF3xEeqDltrGMfDxAPGIVMSSRv8tbRSODbrs4KGsRRLEhrW8N8Rd4DRgB2+621hY8A8XwwrTVhXWpxFvMzg==}
+
+  lodash.isequal@4.5.0:
+    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
   lodash.isinteger@4.0.4:
     resolution: {integrity: sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA==}
@@ -6097,6 +6120,21 @@ snapshots:
     dependencies:
       '@vercel/stega': 0.1.2
       json-pointer: 0.6.2
+
+  '@contentful/live-preview@4.6.50(graphql@16.11.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@contentful/content-source-maps': 0.11.38
+      '@contentful/rich-text-types': 17.2.4
+      flatted: 3.3.3
+      graphql-tag: 2.12.6(graphql@16.11.0)
+      json-pointer: 0.6.2
+      lodash.isequal: 4.5.0
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+    transitivePeerDependencies:
+      - '@lingui/babel-plugin-lingui-macro'
+      - babel-plugin-macros
+      - graphql
 
   '@contentful/rich-text-react-renderer@16.1.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -9467,6 +9505,13 @@ snapshots:
 
   graphemer@1.4.0: {}
 
+  graphql-tag@2.12.6(graphql@16.11.0):
+    dependencies:
+      graphql: 16.11.0
+      tslib: 2.8.1
+
+  graphql@16.11.0: {}
+
   h3@1.15.4:
     dependencies:
       cookie-es: 1.2.2
@@ -10103,6 +10148,8 @@ snapshots:
   lodash.isboolean@3.0.3: {}
 
   lodash.isempty@4.4.0: {}
+
+  lodash.isequal@4.5.0: {}
 
   lodash.isinteger@4.0.4: {}
 
