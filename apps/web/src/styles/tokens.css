@@ -1,0 +1,7 @@
+/* styles/tokens.css */
+@layer tokens {
+  :root {
+    --font-sans: var(--font-diatype-medium);
+    --font-sans-italic: var(--font-diatype-medium-italic);
+  }
+}
