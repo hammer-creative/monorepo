@@ -1,15 +1,23 @@
 import { useContentfulLiveUpdates } from '@contentful/live-preview/react';
 import type { GetStaticProps, GetStaticPaths } from 'next';
 import { fetchEntries } from '@chorusworks/contentful';
+import type { EntrySkeletonType } from '@chorusworks/contentful';
+
+interface CaseStudyFields {
+  title: string;
+  slug: string;
+}
+
+interface CaseStudySkeleton extends EntrySkeletonType {
+  contentTypeId: 'caseStudy';
+  fields: CaseStudyFields;
+}
 
 type CaseStudy = {
   sys: {
     id: string;
   };
-  fields: {
-    title: string;
-    slug: string;
-  };
+  fields: CaseStudyFields;
 };
 
 type PageProps = {
@@ -28,10 +36,10 @@ export default function CaseStudyPage({ caseStudy }: PageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const caseStudies = await fetchEntries('caseStudy');
+  const caseStudies = await fetchEntries<CaseStudySkeleton>('caseStudy');
 
   const paths = caseStudies.map((caseStudy) => ({
-    params: { slug: caseStudy.fields.slug },
+    params: { slug: caseStudy.fields.slug as string },
   }));
 
   return {
@@ -44,7 +52,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
   params,
   draftMode = false,
 }) => {
-  const caseStudies = await fetchEntries(
+  const caseStudies = await fetchEntries<CaseStudySkeleton>(
     'caseStudy',
     {
       'fields.slug': params?.slug,
@@ -61,5 +69,6 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
 
   return {
     props: { caseStudy },
+    revalidate: 60,
   };
 };
