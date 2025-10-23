@@ -1,0 +1,10 @@
+{
+  "name": "Text and Image Module Editor",
+  "description": "Custom field editor for the text and image module",
+  "locations": [
+    {
+      "location": "entry-field",
+      "fieldTypes": ["Object"]
+    }
+  ]
+}
