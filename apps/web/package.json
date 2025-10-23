@@ -15,16 +15,25 @@
   },
   "dependencies": {
     "@chorusworks/contentful": "workspace:*",
+    "@contentful/live-preview": "^4.6.50",
+    "@contentful/rich-text-react-renderer": "^16.1.5",
     "next": "15.5.5",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@chorusworks/eslint-config": "workspace:*",
+    "@contentful/rich-text-types": "^17.2.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint-config-next": "^15.5.6",
+    "postcss": "^8.5.6",
+    "postcss-import": "^16.1.1",
+    "postcss-mixins": "^12.1.2",
+    "postcss-nested": "^7.0.2",
+    "postcss-preset-env": "^10.4.0",
+    "postcss-simple-vars": "^7.0.1",
     "typescript": "^5"
   },
   "lint-staged": {

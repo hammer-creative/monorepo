@@ -1,11 +1,9 @@
-import { contentfulClient } from '@chorusworks/contentful';
+// apps/web/src/pages/index.tsx;
 
-export async function getStaticProps() {
-  const client = contentfulClient();
-  const entries = await client.getEntries();
-  return { props: { count: entries.items.length } };
-}
-
-export default function Home({ count }: { count: number }) {
-  return <div>Entries: {count}</div>;
+export default function HomePage() {
+  return (
+    <div>
+      <h1>Hammer Creative</h1>
+    </div>
+  );
 }
