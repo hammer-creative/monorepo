@@ -1,5 +1,6 @@
 /* apps/web/src/styles/index.css */
 
+@import './reset.css';
 @import './tokens.css';
 @import './base.css';
-@import './headings.css';
+@import './typography';

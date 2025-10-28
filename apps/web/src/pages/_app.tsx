@@ -1,6 +1,12 @@
 // apps/web/src/pages/_app.tsx
+import Layout from '@/components/Layout/Layout';
 import '@/styles/index.css';
-import { DIATYPE_MEDIUM, DIATYPE_MEDIUM_ITALIC } from '@/utils/fontConfig';
+import {
+  DIATYPE_MEDIUM,
+  DIATYPE_MEDIUM_ITALIC,
+  MOHOL_BOLD,
+  MOHOL_REGULAR,
+} from '@/utils/fontConfig';
 import { ContentfulLivePreviewProvider } from '@contentful/live-preview/react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -16,6 +22,8 @@ export default function App({ Component, pageProps }: AppProps) {
           --font-diatype-medium: ${DIATYPE_MEDIUM.style.fontFamily};
           --font-diatype-medium-italic: ${DIATYPE_MEDIUM_ITALIC.style
             .fontFamily};
+          --font-mohol-regular: ${MOHOL_REGULAR.style.fontFamily};
+          --font-mohol-bold: ${MOHOL_BOLD.style.fontFamily};
         }
       `}</style>
       <div
@@ -31,7 +39,9 @@ export default function App({ Component, pageProps }: AppProps) {
           enableInspectorMode={pageProps.preview}
           enableLiveUpdates={pageProps.preview}
         >
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </ContentfulLivePreviewProvider>
       </div>
     </>

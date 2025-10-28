@@ -1,7 +1,84 @@
+/* NOTE: post-css-fluid function takes 4 parameters:
+
+min value
+max value
+min viewport width
+max viewport width.
+
+.some-class {
+  some-property: fluid(1rem, 2rem, 40rem, 120rem);
+}
+
+*/
+
 /* styles/tokens.css */
 @layer tokens {
   :root {
+    /* VIEWPORTS */
+    --viewport-jumbo: 80rem; /* 1280px */
+    --viewport-wide: 60rem;
+    --viewport-default: 45rem; /* 720px */
+    --viewport-narrow: 20rem; /* 320px */
+
+    /* TYPEFACES */
     --font-sans: var(--font-diatype-medium);
     --font-sans-italic: var(--font-diatype-medium-italic);
+    --font-serif: var(--font-mohol-regular);
+    --font-serif-bold: var(--font-mohol-bold);
+
+    /* FONT SIZES */
+    --font-size-default: 16px;
+    --font-size-display: 5rem; /* 80px */
+    --font-size-extra-large: 3.75rem; /* 60px */
+    --font-size-large: 2.5rem; /* 40px */
+    --font-size-medium: 1.25rem; /* 20px */
+    --font-size-small: 0.875rem; /* 14px */
+    --font-size-extra-small: 0.625rem; /* 10px */
+
+    /* FLUID FONT SIZES */
+    --font-size-fluid-headline: clamp(
+      20px,
+      calc(1.25rem + ((1vw - 3.2px) * 6.25)),
+      80px
+    );
+    --font-size-fluid-subheadline: clamp(
+      20px,
+      calc(1.25rem + ((1vw - 3.2px) * 4.1667)),
+      60px
+    );
+    --font-size-fluid-large: clamp(
+      10px,
+      calc(0.625rem + ((1vw - 3.2px) * 5.2083)),
+      60px
+    );
+    --font-size-fluid-medium: clamp(
+      10px,
+      calc(0.625rem + ((1vw - 3.2px) * 3.125)),
+      40px
+    );
+    --font-size-fluid-small: clamp(
+      10px,
+      calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
+      14px
+    );
+
+    /* FONT WEIGHTS */
+    --font-weight-default: 500;
+    --font-weight-light: 100;
+
+    /* LINE HEIGHTS */
+    --line-height-default: 1;
+    --line-height-fluid-reverse: clamp(
+      1,
+      calc(2 - ((100vw - 20rem) / 60rem)),
+      2
+    ); /* 2 at narrow → 1 at wide */
+    --line-height-loose: 2;
+
+    /* LETTER SPACING */
+    --letter-spacing-default: normal;
+    --letter-spacing-tight: -0.04em;
+    --letter-spacing-loose: -0.01em;
+    --letter-spacing-wide: 0.1em;
   }
 }
