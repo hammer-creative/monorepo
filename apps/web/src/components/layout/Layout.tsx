@@ -1,7 +1,7 @@
 // apps/web/src/components/layout/Layout.tsx
 
 function Layout({ children }: { children: React.ReactNode }) {
-  return <div className="layout-container">{children}</div>;
+  return <main className="layout-container">{children}</main>;
 }
 
 export default Layout;

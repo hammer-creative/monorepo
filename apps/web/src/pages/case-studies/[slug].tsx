@@ -1,4 +1,6 @@
+import { HeroCopy, HeroHeadline, HeroImage } from '@/components/Hero';
 import { useContentfulLiveUpdates } from '@contentful/live-preview/react';
+import DOMPurify from 'isomorphic-dompurify';
 import type { GetStaticProps, GetStaticPaths } from 'next';
 import { fetchEntries } from '@chorusworks/contentful';
 import type { EntrySkeletonType } from '@chorusworks/contentful';
@@ -6,6 +8,7 @@ import type { EntrySkeletonType } from '@chorusworks/contentful';
 interface CaseStudyFields {
   title: string;
   slug: string;
+  imageText: Array<unknown>;
 }
 
 interface CaseStudySkeleton extends EntrySkeletonType {
@@ -25,12 +28,55 @@ type PageProps = {
 };
 
 export default function CaseStudyPage({ caseStudy }: PageProps) {
-  const { fields } = useContentfulLiveUpdates(caseStudy);
+  const { imageText, ...contentFields } =
+    useContentfulLiveUpdates(caseStudy).fields;
+
+  const {
+    title = '',
+    slug = '',
+    hero = null,
+    heroCopy: heroText = '',
+  } = contentFields;
+
+  console.log(hero);
 
   return (
-    <div>
-      <h1>{fields.title}</h1>
-      <p>Slug: {fields.slug}</p>
+    <div className="case-study">
+      <HeroHeadline data={title} />
+      {/* <HeroCopy data={heroText} /> */}
+      <h2>h2 A First Step Into His Shoes</h2>
+      <p className="large">
+        LARGE TEXTFor our Announce, embodying the classic Indy feel was the top
+        goal. That meant capturing what it feels like to think, fight, and
+        explore like Indy. So we keyed into what makes his adventures unique —
+        the swashbuckling, the globetrotting, the perilous antiquing — and
+        presented them as an accessible homage with undeniable thrills.
+      </p>
+      <p className="medium">
+        MEDIUM TEXT With an engagement rate of 16%, we beat the average campaign
+        engagement rate three times over, as fans organically shared our
+        creative beyond gaming circles..
+      </p>
+      <p className="small">
+        SMALL TEXT With an engagement rate of 16%, we beat the average campaign
+        engagement rate three times over, as fans organically shared our
+        creative beyond gaming circles.
+      </p>
+      <div className="rubric">Services</div>
+      <ul>
+        <li>asdfasdf</li>
+        <li>asdfasdf</li>
+        <li>asdfasdf</li>
+        <li>asdfasdf</li>
+        <li>asdfasdf</li>
+        <li>asdfasdf</li>
+        <li>asdfasdf</li>
+      </ul>
+      {/* <div
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(moduleTextImage[0].text),
+        }}
+      /> */}
     </div>
   );
 }

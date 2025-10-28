@@ -1,0 +1,58 @@
+/* apps/web/src/styles/typography.css
+
+Contains typographic rhythm, scaling, and sizing. Does not contain spacing, color, or special effects */
+
+@import './tokens.css';
+@import './mixins';
+
+body {
+  color: $color-stealth;
+  font-family: var(--font-sans);
+}
+
+h1,
+h2 {
+  text-transform: uppercase;
+  line-height: var(--line-height-default);
+}
+
+h1 {
+  @mixin typography var(--font-serif), var(--font-size-fluid-headline);
+  @mixin letter-spacing-responsive var(--letter-spacing-loose)
+    var(--letter-spacing-tight);
+}
+
+h2 {
+  @mixin typography var(--font-serif), var(--font-size-fluid-subheadline);
+  @mixin letter-spacing-responsive var(--letter-spacing-loose);
+}
+
+p.large {
+  @mixin typography var(--font-sans), var(--font-size-fluid-large);
+  line-height: var(--line-height-fluid-reverse);
+}
+
+p.medium {
+  @mixin typography var(--font-sans), var(--font-size-fluid-medium);
+  line-height: var(--line-height-fluid-reverse);
+}
+
+p.small,
+div.client {
+  @mixin typography var(--font-sans), var(--font-size-fluid-small);
+  line-height: var(--line-height-fluid-reverse);
+}
+
+ul li {
+  @mixin typography var(--font-sans), var(--font-size-fluid-small);
+  line-height: var(--line-height-loose);
+}
+
+ul li:first-of-type {
+  text-transform: uppercase;
+  @mixin letter-spacing-responsive var(--letter-spacing-wide);
+}
+
+div.rubric {
+  @mixin all-caps-accent;
+}
