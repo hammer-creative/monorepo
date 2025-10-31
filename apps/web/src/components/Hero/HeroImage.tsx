@@ -1,5 +1,5 @@
 // web/src/components/Hero/HeroImage.tsx
-import React from 'react';
+import type React from 'react';
 
 interface HeroImageProps {
   src: string;

@@ -37,4 +37,7 @@ const nextConfig: NextConfig = {
 
 export const sizes = nextConfig.images?.deviceSizes ?? [];
 
+console.log('Current directory:', process.cwd());
+console.log('SANITY_PROJECT_ID:', process.env.SANITY_PROJECT_ID);
+
 export default nextConfig;
