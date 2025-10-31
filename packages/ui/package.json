@@ -1,0 +1,38 @@
+{
+  "name": "@chorusworks/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "postinstall": "eslint-init react",
+    "clean": "rm -rf dist node_modules .turbo",
+    "dev:watch": "pnpm build -- --watch",
+    "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{ts,tsx}\" --cache --fix --format stylish",
+    "lint:summary": "eslint \"**/*.{ts,tsx}\" --cache --format summary",
+    "lint:verbose": "eslint \"**/*.{ts,tsx}\" --cache --debug --format stylish",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.4",
+  "devDependencies": {
+    "@chorusworks/eslint-config": "workspace:*",
+    "tsup": "^7.3.0"
+  }
+}

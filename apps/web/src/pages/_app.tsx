@@ -7,7 +7,6 @@ import {
   MOHOL_BOLD,
   MOHOL_REGULAR,
 } from '@/utils/fontConfig';
-import { ContentfulLivePreviewProvider } from '@contentful/live-preview/react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
@@ -34,15 +33,9 @@ export default function App({ Component, pageProps }: AppProps) {
             <meta name="robots" content="noindex, nofollow" />
           </Head>
         )}
-        <ContentfulLivePreviewProvider
-          locale="en-US"
-          enableInspectorMode={pageProps.preview}
-          enableLiveUpdates={pageProps.preview}
-        >
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ContentfulLivePreviewProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </div>
     </>
   );
