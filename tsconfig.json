@@ -1,12 +1,8 @@
 {
   "files": [],
   "references": [
-    { "path": "apps/web" },
-    { "path": "packages/contentful" }
-  ],
-  "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
-    "noEmit": true
-  }
+    { "path": "./apps/web" },
+    { "path": "./packages/sanity" },
+    { "path": "./packages/ui" }
+  ]
 }

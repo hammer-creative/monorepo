@@ -1,0 +1,9 @@
+{
+  "folders": [
+    { "name": "root", "path": "./" },
+    { "name": "web", "path": "./apps/web" }
+		{ "name": "sanity-web", "path": "./apps/web/src/lib/sanity" },
+    { "name": "sanity-studio", "path": "./packages/sanity" }
+  ],
+  "settings": {}
+}
