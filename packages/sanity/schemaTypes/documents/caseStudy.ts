@@ -14,7 +14,7 @@ export const caseStudy = defineType({
       name: 'modules',
       title: 'Content Modules',
       type: 'array',
-      of: [{type: 'heroModule'}],
+      of: [{type: 'heroModule'}, {type: 'singleVideoModule'}, {type: 'multiVideoModule'}],
       validation: (Rule) =>
         Rule.custom((modules) => {
           if (!modules) return true
