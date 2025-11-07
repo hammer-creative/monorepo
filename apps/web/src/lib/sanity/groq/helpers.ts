@@ -1,5 +1,5 @@
 // apps/web/src/lib/sanity/groq/helpers.ts
-import { client } from '@/lib/sanity/client';
+import { client } from '../client';
 
 type FetchOptions = {
   params?: Record<string, any>;

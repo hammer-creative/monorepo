@@ -1,6 +1,7 @@
 // apps/web/src/lib/queries/caseStudy.ts
-import { projections, moduleProjections } from '@/lib/sanity/groq/builders';
+// lib/sanity/queries/caseStudy.ts
 import type { CaseStudy, CaseStudyListItem } from '@/types/sanity';
+import { projections, moduleProjections } from '../groq/builders';
 import { fetchOne, fetchAll, fetchSlugs } from '../groq/helpers';
 
 const fullProjection = `
