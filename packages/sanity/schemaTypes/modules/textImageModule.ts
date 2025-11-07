@@ -1,0 +1,51 @@
+// packages/sanity/schemaTypes/modules/textImageModule.ts
+
+import {ImageIcon} from '@sanity/icons'
+import {defineType} from 'sanity'
+import {createTextField} from '../factories/textFieldFactory'
+import {createPortableTextField} from '../factories/portableTextFactory'
+import {createSingleImageField} from '../factories/imageFieldFactory'
+import {createColorField} from '../factories/colorFieldFactory'
+
+export const textImageModule = defineType({
+  name: 'textImageModule',
+  title: 'Text + Image',
+  type: 'object',
+  icon: ImageIcon,
+  fields: [
+    createTextField({
+      name: 'title',
+      title: 'Heading',
+      required: true,
+      maxLength: 100,
+    }),
+    createPortableTextField({
+      name: 'bodyText',
+      title: 'Body Text',
+      required: true,
+      maxLength: 600,
+    }),
+    createSingleImageField({
+      name: 'image',
+      title: 'Image',
+      required: true,
+    }),
+    createColorField({
+      name: 'backgroundColor',
+      title: 'Background Color',
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      media: 'image',
+    },
+    prepare({title, media}) {
+      return {
+        title: title || 'Untitled',
+        subtitle: 'Text + Image Module',
+        media,
+      }
+    },
+  },
+})

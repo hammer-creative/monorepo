@@ -20,11 +20,12 @@
     "sanity"
   ],
   "dependencies": {
+    "@sanity/icons": "^3.7.4",
     "@sanity/ui": "^3.1.11",
-    "@sanity/vision": "^4.11.0",
+    "@sanity/vision": "^4.13.0",
     "react": "^19.1",
     "react-dom": "^19.1",
-    "sanity": "^4.11.0",
+    "sanity": "^4.13.0",
     "sanity-plugin-mux-input": "^2.10.0",
     "styled-components": "^6.1.18"
   },

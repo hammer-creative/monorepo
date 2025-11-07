@@ -1,32 +1,55 @@
 // schemaTypes/documents/caseStudy.ts
 
+// schemaTypes/documents/caseStudy.ts
+
 import {defineType} from 'sanity'
-import {titleField, slugField} from '../fields'
+import {titleField, slugField} from '../fields/textField'
+import {ModulesArrayInput} from '../components/ModulesArrayInput'
 
 export const caseStudy = defineType({
   name: 'caseStudy',
   title: 'Case Study',
   type: 'document',
   fields: [
-    titleField,
-    slugField,
+    titleField(), // ✅ now a function call
+    slugField(), // ✅ now a function call
     {
       name: 'modules',
       title: 'Content Modules',
       type: 'array',
-      of: [{type: 'heroModule'}, {type: 'singleVideoModule'}, {type: 'multiVideoModule'}],
+      components: {input: ModulesArrayInput},
+      of: [
+        {type: 'heroModule'},
+        {type: 'videoModule'},
+        {type: 'singleImageModule'},
+        {type: 'multiImageModule'},
+        {type: 'textImageModule'},
+        {type: 'impactModule'},
+      ],
       validation: (Rule) =>
-        Rule.custom((modules) => {
-          if (!modules) return true
+        Rule.required()
+          .min(1)
+          .custom((modules: any[] | undefined) => {
+            if (!modules || modules.length === 0) {
+              return 'At least one module is required'
+            }
 
-          const heroCount = modules.filter((module: any) => module._type === 'heroModule').length
+            const heroCount = modules.filter((m) => m._type === 'heroModule').length
 
-          if (heroCount > 1) {
-            return 'Only one Hero Module is allowed per case study'
-          }
+            if (heroCount === 0) {
+              return 'Exactly one Hero Module is required'
+            }
 
-          return true
-        }),
+            if (heroCount > 1) {
+              return 'Only one Hero Module is allowed'
+            }
+
+            if (modules[0]._type !== 'heroModule') {
+              return 'Hero Module must be the first module'
+            }
+
+            return true
+          }),
     },
   ],
   preview: {
@@ -35,9 +58,10 @@ export const caseStudy = defineType({
       modules: 'modules',
     },
     prepare({title, modules}) {
+      const moduleCount = modules?.length || 0
       return {
         title: title || 'Untitled',
-        subtitle: `${modules?.length || 0} modules`,
+        subtitle: `${moduleCount} module${moduleCount !== 1 ? 's' : ''}`,
       }
     },
   },

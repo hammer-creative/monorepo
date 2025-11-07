@@ -26,11 +26,12 @@ module.exports = __toCommonJS(src_exports);
 
 // src/tokens/colors.ts
 var DEFAULT_COLORS = {
-  stealth: "#141515",
   aircutter: "#C7D3D3",
   alloy: "#778888",
   nimbus: "#C7D3D3",
-  hyperbeam: "#0066CC"
+  stealth: "#141515",
+  hyperbeam: "#35808D",
+  vinewhip: "#274040"
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

@@ -7,6 +7,8 @@ import {
   MOHOL_BOLD,
   MOHOL_REGULAR,
 } from '@/utils/fontConfig';
+import { DefaultSeo } from 'next-seo';
+import SEO from 'next-seo.config';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
@@ -34,6 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </Head>
         )}
         <Layout>
+          <DefaultSeo {...SEO} />
           <Component {...pageProps} />
         </Layout>
       </div>

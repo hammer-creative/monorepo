@@ -16,10 +16,13 @@
   },
   "dependencies": {
     "@chorusworks/ui": "workspace:*",
+    "@mux/mux-player-react": "^3.8.0",
+    "@radix-ui/react-dialog": "^1.1.15",
     "@sanity/image-url": "^1.2.0",
     "modern-normalize": "^3.0.1",
     "next": "15.5.5",
     "next-sanity": "^11.6.2",
+    "next-seo": "6.6.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "sanity-plugin-media": "^4.0.0",

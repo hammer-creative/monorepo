@@ -1,56 +1,98 @@
 // apps/web/src/pages/case-studies/[slug].tsx
+import {
+  HeroModule,
+  // VideoModule,
+  // TextImageModule,
+  // ImpactModule,
+} from '@/components/Modules';
 import { getCaseStudy, getCaseStudySlugs } from '@/lib/sanity';
-import type { CaseStudy } from '@/types/sanity';
+import { ModuleType } from '@/types/sanity';
+import type {
+  CaseStudy,
+  Module,
+  HeroModuleType,
+  VideoModuleType,
+  TextImageModuleType,
+  ImpactModuleType,
+} from '@/types/sanity';
 import type { GetStaticPaths, GetStaticProps } from 'next';
+import { NextSeo } from 'next-seo';
+import type { ComponentType } from 'react';
 
-type Props = {
+interface Props {
   caseStudy: CaseStudy;
+}
+
+type KnownModules = {
+  [ModuleType.Hero]: ComponentType<{ data: HeroModuleType }>;
+  [ModuleType.Video]: ComponentType<{ data: VideoModuleType }>;
+  [ModuleType.TextImage]: ComponentType<{ data: TextImageModuleType }>;
+  [ModuleType.Impact]: ComponentType<{ data: ImpactModuleType }>;
 };
+
+// known modules
+const knownModuleComponents: KnownModules = {
+  [ModuleType.Hero]: HeroModule,
+  // [ModuleType.Video]: VideoModule,
+  // [ModuleType.TextImage]: TextImageModule,
+  // [ModuleType.Impact]: ImpactModule,
+};
+
+// allow unknown modules without crashing
+const moduleComponents: Record<
+  string,
+  ComponentType<any>
+> = knownModuleComponents;
 
 export default function CaseStudyPage({ caseStudy }: Props) {
   return (
-    <article>
-      <h1>{caseStudy.title}</h1>
-
-      {caseStudy.modules.map((module) => {
-        if (module._type === 'heroModule') {
+    <>
+      <NextSeo
+        title={caseStudy.title}
+        titleTemplate="%s | Hammer Creative"
+        openGraph={{ title: caseStudy.title, type: 'article' }}
+      />
+      <article>
+        {caseStudy.modules.map((mod) => {
+          const Component = moduleComponents[mod._type];
+          if (!Component) {
+            console.warn(`No component found for module type "${mod._type}"`);
+            return null;
+          }
           return (
-            <div key={module._key}>
-              <h2>{module.heading}</h2>
-            </div>
+            <Component
+              key={mod._key}
+              data={mod as Extract<Module, { _type: typeof mod._type }>}
+            />
           );
-        }
-        return null;
-      })}
-    </article>
+        })}
+      </article>
+    </>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await getCaseStudySlugs();
-
   return {
     paths: slugs.map((item) => ({
-      params: { slug: item.slug },
+      params: {
+        slug: typeof item.slug === 'string' ? item.slug : item.slug?.current,
+      },
     })),
-    fallback: 'blocking', // or false for strict SSG
+    fallback: 'blocking',
   };
 };
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
-  const slug = params?.slug as string;
+  const slugParam = params?.slug;
+  const slug =
+    typeof slugParam === 'string'
+      ? slugParam
+      : Array.isArray(slugParam)
+        ? slugParam[0]
+        : '';
+
   const caseStudy = await getCaseStudy(slug);
-
-  if (!caseStudy) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      caseStudy,
-    },
-    revalidate: 60,
-  };
+  if (!caseStudy) return { notFound: true };
+  return { props: { caseStudy }, revalidate: 60 };
 };
