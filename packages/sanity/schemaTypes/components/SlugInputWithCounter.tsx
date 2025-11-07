@@ -1,9 +1,38 @@
-// packages/sanity/schemaTypes/components/SLugInputWithCounter.tsx
-
+// packages/sanity/schemaTypes/components/SlugInputWithCounter.tsx
 import {TextInput, Stack, Text, Button, Flex, Box} from '@sanity/ui'
 import {set, unset} from 'sanity'
 import type {SlugInputProps} from 'sanity'
 import {useFormValue} from 'sanity'
+
+const STOP_WORDS = new Set([
+  'a',
+  'an',
+  'and',
+  'as',
+  'at',
+  'before',
+  'but',
+  'by',
+  'for',
+  'from',
+  'is',
+  'in',
+  'into',
+  'like',
+  'of',
+  'off',
+  'on',
+  'onto',
+  'since',
+  'than',
+  'the',
+  'this',
+  'that',
+  'to',
+  'up',
+  'via',
+  'with',
+])
 
 export function SlugInputWithCounter(props: SlugInputProps) {
   const {value, schemaType, onChange} = props
@@ -11,12 +40,10 @@ export function SlugInputWithCounter(props: SlugInputProps) {
   const charCount = slugValue.length
   const maxLength = schemaType.options?.maxLength || 96
 
-  // Get the document to access the source field
   const document = useFormValue([]) as Record<string, any>
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.currentTarget.value
-
     if (newValue.length <= maxLength) {
       onChange(newValue ? set({_type: 'slug', current: newValue}) : unset())
     }
@@ -27,8 +54,14 @@ export function SlugInputWithCounter(props: SlugInputProps) {
     if (sourceField && document) {
       const sourceValue = document[sourceField] as string
       if (sourceValue && schemaType.options?.slugify) {
-        const slugified = schemaType.options.slugify(sourceValue)
-        onChange(set({_type: 'slug', current: slugified}))
+        // Base slugify
+        const baseSlug = schemaType.options.slugify(sourceValue)
+        // Remove stop words
+        const filteredSlug = baseSlug
+          .split('-')
+          .filter((word) => !STOP_WORDS.has(word.toLowerCase()))
+          .join('-')
+        onChange(set({_type: 'slug', current: filteredSlug}))
       }
     }
   }

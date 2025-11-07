@@ -2,3 +2,4 @@
 
 export * from './textField'
 export * from './videoField'
+export * from './colorField'

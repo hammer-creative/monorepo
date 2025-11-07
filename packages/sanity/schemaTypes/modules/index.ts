@@ -1,6 +1,16 @@
 // packages/sanity/schemaTypes/modules/index.ts
 import {heroModule} from './heroModule'
-import {singleVideoModule} from './singleVideoModule'
-import {multiVideoModule} from './multiVideoModule'
+import {videoModule} from './videoModule'
+import {textImageModule} from './textImageModule'
+import {singleImageModule} from './singleImageModule'
+import {multiImageModule} from './multiImageModule'
+import {impactModule} from './impactModule'
 
-export const moduleTypes = [heroModule, singleVideoModule, multiVideoModule]
+export const moduleTypes = [
+  heroModule,
+  videoModule,
+  textImageModule,
+  singleImageModule,
+  multiImageModule,
+  impactModule,
+]
