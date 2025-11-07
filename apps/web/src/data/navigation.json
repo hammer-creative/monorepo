@@ -1,0 +1,78 @@
+// apps/web/src/data/navigation.json
+
+{
+  "wordmark": {
+    "text": "Hammer",
+    "href": "/"
+  },
+  "main": [
+    {
+      "id": "home",
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "id": "about",
+      "label": "About",
+      "href": "/about"
+    },
+    {
+      "id": "services",
+      "label": "Services",
+      "href": "/services"
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "footer": [
+    {
+      "id": "company",
+      "title": "Company",
+      "items": [
+        {
+          "id": "footer-about",
+          "label": "About Us",
+          "href": "/about"
+        },
+        {
+          "id": "footer-careers",
+          "label": "Careers",
+          "href": "/careers"
+        }
+      ]
+    },
+    {
+      "id": "legal",
+      "title": "Legal",
+      "items": [
+        {
+          "id": "footer-privacy",
+          "label": "Privacy Policy",
+          "href": "/privacy"
+        },
+        {
+          "id": "footer-terms",
+          "label": "Terms of Service",
+          "href": "/terms"
+        }
+      ]
+    }
+  ],
+  "social": [
+    {
+      "id": "social-twitter",
+      "label": "Twitter",
+      "href": "https://twitter.com/yourbrand",
+      "platform": "twitter"
+    },
+    {
+      "id": "social-github",
+      "label": "GitHub",
+      "href": "https://github.com/yourbrand",
+      "platform": "github"
+    }
+  ]
+}
