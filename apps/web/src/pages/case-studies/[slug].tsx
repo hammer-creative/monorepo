@@ -4,7 +4,7 @@ import {
   // VideoModule,
   // TextImageModule,
   // ImpactModule,
-} from '@/components/Modules';
+} from '@/components/modules';
 import { getCaseStudy, getCaseStudySlugs } from '@/lib/sanity';
 import { ModuleType } from '@/types/sanity';
 import type {
