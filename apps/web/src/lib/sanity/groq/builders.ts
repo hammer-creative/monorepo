@@ -1,7 +1,5 @@
 // apps/web/src/lib/sanity/groq/builders.ts
 
-// apps/web/src/lib/sanity/groq/builders.ts
-
 export const projections = {
   slug: `"slug": slug.current`,
 
@@ -21,6 +19,16 @@ export const moduleProjections = `
   _type == "heroModule" => {
     heading,
     description,
+    backgroundColor
+  },
+  _type == "textImageModule" => {
+    title,
+    image {
+      "url": asset->url,
+      alt,
+      "metadata": asset->metadata
+    },
+    bodyText,
     backgroundColor
   }
 `;

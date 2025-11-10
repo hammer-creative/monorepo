@@ -1,5 +1,6 @@
 // apps/web/src/pages/_app.tsx
-import Layout from '@/components/Layout/Layout';
+import { Layout } from '@/components/layout/Layout';
+import { NavigationProvider } from '@/contexts/NavigationContext';
 import '@/styles/index.css';
 import {
   DIATYPE_MEDIUM,
@@ -35,10 +36,12 @@ export default function App({ Component, pageProps }: AppProps) {
             <meta name="robots" content="noindex, nofollow" />
           </Head>
         )}
-        <Layout>
-          <DefaultSeo {...SEO} />
-          <Component {...pageProps} />
-        </Layout>
+        <NavigationProvider>
+          <Layout>
+            <DefaultSeo {...SEO} />
+            <Component {...pageProps} />
+          </Layout>
+        </NavigationProvider>
       </div>
     </>
   );
