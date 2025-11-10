@@ -3,6 +3,8 @@
 import {PlayIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {createTextField} from '../factories/textFieldFactory'
+// ✅ ADD: import poster helper
+import {createSingleImageField} from '../factories/imageFieldFactory'
 
 /**
  * Video Item Object
@@ -25,6 +27,13 @@ export const videoItem = defineType({
       type: 'mux.video',
       validation: (Rule) => Rule.required(),
     },
+    // ✅ ADD: per-video poster (jpg/gif)
+    createSingleImageField({
+      name: 'poster',
+      title: 'Poster (JPG or GIF)',
+      description: 'Optional poster or animated GIF for this video',
+      required: false,
+    }),
   ],
   preview: {
     select: {
@@ -34,8 +43,10 @@ export const videoItem = defineType({
       encodingTier: 'video.asset.data.encoding_tier',
       videoQuality: 'video.asset.data.video_quality',
       media: 'video.asset',
+      // ✅ ADD: use poster in preview if provided
+      poster: 'poster',
     },
-    prepare({title, duration, resolution, encodingTier, videoQuality, media}) {
+    prepare({title, duration, resolution, encodingTier, videoQuality, media, poster}) {
       // Format duration as MM:SS
       const formatDuration = (seconds: number) => {
         const mins = Math.floor(seconds / 60)
@@ -51,7 +62,8 @@ export const videoItem = defineType({
       return {
         title: title || 'Untitled Video',
         subtitle: `${durationText} • ${details}`,
-        media,
+        // ✅ ADD: prefer poster, fallback to mux asset
+        media: poster || media,
       }
     },
   },

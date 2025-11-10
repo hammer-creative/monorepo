@@ -1,51 +1,48 @@
-// schemaTypes/modules/heroModule.ts
+// packages/sanity/schemaTypes/modules/textModule.ts
 
-// schemaTypes/modules/heroModule.ts
-import {StarIcon} from '@sanity/icons'
+import {TextIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {createTextField} from '../factories/textFieldFactory'
 import {createPortableTextField} from '../factories/portableTextFactory'
 import {createColorField} from '../factories/colorFieldFactory'
-import {createSingleImageField} from '../factories/imageFieldFactory'
 
-export const heroModule = defineType({
-  name: 'heroModule',
-  title: 'Hero Module',
+export const textModule = defineType({
+  name: 'textModule',
+  title: 'Text',
   type: 'object',
-  icon: StarIcon,
+  icon: TextIcon,
   fields: [
     createTextField({
       name: 'title',
-      title: 'Heading',
+      title: 'Headline',
       required: true,
-      maxLength: 80,
+      maxLength: 100,
+    }),
+    createTextField({
+      name: 'tag',
+      title: 'Tag',
+      required: true,
+      maxLength: 100,
     }),
     createPortableTextField({
-      name: 'description',
-      title: 'Description',
+      name: 'bodyText',
+      title: 'Body Text',
       required: true,
-      maxLength: 500,
-    }),
-    createSingleImageField({
-      name: 'image',
-      title: 'Image',
-      required: true,
+      maxLength: 600,
     }),
     createColorField({
       name: 'backgroundColor',
       title: 'Background Color',
-      required: true,
     }),
   ],
   preview: {
     select: {
-      title: 'heading',
+      title: 'title',
       backgroundColor: 'backgroundColor',
     },
     prepare({title, backgroundColor}) {
-      console.log(backgroundColor)
       return {
-        title: title || 'Hero Module',
+        title: title || 'Text Module',
         subtitle: backgroundColor?.enabled ? `Background: ${backgroundColor.name}` : 'Hero',
       }
     },

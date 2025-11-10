@@ -13,11 +13,13 @@
   font-size: $font-size;
 }
 
-@define-mixin letter-spacing-responsive $narrow: 0em, $wide: 0em {
+@define-mixin letter-spacing-responsive $narrow, $wide {
   letter-spacing: $narrow;
 
   @media (min-width: 80rem) {
-    letter-spacing: $wide;
+    & {
+      letter-spacing: $wide;
+    }
   }
 }
 
