@@ -18,9 +18,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.ctfassets.net',
-        port: '',
-        pathname: '/lpg4lrp82d8t/**',
+        hostname: 'cdn.sanity.io',
+        pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'image.mux.com',
+        pathname: '/**',
       },
     ],
   },

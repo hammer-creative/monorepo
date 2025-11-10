@@ -1,3 +1,4 @@
+// apps/web/src/components/navigation/MenuToggle.tsx
 import { useNavigation } from '@/contexts/NavigationContext';
 
 export function MenuToggle() {

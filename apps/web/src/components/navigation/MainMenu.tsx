@@ -1,6 +1,7 @@
-import Link from 'next/link';
-import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+// apps/web/src/components/navigation/MainMenu.tsx
 import { MenuItem } from '@/types/navigation';
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+import Link from 'next/link';
 
 interface MainMenuProps {
   items: MenuItem[];

@@ -1,5 +1,6 @@
-import Link from 'next/link';
+// apps/web/src/components/Navigation/FooterMenu.tsx
 import { FooterSection } from '@/types/navigation';
+import Link from 'next/link';
 
 interface FooterMenuProps {
   sections: FooterSection[];
