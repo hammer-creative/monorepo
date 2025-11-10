@@ -33,18 +33,18 @@ export const textImageModule = defineType({
     createColorField({
       name: 'backgroundColor',
       title: 'Background Color',
+      required: true,
     }),
   ],
   preview: {
     select: {
-      title: 'title',
-      media: 'image',
+      title: 'heading',
+      backgroundColor: 'backgroundColor',
     },
-    prepare({title, media}) {
+    prepare({title, backgroundColor}) {
       return {
-        title: title || 'Untitled',
-        subtitle: 'Text + Image Module',
-        media,
+        title: title || 'Text + Image Module',
+        subtitle: backgroundColor?.enabled ? `Background: ${backgroundColor.name}` : 'Hero',
       }
     },
   },

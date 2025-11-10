@@ -31,7 +31,6 @@ export function VideoModal({
 
           {(title || description) && (
             <div className="video-modal-info">
-              <Dialog.Title>{title}</Dialog.Title>
               {description && (
                 <Dialog.Description>{description}</Dialog.Description>
               )}

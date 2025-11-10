@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/impactModule.ts
 
-import {BulbOutlineIcon} from '@sanity/icons'
+import {VersionsIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {createTextField} from '../factories/textFieldFactory'
 import {createPortableTextField} from '../factories/portableTextFactory'
@@ -17,7 +17,7 @@ export const impactModule = defineType({
   name: 'impactModule',
   title: 'Impact',
   type: 'object',
-  icon: BulbOutlineIcon,
+  icon: VersionsIcon,
   fields: [
     {
       name: 'layout',

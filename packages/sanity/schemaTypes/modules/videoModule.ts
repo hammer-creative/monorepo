@@ -1,9 +1,10 @@
 // packages/sanity/schemaTypes/modules/videoModule.ts
 
-import {PlayIcon} from '@sanity/icons'
+import {VideoIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {createVideoField} from '../factories/videoFieldFactory'
 import {createLimitedArrayInput} from '../utils/LimitedArrayInput'
+import {createColorField} from '../factories/colorFieldFactory'
 
 /**
  * Video Module
@@ -13,7 +14,7 @@ export const videoModule = defineType({
   name: 'videoModule',
   title: 'Video',
   type: 'object',
-  icon: PlayIcon,
+  icon: VideoIcon,
   fields: [
     {
       ...createVideoField({
@@ -28,18 +29,26 @@ export const videoModule = defineType({
         input: createLimitedArrayInput(3, 'video'),
       },
     },
+    createColorField({
+      name: 'backgroundColor',
+      title: 'Background Color',
+      required: true,
+    }),
   ],
   preview: {
     select: {
       videos: 'videos',
+      backgroundColor: 'backgroundColor',
     },
-    prepare({videos}) {
+    prepare({videos, backgroundColor}) {
       const count = videos?.length || 0
       const layouts = ['No videos', 'Full width', 'Half width', 'Thirds']
 
       return {
         title: `${count} Video${count !== 1 ? 's' : ''}`,
-        subtitle: `Video Module • ${layouts[count]}`,
+        subtitle: backgroundColor?.enabled
+          ? `Background: ${backgroundColor.name} • ${layouts[count]}`
+          : `Video Module • ${layouts[count]}`,
         media: videos?.[0]?.video?.asset,
       }
     },
