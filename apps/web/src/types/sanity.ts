@@ -23,8 +23,9 @@ export enum ModuleType {
 // Common helpers
 // --------------------
 export type BackgroundColor = {
-  color: string;
   enabled: boolean;
+  color: string;
+  hex?: string; // Optional since it's added by workaround
 };
 
 // --------------------
