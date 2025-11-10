@@ -10,12 +10,20 @@ interface LayoutProps {
   children: ReactNode;
 }
 
+// export function Layout({ children }: LayoutProps) {
+//   return (
+//     <>
+//       <Header navigationData={navData} />
+//       <main className="layout-container">{children}</main>
+//       <Footer navigationData={navData} />
+//     </>
+//   );
+// }
+
 export function Layout({ children }: LayoutProps) {
   return (
     <>
-      <Header navigationData={navData} />
       <main className="layout-container">{children}</main>
-      <Footer navigationData={navData} />
     </>
   );
 }

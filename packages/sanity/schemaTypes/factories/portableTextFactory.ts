@@ -1,9 +1,7 @@
 // packages/sanity/schemaTypes/factories/portableTextFactory.ts
-
-import {defineField} from 'sanity'
+import {defineField, type ArrayRule} from 'sanity'
 import {PortableTextWithCounter} from '../components/PortableTextWithCounter'
 import {addRequiredLabel} from '../utils/fieldHelpers'
-import type {ArrayRule} from 'sanity'
 
 interface PortableTextConfig {
   name?: string
@@ -11,7 +9,7 @@ interface PortableTextConfig {
   required?: boolean
   maxLength?: number
   description?: string
-  blocks?: any[] // allow caller to override the `of` config
+  blocks?: any[]
 }
 
 export const createPortableTextField = (config: PortableTextConfig = {}) => {
@@ -24,16 +22,14 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     blocks,
   } = config
 
-  // Default Sanity block definition (default toolbar)
   const defaultBlocks = [
     {
       type: 'block',
       styles: [
         {title: 'Normal', value: 'normal'},
-        {title: 'H2', value: 'h2'},
-        {title: 'H3', value: 'h3'},
+        {title: 'Blockquote', value: 'blockquote'},
       ],
-      lists: [{title: 'Bullet', value: 'bullet'}],
+      lists: [],
       marks: {
         decorators: [
           {title: 'Bold', value: 'strong'},
@@ -44,13 +40,7 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
             name: 'link',
             type: 'object',
             title: 'Link',
-            fields: [
-              {
-                name: 'href',
-                type: 'url',
-                title: 'URL',
-              },
-            ],
+            fields: [{name: 'href', type: 'url', title: 'URL'}],
           },
         ],
       },
@@ -61,11 +51,9 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     name,
     title,
     type: 'array',
-    of: blocks || defaultBlocks, // <- use override if passed
+    of: blocks || defaultBlocks,
     description: addRequiredLabel(description, required),
-    components: {
-      input: PortableTextWithCounter,
-    },
+    components: {input: PortableTextWithCounter},
     validation: (Rule: ArrayRule) => {
       let rule = Rule
       if (required) rule = rule.required()

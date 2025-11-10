@@ -1,11 +1,12 @@
 // apps/web/src/lib/sanity/colors.ts
 
 export const COLORS = {
-  stealth: '#141515',
+  nightshade: '#141515',
+  sandstorm: '#778888',
   aircutter: '#C7D3D3',
-  alloy: '#778888',
-  nimbus: '#C7D3D3',
-  hyperbeam: '#0066CC',
+  hyperbeam: '#FFCC98',
+  hydroblast: '#35808D',
+  vinewhip: '#274040',
 } as const;
 
 export function resolveBackgroundColor(

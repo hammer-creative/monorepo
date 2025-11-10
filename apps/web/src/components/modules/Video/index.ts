@@ -4,3 +4,4 @@ export * from './MuxVideo';
 export * from './SingleVideoModule';
 export * from './VideoModal';
 export * from './VideoThumbnail';
+export * from './VideoModule';

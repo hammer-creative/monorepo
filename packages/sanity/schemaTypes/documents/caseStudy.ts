@@ -1,7 +1,5 @@
 // schemaTypes/documents/caseStudy.ts
 
-// schemaTypes/documents/caseStudy.ts
-
 import {defineType} from 'sanity'
 import {titleField, slugField} from '../fields/textField'
 import {ModulesArrayInput} from '../components/ModulesArrayInput'
@@ -20,10 +18,11 @@ export const caseStudy = defineType({
       components: {input: ModulesArrayInput},
       of: [
         {type: 'heroModule'},
+        {type: 'textImageModule'},
         {type: 'videoModule'},
+        {type: 'textModule'},
         {type: 'singleImageModule'},
         {type: 'multiImageModule'},
-        {type: 'textImageModule'},
         {type: 'impactModule'},
       ],
       validation: (Rule) =>

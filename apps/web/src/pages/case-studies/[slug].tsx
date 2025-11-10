@@ -1,23 +1,30 @@
 // apps/web/src/pages/case-studies/[slug].tsx
+// apps/web/src/pages/case-studies/[slug].tsx
 import {
   HeroModule,
-  // VideoModule,
+  VideoModule,
+  TextModule,
   TextImageModule,
-  // ImpactModule,
+  ImpactModule,
 } from '@/components/modules';
 import { getCaseStudy, getCaseStudySlugs } from '@/lib/sanity';
+import { resolveBackgroundColor } from '@/lib/sanity/colors';
 import { ModuleType } from '@/types/sanity';
 import type {
   CaseStudy,
   Module,
   HeroModuleType,
-  VideoModuleType,
-  TextImageModuleType,
   ImpactModuleType,
+  TextModuleType,
+  TextImageModuleType,
+  VideoModuleType,
 } from '@/types/sanity';
+import { toKebab } from '@/utils/stringUtils';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
 import type { ComponentType } from 'react';
+
+// ✅ import shared resolver
 
 interface Props {
   caseStudy: CaseStudy;
@@ -25,17 +32,19 @@ interface Props {
 
 type KnownModules = {
   [ModuleType.Hero]: ComponentType<{ data: HeroModuleType }>;
-  [ModuleType.Video]: ComponentType<{ data: VideoModuleType }>;
-  [ModuleType.TextImage]: ComponentType<{ data: TextImageModuleType }>;
   [ModuleType.Impact]: ComponentType<{ data: ImpactModuleType }>;
+  [ModuleType.Text]: ComponentType<{ data: TextModuleType }>;
+  [ModuleType.TextImage]: ComponentType<{ data: TextImageModuleType }>;
+  [ModuleType.Video]: ComponentType<{ data: VideoModuleType }>;
 };
 
 // known modules
 const knownModuleComponents: KnownModules = {
   [ModuleType.Hero]: HeroModule,
-  // [ModuleType.Video]: VideoModule,
+  [ModuleType.Video]: VideoModule,
+  [ModuleType.Text]: TextModule,
   [ModuleType.TextImage]: TextImageModule,
-  // [ModuleType.Impact]: ImpactModule,
+  [ModuleType.Impact]: ImpactModule,
 };
 
 // allow unknown modules without crashing
@@ -44,32 +53,8 @@ const moduleComponents: Record<
   ComponentType<any>
 > = knownModuleComponents;
 
-// TEMPORARY: Color hex mapping until Sanity solution is implemented
-// TEMPORARY: Color hex mapping until Sanity solution is implemented
-const COLORS = {
-  stealth: '#141515',
-  aircutter: '#C7D3D3',
-  alloy: '#778888',
-  nimbus: '#C7D3D3',
-  hyperbeam: '#0066CC',
-} as const;
-
-function resolveBackgroundColor(
-  backgroundColor: { enabled: boolean; color: string } | null | undefined,
-) {
-  if (!backgroundColor?.enabled || !backgroundColor?.color) {
-    return null;
-  }
-
-  return {
-    enabled: true,
-    name: backgroundColor.color,
-    hex: COLORS[backgroundColor.color as keyof typeof COLORS],
-  };
-}
-
 export default function CaseStudyPage({ caseStudy }: Props) {
-  // TEMPORARY: Resolve backgroundColor hex for all modules
+  // ✅ Use shared color resolver
   const resolvedModules = caseStudy.modules.map((mod) => {
     if ('backgroundColor' in mod && mod.backgroundColor) {
       return {
@@ -87,18 +72,31 @@ export default function CaseStudyPage({ caseStudy }: Props) {
         titleTemplate="%s | Hammer Creative"
         openGraph={{ title: caseStudy.title, type: 'article' }}
       />
-      <article>
+      <article className="case-study">
         {resolvedModules.map((mod) => {
           const Component = moduleComponents[mod._type];
           if (!Component) {
             console.warn(`No component found for module type "${mod._type}"`);
             return null;
           }
+
+          // derive clean classes
+          const moduleClass = `module ${mod._type
+            .replace(/([a-z])([A-Z])/g, '$1-$2')
+            .toLowerCase()}`;
+
           return (
-            <Component
+            <section
               key={mod._key}
-              data={mod as Extract<Module, { _type: typeof mod._type }>}
-            />
+              className={moduleClass}
+              style={{
+                backgroundColor: mod.backgroundColor?.hex ?? 'transparent',
+              }}
+            >
+              <Component
+                data={mod as Extract<Module, { _type: typeof mod._type }>}
+              />
+            </section>
           );
         })}
       </article>
@@ -129,6 +127,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
   const caseStudy = await getCaseStudy(slug);
   if (!caseStudy) return { notFound: true };
+
   console.log(
     'backgroundColor from Sanity:',
     JSON.stringify(caseStudy.modules[0]?.backgroundColor, null, 2),

@@ -1,4 +1,5 @@
 // apps/web/src/types/sanity.ts
+import type { PortableTextBlock } from '@portabletext/types';
 
 // --------------------
 // Base video type
@@ -15,6 +16,7 @@ export type MuxVideo = {
 export enum ModuleType {
   Hero = 'heroModule',
   Video = 'videoModule',
+  Text = 'textModule',
   TextImage = 'textImageModule',
   Impact = 'impactModule',
 }
@@ -24,8 +26,19 @@ export enum ModuleType {
 // --------------------
 export type BackgroundColor = {
   enabled: boolean;
-  color: string;
-  hex?: string; // Optional since it's added by workaround
+  name: string;
+  hex?: string;
+};
+
+export type ProjectedImage = {
+  url: string;
+  alt?: string;
+  metadata?: {
+    dimensions?: {
+      width: number;
+      height: number;
+    };
+  };
 };
 
 // --------------------
@@ -34,9 +47,10 @@ export type BackgroundColor = {
 export type HeroModuleType = {
   _type: ModuleType.Hero;
   _key: string;
-  heading: string;
   backgroundColor?: BackgroundColor;
-  description?: Array<{ _type: string; children?: any[] }>;
+  description?: PortableTextBlock[];
+  title: string;
+  image?: ProjectedImage;
 };
 
 export type VideoItem = {
@@ -51,16 +65,21 @@ export type VideoModuleType = {
   videos: VideoItem[];
 };
 
+export type TextModuleType = {
+  _type: ModuleType.Text;
+  _key: string;
+  title?: string;
+  tag?: string;
+  bodyText?: PortableTextBlock[];
+  backgroundColor?: BackgroundColor;
+};
+
 export type TextImageModuleType = {
   _type: ModuleType.TextImage;
   _key: string;
   heading?: string;
-  bodyText?: Array<{ _type: string; children?: any[] }>;
-  image?: {
-    _type: 'image';
-    alt?: string;
-    asset?: { _ref?: string; _type?: string };
-  };
+  bodyText?: PortableTextBlock[];
+  image?: ProjectedImage;
   backgroundColor?: BackgroundColor;
 };
 
@@ -69,18 +88,14 @@ export type ImpactModuleType = {
   _key: string;
   heading?: string;
   layout?: string;
-  image?: {
-    _type: 'image';
-    alt?: string;
-    asset?: { _ref?: string; _type?: string };
-  };
+  image?: ProjectedImage;
   textBlock1?: {
     heading?: string;
-    description?: Array<{ _type: string; children?: any[] }>;
+    description?: PortableTextBlock[];
   };
   textBlock2?: {
     heading?: string;
-    description?: Array<{ _type: string; children?: any[] }>;
+    description?: PortableTextBlock[];
   };
 };
 
@@ -90,6 +105,7 @@ export type ImpactModuleType = {
 export type Module =
   | HeroModuleType
   | VideoModuleType
+  | TextModuleType
   | TextImageModuleType
   | ImpactModuleType;
 

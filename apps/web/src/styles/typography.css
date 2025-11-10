@@ -10,6 +10,7 @@ body {
   font-family: var(--font-sans);
 }
 
+/* HEADINGS */
 h1,
 h2 {
   text-transform: uppercase;
@@ -18,7 +19,7 @@ h2 {
 
 h1 {
   @mixin typography var(--font-serif), var(--font-size-fluid-headline);
-  @mixin letter-spacing-responsive var(--letter-spacing-loose)
+  @mixin letter-spacing-responsive var(--letter-spacing-loose),
     var(--letter-spacing-tight);
 }
 
@@ -27,6 +28,7 @@ h2 {
   @mixin letter-spacing-responsive var(--letter-spacing-loose);
 }
 
+/* PARAGRAPHS & BLOCKS */
 p.large {
   @mixin typography var(--font-sans), var(--font-size-fluid-large);
   line-height: var(--line-height-fluid-reverse);
@@ -55,4 +57,14 @@ ul li:first-of-type {
 
 div.rubric {
   @mixin all-caps-accent;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+}
+
+/* BLOCKQUOTE OVERRIDE */
+.case-study blockquote {
+  @mixin typography var(--font-sans), var(--font-size-fluid-small);
+  line-height: var(--line-height-fluid-reverse);
+  padding: 2rem 0;
 }
