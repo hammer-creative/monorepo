@@ -1,0 +1,168 @@
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+/* Wordmark */
+.wordmark {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Main Menu */
+.main-menu {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .main-menu {
+    display: block;
+  }
+}
+
+.main-menu-list {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-menu-link {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Menu Toggle */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .menu-toggle {
+    display: none;
+  }
+}
+
+.menu-toggle-line {
+  display: block;
+  width: 1.5rem;
+  height: 0.125rem;
+  background-color: currentColor;
+}
+
+/* Mobile Menu */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mobile-menu-content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  max-width: 24rem;
+  background-color: white;
+  padding: 1rem;
+}
+
+.mobile-menu-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.mobile-menu-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-menu-item {
+  margin-bottom: 0.5rem;
+}
+
+.mobile-menu-link {
+  display: block;
+  padding: 0.75rem;
+  text-decoration: none;
+}
+
+/* Footer */
+.footer {
+  margin-top: auto;
+}
+
+.footer-container {
+  padding: 3rem 1rem;
+}
+
+.footer-menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer-section-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-section-item {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section-link {
+  text-decoration: none;
+}
+
+/* Social Menu */
+.social-menu-list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.social-menu-link {
+  text-decoration: none;
+}
