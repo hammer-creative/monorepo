@@ -2,9 +2,8 @@
 
 import {VideoIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-import {createVideoField} from '../factories/videoFieldFactory'
+import {createVideoField, createColorField} from '../factories'
 import {createLimitedArrayInput} from '../utils/LimitedArrayInput'
-import {createColorField} from '../factories/colorFieldFactory'
 
 /**
  * Video Module
@@ -12,7 +11,7 @@ import {createColorField} from '../factories/colorFieldFactory'
  */
 export const videoModule = defineType({
   name: 'videoModule',
-  title: 'Video',
+  title: 'Video Module',
   type: 'object',
   icon: VideoIcon,
   fields: [
@@ -46,9 +45,9 @@ export const videoModule = defineType({
 
       return {
         title: `${count} Video${count !== 1 ? 's' : ''}`,
-        subtitle: backgroundColor?.enabled
-          ? `Background: ${backgroundColor.name} • ${layouts[count]}`
-          : `Video Module • ${layouts[count]}`,
+        subtitle: [layouts[count], backgroundColor?.enabled ? `BG: ${backgroundColor.name}` : null]
+          .filter(Boolean)
+          .join(' • '),
         media: videos?.[0]?.video?.asset,
       }
     },

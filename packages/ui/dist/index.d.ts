@@ -1,9 +1,9 @@
 declare const DEFAULT_COLORS: {
+    readonly nightshade: "#141515";
+    readonly sandstorm: "#778888";
     readonly aircutter: "#C7D3D3";
-    readonly alloy: "#778888";
-    readonly nimbus: "#C7D3D3";
-    readonly stealth: "#141515";
-    readonly hyperbeam: "#35808D";
+    readonly hyperbeam: "#FFCC98";
+    readonly hydroblast: "#35808D";
     readonly vinewhip: "#274040";
 };
 

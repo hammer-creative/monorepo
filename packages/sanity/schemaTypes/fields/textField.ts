@@ -4,7 +4,11 @@ import {defineField} from 'sanity'
 import {SlugInputWithCounter} from '../components/SlugInputWithCounter'
 import {createTextField} from '../factories/textFieldFactory'
 import {createPortableTextField} from '../factories/portableTextFactory'
+import {addRequiredLabel} from '../utils/fieldHelpers'
 
+/**
+ * Standard title text field with character counter
+ */
 export const titleField = () =>
   createTextField({
     name: 'title',
@@ -14,23 +18,20 @@ export const titleField = () =>
     withCounter: true,
   })
 
-export const headingField = () =>
-  createTextField({
-    name: 'heading',
-    title: 'Heading',
-    required: true,
-    maxLength: 80,
-    withCounter: true,
-  })
-
-export const descriptionField = () =>
+/**
+ * Rich text body field with optional length limit
+ */
+export const portableTextField = () =>
   createPortableTextField({
-    name: 'description',
-    title: 'Description',
+    name: 'body',
+    title: 'Body',
     required: true,
-    maxLength: 500,
+    maxLength: 600,
   })
 
+/**
+ * Optional image/video caption text field
+ */
 export const captionField = () =>
   createTextField({
     name: 'caption',
@@ -41,11 +42,15 @@ export const captionField = () =>
     withCounter: true,
   })
 
+/**
+ * Standard slug field, auto-generated from title
+ */
 export const slugField = () =>
   defineField({
     name: 'slug',
     title: 'Slug',
     type: 'slug',
+    description: addRequiredLabel('Auto-generated from title', true),
     components: {
       input: SlugInputWithCounter,
     },
@@ -61,5 +66,5 @@ export const slugField = () =>
           .replace(/^-+/, '')
           .replace(/-+$/, ''),
     },
-    validation: (Rule) => Rule.required(),
+    validation: (rule) => rule.required().error('Slug is required'),
   })

@@ -1,4 +1,5 @@
 // packages/sanity/schemaTypes/factories/portableTextFactory.ts
+
 import {defineField, type ArrayRule} from 'sanity'
 import {PortableTextWithCounter} from '../components/PortableTextWithCounter'
 import {addRequiredLabel} from '../utils/fieldHelpers'
@@ -12,6 +13,10 @@ interface PortableTextConfig {
   blocks?: any[]
 }
 
+/**
+ * Creates a Portable Text field with optional character counter and validation
+ * Supports custom block sets or defaults to basic text, blockquote, and link annotations
+ */
 export const createPortableTextField = (config: PortableTextConfig = {}) => {
   const {
     name = 'content',
@@ -54,11 +59,9 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     of: blocks || defaultBlocks,
     description: addRequiredLabel(description, required),
     components: {input: PortableTextWithCounter},
-    validation: (Rule: ArrayRule) => {
-      let rule = Rule
-      if (required) rule = rule.required()
-      if (maxLength) rule = rule.max(maxLength)
-      return rule
-    },
+    // Change both ArrayRule to ArrayRule<any> to avoid generic type issues
+    validation: required
+      ? (rule: ArrayRule<any>) => rule.required().max(maxLength).error(`${title} is required`)
+      : (rule: ArrayRule<any>) => rule.max(maxLength),
   })
 }

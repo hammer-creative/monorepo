@@ -4,6 +4,10 @@ import {set, unset} from 'sanity'
 import type {SlugInputProps} from 'sanity'
 import {useFormValue} from 'sanity'
 
+/**
+ * Common English stop words to exclude from slugs.
+ * Helps create cleaner, more meaningful URLs.
+ */
 const STOP_WORDS = new Set([
   'a',
   'an',
@@ -34,8 +38,14 @@ const STOP_WORDS = new Set([
   'with',
 ])
 
+/**
+ * Slug input with character counter and custom stop word filtering.
+ *
+ * Generates URL-friendly slugs from a source field (typically 'title')
+ * and removes common stop words for cleaner URLs.
+ */
 export function SlugInputWithCounter(props: SlugInputProps) {
-  const {value, schemaType, onChange} = props
+  const {value, schemaType, onChange, renderDefault} = props
   const slugValue = value?.current || ''
   const charCount = slugValue.length
   const maxLength = schemaType.options?.maxLength || 96
@@ -49,21 +59,33 @@ export function SlugInputWithCounter(props: SlugInputProps) {
     }
   }
 
+  /**
+   * Generate slug from source field with stop word filtering.
+   * Uses Sanity's built-in slug generation then removes common stop words.
+   */
   const handleGenerate = () => {
     const sourceField = schemaType.options?.source as string
-    if (sourceField && document) {
-      const sourceValue = document[sourceField] as string
-      if (sourceValue && schemaType.options?.slugify) {
-        // Base slugify
-        const baseSlug = schemaType.options.slugify(sourceValue)
-        // Remove stop words
-        const filteredSlug = baseSlug
-          .split('-')
-          .filter((word) => !STOP_WORDS.has(word.toLowerCase()))
-          .join('-')
-        onChange(set({_type: 'slug', current: filteredSlug}))
-      }
-    }
+    if (!sourceField || !document) return
+
+    const sourceValue = document[sourceField] as string
+    if (!sourceValue) return
+
+    // Simple slugify: lowercase, replace spaces with hyphens, remove special chars
+    const baseSlug = sourceValue
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '')
+
+    // Remove stop words
+    const filteredSlug = baseSlug
+      .split('-')
+      .filter((word: string) => !STOP_WORDS.has(word.toLowerCase()))
+      .join('-')
+
+    onChange(set({_type: 'slug', current: filteredSlug}))
   }
 
   return (

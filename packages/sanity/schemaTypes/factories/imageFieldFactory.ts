@@ -46,9 +46,7 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
     title,
     type: 'image',
     description: addRequiredLabel(description, required),
-    options: {
-      hotspot,
-    },
+    options: {hotspot},
     fields: [
       createTextField({
         name: 'alt',
@@ -70,7 +68,9 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
           ]
         : []),
     ],
-    validation: (Rule: ImageRule) => (required ? Rule.required() : Rule),
+    validation: required
+      ? (Rule: ImageRule) => Rule.required().error(`${title} is required`)
+      : undefined,
   })
 }
 
@@ -83,8 +83,8 @@ export const createMultiImageField = (config: MultiImageConfig = {}) => {
     name = 'imageItems',
     title = 'Images',
     required = false,
-    minImages = 2,
-    maxImages = 6,
+    minImages = 4,
+    maxImages = 20,
     description = '',
   } = config
 
@@ -94,11 +94,19 @@ export const createMultiImageField = (config: MultiImageConfig = {}) => {
     type: 'array',
     of: [{type: 'imageItem'}],
     description: addRequiredLabel(description, required),
-    validation: (Rule: ArrayRule) => {
-      let rule = Rule
-      if (required) rule = rule.required()
-      rule = rule.min(minImages).max(maxImages)
-      return rule
-    },
+    validation: required
+      ? (Rule: ArrayRule<any>) =>
+          Rule.required()
+            .min(minImages)
+            .max(maxImages)
+            .error(
+              `${title} must include ${minImages}-${maxImages} image${maxImages !== 1 ? 's' : ''}`,
+            )
+      : (Rule: ArrayRule<any>) =>
+          Rule.min(minImages)
+            .max(maxImages)
+            .error(
+              `${title} must include ${minImages}-${maxImages} image${maxImages !== 1 ? 's' : ''}`,
+            ),
   })
 }

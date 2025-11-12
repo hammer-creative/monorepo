@@ -12,7 +12,7 @@ export function TextImageModule({ data }: { data: TextImageModuleType }) {
 
   return (
     <div className="flow">
-      <PortableTextRenderer value={data.bodyText} className="small" />
+      <PortableTextRenderer value={data.body} className="small" />
       {image?.url && (
         <SanityImage
           url={image.url}

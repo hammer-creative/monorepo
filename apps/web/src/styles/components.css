@@ -11,7 +11,7 @@
   bottom: 0;
   left: 0;
   width: 50%;
-  padding: 1.75rem 1rem 2.25rem 3rem;
+  padding: 1.75rem 1rem 3rem 3rem;
 }
 
 .hero-image {
@@ -26,6 +26,15 @@
   transform: scale(1); /* start slightly zoomed in */
   transform-origin: center center;
   animation: heroZoomOut 1s ease-out forwards;
+}
+
+.hero-description {
+  width: 50%;
+  padding: 0 1rem 12rem 3rem;
+}
+
+.hero-accent-bar {
+  padding-bottom: 3rem;
 }
 
 @keyframes heroZoomOut {
@@ -73,4 +82,30 @@
     text-wrap: balance;
     text-justify: inter-word;
   }
+}
+
+.text-image-module .flow {
+  gap: 0 !important;
+}
+
+.text-image-module .body {
+  flex: none !important;
+  width: 50% !important;
+  padding: 3rem 15% 3rem 3rem !important;
+}
+
+blockquote {
+  font-weight: 900;
+}
+
+.video-module {
+  padding: 1rem;
+}
+
+.text-module[data-module-index='5'] {
+  color: #778888 !important;
+}
+
+.text-module h2 {
+  padding-right: 2rem;
 }

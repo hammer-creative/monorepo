@@ -15,7 +15,7 @@ export function TextModule({ data }: { data: TextModuleType }) {
       <div className="flow">
         <h2>{data.title}</h2>
         <div className="rubric">{data.tag}</div>
-        <PortableTextRenderer value={data.bodyText} className="medium" />
+        <PortableTextRenderer value={data.body} className="medium" />
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 // packages/sanity/schemaTypes/factories/videoModuleFactory.ts
 
 import {defineField} from 'sanity'
+import {addRequiredLabel} from '../utils/fieldHelpers'
 import type {ArrayRule} from 'sanity'
 
 interface VideoFieldConfig {
@@ -31,12 +32,16 @@ export const createVideoField = (config: VideoFieldConfig = {}) => {
     title,
     type: 'array',
     of: [{type: 'videoItem'}],
-    description,
-    validation: (Rule: ArrayRule) => {
-      let rule = Rule
-      if (required) rule = rule.required()
-      rule = rule.min(minVideos).max(maxVideos)
-      return rule
-    },
+    description: addRequiredLabel(description, required),
+    validation: required
+      ? (Rule: ArrayRule<any>) =>
+          Rule.required()
+            .min(minVideos)
+            .max(maxVideos)
+            .error(`${title} requires between ${minVideos} and ${maxVideos} videos`)
+      : (Rule: ArrayRule<any>) =>
+          Rule.min(minVideos)
+            .max(maxVideos)
+            .error(`${title} requires between ${minVideos} and ${maxVideos} videos`),
   })
 }

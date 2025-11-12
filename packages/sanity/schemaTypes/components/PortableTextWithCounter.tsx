@@ -3,6 +3,12 @@
 import {Stack, Text} from '@sanity/ui'
 import type {ArrayOfObjectsInputProps} from 'sanity'
 
+/**
+ * Portable Text input with character counter.
+ *
+ * Displays the current character count and maximum allowed characters
+ * extracted from the field's validation rules.
+ */
 export function PortableTextWithCounter(props: ArrayOfObjectsInputProps) {
   const {value = [], renderDefault, schemaType} = props
 
@@ -12,9 +18,10 @@ export function PortableTextWithCounter(props: ArrayOfObjectsInputProps) {
     .map((block: any) => block.children?.map((child: any) => child.text || '').join('') || '')
     .join('').length
 
-  // Extract max length from validation rules
+  // Extract max length from validation rules (with safe type casting)
+  const validation = schemaType.validation as any
   const maxLength =
-    schemaType.validation?.[0]?._rules?.find((rule: any) => rule.flag === 'max')?.constraint || 1000
+    validation?.[0]?._rules?.find((rule: any) => rule.flag === 'max')?.constraint || 1000
 
   return (
     <Stack space={2}>

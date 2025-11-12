@@ -2,48 +2,50 @@
 
 import {TextIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-import {createTextField} from '../factories/textFieldFactory'
-import {createPortableTextField} from '../factories/portableTextFactory'
-import {createColorField} from '../factories/colorFieldFactory'
+import {titleField, portableTextField} from '../fields/textField'
+import {createTextField, createColorField} from '../factories'
 
 export const textModule = defineType({
   name: 'textModule',
-  title: 'Text',
+  title: 'Text Module',
   type: 'object',
   icon: TextIcon,
   fields: [
     createTextField({
-      name: 'title',
-      title: 'Headline',
-      required: true,
-      maxLength: 100,
-    }),
-    createTextField({
       name: 'tag',
       title: 'Tag',
       required: true,
-      maxLength: 100,
+      maxLength: 50,
     }),
-    createPortableTextField({
-      name: 'bodyText',
-      title: 'Body Text',
-      required: true,
-      maxLength: 600,
-    }),
+    titleField(),
+    portableTextField(),
     createColorField({
       name: 'backgroundColor',
       title: 'Background Color',
+      required: true,
+    }),
+    createColorField({
+      name: 'textColor',
+      title: 'Text Color',
+      required: true,
+      initialValue: {
+        enabled: true,
+        name: 'nightshade',
+      },
     }),
   ],
   preview: {
     select: {
       title: 'title',
+      tag: 'tag',
       backgroundColor: 'backgroundColor',
     },
-    prepare({title, backgroundColor}) {
+    prepare({title, tag, backgroundColor}) {
       return {
         title: title || 'Text Module',
-        subtitle: backgroundColor?.enabled ? `Background: ${backgroundColor.name}` : 'Hero',
+        subtitle: [tag, backgroundColor?.enabled ? `BG: ${backgroundColor.name}` : null]
+          .filter(Boolean)
+          .join(' • '),
       }
     },
   },

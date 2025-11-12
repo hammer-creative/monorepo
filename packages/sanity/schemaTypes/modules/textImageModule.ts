@@ -2,29 +2,17 @@
 
 import {ImageIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-import {createTextField} from '../factories/textFieldFactory'
-import {createPortableTextField} from '../factories/portableTextFactory'
-import {createSingleImageField} from '../factories/imageFieldFactory'
-import {createColorField} from '../factories/colorFieldFactory'
+import {titleField, portableTextField} from '../fields/textField'
+import {createSingleImageField, createColorField} from '../factories'
 
 export const textImageModule = defineType({
   name: 'textImageModule',
-  title: 'Text + Image',
+  title: 'Text + Image Module',
   type: 'object',
   icon: ImageIcon,
   fields: [
-    createTextField({
-      name: 'title',
-      title: 'Heading',
-      required: true,
-      maxLength: 100,
-    }),
-    createPortableTextField({
-      name: 'bodyText',
-      title: 'Body Text',
-      required: true,
-      maxLength: 600,
-    }),
+    titleField(),
+    portableTextField(),
     createSingleImageField({
       name: 'image',
       title: 'Image',
@@ -35,16 +23,27 @@ export const textImageModule = defineType({
       title: 'Background Color',
       required: true,
     }),
+    createColorField({
+      name: 'textColor',
+      title: 'Text Color',
+      required: true,
+      initialValue: {
+        enabled: true,
+        name: 'nightshade',
+      },
+    }),
   ],
   preview: {
     select: {
-      title: 'heading',
+      title: 'title',
+      media: 'image',
       backgroundColor: 'backgroundColor',
     },
-    prepare({title, backgroundColor}) {
+    prepare({title, media, backgroundColor}) {
       return {
         title: title || 'Text + Image Module',
-        subtitle: backgroundColor?.enabled ? `Background: ${backgroundColor.name}` : 'Hero',
+        subtitle: backgroundColor?.enabled ? `BG: ${backgroundColor.name}` : undefined,
+        media,
       }
     },
   },

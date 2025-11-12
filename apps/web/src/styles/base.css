@@ -9,7 +9,7 @@ body {
 }
 
 body {
-  color: $color-stealth;
+  color: $color-nightshade;
   background: var(--background);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

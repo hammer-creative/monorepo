@@ -1,19 +1,21 @@
 // apps/web/src/components/Video/SingleVideoModule.tsx
-import type { SingleVideoModuleType } from '@/types/sanity';
+import type { VideoModuleType } from '@/types/sanity';
 import { MuxVideo } from './MuxVideo';
 
 export function SingleVideoModule({
   data,
   priority = false,
 }: {
-  data: SingleVideoModuleType;
+  data: VideoModuleType;
   priority?: boolean;
 }) {
+  const video = data.videos?.[0];
+
+  if (!video) return null;
+
   return (
     <section className="single-video-module">
-      <h2>{data.heading}</h2>
-      {data.description && <p>{data.description}</p>}
-      <MuxVideo video={data.video} title={data.heading} priority={priority} />
+      <MuxVideo video={video.video} title={video.title} priority={priority} />
     </section>
   );
 }

@@ -2,12 +2,11 @@
 
 import {VersionsIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-import {createTextField} from '../factories/textFieldFactory'
-import {createPortableTextField} from '../factories/portableTextFactory'
-import {createSingleImageField} from '../factories/imageFieldFactory'
+import {createSingleImageField, createColorField} from '../factories'
 
 /**
  * Impact Module
+ *
  * Flexible layout supporting:
  * - 3 text blocks (thirds)
  * - 2 text blocks + 1 image (thirds)
@@ -15,7 +14,7 @@ import {createSingleImageField} from '../factories/imageFieldFactory'
  */
 export const impactModule = defineType({
   name: 'impactModule',
-  title: 'Impact',
+  title: 'Impact Module',
   type: 'object',
   icon: VersionsIcon,
   fields: [
@@ -37,122 +36,19 @@ export const impactModule = defineType({
     {
       name: 'textBlock1',
       title: 'Text Block 1',
-      type: 'object',
-      fields: [
-        createTextField({
-          name: 'heading',
-          title: 'Heading',
-          required: true,
-          maxLength: 60,
-        }),
-        createPortableTextField({
-          name: 'description',
-          title: 'Description',
-          required: true,
-          maxLength: 300,
-          blocks: [
-            {
-              type: 'block',
-              styles: [{title: 'Blockquote', value: 'blockquote'}],
-              lists: [],
-              marks: {
-                decorators: [
-                  {title: 'Bold', value: 'strong'},
-                  {title: 'Italic', value: 'em'},
-                ],
-                annotations: [
-                  {
-                    name: 'link',
-                    type: 'object',
-                    title: 'Link',
-                    fields: [{name: 'href', type: 'url', title: 'URL'}],
-                  },
-                ],
-              },
-            },
-          ],
-        }),
-      ],
+      type: 'textBlock',
     },
     {
       name: 'textBlock2',
       title: 'Text Block 2',
-      type: 'object',
-      fields: [
-        createTextField({
-          name: 'heading',
-          title: 'Heading',
-          required: true,
-          maxLength: 60,
-        }),
-        createPortableTextField({
-          name: 'description',
-          title: 'Description',
-          required: true,
-          maxLength: 300,
-          blocks: [
-            {
-              type: 'block',
-              styles: [{title: 'Blockquote', value: 'blockquote'}],
-              marks: {
-                decorators: [
-                  {title: 'Bold', value: 'strong'},
-                  {title: 'Italic', value: 'em'},
-                ],
-                annotations: [
-                  {
-                    name: 'link',
-                    type: 'object',
-                    title: 'Link',
-                    fields: [{name: 'href', type: 'url', title: 'URL'}],
-                  },
-                ],
-              },
-            },
-          ],
-        }),
-      ],
-      hidden: ({parent}) => parent?.layout === 'oneTextOneImage',
+      type: 'textBlock',
+      hidden: ({parent}: any) => parent?.layout === 'oneTextOneImage',
     },
     {
       name: 'textBlock3',
       title: 'Text Block 3',
-      type: 'object',
-      fields: [
-        createTextField({
-          name: 'heading',
-          title: 'Heading',
-          required: true,
-          maxLength: 60,
-        }),
-        createPortableTextField({
-          name: 'description',
-          title: 'Description',
-          required: true,
-          maxLength: 300,
-          blocks: [
-            {
-              type: 'block',
-              styles: [{title: 'Blockquote', value: 'blockquote'}],
-              marks: {
-                decorators: [
-                  {title: 'Bold', value: 'strong'},
-                  {title: 'Italic', value: 'em'},
-                ],
-                annotations: [
-                  {
-                    name: 'link',
-                    type: 'object',
-                    title: 'Link',
-                    fields: [{name: 'href', type: 'url', title: 'URL'}],
-                  },
-                ],
-              },
-            },
-          ],
-        }),
-      ],
-      hidden: ({parent}) => parent?.layout !== 'threeText',
+      type: 'textBlock',
+      hidden: ({parent}: any) => parent?.layout !== 'threeText',
     },
     {
       ...createSingleImageField({
@@ -160,9 +56,22 @@ export const impactModule = defineType({
         title: 'Image',
         required: true,
       }),
-      // Hidden unless layout needs image
-      hidden: ({parent}) => parent?.layout === 'threeText',
+      hidden: ({parent}: any) => parent?.layout === 'threeText',
     },
+    createColorField({
+      name: 'backgroundColor',
+      title: 'Background Color',
+      required: true,
+    }),
+    createColorField({
+      name: 'textColor',
+      title: 'Text Color',
+      required: true,
+      initialValue: {
+        enabled: true,
+        name: 'nightshade',
+      },
+    }),
   ],
   validation: (Rule) =>
     Rule.custom((fields: any) => {
@@ -191,19 +100,25 @@ export const impactModule = defineType({
   preview: {
     select: {
       layout: 'layout',
-      heading: 'textBlock1.heading',
+      title: 'textBlock1.title',
       media: 'image',
+      backgroundColor: 'backgroundColor',
     },
-    prepare({layout, heading, media}) {
+    prepare({layout, title, media, backgroundColor}) {
       const layoutLabels = {
         threeText: '3 Text Blocks',
         twoTextOneImage: '2 Text + 1 Image',
-        oneTextOneImage: '1 Text + 1 Image (50/50)',
+        oneTextOneImage: '1 Text + 1 Image',
       }
 
       return {
-        title: heading || 'Untitled',
-        subtitle: `Impact Module • ${layoutLabels[layout as keyof typeof layoutLabels] || layout}`,
+        title: title || 'Impact Module',
+        subtitle: [
+          layoutLabels[layout as keyof typeof layoutLabels],
+          backgroundColor?.enabled ? backgroundColor.name : undefined,
+        ]
+          .filter(Boolean)
+          .join(' • '),
         media,
       }
     },

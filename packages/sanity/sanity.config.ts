@@ -2,6 +2,7 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
+import {taxonomyManager} from 'sanity-plugin-taxonomy-manager'
 import {schema} from './schemaTypes'
 import {muxInput} from 'sanity-plugin-mux-input'
 
@@ -22,6 +23,3 @@ export default defineConfig({
 
   schema, // Register all schema types
 })
-
-// console.log('Mux Token ID:', process.env.SANITY_STUDIO_MUX_TOKEN_ID)
-// console.log('Mux Token Secret:', process.env.SANITY_STUDIO_MUX_TOKEN_SECRET)

@@ -1,4 +1,9 @@
 // packages/sanity/schemaTypes/documents/index.ts
-import {caseStudy} from './caseStudy'
 
-export const documentTypes = [caseStudy]
+// Documents (schemas in array)
+import {caseStudy} from './caseStudy'
+import {client} from './client'
+import {deliverable} from './deliverable'
+import {service} from './service'
+
+export const documentTypes = [client, caseStudy, deliverable, service]
