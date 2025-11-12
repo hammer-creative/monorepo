@@ -29,7 +29,7 @@ export const createTextField = (config: TextFieldConfig = {}) => {
     description = '',
   } = config
 
-  const field = defineField({
+  return defineField({
     name,
     title,
     type: multiline ? 'text' : 'string',
@@ -39,20 +39,10 @@ export const createTextField = (config: TextFieldConfig = {}) => {
           input: multiline ? TextAreaWithCounter : TextInputWithCounter,
         }
       : undefined,
-    options: multiline ? {rows} : undefined,
-    validation: (Rule: StringRule | TextRule) => {
-      let rule = Rule
-      if (required) rule = rule.required().error(`${title} is required`)
-      if (maxLength) rule = rule.max(maxLength)
-      return rule
-    },
+    rows: multiline ? rows : undefined,
+    validation: required
+      ? (Rule: StringRule | TextRule) =>
+          Rule.required().max(maxLength).error(`${title} is required`)
+      : (Rule: StringRule | TextRule) => Rule.max(maxLength),
   })
-
-  // ✅ forcibly tag the schema so Sanity always shows the required badge
-  if (required) {
-    ;(field as any).validation = (Rule: StringRule | TextRule) =>
-      Rule.required().error(`${title} is required`).max(maxLength)
-  }
-
-  return field
 }

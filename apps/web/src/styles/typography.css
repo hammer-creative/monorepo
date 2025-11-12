@@ -6,7 +6,6 @@ Contains typographic rhythm, scaling, and sizing. Does not contain spacing, colo
 @import './mixins';
 
 body {
-  color: $color-stealth;
   font-family: var(--font-sans);
 }
 
@@ -60,6 +59,7 @@ div.rubric {
   text-transform: lowercase;
   font-variant: small-caps;
   letter-spacing: 0.1em;
+  font-weight: 900;
 }
 
 /* BLOCKQUOTE OVERRIDE */

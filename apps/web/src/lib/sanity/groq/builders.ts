@@ -1,9 +1,13 @@
 // apps/web/src/lib/sanity/groq/builders.ts
 
-// apps/web/src/lib/sanity/groq/builders.ts
-
 export const projections = {
   slug: `"slug": slug.current`,
+
+  image: `
+    "url": asset->url,
+    alt,
+    "metadata": asset->metadata
+  `,
 
   video: `
     "video": video.asset->{
@@ -21,50 +25,72 @@ export const moduleProjections = `
 
   _type == "heroModule" => {
     title,
-    description,
+    body,
     image {
-      "url": asset->url,
-      alt,
-      "metadata": asset->metadata
+      ${projections.image}
     },
-    backgroundColor
+    backgroundColor,
+    textColor,
+    client->{
+      _id,
+      name,
+      slug
+    }
   },
 
   _type == "textModule" => {
-    title,
     tag,
-    bodyText,
-    backgroundColor
+    title,
+    body,
+    backgroundColor,
+    textColor
   },
 
   _type == "textImageModule" => {
     title,
+    body,
     image {
-      "url": asset->url,
-      alt,
-      "metadata": asset->metadata
+      ${projections.image}
     },
-    bodyText,
-    backgroundColor
+    backgroundColor,
+    textColor
   },
 
   _type == "videoModule" => {
     backgroundColor,
+    textColor,
     videos[]{
       _key,
+      _type,
       title,
-      description,
-      "video": video.asset->{
-        playbackId,
-        "aspectRatio": data.aspect_ratio,
-        "thumbTime": data.max_stored_frame_time
-      },
+      ${projections.video},
       poster{
-        "url": asset->url,
-        alt,
-        "metadata": asset->metadata
+        ${projections.image}
       }
     }
+  },
+
+  _type == "impactModule" => {
+    layout,
+    textBlock1{
+      title,
+      body
+    },
+    textBlock2{
+      title,
+      body
+    },
+    textBlock3{
+      title,
+      body
+    },
+    image {
+      ${projections.image},
+      crop,
+      hotspot
+    },
+    backgroundColor,
+    textColor
   },
 `;
 

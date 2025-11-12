@@ -1,75 +1,40 @@
-// apps/packages/sanity/schemaTypes/modules/singleImageModule.ts
+// packages/sanity/schemaTypes/modules/singleImageModule.ts
 
 import {ImageIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-import {createTextField} from '../factories/textFieldFactory'
-import {createPortableTextField} from '../factories/portableTextFactory'
-import {createSingleImageField} from '../factories/imageFieldFactory'
-import {createColorField} from '../factories/colorFieldFactory'
+import {titleField, portableTextField} from '../fields/textField'
+import {createSingleImageField, createColorField} from '../factories'
 
 /**
  * Single Image Module
  * Displays one hero image with optional caption and description
- *
- * Use cases:
- * - Featured images
- * - Full-width hero images
- * - Standalone visuals
- * - Portfolio pieces
  */
 export const singleImageModule = defineType({
   name: 'singleImageModule',
-  title: 'Single Image',
+  title: 'Single Image Module',
   type: 'object',
   icon: ImageIcon,
   fields: [
-    createTextField({
-      name: 'title',
-      title: 'Title',
-      required: true,
-      maxLength: 100,
-    }),
     createSingleImageField({
       name: 'image',
       title: 'Image',
       required: true,
-      withCaption: true,
     }),
-    createPortableTextField({
-      name: 'description',
-      title: 'Description',
-      maxLength: 500,
-    }),
-    {
-      name: 'layout',
-      title: 'Layout',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Full Width', value: 'fullWidth'},
-          {title: 'Contained', value: 'contained'},
-          {title: 'Wide', value: 'wide'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'contained',
-      description: 'How the image should be displayed on the page',
-    },
     createColorField({
       name: 'backgroundColor',
       title: 'Background Color',
+      required: true,
     }),
   ],
   preview: {
     select: {
-      title: 'title',
       media: 'image',
-      layout: 'layout',
+      backgroundColor: 'backgroundColor',
     },
-    prepare({title, media, layout}) {
+    prepare({media, backgroundColor}) {
       return {
-        title: title || 'Untitled',
-        subtitle: `Single Image Module • ${layout || 'contained'}`,
+        title: 'Single Image Module',
+        subtitle: backgroundColor?.enabled ? backgroundColor.name : undefined,
         media,
       }
     },

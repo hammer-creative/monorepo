@@ -4,22 +4,37 @@ import type { MuxVideo } from '@/types/sanity';
 interface VideoThumbnailProps {
   video: MuxVideo;
   title: string;
+  posterUrl?: string;
   onClick: () => void;
 }
 
-export function VideoThumbnail({ video, title, onClick }: VideoThumbnailProps) {
-  if (!video?.playbackId) return null;
+export function VideoThumbnail({
+  video,
+  title,
+  posterUrl,
+  onClick,
+}: VideoThumbnailProps) {
+  const src =
+    posterUrl ||
+    (video?.playbackId
+      ? `https://image.mux.com/${video.playbackId}/thumbnail.jpg?fit_mode=smartcrop`
+      : '');
 
-  const thumbnailUrl = `https://image.mux.com/${video.playbackId}/thumbnail.jpg?width=640&fit_mode=smartcrop${video.thumbTime ? `&time=${video.thumbTime}` : ''}`;
+  if (!src) return null;
 
   return (
     <button onClick={onClick} className="video-thumbnail" type="button">
       <img
-        src={thumbnailUrl}
+        src={src}
         alt={title}
         loading="lazy"
-        width="640"
-        height="360"
+        style={{
+          width: '100%',
+          height: 'auto',
+          objectFit: 'cover',
+          display: 'block',
+          borderRadius: '4px',
+        }}
       />
       <div className="video-thumbnail-play-icon">
         <svg width="64" height="64" viewBox="0 0 64 64" fill="none">

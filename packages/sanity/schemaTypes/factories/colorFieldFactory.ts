@@ -1,46 +1,58 @@
 // packages/sanity/schemaTypes/factories/colorFieldFactory.ts
 
 import {defineField} from 'sanity'
-import type {Rule} from 'sanity'
+import type {ObjectRule} from 'sanity'
 import React from 'react'
-
-const COLORS = {
-  nightshade: '#141515',
-  sandstorm: '#778888',
-  aircutter: '#C7D3D3',
-  hyperbeam: '#FFCC98',
-  hydroblast: '#35808D',
-  vinewhip: '#274040',
-} as const
+import {DEFAULT_COLORS} from '@chorusworks/ui'
+import {addRequiredLabel} from '../utils/fieldHelpers'
 
 interface ColorFieldConfig {
   name?: string
   title?: string
   required?: boolean
+  includeLabel?: string
+  initialValue?: {
+    enabled: boolean
+    name?: string
+  }
 }
 
+/**
+ * Creates a color selection field using predefined palette options
+ * Supports toggling background/text color inclusion
+ */
 export const createColorField = (config: ColorFieldConfig = {}) => {
-  const {name = 'backgroundColor', title = 'Background Color', required = false} = config
+  const {
+    name = 'backgroundColor',
+    title = 'Background Color',
+    required = false,
+    includeLabel,
+    initialValue,
+  } = config
+
+  const isTextColor = name === 'textColor'
 
   return defineField({
     name,
     title,
     type: 'object',
+    description: addRequiredLabel('', required),
     fields: [
       {
         name: 'enabled',
-        title: 'Include background color?',
+        title: includeLabel || (isTextColor ? 'Include text color?' : 'Include background color?'),
         type: 'boolean',
-        initialValue: false,
+        initialValue: initialValue?.enabled ?? false,
       },
       {
         name: 'name',
         title: 'Color',
         type: 'string',
+        initialValue: initialValue?.name,
         options: {
           layout: 'radio',
           direction: 'vertical',
-          list: Object.entries(COLORS).map(([key, hex]) => ({
+          list: Object.entries(DEFAULT_COLORS).map(([key, hex]) => ({
             title: React.createElement(
               'div',
               {
@@ -68,54 +80,14 @@ export const createColorField = (config: ColorFieldConfig = {}) => {
                 ),
               ],
             ),
-            value: key, // Just store the name
+            value: key,
           })),
         },
         hidden: ({parent}: any) => !parent?.enabled,
-        validation: (Rule: Rule) =>
-          Rule.custom((value, context: any) => {
-            const parent = context.parent
-            if (parent?.enabled && !value) {
-              return 'Please select a color'
-            }
-            return true
-          }),
-      },
-      {
-        name: 'hex',
-        title: 'Hex',
-        type: 'string',
-        readOnly: true,
-        hidden: true,
       },
     ],
-    preview: {
-      select: {
-        enabled: 'enabled',
-        name: 'name',
-      },
-      prepare({enabled, name}) {
-        if (!enabled || !name) {
-          return {title: 'No background color'}
-        }
-
-        const hex = COLORS[name as keyof typeof COLORS]
-        return {
-          title: name.charAt(0).toUpperCase() + name.slice(1),
-          subtitle: hex,
-          media: () =>
-            React.createElement('div', {
-              style: {
-                width: '24px',
-                height: '24px',
-                borderRadius: '4px',
-                backgroundColor: hex,
-                border: '1px solid #ccc',
-              },
-            }),
-        }
-      },
-    },
-    validation: required ? (Rule: Rule) => Rule.required() : undefined,
+    validation: required
+      ? (rule: ObjectRule) => rule.required().error(`${title} is required`)
+      : undefined,
   })
 }

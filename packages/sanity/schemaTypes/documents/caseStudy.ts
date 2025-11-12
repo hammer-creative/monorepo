@@ -18,11 +18,12 @@ export const caseStudy = defineType({
       components: {input: ModulesArrayInput},
       of: [
         {type: 'heroModule'},
+        {type: 'servicesModule'},
         {type: 'textImageModule'},
         {type: 'videoModule'},
         {type: 'textModule'},
         {type: 'singleImageModule'},
-        {type: 'multiImageModule'},
+        {type: 'carouselModule'},
         {type: 'impactModule'},
       ],
       validation: (Rule) =>

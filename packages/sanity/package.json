@@ -27,9 +27,11 @@
     "react-dom": "^19.1",
     "sanity": "^4.13.0",
     "sanity-plugin-mux-input": "^2.10.0",
+    "sanity-plugin-taxonomy-manager": "^4.1.0",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
+    "@chorusworks/ui": "workspace:^1.0.0",
     "@sanity/eslint-config-studio": "^5.0.2",
     "@types/react": "^19.1",
     "@types/styled-components": "^5.1.35",
