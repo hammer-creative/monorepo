@@ -1,0 +1,1104 @@
+[
+  {
+    "_createdAt": "2025-10-30T21:55:54Z",
+    "_id": "d54b8929-db7a-421f-b276-adeefbc2c2a8",
+    "_rev": "qxSJ99Fg5C2DHSyXTu0JAt",
+    "_system": {
+      "base": {
+        "id": "d54b8929-db7a-421f-b276-adeefbc2c2a8",
+        "rev": "JfOOwd2fQL6VRVhAnas5Ry"
+      }
+    },
+    "_type": "caseStudy",
+    "_updatedAt": "2025-11-11T03:20:07Z",
+    "modules": [
+      {
+        "_key": "5e53e09d1b54",
+        "_type": "heroModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "sandstorm"
+        },
+        "client": {
+          "_ref": "d3f0a5eb-d57c-4fd0-9eec-32d5acc5a995",
+          "_type": "reference"
+        },
+        "description": [
+          {
+            "_key": "d785fcc11c94",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "a9ed4a1c07ca",
+                "_type": "span",
+                "marks": [],
+                "text": "Indy’s next great adventure has landed on Xbox. With Bethesda and Machine Games at the helm, we swung aboard to help unveil the next chapter of Indiana Jones."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "image": {
+          "_type": "image",
+          "alt": "Indiana Jones and the Great Circle",
+          "asset": {
+            "_ref": "image-e8a00f146d2272b8cff1d433ba366810e889effc-3840x2160-jpg",
+            "_type": "reference"
+          }
+        },
+        "textColor": {
+          "enabled": false
+        },
+        "title": "Indiana Jones and the Great Circle"
+      },
+      {
+        "_key": "44c1c1ab89de",
+        "_type": "textImageModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "aircutter"
+        },
+        "bodyText": [
+          {
+            "_key": "307aee2da73f",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "be6582c60531",
+                "_type": "span",
+                "marks": [],
+                "text": "Indy is the OG adventurer, full-stop. He’s a Hollywood icon with millions of worldwide fans and a 40+ year legacy. Indiana Jones has gone beyond inspiring films and games — it has defined the genre of action-adventure. "
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          },
+          {
+            "_key": "f859a0e5bec0",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "be6582c60531",
+                "_type": "span",
+                "marks": [],
+                "text": "And now, he’s back."
+              }
+            ],
+            "markDefs": [],
+            "style": "blockquote"
+          },
+          {
+            "_key": "eec09dd973b2",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "be6582c60531",
+                "_type": "span",
+                "marks": [],
+                "text": "But this title is for today’s players, who hold Tomb Raider and Uncharted as their classic adventure games. So our approach had to introduce Indy to new audiences, celebrate his legacy for existing fans, and, above all, prove that The Great Circle belongs in the pantheon of his greatest stories yet."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "image": {
+          "_type": "image",
+          "alt": "Indiana Jones and the Great Circle",
+          "asset": {
+            "_ref": "image-8ff34aaeface4fcf7fe68a2171d820e31977388d-1960x1400-jpg",
+            "_type": "reference"
+          }
+        },
+        "title": "Placeholder Title"
+      },
+      {
+        "_key": "88b0c0b124e2",
+        "_type": "videoModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "sandstorm"
+        },
+        "videos": [
+          {
+            "_key": "4e4e3e801e7c",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Single Video",
+              "asset": {
+                "_ref": "image-f87265863aa7cc8e797bb44c872f67dcb4329727-3760x2120-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Single Video",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "_key": "2b09907845c3",
+        "_type": "textModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "sandstorm"
+        },
+        "bodyText": [
+          {
+            "_key": "ae17ee3cbd75",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "63519a4c5767",
+                "_type": "span",
+                "marks": [],
+                "text": "For our Announce, embodying the classic Indy feel was the top goal. That meant capturing what it feels like to think, fight, and explore like Indy. So we keyed into what makes his adventures unique — the swashbuckling, the globetrotting, the perilous antiquing — and presented them as an accessible homage with undeniable thrills."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "tag": "Announce Trailer",
+        "title": "A First Step Into His Shoes"
+      },
+      {
+        "_key": "b5bba3ca46d6",
+        "_type": "videoModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "nightshade"
+        },
+        "videos": [
+          {
+            "_key": "3ab79aaad772",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Indiana Jones and the Great Circle",
+              "asset": {
+                "_ref": "image-585fc82ff674d29ef970c6dda546a2cdc37ffe71-1200x2000-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Video #1 FPO",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          },
+          {
+            "_key": "9f88321d14c0",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Indiana Jones and the Great Circle",
+              "asset": {
+                "_ref": "image-585fc82ff674d29ef970c6dda546a2cdc37ffe71-1200x2000-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Video #2 FPO",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          },
+          {
+            "_key": "7a2784fe6896",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Indiana Jones and the Great Circle",
+              "asset": {
+                "_ref": "image-585fc82ff674d29ef970c6dda546a2cdc37ffe71-1200x2000-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Video #3 FPO",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "_key": "4fc744c2d1ed",
+        "_type": "textModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "nightshade"
+        },
+        "bodyText": [
+          {
+            "_key": "1f067d3096c0",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "db55f9711854",
+                "_type": "span",
+                "marks": [],
+                "text": "We focused on the feeling of stepping into Indy’s shoes with strong gameplay, without losing sight of how our audience talks and creates on platforms like TikTok. Every piece of creative was put through this dual lens. The results authentically spoke to a wide audience of all ages, from die-hard fans to younger initiates."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "tag": "Social Series",
+        "title": "Taking Flight on Social"
+      },
+      {
+        "_key": "df3b864ec0fb",
+        "_type": "videoModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "aircutter"
+        },
+        "videos": [
+          {
+            "_key": "2956e93629f4",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Indiana Jones and the Great Circle",
+              "asset": {
+                "_ref": "image-f87265863aa7cc8e797bb44c872f67dcb4329727-3760x2120-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Indiana Jones and the Great Circle",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "_key": "c34f99508460",
+        "_type": "textModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "aircutter"
+        },
+        "bodyText": [
+          {
+            "_key": "94ca1d9f68fd",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "8eb2b8c6273b",
+                "_type": "span",
+                "marks": [],
+                "text": "Leading with adventure changes everything. Indy’s power is his mind—he wins through quick thinking, not brute force. To reach players used to nonstop action, we used A/V to show how his intelligence drives every fight, climb, and puzzle. The first-person view makes that experience personal and immersive."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "tag": "Gameplay Deep-Dive Trailer",
+        "title": "Elevenating Adventure Over Action"
+      },
+      {
+        "_key": "a17d60ac9bfc",
+        "_type": "impactModule",
+        "image": {
+          "_type": "image",
+          "alt": "aasdf",
+          "asset": {
+            "_ref": "image-7b954465c47009f4c44ddcebd5257a928b0abddd-2560x1440-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0,
+            "left": 0.5390554659363747,
+            "right": 0,
+            "top": 0
+          },
+          "hotspot": {
+            "_type": "sanity.imageHotspot",
+            "height": 1,
+            "width": 0.46094453406362534,
+            "x": 0.7695277329681873,
+            "y": 0.5
+          }
+        },
+        "layout": "twoTextOneImage",
+        "textBlock1": {
+          "description": [
+            {
+              "_key": "3b148f78afd9",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "a413e55c2f90",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Lorem ipsum dolor sit amet, conectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam um."
+                }
+              ],
+              "markDefs": [],
+              "style": "normal"
+            }
+          ],
+          "heading": "Lorem Ipsum"
+        },
+        "textBlock2": {
+          "description": [
+            {
+              "_key": "a4dcc6a68afe",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "3635db6d5899",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Lorem ipsum dolor sit amet, conectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam um."
+                }
+              ],
+              "markDefs": [],
+              "style": "normal"
+            }
+          ],
+          "heading": "Lorem Ipsum"
+        }
+      }
+    ],
+    "slug": {
+      "_type": "slug",
+      "current": "indiana-jones-great-circle"
+    },
+    "title": "Indiana Jones and the Great Circle"
+  },
+  {
+    "_createdAt": "2025-11-11T03:49:40Z",
+    "_id": "drafts.a11bf4d7-06f9-4079-b412-eff0584c2a1b",
+    "_rev": "79c44520-0c4d-451b-a5e7-0126402a5c90",
+    "_type": "caseStudy",
+    "_updatedAt": "2025-11-11T03:49:42Z"
+  },
+  {
+    "_createdAt": "2025-11-11T04:13:16Z",
+    "_id": "drafts.addf2654-57fc-420a-84e7-50f2e6ea5194",
+    "_rev": "4dee8942-4aad-4aec-9fb6-47496a972c95",
+    "_type": "caseStudy",
+    "_updatedAt": "2025-11-11T04:15:11Z",
+    "modules": [
+      {
+        "_key": "b32fbc3b1ba1",
+        "_type": "heroModule",
+        "backgroundColor": {
+          "enabled": true
+        },
+        "textColor": {
+          "enabled": true,
+          "name": "default"
+        }
+      }
+    ]
+  },
+  {
+    "_createdAt": "2025-11-11T03:50:09Z",
+    "_id": "drafts.b46e6984-badc-46d9-a06d-6951c370cdff",
+    "_rev": "04b25835-cbbd-4455-b1f2-9fd968cbbeea",
+    "_type": "caseStudy",
+    "_updatedAt": "2025-11-11T03:51:14Z",
+    "modules": [
+      {
+        "_key": "7d1610793243",
+        "_type": "heroModule",
+        "backgroundColor": {
+          "enabled": false
+        },
+        "textColor": {
+          "enabled": true,
+          "name": "default"
+        }
+      }
+    ]
+  },
+  {
+    "_createdAt": "2025-11-11T04:15:19Z",
+    "_id": "drafts.b637ecbb-9f7d-477d-9398-87d10f904a95",
+    "_rev": "eeb37931-df65-4453-8c9e-4ffb7b43f592",
+    "_type": "caseStudy",
+    "_updatedAt": "2025-11-11T04:15:20Z",
+    "modules": [
+      {
+        "_key": "a49924743e92",
+        "_type": "heroModule",
+        "backgroundColor": {
+          "enabled": false
+        },
+        "textColor": {
+          "enabled": true,
+          "hex": "#141515",
+          "name": "default"
+        }
+      }
+    ]
+  },
+  {
+    "_createdAt": "2025-10-30T21:55:54Z",
+    "_id": "drafts.d54b8929-db7a-421f-b276-adeefbc2c2a8",
+    "_rev": "d4c2124e-aaa0-4326-bf32-a39e288b5b16",
+    "_system": {
+      "base": {
+        "id": "d54b8929-db7a-421f-b276-adeefbc2c2a8",
+        "rev": "qxSJ99Fg5C2DHSyXTu0JAt"
+      }
+    },
+    "_type": "caseStudy",
+    "_updatedAt": "2025-11-11T03:48:15Z",
+    "modules": [
+      {
+        "_key": "5e53e09d1b54",
+        "_type": "heroModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "sandstorm"
+        },
+        "client": {
+          "_ref": "d3f0a5eb-d57c-4fd0-9eec-32d5acc5a995",
+          "_type": "reference"
+        },
+        "description": [
+          {
+            "_key": "d785fcc11c94",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "a9ed4a1c07ca",
+                "_type": "span",
+                "marks": [],
+                "text": "Indy’s next great adventure has landed on Xbox. With Bethesda and Machine Games at the helm, we swung aboard to help unveil the next chapter of Indiana Jones."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "image": {
+          "_type": "image",
+          "alt": "Indiana Jones and the Great Circle",
+          "asset": {
+            "_ref": "image-e8a00f146d2272b8cff1d433ba366810e889effc-3840x2160-jpg",
+            "_type": "reference"
+          }
+        },
+        "textColor": {
+          "enabled": false
+        },
+        "title": "Indiana Jones and the Great Circle"
+      },
+      {
+        "_key": "44c1c1ab89de",
+        "_type": "textImageModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "aircutter"
+        },
+        "bodyText": [
+          {
+            "_key": "307aee2da73f",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "be6582c60531",
+                "_type": "span",
+                "marks": [],
+                "text": "Indy is the OG adventurer, full-stop. He’s a Hollywood icon with millions of worldwide fans and a 40+ year legacy. Indiana Jones has gone beyond inspiring films and games — it has defined the genre of action-adventure. "
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          },
+          {
+            "_key": "f859a0e5bec0",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "be6582c60531",
+                "_type": "span",
+                "marks": [],
+                "text": "And now, he’s back."
+              }
+            ],
+            "markDefs": [],
+            "style": "blockquote"
+          },
+          {
+            "_key": "eec09dd973b2",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "be6582c60531",
+                "_type": "span",
+                "marks": [],
+                "text": "But this title is for today’s players, who hold Tomb Raider and Uncharted as their classic adventure games. So our approach had to introduce Indy to new audiences, celebrate his legacy for existing fans, and, above all, prove that The Great Circle belongs in the pantheon of his greatest stories yet."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "image": {
+          "_type": "image",
+          "alt": "Indiana Jones and the Great Circle",
+          "asset": {
+            "_ref": "image-8ff34aaeface4fcf7fe68a2171d820e31977388d-1960x1400-jpg",
+            "_type": "reference"
+          }
+        },
+        "title": "Placeholder Title"
+      },
+      {
+        "_key": "88b0c0b124e2",
+        "_type": "videoModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "sandstorm"
+        },
+        "videos": [
+          {
+            "_key": "4e4e3e801e7c",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Single Video",
+              "asset": {
+                "_ref": "image-f87265863aa7cc8e797bb44c872f67dcb4329727-3760x2120-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Single Video",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "_key": "2b09907845c3",
+        "_type": "textModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "sandstorm"
+        },
+        "bodyText": [
+          {
+            "_key": "ae17ee3cbd75",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "63519a4c5767",
+                "_type": "span",
+                "marks": [],
+                "text": "For our Announce, embodying the classic Indy feel was the top goal. That meant capturing what it feels like to think, fight, and explore like Indy. So we keyed into what makes his adventures unique — the swashbuckling, the globetrotting, the perilous antiquing — and presented them as an accessible homage with undeniable thrills."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "tag": "Announce Trailer",
+        "title": "A First Step Into His Shoes"
+      },
+      {
+        "_key": "b5bba3ca46d6",
+        "_type": "videoModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "nightshade"
+        },
+        "videos": [
+          {
+            "_key": "3ab79aaad772",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Indiana Jones and the Great Circle",
+              "asset": {
+                "_ref": "image-585fc82ff674d29ef970c6dda546a2cdc37ffe71-1200x2000-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Video #1 FPO",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          },
+          {
+            "_key": "9f88321d14c0",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Indiana Jones and the Great Circle",
+              "asset": {
+                "_ref": "image-585fc82ff674d29ef970c6dda546a2cdc37ffe71-1200x2000-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Video #2 FPO",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          },
+          {
+            "_key": "7a2784fe6896",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Indiana Jones and the Great Circle",
+              "asset": {
+                "_ref": "image-585fc82ff674d29ef970c6dda546a2cdc37ffe71-1200x2000-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Video #3 FPO",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "_key": "4fc744c2d1ed",
+        "_type": "textModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "nightshade"
+        },
+        "bodyText": [
+          {
+            "_key": "1f067d3096c0",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "db55f9711854",
+                "_type": "span",
+                "marks": [],
+                "text": "We focused on the feeling of stepping into Indy’s shoes with strong gameplay, without losing sight of how our audience talks and creates on platforms like TikTok. Every piece of creative was put through this dual lens. The results authentically spoke to a wide audience of all ages, from die-hard fans to younger initiates."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "tag": "Social Series",
+        "title": "Taking Flight on Social"
+      },
+      {
+        "_key": "df3b864ec0fb",
+        "_type": "videoModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "aircutter"
+        },
+        "videos": [
+          {
+            "_key": "2956e93629f4",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "Indiana Jones and the Great Circle",
+              "asset": {
+                "_ref": "image-f87265863aa7cc8e797bb44c872f67dcb4329727-3760x2120-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "Indiana Jones and the Great Circle",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "_key": "c34f99508460",
+        "_type": "textModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "aircutter"
+        },
+        "bodyText": [
+          {
+            "_key": "94ca1d9f68fd",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "8eb2b8c6273b",
+                "_type": "span",
+                "marks": [],
+                "text": "Leading with adventure changes everything. Indy’s power is his mind—he wins through quick thinking, not brute force. To reach players used to nonstop action, we used A/V to show how his intelligence drives every fight, climb, and puzzle. The first-person view makes that experience personal and immersive."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "tag": "Gameplay Deep-Dive Trailer",
+        "title": "Elevenating Adventure Over Action"
+      },
+      {
+        "_key": "a17d60ac9bfc",
+        "_type": "impactModule",
+        "image": {
+          "_type": "image",
+          "alt": "aasdf",
+          "asset": {
+            "_ref": "image-7b954465c47009f4c44ddcebd5257a928b0abddd-2560x1440-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0,
+            "left": 0.5390554659363747,
+            "right": 0,
+            "top": 0
+          },
+          "hotspot": {
+            "_type": "sanity.imageHotspot",
+            "height": 1,
+            "width": 0.46094453406362534,
+            "x": 0.7695277329681873,
+            "y": 0.5
+          }
+        },
+        "layout": "twoTextOneImage",
+        "textBlock1": {
+          "description": [
+            {
+              "_key": "3b148f78afd9",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "a413e55c2f90",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Lorem ipsum dolor sit amet, conectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam um."
+                }
+              ],
+              "markDefs": [],
+              "style": "normal"
+            }
+          ],
+          "heading": "Lorem Ipsum"
+        },
+        "textBlock2": {
+          "description": [
+            {
+              "_key": "a4dcc6a68afe",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "3635db6d5899",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Lorem ipsum dolor sit amet, conectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam um."
+                }
+              ],
+              "markDefs": [],
+              "style": "normal"
+            }
+          ],
+          "heading": "Lorem Ipsum"
+        }
+      }
+    ],
+    "slug": {
+      "_type": "slug",
+      "current": "indiana-jones-great-circle"
+    },
+    "title": "Indiana Jones and the Great Circle"
+  },
+  {
+    "_createdAt": "2025-11-10T21:58:26Z",
+    "_id": "drafts.f07de2cd-f83e-40c7-9d79-12ac7e76ea07",
+    "_rev": "56a3474c-b13a-4b3a-a183-82e5fe7b4fc3",
+    "_system": {
+      "base": {
+        "id": "f07de2cd-f83e-40c7-9d79-12ac7e76ea07",
+        "rev": "JfOOwd2fQL6VRVhAnatlBa"
+      }
+    },
+    "_type": "caseStudy",
+    "_updatedAt": "2025-11-10T23:25:09Z",
+    "modules": [
+      {
+        "_key": "4248ea26d3f4",
+        "_type": "heroModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "nightshade"
+        },
+        "description": [
+          {
+            "_key": "e15810468d08",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "029479d23118",
+                "_type": "span",
+                "marks": [],
+                "text": "Indy’s next great adventure has landed on Xbox. With Bethesda and Machine Games at the helm, we swung aboard to help unveil the next chapter of Indiana Jones."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "image": {
+          "_type": "image",
+          "alt": "Indy",
+          "asset": {
+            "_ref": "image-e8a00f146d2272b8cff1d433ba366810e889effc-3840x2160-jpg",
+            "_type": "reference"
+          }
+        },
+        "textColor": {
+          "enabled": true,
+          "name": "nightshade"
+        },
+        "title": "Alam Wake II"
+      },
+      {
+        "_key": "0920ce8524ac",
+        "_type": "textImageModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "sandstorm"
+        },
+        "bodyText": [
+          {
+            "_key": "6b260bba6f69",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "a57d21c7aafe",
+                "_type": "span",
+                "marks": [],
+                "text": "Remedy Studios makes genre-defying games. Hits like Control and Quantum Break blend mind-bending stories with mixed media. Cult classic Alan Wake spins a meta narrative with Twin Peaks vibes. All are part of a connected, auteur-driven universe.\n\nNothing is as it seems.\n\nAlan Wake 2 reimagined the original as a survival horror game. With over a decade between titles, our launch had to rekindle old fans and draw in a new horror audience.\n\nTo reflect Remedy’s subversive style, weleaned into psychological scares over gore—each campaign moment layered with eerie, cerebral tension."
+              }
+            ],
+            "markDefs": [],
+            "style": "blockquote"
+          }
+        ],
+        "image": {
+          "_type": "image",
+          "alt": "alt tag",
+          "asset": {
+            "_ref": "image-8ff34aaeface4fcf7fe68a2171d820e31977388d-1960x1400-jpg",
+            "_type": "reference"
+          }
+        },
+        "title": "No heading"
+      },
+      {
+        "_key": "a91d770e597c",
+        "_type": "videoModule",
+        "backgroundColor": {
+          "enabled": false
+        },
+        "videos": [
+          {
+            "_key": "dd6b03740f44",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "test",
+              "asset": {
+                "_ref": "image-f87265863aa7cc8e797bb44c872f67dcb4329727-3760x2120-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "title",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "slug": {
+      "_type": "slug",
+      "current": "alan-wake-ii"
+    },
+    "title": "Alan Wake II"
+  },
+  {
+    "_createdAt": "2025-11-10T21:58:26Z",
+    "_id": "f07de2cd-f83e-40c7-9d79-12ac7e76ea07",
+    "_rev": "JfOOwd2fQL6VRVhAnatlBa",
+    "_system": {
+      "base": {
+        "id": "f07de2cd-f83e-40c7-9d79-12ac7e76ea07",
+        "rev": "JfOOwd2fQL6VRVhAnatTZy"
+      }
+    },
+    "_type": "caseStudy",
+    "_updatedAt": "2025-11-10T22:13:14Z",
+    "modules": [
+      {
+        "_key": "4248ea26d3f4",
+        "_type": "heroModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "nightshade"
+        },
+        "description": [
+          {
+            "_key": "e15810468d08",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "029479d23118",
+                "_type": "span",
+                "marks": [],
+                "text": "Indy’s next great adventure has landed on Xbox. With Bethesda and Machine Games at the helm, we swung aboard to help unveil the next chapter of Indiana Jones."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "image": {
+          "_type": "image",
+          "alt": "Indy",
+          "asset": {
+            "_ref": "image-e8a00f146d2272b8cff1d433ba366810e889effc-3840x2160-jpg",
+            "_type": "reference"
+          }
+        },
+        "title": "Alam Wake II"
+      },
+      {
+        "_key": "0920ce8524ac",
+        "_type": "textImageModule",
+        "backgroundColor": {
+          "enabled": true,
+          "name": "sandstorm"
+        },
+        "bodyText": [
+          {
+            "_key": "6b260bba6f69",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "a57d21c7aafe",
+                "_type": "span",
+                "marks": [],
+                "text": "Remedy Studios makes genre-defying games. Hits like Control and Quantum Break blend mind-bending stories with mixed media. Cult classic Alan Wake spins a meta narrative with Twin Peaks vibes. All are part of a connected, auteur-driven universe.\n\nNothing is as it seems.\n\nAlan Wake 2 reimagined the original as a survival horror game. With over a decade between titles, our launch had to rekindle old fans and draw in a new horror audience.\n\nTo reflect Remedy’s subversive style, weleaned into psychological scares over gore—each campaign moment layered with eerie, cerebral tension."
+              }
+            ],
+            "markDefs": [],
+            "style": "blockquote"
+          }
+        ],
+        "image": {
+          "_type": "image",
+          "alt": "alt tag",
+          "asset": {
+            "_ref": "image-8ff34aaeface4fcf7fe68a2171d820e31977388d-1960x1400-jpg",
+            "_type": "reference"
+          }
+        },
+        "title": "No heading"
+      },
+      {
+        "_key": "a91d770e597c",
+        "_type": "videoModule",
+        "backgroundColor": {
+          "enabled": false
+        },
+        "videos": [
+          {
+            "_key": "dd6b03740f44",
+            "_type": "videoItem",
+            "poster": {
+              "_type": "image",
+              "alt": "test",
+              "asset": {
+                "_ref": "image-f87265863aa7cc8e797bb44c872f67dcb4329727-3760x2120-jpg",
+                "_type": "reference"
+              }
+            },
+            "title": "title",
+            "video": {
+              "_type": "mux.video",
+              "asset": {
+                "_ref": "2587c551-e272-456b-b075-3853a03f6102",
+                "_type": "reference",
+                "_weak": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "slug": {
+      "_type": "slug",
+      "current": "alan-wake-ii"
+    },
+    "title": "Alan Wake II"
+  }
+]

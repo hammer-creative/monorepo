@@ -19,12 +19,15 @@ export enum ModuleType {
   Text = 'textModule',
   TextImage = 'textImageModule',
   Impact = 'impactModule',
+  SingleImage = 'singleImageModule',
+  MultiImage = 'multiImageModule',
+  Services = 'servicesModule',
 }
 
 // --------------------
 // Common helpers
 // --------------------
-export type BackgroundColor = {
+export type ColorValue = {
   enabled: boolean;
   name: string;
   hex?: string;
@@ -39,6 +42,28 @@ export type ProjectedImage = {
       height: number;
     };
   };
+  crop?: {
+    _type: 'sanity.imageCrop';
+    bottom: number;
+    left: number;
+    right: number;
+    top: number;
+  };
+  hotspot?: {
+    _type: 'sanity.imageHotspot';
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+  };
+};
+
+export type ClientReference = {
+  _id: string;
+  name: string;
+  slug: {
+    current: string;
+  };
 };
 
 // --------------------
@@ -47,56 +72,101 @@ export type ProjectedImage = {
 export type HeroModuleType = {
   _type: ModuleType.Hero;
   _key: string;
-  backgroundColor?: BackgroundColor;
-  description?: PortableTextBlock[];
   title: string;
+  body?: PortableTextBlock[];
   image?: ProjectedImage;
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+  client?: ClientReference;
 };
 
 export type VideoItem = {
+  _key: string;
+  _type: 'videoItem';
   title: string;
-  description?: string;
   video: MuxVideo;
+  poster?: ProjectedImage;
 };
 
 export type VideoModuleType = {
   _type: ModuleType.Video;
   _key: string;
   videos: VideoItem[];
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
 };
 
 export type TextModuleType = {
   _type: ModuleType.Text;
   _key: string;
-  title?: string;
   tag?: string;
-  bodyText?: PortableTextBlock[];
-  backgroundColor?: BackgroundColor;
+  title?: string;
+  body?: PortableTextBlock[];
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
 };
 
 export type TextImageModuleType = {
   _type: ModuleType.TextImage;
   _key: string;
-  heading?: string;
-  bodyText?: PortableTextBlock[];
+  title?: string;
+  body?: PortableTextBlock[];
   image?: ProjectedImage;
-  backgroundColor?: BackgroundColor;
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+};
+
+export type TextBlock = {
+  title?: string;
+  body?: PortableTextBlock[];
 };
 
 export type ImpactModuleType = {
   _type: ModuleType.Impact;
   _key: string;
-  heading?: string;
-  layout?: string;
+  layout?: 'threeText' | 'twoTextOneImage' | 'oneTextOneImage';
+  textBlock1?: TextBlock;
+  textBlock2?: TextBlock;
+  textBlock3?: TextBlock;
   image?: ProjectedImage;
-  textBlock1?: {
-    heading?: string;
-    description?: PortableTextBlock[];
-  };
-  textBlock2?: {
-    heading?: string;
-    description?: PortableTextBlock[];
-  };
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+};
+
+export type SingleImageModuleType = {
+  _type: ModuleType.SingleImage;
+  _key: string;
+  title?: string;
+  image?: ProjectedImage;
+  body?: PortableTextBlock[];
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+};
+
+export type MultiImageModuleType = {
+  _type: ModuleType.MultiImage;
+  _key: string;
+  images?: ProjectedImage[];
+  backgroundColor?: ColorValue;
+};
+
+export type ServiceReference = {
+  _id: string;
+  name: string;
+};
+
+export type DeliverableReference = {
+  _id: string;
+  name: string;
+};
+
+export type ServicesModuleType = {
+  _type: ModuleType.Services;
+  _key: string;
+  services?: ServiceReference[];
+  deliverables?: DeliverableReference[];
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
 };
 
 // --------------------
@@ -107,7 +177,10 @@ export type Module =
   | VideoModuleType
   | TextModuleType
   | TextImageModuleType
-  | ImpactModuleType;
+  | ImpactModuleType
+  | SingleImageModuleType
+  | MultiImageModuleType
+  | ServicesModuleType;
 
 // ---------------------
 // Case study structures

@@ -1,35 +1,27 @@
 // packages/sanity/schemaTypes/objects/imageItem.ts
+// packages/sanity/schemaTypes/objects/imageItem.ts
 import {defineType} from 'sanity'
-import type {Rule} from 'sanity'
+import {createSingleImageField, createTextField} from '../factories'
 
 export const imageItem = defineType({
   name: 'imageItem',
   title: 'Image Item',
   type: 'object',
   fields: [
-    {
+    createSingleImageField({
       name: 'image',
       title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        {
-          name: 'alt',
-          title: 'Alt Text',
-          type: 'string',
-          validation: (Rule: Rule) => Rule.required(),
-        },
-      ],
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
+      required: true,
+    }),
+    createTextField({
       name: 'caption',
       title: 'Caption',
-      type: 'text',
+      multiline: true,
       rows: 2,
-    },
+      required: false,
+      maxLength: 200,
+      withCounter: true,
+    }),
   ],
   preview: {
     select: {
