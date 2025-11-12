@@ -1,0 +1,5 @@
+// packages/sanity/schemaTypes/fields/index.ts
+
+export * from './textField'
+export * from './videoField'
+export * from './colorField'

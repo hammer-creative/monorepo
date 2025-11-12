@@ -1,0 +1,48 @@
+{
+  "name": "sanity",
+  "private": true,
+  "version": "1.0.0",
+  "main": "package.json",
+  "license": "UNLICENSED",
+  "scripts": {
+    "clean": "rm -rf dist node_modules .sanity .turbo",
+    "dev:watch": "sanity dev",
+    "build": "sanity build",
+    "start": "sanity start",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@sanity/icons": "^3.7.4",
+    "@sanity/ui": "^3.1.11",
+    "@sanity/vision": "^4.13.0",
+    "react": "^19.1",
+    "react-dom": "^19.1",
+    "sanity": "^4.13.0",
+    "sanity-plugin-mux-input": "^2.10.0",
+    "sanity-plugin-taxonomy-manager": "^4.1.0",
+    "styled-components": "^6.1.18"
+  },
+  "devDependencies": {
+    "@chorusworks/ui": "workspace:^1.0.0",
+    "@sanity/eslint-config-studio": "^5.0.2",
+    "@types/react": "^19.1",
+    "@types/styled-components": "^5.1.35",
+    "eslint": "^9.28",
+    "prettier": "^3.5",
+    "typescript": "^5.8"
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 100,
+    "bracketSpacing": false,
+    "singleQuote": true
+  }
+}

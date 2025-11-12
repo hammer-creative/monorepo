@@ -1,9 +1,7 @@
-// apps/web/src/pages/index.tsx;
+// apps/web/src/pages/index.tsx
 
 export default function HomePage() {
-  return (
-    <div>
-      <h1>Hammer Creative</h1>
-    </div>
-  );
+  return <main>home page</main>;
 }
+
+// No getStaticProps needed - just a plain static page

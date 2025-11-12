@@ -1,5 +1,12 @@
 /* apps/web/src/styles/index.css */
 
+/* Imports */
+@import './reset.css';
 @import './tokens.css';
 @import './base.css';
-@import './headings.css';
+@import './utilities.css';
+@import './layout.css';
+@import './typography.css';
+@import './navigation.css';
+@import './components.css';
+@import './videos.css';

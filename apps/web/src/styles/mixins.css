@@ -1,0 +1,30 @@
+/* apps/web/src/styles/mixins.css */
+
+@import './tokens.css';
+
+/* @define-mixin name $param1: default1, $param2: default2 {
+  property: $param1;
+  property: $param2;
+} */
+
+@define-mixin typography $font-family: var(--font-sans),
+  $font-size: var(--font-size-default) {
+  font-family: $font-family;
+  font-size: $font-size;
+}
+
+@define-mixin letter-spacing-responsive $narrow, $wide {
+  letter-spacing: $narrow;
+
+  @media (min-width: 80rem) {
+    & {
+      letter-spacing: $wide;
+    }
+  }
+}
+
+@define-mixin all-caps-accent {
+  @mixin typography var(--font-sans), var(--font-size-fluid-small);
+  letter-spacing-responsive: var(--letter-spacing-wide);
+  text-transform: uppercase;
+}

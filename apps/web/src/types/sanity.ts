@@ -1,0 +1,199 @@
+// apps/web/src/types/sanity.ts
+import type { PortableTextBlock } from '@portabletext/types';
+
+// --------------------
+// Base video type
+// --------------------
+export type MuxVideo = {
+  playbackId: string;
+  aspectRatio: string;
+  thumbTime?: number;
+};
+
+// --------------------
+// Enum for module types
+// --------------------
+export enum ModuleType {
+  Hero = 'heroModule',
+  Video = 'videoModule',
+  Text = 'textModule',
+  TextImage = 'textImageModule',
+  Impact = 'impactModule',
+  SingleImage = 'singleImageModule',
+  MultiImage = 'multiImageModule',
+  Services = 'servicesModule',
+}
+
+// --------------------
+// Common helpers
+// --------------------
+export type ColorValue = {
+  enabled: boolean;
+  name: string;
+  hex?: string;
+};
+
+export type ProjectedImage = {
+  url: string;
+  alt?: string;
+  metadata?: {
+    dimensions?: {
+      width: number;
+      height: number;
+    };
+  };
+  crop?: {
+    _type: 'sanity.imageCrop';
+    bottom: number;
+    left: number;
+    right: number;
+    top: number;
+  };
+  hotspot?: {
+    _type: 'sanity.imageHotspot';
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+  };
+};
+
+export type ClientReference = {
+  _id: string;
+  name: string;
+  slug: {
+    current: string;
+  };
+};
+
+// --------------------
+// Module definitions
+// --------------------
+export type HeroModuleType = {
+  _type: ModuleType.Hero;
+  _key: string;
+  title: string;
+  body?: PortableTextBlock[];
+  image?: ProjectedImage;
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+  client?: ClientReference;
+};
+
+export type VideoItem = {
+  _key: string;
+  _type: 'videoItem';
+  title: string;
+  video: MuxVideo;
+  poster?: ProjectedImage;
+};
+
+export type VideoModuleType = {
+  _type: ModuleType.Video;
+  _key: string;
+  videos: VideoItem[];
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+};
+
+export type TextModuleType = {
+  _type: ModuleType.Text;
+  _key: string;
+  tag?: string;
+  title?: string;
+  body?: PortableTextBlock[];
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+};
+
+export type TextImageModuleType = {
+  _type: ModuleType.TextImage;
+  _key: string;
+  title?: string;
+  body?: PortableTextBlock[];
+  image?: ProjectedImage;
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+};
+
+export type TextBlock = {
+  title?: string;
+  body?: PortableTextBlock[];
+};
+
+export type ImpactModuleType = {
+  _type: ModuleType.Impact;
+  _key: string;
+  layout?: 'threeText' | 'twoTextOneImage' | 'oneTextOneImage';
+  textBlock1?: TextBlock;
+  textBlock2?: TextBlock;
+  textBlock3?: TextBlock;
+  image?: ProjectedImage;
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+};
+
+export type SingleImageModuleType = {
+  _type: ModuleType.SingleImage;
+  _key: string;
+  title?: string;
+  image?: ProjectedImage;
+  body?: PortableTextBlock[];
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+};
+
+export type MultiImageModuleType = {
+  _type: ModuleType.MultiImage;
+  _key: string;
+  images?: ProjectedImage[];
+  backgroundColor?: ColorValue;
+};
+
+export type ServiceReference = {
+  _id: string;
+  name: string;
+};
+
+export type DeliverableReference = {
+  _id: string;
+  name: string;
+};
+
+export type ServicesModuleType = {
+  _type: ModuleType.Services;
+  _key: string;
+  services?: ServiceReference[];
+  deliverables?: DeliverableReference[];
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
+};
+
+// --------------------
+// Union of all modules
+// --------------------
+export type Module =
+  | HeroModuleType
+  | VideoModuleType
+  | TextModuleType
+  | TextImageModuleType
+  | ImpactModuleType
+  | SingleImageModuleType
+  | MultiImageModuleType
+  | ServicesModuleType;
+
+// ---------------------
+// Case study structures
+// ---------------------
+export type CaseStudy = {
+  _id: string;
+  title: string;
+  slug: string;
+  modules: Module[];
+};
+
+export type CaseStudyListItem = {
+  _id: string;
+  title: string;
+  slug: string;
+};
