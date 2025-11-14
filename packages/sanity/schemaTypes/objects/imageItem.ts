@@ -1,18 +1,29 @@
 // packages/sanity/schemaTypes/objects/imageItem.ts
-// packages/sanity/schemaTypes/objects/imageItem.ts
+
 import {defineType} from 'sanity'
-import {createSingleImageField, createTextField} from '../factories'
+import {createTextField} from '../factories'
 
 export const imageItem = defineType({
   name: 'imageItem',
   title: 'Image Item',
   type: 'object',
   fields: [
-    createSingleImageField({
+    {
       name: 'image',
       title: 'Image',
-      required: true,
-    }),
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        createTextField({
+          name: 'alt',
+          title: 'Alt Text',
+          required: true,
+          maxLength: 150,
+        }),
+      ],
+    },
     createTextField({
       name: 'caption',
       title: 'Caption',

@@ -12,6 +12,18 @@ export const caseStudy = defineType({
     titleField(), // ✅ now a function call
     slugField(), // ✅ now a function call
     {
+      name: 'services',
+      title: 'Services',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'service'}]}],
+    },
+    {
+      name: 'deliverables',
+      title: 'Deliverables',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'deliverable'}]}],
+    },
+    {
       name: 'modules',
       title: 'Content Modules',
       type: 'array',
@@ -19,6 +31,7 @@ export const caseStudy = defineType({
       of: [
         {type: 'heroModule'},
         {type: 'servicesModule'},
+        {type: 'deliverablesModule'},
         {type: 'textImageModule'},
         {type: 'videoModule'},
         {type: 'textModule'},

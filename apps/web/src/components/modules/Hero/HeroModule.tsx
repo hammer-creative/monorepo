@@ -4,10 +4,6 @@ import { SanityImage } from '@/components/common/SanityImage';
 import type { HeroModuleType } from '@/types/sanity';
 
 export function HeroModule({ data }: { data: HeroModuleType }) {
-  const image = data.image;
-  const width = image?.metadata?.dimensions?.width ?? 800;
-  const height = image?.metadata?.dimensions?.height ?? 600;
-
   return (
     <>
       <div className="hero">
@@ -15,12 +11,11 @@ export function HeroModule({ data }: { data: HeroModuleType }) {
           <h1>{data.title}</h1>
         </div>
 
-        {image?.url && (
+        {data.image && (
           <SanityImage
-            url={image.url}
-            alt={image.alt || ''}
-            width={width}
-            height={height}
+            image={data.image}
+            width={1200}
+            height={800}
             className="hero-image"
             priority
           />

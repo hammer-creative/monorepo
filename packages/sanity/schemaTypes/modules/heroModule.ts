@@ -1,5 +1,7 @@
 // schemaTypes/modules/heroModule.ts
 
+// schemaTypes/modules/heroModule.ts
+
 import {StarIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {titleField, portableTextField} from '../fields/textField'
@@ -20,8 +22,20 @@ export const heroModule = defineType({
     portableTextField(),
     createSingleImageField({
       name: 'image',
-      title: 'Image',
+      title: 'Hero Image',
       required: true,
+      minWidth: 1920,
+      minHeight: 1080,
+      maxFileSize: 5,
+      description: 'Main hero image. Minimum 1920x1080px, maximum 5MB.',
+      imageOptions: {
+        hotspot: {
+          previews: [
+            {title: '16:9 Landscape', aspectRatio: 16 / 9},
+            {title: '21:9 Ultrawide', aspectRatio: 21 / 9},
+          ],
+        },
+      },
     }),
     createColorField({
       name: 'backgroundColor',

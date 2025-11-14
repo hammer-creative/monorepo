@@ -2,104 +2,122 @@
 
 export const projections = {
   slug: `"slug": slug.current`,
-
   image: `
-    "url": asset->url,
-    alt,
-    "metadata": asset->metadata
+    image {
+      asset,
+      alt,
+      crop,
+      hotspot
+    }
   `,
-
-  video: `
-    "video": video.asset->{
-      playbackId,
-      "aspectRatio": data.aspect_ratio,
-      "thumbTime": data.max_stored_frame_time
+  imageItem: `
+    image {
+      asset,
+      alt,
+      crop,
+      hotspot
+    }
+  `,
+  videoItem: `
+    _key,
+    _type,
+    title,
+    video {
+      asset->
+    },
+    poster {
+      asset->,
+      alt
+    }
+  `,
+  textBlock: `
+    title,
+    body
+  `,
+  color: `
+    enabled,
+    name
+  `,
+  services: `
+    services[]-> {
+      _id,
+      name
+    }
+  `,
+  deliverables: `
+    deliverables[]-> {
+      _id,
+      name
     }
   `,
 };
 
-// --- Module projections ---
 export const moduleProjections = `
-  _type,
   _key,
+  _type,
+  backgroundColor {
+    ${projections.color}
+  },
 
+  // Hero Module
   _type == "heroModule" => {
     title,
     body,
-    image {
-      ${projections.image}
+    textColor {
+      ${projections.color}
     },
-    backgroundColor,
-    textColor,
-    client->{
-      _id,
-      name,
-      slug
+    client->,
+    ${projections.image}
+  },
+
+  // Text Module
+  _type == "textModule" => {
+    title,
+    tag,
+    body,
+    textColor {
+      ${projections.color}
     }
   },
 
-  _type == "textModule" => {
-    tag,
-    title,
-    body,
-    backgroundColor,
-    textColor
-  },
-
+  // Text + Image Module
   _type == "textImageModule" => {
     title,
     body,
-    image {
-      ${projections.image}
+    textColor {
+      ${projections.color}
     },
-    backgroundColor,
-    textColor
+    ${projections.image}
   },
 
+  // Video Module
   _type == "videoModule" => {
-    backgroundColor,
-    textColor,
-    videos[]{
-      _key,
-      _type,
-      title,
-      ${projections.video},
-      poster{
-        ${projections.image}
-      }
+    videos[] {
+      ${projections.videoItem}
     }
   },
 
+  // Carousel Module (Multi Image)
+  _type == "carouselModule" => {
+    images[] {
+      _key,
+      _type,
+      ${projections.imageItem}
+    }
+  },
+
+  // Impact Module
   _type == "impactModule" => {
     layout,
-    textBlock1{
-      title,
-      body
+    textColor {
+      ${projections.color}
     },
-    textBlock2{
-      title,
-      body
+    ${projections.image},
+    textBlock1 {
+      ${projections.textBlock}
     },
-    textBlock3{
-      title,
-      body
-    },
-    image {
-      ${projections.image},
-      crop,
-      hotspot
-    },
-    backgroundColor,
-    textColor
-  },
+    textBlock2 {
+      ${projections.textBlock}
+    }
+  }
 `;
-
-export const filters = {
-  published: `!(_id in path("drafts.**"))`,
-  byType: (type: string) => `_type == "${type}"`,
-};
-
-export const orderings = {
-  newest: `| order(_createdAt desc)`,
-  oldest: `| order(_createdAt asc)`,
-};

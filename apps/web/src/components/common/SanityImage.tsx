@@ -1,45 +1,37 @@
 // apps/web/src/components/common/SanityImage.tsx
-// apps/web/src/components/common/SanityImage.tsx
+import { urlFor } from '@/lib/sanity/image';
+import type { ProjectedImage } from '@/types/sanity';
 import Image from 'next/image';
 
 interface SanityImageProps {
-  url: string;
-  alt?: string;
-  width?: number;
-  height?: number;
-  fit?: 'cover' | 'contain';
+  image: ProjectedImage;
+  width: number;
+  height: number;
   sizes?: string;
   priority?: boolean;
-  className?: string; // ✅ optional class
+  className?: string;
 }
 
 export function SanityImage({
-  url,
-  alt = '',
-  width = 800,
-  height = 600,
-  fit = 'cover',
-  sizes = '(max-width: 768px) 100vw, 50vw',
+  image,
+  width,
+  height,
+  sizes = '100vw',
   priority = false,
   className = '',
 }: SanityImageProps) {
+  if (!image?.asset) return null;
+
   return (
-    <div
-      className={`sanity-image-wrapper ${className}`}
-      style={{
-        position: 'relative',
-        width: '100%',
-        aspectRatio: `${width} / ${height}`,
-      }}
-    >
-      <Image
-        src={url}
-        alt={alt}
-        fill
-        sizes={sizes}
-        priority={priority}
-        style={{ objectFit: fit }}
-      />
-    </div>
+    <Image
+      src={urlFor(image).width(width).height(height).fit('crop').url()}
+      alt={image.alt || ''}
+      width={width}
+      height={height}
+      sizes={sizes}
+      priority={priority}
+      className={className}
+      style={{ width: '100%', height: 'auto' }}
+    />
   );
 }

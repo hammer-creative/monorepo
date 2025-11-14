@@ -2,3 +2,4 @@
 export { client } from './client';
 export * from './queries';
 export * from './groq';
+export * from './image';

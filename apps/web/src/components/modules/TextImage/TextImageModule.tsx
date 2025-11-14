@@ -4,21 +4,18 @@ import { SanityImage } from '@/components/common/SanityImage';
 import type { TextImageModuleType } from '@/types/sanity';
 
 export function TextImageModule({ data }: { data: TextImageModuleType }) {
-  const image = data.image;
-  const width = image?.metadata?.dimensions?.width ?? 800;
-  const height = image?.metadata?.dimensions?.height ?? 600;
-
-  console.log('TextImageModule data:', data);
+  // console.log('TextImageModule data:', data);
 
   return (
     <div className="flow">
       <PortableTextRenderer value={data.body} className="small" />
-      {image?.url && (
+      {data.image && (
         <SanityImage
-          url={image.url}
-          alt={image.alt || ''}
-          width={width}
-          height={height}
+          image={data.image}
+          width={1200}
+          height={800}
+          className="hero-image"
+          priority
         />
       )}
     </div>

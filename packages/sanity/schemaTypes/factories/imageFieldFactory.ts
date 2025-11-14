@@ -5,14 +5,35 @@ import {addRequiredLabel} from '../utils/fieldHelpers'
 import {createTextField} from './textFieldFactory'
 import type {ImageRule, ArrayRule} from 'sanity'
 
-interface SingleImageConfig {
+interface HotspotPreview {
+  title: string
+  aspectRatio: number
+}
+
+interface ImageOptions {
+  hotspot?:
+    | boolean
+    | {
+        previews?: HotspotPreview[]
+      }
+  metadata?: string[]
+  accept?: string
+}
+
+interface BaseImageConfig {
   name?: string
   title?: string
+  altMaxLength?: number
+  imageOptions?: ImageOptions
+  minWidth?: number
+  minHeight?: number
+  maxFileSize?: number // in MB
+}
+
+interface SingleImageConfig extends BaseImageConfig {
   required?: boolean
   withCaption?: boolean
   captionMaxLength?: number
-  altMaxLength?: number
-  hotspot?: boolean
   description?: string
 }
 
@@ -26,27 +47,25 @@ interface MultiImageConfig {
 }
 
 /**
- * Creates a single image field with alt text and optional caption
- * Uses Sanity's native image type with hotspot cropping support
+ * Base image field configuration shared by both single and multi-image fields
+ * Handles validation for dimensions and file size
  */
-export const createSingleImageField = (config: SingleImageConfig = {}) => {
+function createBaseImageField(config: BaseImageConfig = {}) {
   const {
     name = 'image',
     title = 'Image',
-    required = false,
-    withCaption = false,
-    captionMaxLength = 200,
     altMaxLength = 150,
-    hotspot = true,
-    description = '',
+    imageOptions = {hotspot: true},
+    minWidth,
+    minHeight,
+    maxFileSize,
   } = config
 
-  return defineField({
+  return {
     name,
     title,
-    type: 'image',
-    description: addRequiredLabel(description, required),
-    options: {hotspot},
+    type: 'image' as const,
+    options: imageOptions,
     fields: [
       createTextField({
         name: 'alt',
@@ -55,22 +74,104 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
         maxLength: altMaxLength,
         description: 'Describe the image for accessibility (screen readers, SEO)',
       }),
+    ],
+    validation: (Rule: ImageRule) => {
+      let rule = Rule
+
+      // Dimension and file size validation
+      if (minWidth || minHeight || maxFileSize) {
+        rule = rule.custom((image: any) => {
+          if (!image?.asset) return true
+
+          return new Promise((resolve) => {
+            const query = `*[_id == "${image.asset._ref}"][0]{
+              "dimensions": metadata.dimensions,
+              "size": size
+            }`
+
+            // Dynamic import to avoid circular dependency
+            import('../../src/lib/sanity').then(({client}) => {
+              client.fetch(query).then((asset: any) => {
+                if (!asset) return resolve(true)
+
+                const {dimensions, size} = asset
+
+                // Check minimum width
+                if (minWidth && dimensions?.width < minWidth) {
+                  return resolve(
+                    `Image must be at least ${minWidth}px wide (currently ${dimensions.width}px)`,
+                  )
+                }
+
+                // Check minimum height
+                if (minHeight && dimensions?.height < minHeight) {
+                  return resolve(
+                    `Image must be at least ${minHeight}px tall (currently ${dimensions.height}px)`,
+                  )
+                }
+
+                // Check file size
+                if (maxFileSize) {
+                  const maxBytes = maxFileSize * 1024 * 1024
+                  if (size > maxBytes) {
+                    const sizeMB = (size / (1024 * 1024)).toFixed(2)
+                    return resolve(
+                      `Image must be smaller than ${maxFileSize}MB (currently ${sizeMB}MB)`,
+                    )
+                  }
+                }
+
+                resolve(true)
+              })
+            })
+          })
+        })
+      }
+
+      return rule
+    },
+  }
+}
+
+/**
+ * Creates a single image field with alt text and optional caption
+ * Uses Sanity's native image type with hotspot cropping support
+ */
+export const createSingleImageField = (config: SingleImageConfig = {}) => {
+  const {
+    required = false,
+    withCaption = false,
+    captionMaxLength = 200,
+    description = '',
+    ...baseConfig
+  } = config
+
+  const baseField = createBaseImageField(baseConfig)
+
+  return defineField({
+    ...baseField,
+    description: addRequiredLabel(description, required),
+    fields: [
+      ...baseField.fields,
       ...(withCaption
         ? [
             createTextField({
               name: 'caption',
               title: 'Caption',
               multiline: true,
-              rows: 2,
+              rows: 1,
               maxLength: captionMaxLength,
               description: 'Optional caption text displayed with the image',
             }),
           ]
         : []),
     ],
-    validation: required
-      ? (Rule: ImageRule) => Rule.required().error(`${title} is required`)
-      : undefined,
+    validation: (Rule: ImageRule) => {
+      const baseValidation = baseField.validation(Rule)
+      return required
+        ? baseValidation.required().error(`${baseField.title} is required`)
+        : baseValidation
+    },
   })
 }
 
@@ -80,10 +181,10 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
  */
 export const createMultiImageField = (config: MultiImageConfig = {}) => {
   const {
-    name = 'imageItems',
+    name = 'images',
     title = 'Images',
     required = false,
-    minImages = 4,
+    minImages = 2,
     maxImages = 20,
     description = '',
   } = config
@@ -110,3 +211,8 @@ export const createMultiImageField = (config: MultiImageConfig = {}) => {
             ),
   })
 }
+
+/**
+ * Export base for use in imageItem object
+ */
+export {createBaseImageField}
