@@ -21,7 +21,9 @@ export enum ModuleType {
   Impact = 'impactModule',
   SingleImage = 'singleImageModule',
   MultiImage = 'multiImageModule',
+  Carousel = 'carouselModule',
   Services = 'servicesModule',
+  Deliverables = 'deliverablesModule',
 }
 
 // --------------------
@@ -33,15 +35,13 @@ export type ColorValue = {
   hex?: string;
 };
 
+// apps/web/src/types/sanity.ts
 export type ProjectedImage = {
-  url: string;
-  alt?: string;
-  metadata?: {
-    dimensions?: {
-      width: number;
-      height: number;
-    };
+  asset?: {
+    _ref: string;
+    _type: string;
   };
+  alt?: string;
   crop?: {
     _type: 'sanity.imageCrop';
     bottom: number;
@@ -133,6 +133,8 @@ export type ImpactModuleType = {
   textColor?: ColorValue;
 };
 
+export type ImpactTextBlocks = (TextBlock | undefined)[];
+
 export type SingleImageModuleType = {
   _type: ModuleType.SingleImage;
   _key: string;
@@ -150,6 +152,19 @@ export type MultiImageModuleType = {
   backgroundColor?: ColorValue;
 };
 
+export type ImageItem = {
+  _key: string;
+  _type: 'imageItem';
+  image?: ProjectedImage;
+};
+
+export type CarouselModuleType = {
+  _type: ModuleType.Carousel;
+  _key: string;
+  images?: ImageItem[];
+  backgroundColor?: ColorValue;
+};
+
 export type ServiceReference = {
   _id: string;
   name: string;
@@ -164,9 +179,14 @@ export type ServicesModuleType = {
   _type: ModuleType.Services;
   _key: string;
   services?: ServiceReference[];
+  backgroundColor?: ColorValue;
+};
+
+export type DeliverablesModuleType = {
+  _type: ModuleType.Deliverables;
+  _key: string;
   deliverables?: DeliverableReference[];
   backgroundColor?: ColorValue;
-  textColor?: ColorValue;
 };
 
 // --------------------
@@ -180,7 +200,9 @@ export type Module =
   | ImpactModuleType
   | SingleImageModuleType
   | MultiImageModuleType
-  | ServicesModuleType;
+  | CarouselModuleType
+  | ServicesModuleType
+  | DeliverablesModuleType;
 
 // ---------------------
 // Case study structures
@@ -189,6 +211,8 @@ export type CaseStudy = {
   _id: string;
   title: string;
   slug: string;
+  services?: ServiceReference[];
+  deliverables?: DeliverableReference[];
   modules: Module[];
 };
 

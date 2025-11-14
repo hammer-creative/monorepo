@@ -8,7 +8,7 @@ export function TextModule({ data }: { data: TextModuleType }) {
       ? data.backgroundColor.hex
       : 'transparent';
 
-  console.log('TextModule data:', data);
+  // console.log('TextModule data:', data);
 
   return (
     <>

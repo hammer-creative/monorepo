@@ -8,6 +8,8 @@ const fullProjection = `
   _id,
   title,
   ${projections.slug},
+  ${projections.services},
+  ${projections.deliverables},
   modules[]{
     ${moduleProjections}
   }
