@@ -15,8 +15,17 @@ export const textImageModule = defineType({
     portableTextField(),
     createSingleImageField({
       name: 'image',
-      title: 'Image',
+      title: 'Hero Image',
       required: true,
+      minWidth: 1960,
+      minHeight: 1400,
+      maxFileSize: 3,
+      description: 'Minimum dimensions 1960 px × 1400 px, maximum filze size 3 MB.',
+      imageOptions: {
+        hotspot: {
+          previews: [{title: '14:10 Rectangle', aspectRatio: 14 / 10}],
+        },
+      },
     }),
     createColorField({
       name: 'backgroundColor',

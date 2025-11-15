@@ -1,5 +1,7 @@
 // packages/sanity/schemaTypes/factories/imageFieldFactory.ts
 
+// packages/sanity/schemaTypes/factories/imageFieldFactory.ts
+
 import {defineField} from 'sanity'
 import {addRequiredLabel} from '../utils/fieldHelpers'
 import {createTextField} from './textFieldFactory'
@@ -10,13 +12,15 @@ interface HotspotPreview {
   aspectRatio: number
 }
 
+type ImageMetadataType = 'blurhash' | 'lqip' | 'palette' | 'exif' | 'location' | 'image'
+
 interface ImageOptions {
   hotspot?:
     | boolean
     | {
         previews?: HotspotPreview[]
       }
-  metadata?: string[]
+  metadata?: ImageMetadataType[]
   accept?: string
 }
 
@@ -75,61 +79,9 @@ function createBaseImageField(config: BaseImageConfig = {}) {
         description: 'Describe the image for accessibility (screen readers, SEO)',
       }),
     ],
-    validation: (Rule: ImageRule) => {
-      let rule = Rule
-
-      // Dimension and file size validation
-      if (minWidth || minHeight || maxFileSize) {
-        rule = rule.custom((image: any) => {
-          if (!image?.asset) return true
-
-          return new Promise((resolve) => {
-            const query = `*[_id == "${image.asset._ref}"][0]{
-              "dimensions": metadata.dimensions,
-              "size": size
-            }`
-
-            // Dynamic import to avoid circular dependency
-            import('../../src/lib/sanity').then(({client}) => {
-              client.fetch(query).then((asset: any) => {
-                if (!asset) return resolve(true)
-
-                const {dimensions, size} = asset
-
-                // Check minimum width
-                if (minWidth && dimensions?.width < minWidth) {
-                  return resolve(
-                    `Image must be at least ${minWidth}px wide (currently ${dimensions.width}px)`,
-                  )
-                }
-
-                // Check minimum height
-                if (minHeight && dimensions?.height < minHeight) {
-                  return resolve(
-                    `Image must be at least ${minHeight}px tall (currently ${dimensions.height}px)`,
-                  )
-                }
-
-                // Check file size
-                if (maxFileSize) {
-                  const maxBytes = maxFileSize * 1024 * 1024
-                  if (size > maxBytes) {
-                    const sizeMB = (size / (1024 * 1024)).toFixed(2)
-                    return resolve(
-                      `Image must be smaller than ${maxFileSize}MB (currently ${sizeMB}MB)`,
-                    )
-                  }
-                }
-
-                resolve(true)
-              })
-            })
-          })
-        })
-      }
-
-      return rule
-    },
+    minWidth,
+    minHeight,
+    maxFileSize,
   }
 }
 
@@ -147,9 +99,13 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
   } = config
 
   const baseField = createBaseImageField(baseConfig)
+  const {minWidth, minHeight, maxFileSize} = baseField
 
   return defineField({
-    ...baseField,
+    name: baseField.name,
+    title: baseField.title,
+    type: baseField.type,
+    options: baseField.options,
     description: addRequiredLabel(description, required),
     fields: [
       ...baseField.fields,
@@ -167,10 +123,93 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
         : []),
     ],
     validation: (Rule: ImageRule) => {
-      const baseValidation = baseField.validation(Rule)
-      return required
-        ? baseValidation.required().error(`${baseField.title} is required`)
-        : baseValidation
+      console.log('🔧 Setting up validation with:', {minWidth, minHeight, maxFileSize, required})
+
+      return Rule.custom((image: any) => {
+        console.log('🔍 Custom validation running for:', image)
+
+        // Check required first
+        if (required && !image?.asset) {
+          console.log('❌ Required check failed - no image')
+          return `${baseField.title} is required`
+        }
+
+        // If not required and no image, that's fine
+        if (!image?.asset) {
+          console.log('⚠️ No asset, skipping dimension checks')
+          return true
+        }
+
+        // No dimension/filesize constraints to check
+        if (!minWidth && !minHeight && !maxFileSize) {
+          console.log('✅ No constraints to check')
+          return true
+        }
+
+        console.log('📎 Asset ref:', image.asset._ref)
+
+        return new Promise((resolve) => {
+          const query = `*[_id == "${image.asset._ref}"][0]{
+        "dimensions": metadata.dimensions,
+        "size": size
+      }`
+
+          console.log('🔎 Running query:', query)
+
+          import('../../src/lib/sanity')
+            .then(({client}) => {
+              console.log('✅ Client imported successfully')
+              client
+                .fetch(query)
+                .then((asset: any) => {
+                  console.log('📊 Asset data received:', asset)
+
+                  if (!asset) {
+                    console.log('❌ No asset data returned')
+                    return resolve(true)
+                  }
+
+                  const {dimensions, size} = asset
+
+                  if (minWidth && dimensions?.width < minWidth) {
+                    console.log(`❌ WIDTH FAIL: ${dimensions.width} < ${minWidth}`)
+                    return resolve(
+                      `Image must be at least ${minWidth}px wide (currently ${dimensions.width}px)`,
+                    )
+                  }
+
+                  if (minHeight && dimensions?.height < minHeight) {
+                    console.log(`❌ HEIGHT FAIL: ${dimensions.height} < ${minHeight}`)
+                    return resolve(
+                      `Image must be at least ${minHeight}px tall (currently ${dimensions.height}px)`,
+                    )
+                  }
+
+                  if (maxFileSize) {
+                    const maxBytes = maxFileSize * 1024 * 1024
+                    if (size > maxBytes) {
+                      const sizeMB = (size / (1024 * 1024)).toFixed(2)
+                      console.log(`❌ FILESIZE FAIL: ${sizeMB}MB > ${maxFileSize}MB`)
+                      return resolve(
+                        `Image must be smaller than ${maxFileSize}MB (currently ${sizeMB}MB)`,
+                      )
+                    }
+                  }
+
+                  console.log('✅ All dimension/filesize checks passed')
+                  resolve(true)
+                })
+                .catch((err) => {
+                  console.error('❌ Fetch error:', err)
+                  resolve(true)
+                })
+            })
+            .catch((err) => {
+              console.error('❌ Import error:', err)
+              resolve(true)
+            })
+        })
+      })
     },
   })
 }
