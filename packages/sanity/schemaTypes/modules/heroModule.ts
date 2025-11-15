@@ -24,16 +24,13 @@ export const heroModule = defineType({
       name: 'image',
       title: 'Hero Image',
       required: true,
-      minWidth: 1920,
-      minHeight: 1080,
-      maxFileSize: 5,
-      description: 'Main hero image. Minimum 1920x1080px, maximum 5MB.',
+      minWidth: 3840,
+      minHeight: 2160,
+      maxFileSize: 10,
+      description: 'Minimum dimensions 3840 px × 2160 px, maximum filze size 10 MB.',
       imageOptions: {
         hotspot: {
-          previews: [
-            {title: '16:9 Landscape', aspectRatio: 16 / 9},
-            {title: '21:9 Ultrawide', aspectRatio: 21 / 9},
-          ],
+          previews: [{title: '16:9 Landscape', aspectRatio: 16 / 9}],
         },
       },
     }),

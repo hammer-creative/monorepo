@@ -1,54 +1,35 @@
 // packages/sanity/schemaTypes/modules/videoModule.ts
 
-import {VideoIcon} from '@sanity/icons'
+import {PlayIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-import {createVideoField, createColorField} from '../factories'
-import {createLimitedArrayInput} from '../utils/LimitedArrayInput'
+import {createVideoField} from '../factories/videoFieldFactory'
 
-/**
- * Video Module
- * Displays 1–3 videos with automatic layout
- */
 export const videoModule = defineType({
   name: 'videoModule',
   title: 'Video Module',
   type: 'object',
-  icon: VideoIcon,
+  icon: PlayIcon,
+
   fields: [
-    {
-      ...createVideoField({
-        name: 'videos',
-        title: 'Videos',
-        required: true,
-        minVideos: 1,
-        maxVideos: 3,
-        description: 'Add up to 3 videos',
-      }),
-      components: {
-        input: createLimitedArrayInput(3, 'video'),
-      },
-    },
-    createColorField({
-      name: 'backgroundColor',
-      title: 'Background Color',
+    createVideoField({
+      name: 'videos',
+      title: 'Videos',
       required: true,
+      minVideos: 1,
+      maxVideos: 3,
+      description:
+        'Add 1–3 videos. Posters have different required dimensions depending on the poster type selected.',
     }),
   ],
+
   preview: {
     select: {
-      videos: 'videos',
-      backgroundColor: 'backgroundColor',
+      firstTitle: 'videos.0.title',
     },
-    prepare({videos, backgroundColor}) {
-      const count = videos?.length || 0
-      const layouts = ['No videos', 'Full width', 'Half width', 'Thirds']
-
+    prepare({firstTitle}) {
       return {
-        title: `${count} Video${count !== 1 ? 's' : ''}`,
-        subtitle: [layouts[count], backgroundColor?.enabled ? `BG: ${backgroundColor.name}` : null]
-          .filter(Boolean)
-          .join(' • '),
-        media: videos?.[0]?.video?.asset,
+        title: firstTitle || 'Video Module',
+        subtitle: 'Contains 1–3 videos',
       }
     },
   },
