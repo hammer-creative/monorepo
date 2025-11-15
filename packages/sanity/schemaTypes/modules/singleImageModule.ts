@@ -2,7 +2,6 @@
 
 import {ImageIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-import {titleField, portableTextField} from '../fields/textField'
 import {createSingleImageField, createColorField} from '../factories'
 
 /**
