@@ -1,6 +1,6 @@
 {
-  "name": "hammer/web",
-  "version": "0.1.0",
+  "name": "@hammercreative/web",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "clean": "rm -rf .next node_modules",
