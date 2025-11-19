@@ -257,3 +257,9 @@ fix flex-item flex definition
     }
   }
 }
+
+/* NAVIGATION STYLES */
+
+footer {
+  background: $color-sandstorm;
+}
