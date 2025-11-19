@@ -1,4 +1,4 @@
-// packages/sanity/schemaTypes/factories/videoModuleFactory.ts
+// packages/sanity/schemaTypes/factories/videoFieldFactory.ts
 
 import {defineField} from 'sanity'
 import {addRequiredLabel} from '../utils/fieldHelpers'
@@ -13,10 +13,6 @@ interface VideoFieldConfig {
   description?: string
 }
 
-/**
- * Creates a video array field using videoItem objects
- * For single or multiple video layouts
- */
 export const createVideoField = (config: VideoFieldConfig = {}) => {
   const {
     name = 'videos',
@@ -24,7 +20,7 @@ export const createVideoField = (config: VideoFieldConfig = {}) => {
     required = false,
     minVideos = 1,
     maxVideos = 3,
-    description = `Add ${minVideos}-${maxVideos} videos`,
+    description = '',
   } = config
 
   return defineField({
@@ -33,15 +29,9 @@ export const createVideoField = (config: VideoFieldConfig = {}) => {
     type: 'array',
     of: [{type: 'videoItem'}],
     description: addRequiredLabel(description, required),
-    validation: required
-      ? (Rule: ArrayRule<any>) =>
-          Rule.required()
-            .min(minVideos)
-            .max(maxVideos)
-            .error(`${title} requires between ${minVideos} and ${maxVideos} videos`)
-      : (Rule: ArrayRule<any>) =>
-          Rule.min(minVideos)
-            .max(maxVideos)
-            .error(`${title} requires between ${minVideos} and ${maxVideos} videos`),
+    validation: (Rule: ArrayRule) => {
+      let validation = Rule.min(minVideos).max(maxVideos)
+      return required ? validation.required() : validation
+    },
   })
 }

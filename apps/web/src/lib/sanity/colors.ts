@@ -1,5 +1,4 @@
 // apps/web/src/lib/sanity/colors.ts
-// apps/web/src/lib/sanity/colors.ts
 import type { Module } from '@/types/sanity';
 import { DEFAULT_COLORS } from '@chorusworks/ui';
 

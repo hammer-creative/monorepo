@@ -1,5 +1,6 @@
+// TODO: add common title component, add common text component
 // apps/web/src/components/modules/TextImage/TextModule.ts
-import { PortableTextRenderer } from '@/components/common/PortableTextRenderer';
+import { TextBlock } from '@/components/common/TextBlock';
 import type { TextModuleType } from '@/types/sanity';
 
 export function TextModule({ data }: { data: TextModuleType }) {
@@ -8,14 +9,18 @@ export function TextModule({ data }: { data: TextModuleType }) {
       ? data.backgroundColor.hex
       : 'transparent';
 
-  console.log('TextModule data:', data);
+  // console.log('TextModule data:', data);
 
   return (
     <>
-      <div className="flow">
-        <h2>{data.title}</h2>
-        <div className="rubric">{data.tag}</div>
-        <PortableTextRenderer value={data.body} className="medium" />
+      <div className="flex">
+        <div className="flex-item">
+          {data.tag && <div className="tag">{data.tag}</div>}
+          <h2>{data.title}</h2>
+        </div>
+        <div className="flex-item">
+          <TextBlock body={data.body} className="text medium" />
+        </div>
       </div>
     </>
   );

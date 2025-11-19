@@ -5,14 +5,9 @@
   },
   "main": [
     {
-      "id": "home",
-      "label": "Home",
-      "href": "/"
-    },
-    {
-      "id": "about",
-      "label": "About",
-      "href": "/about"
+      "id": "work",
+      "label": "Work",
+      "href": "/work"
     },
     {
       "id": "services",
@@ -20,57 +15,50 @@
       "href": "/services"
     },
     {
+      "id": "jobs",
+      "label": "Jobs",
+      "href": "/jobs"
+    },
+    {
       "id": "contact",
       "label": "Contact",
       "href": "/contact"
     }
   ],
-  "footer": [
+  "addresses": [
     {
-      "id": "company",
-      "title": "Company",
-      "items": [
-        {
-          "id": "footer-about",
-          "label": "About Us",
-          "href": "/about"
-        },
-        {
-          "id": "footer-careers",
-          "label": "Careers",
-          "href": "/careers"
-        }
-      ]
+      "id": "los-angeles",
+      "label": "Los Angeles",
+      "line1": "4130 Cahuenga Blvd. Suite 113"
     },
     {
-      "id": "legal",
-      "title": "Legal",
-      "items": [
-        {
-          "id": "footer-privacy",
-          "label": "Privacy Policy",
-          "href": "/privacy"
-        },
-        {
-          "id": "footer-terms",
-          "label": "Terms of Service",
-          "href": "/terms"
-        }
-      ]
+      "id": "london",
+      "label": "United Kingdom",
+      "line1": "50 Liverpool Street, EC2M 7PY"
+    }
+  ],
+  "legal": [
+    {
+      "id": "privacy",
+      "label": "Privacy Policy",
+      "href": "https://hammercreative.com/"
     }
   ],
   "social": [
     {
-      "id": "social-twitter",
-      "label": "Twitter",
-      "href": "https://twitter.com/yourbrand",
-      "platform": "twitter"
+      "id": "instagram",
+      "label": "Instagram",
+      "href": "https://instagram.com/"
     },
     {
-      "id": "social-github",
-      "label": "GitHub",
-      "href": "https://github.com/yourbrand",
-      "platform": "github"
+      "id": "youtube",
+      "label": "Youtube",
+      "href": "https://youtube.com"
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "href": "https://linkedin.com"
     }
   ]
 }

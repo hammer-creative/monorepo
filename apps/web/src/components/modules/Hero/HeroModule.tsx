@@ -1,13 +1,21 @@
+// TODO: add common title component, add common body component
 // apps/web/src/components/Hero/HeroModule.tsx
 import { PortableTextRenderer } from '@/components/common/PortableTextRenderer';
 import { SanityImage } from '@/components/common/SanityImage';
-import type { HeroModuleType } from '@/types/sanity';
+import { TextBlock } from '@/components/common/TextBlock';
+import { DeliverablesModule } from '@/components/modules/Services/DeliverablesModule';
+import { ServicesModule } from '@/components/modules/Services/ServicesModule';
+import type { HeroModuleType, ServicesModuleType } from '@/types/sanity';
 
-export function HeroModule({ data }: { data: HeroModuleType }) {
-  const image = data.image;
-  const width = image?.metadata?.dimensions?.width ?? 800;
-  const height = image?.metadata?.dimensions?.height ?? 600;
-
+export function HeroModule({
+  data,
+  services,
+  deliverables,
+}: {
+  data: HeroModuleType;
+  services: ServicesModuleType | undefined;
+  deliverables: ServicesModuleType | undefined;
+}) {
   return (
     <>
       <div className="hero">
@@ -15,32 +23,40 @@ export function HeroModule({ data }: { data: HeroModuleType }) {
           <h1>{data.title}</h1>
         </div>
 
-        {image?.url && (
+        {data.image && (
           <SanityImage
-            url={image.url}
-            alt={image.alt || ''}
-            width={width}
-            height={height}
+            image={data.image}
+            width={1200}
+            height={800}
             className="hero-image"
             priority
           />
         )}
       </div>
+
       <div className="hero-description">
-        <div className="hero-accent-bar">
-          <svg width="80" height="10" viewBox="0 0 80 10">
-            <rect width="80" height="10" fill="#FFCC98" />
-          </svg>
-        </div>
-        {data.body && (
-          <PortableTextRenderer value={data.body} className="medium" />
-        )}
-        {data.client && (
-          <>
+        <div className="flex">
+          <div className="flex-item">
+            <svg width="80" height="10" viewBox="0 0 80 10">
+              <rect
+                width="80"
+                height="10"
+                fill="#FFCC98"
+                className="hero-accent-bar"
+              />
+            </svg>
+            {data.body && <TextBlock body={data.body} className="medium" />}
             <div className="tag">Client</div>
-            <div>{data.client.name}</div>
-          </>
-        )}
+            {data.client && (
+              <div className="hero-client-name">{data.client.name}</div>
+            )}
+          </div>
+
+          <div className="flex-item">
+            {services && <ServicesModule data={services} />}
+            {deliverables && <DeliverablesModule data={deliverables} />}
+          </div>
+        </div>
       </div>
     </>
   );

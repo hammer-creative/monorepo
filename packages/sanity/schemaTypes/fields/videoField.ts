@@ -1,5 +1,6 @@
-// apps/packages/sanity/schemaTypes/fields/videoField.ts
+// packages/sanity/schemaTypes/fields/videoField.ts
 
 import {createVideoField} from '../factories/videoFieldFactory'
 
-export const videoModule = createVideoField()
+// Reusable video array field (1–3 videos, full-width playback)
+export const videoField = createVideoField()

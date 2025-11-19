@@ -1,28 +1,19 @@
 // apps/web/src/components/Navigation/FooterMenu.tsx
-import { FooterSection } from '@/types/navigation';
-import Link from 'next/link';
+import { MenuItem } from '@/types/navigation';
+import { Menu } from './Menu';
 
-interface FooterMenuProps {
-  sections: FooterSection[];
+interface MenuProps {
+  items: MenuItem[];
 }
 
-export function FooterMenu({ sections }: FooterMenuProps) {
+export function FooterMenu({ items }: MenuProps) {
   return (
-    <nav className="footer-menu">
-      {sections.map((section) => (
-        <div key={section.id} className="footer-section">
-          <h3 className="footer-section-title">{section.title}</h3>
-          <ul className="footer-section-list">
-            {section.items.map((item) => (
-              <li key={item.id} className="footer-section-item">
-                <Link href={item.href} className="footer-section-link">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </nav>
+    <Menu
+      items={items}
+      className="footer-menu"
+      listClassName="footer-menu-list"
+      itemClassName="footer-menu-item"
+      linkClassName="footer-menu-link"
+    />
   );
 }

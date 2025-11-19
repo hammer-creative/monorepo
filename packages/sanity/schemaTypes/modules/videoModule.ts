@@ -1,54 +1,123 @@
 // packages/sanity/schemaTypes/modules/videoModule.ts
 
-import {VideoIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-import {createVideoField, createColorField} from '../factories'
-import {createLimitedArrayInput} from '../utils/LimitedArrayInput'
+import {PlayIcon} from '@sanity/icons'
+import {createColorField} from '../factories'
 
-/**
- * Video Module
- * Displays 1–3 videos with automatic layout
- */
+interface VideoItem {
+  poster?: {
+    asset?: {
+      _ref?: string
+    }
+  }
+}
+
+interface LayoutRequirements {
+  minWidth: number
+  minHeight: number
+  label: string
+}
+
+// Layout-specific poster dimension requirements
+// Single video: 1880×1060 (hero layout)
+// Two videos: 940×940 (side-by-side)
+// Three videos: 600×1000 (vertical stack)
+const LAYOUT_REQUIREMENTS: Record<number, LayoutRequirements> = {
+  1: {minWidth: 1880, minHeight: 1060, label: 'single-video'},
+  2: {minWidth: 940, minHeight: 940, label: 'two-video'},
+  3: {minWidth: 600, minHeight: 1000, label: 'three-video'},
+}
+
+const DIMENSION_REGEX = /-(\d+)x(\d+)-/
+
+function extractDimensions(ref: string): {width: number; height: number} | null {
+  const match = ref.match(DIMENSION_REGEX)
+  if (!match) return null
+  return {
+    width: Number(match[1]),
+    height: Number(match[2]),
+  }
+}
+
+function validateVideoPoster(video: VideoItem, requirements: LayoutRequirements): string | true {
+  const ref = video?.poster?.asset?._ref
+
+  if (!ref) {
+    return 'Poster is required'
+  }
+
+  const dimensions = extractDimensions(ref)
+
+  if (!dimensions) {
+    return 'Poster dimensions missing'
+  }
+
+  const {width, height} = dimensions
+  const {minWidth, minHeight, label} = requirements
+
+  if (width < minWidth || height < minHeight) {
+    return `Poster must be ≥ ${minWidth}×${minHeight} for ${label} layout`
+  }
+
+  return true
+}
+
 export const videoModule = defineType({
   name: 'videoModule',
   title: 'Video Module',
   type: 'object',
-  icon: VideoIcon,
+  icon: PlayIcon,
+
   fields: [
     {
-      ...createVideoField({
-        name: 'videos',
-        title: 'Videos',
-        required: true,
-        minVideos: 1,
-        maxVideos: 3,
-        description: 'Add up to 3 videos',
-      }),
-      components: {
-        input: createLimitedArrayInput(3, 'video'),
-      },
+      name: 'videos',
+      title: 'Videos',
+      type: 'array',
+      description:
+        'Add 1-3 videos. Poster dimension requirements vary by count: 1 video requires 1880×1060px, 2 videos require 940×940px each, 3 videos require 600×1000px each.',
+      of: [{type: 'videoItem'}],
+      validation: (Rule) =>
+        Rule.required()
+          .min(1)
+          .max(3)
+          .custom((videos: VideoItem[]) => {
+            if (!Array.isArray(videos)) return true
+
+            const requirements = LAYOUT_REQUIREMENTS[videos.length]
+            if (!requirements) return true
+
+            for (const video of videos) {
+              const result = validateVideoPoster(video, requirements)
+              if (result !== true) return result
+            }
+
+            return true
+          }),
     },
     createColorField({
       name: 'backgroundColor',
       title: 'Background Color',
-      required: true,
+      required: false,
     }),
   ],
+
   preview: {
     select: {
       videos: 'videos',
       backgroundColor: 'backgroundColor',
     },
-    prepare({videos, backgroundColor}) {
-      const count = videos?.length || 0
-      const layouts = ['No videos', 'Full width', 'Half width', 'Thirds']
-
+    prepare({
+      videos,
+      backgroundColor,
+    }: {
+      videos: VideoItem[]
+      backgroundColor?: {enabled?: boolean; name?: string}
+    }) {
+      const count = Array.isArray(videos) ? videos.length : 0
+      const plural = count === 1 ? '' : 's'
       return {
-        title: `${count} Video${count !== 1 ? 's' : ''}`,
-        subtitle: [layouts[count], backgroundColor?.enabled ? `BG: ${backgroundColor.name}` : null]
-          .filter(Boolean)
-          .join(' • '),
-        media: videos?.[0]?.video?.asset,
+        title: `Video Module (${count} video${plural})`,
+        subtitle: backgroundColor?.enabled ? `Background: ${backgroundColor.name}` : undefined,
       }
     },
   },

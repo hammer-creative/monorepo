@@ -1,105 +1,150 @@
 // apps/web/src/lib/sanity/groq/builders.ts
 
+// apps/web/src/lib/sanity/groq/builders.ts
+
 export const projections = {
   slug: `"slug": slug.current`,
 
   image: `
-    "url": asset->url,
-    alt,
-    "metadata": asset->metadata
+    image {
+      asset,
+      alt,
+      crop,
+      hotspot
+    }
   `,
 
-  video: `
-    "video": video.asset->{
-      playbackId,
-      "aspectRatio": data.aspect_ratio,
-      "thumbTime": data.max_stored_frame_time
+  imageItem: `
+    image {
+      asset,
+      alt,
+      crop,
+      hotspot
+    }
+  `,
+
+  poster: `
+    poster {
+      "asset": asset->,
+      alt,
+      crop,
+      hotspot
+    }
+  `,
+
+  videoItem: `
+    _key,
+    _type,
+    title,
+    video {
+      "playbackId": asset->playbackId,
+      "aspectRatio": asset->data.aspect_ratio
+    },
+    poster {
+      "asset": asset->,
+      alt,
+      crop,
+      hotspot
+    }
+  `,
+
+  textBlock: `
+    title,
+    body
+  `,
+
+  color: `
+    enabled,
+    name
+  `,
+
+  services: `
+    services[]-> {
+      _id,
+      name
+    }
+  `,
+
+  deliverables: `
+    deliverables[]-> {
+      _id,
+      name
     }
   `,
 };
 
-// --- Module projections ---
 export const moduleProjections = `
-  _type,
   _key,
+  _type,
+
+  backgroundColor {
+    ${projections.color}
+  },
 
   _type == "heroModule" => {
     title,
     body,
-    image {
-      ${projections.image}
+    textColor {
+      ${projections.color}
     },
-    backgroundColor,
-    textColor,
-    client->{
-      _id,
-      name,
-      slug
-    }
+    client->,
+    ${projections.image}
   },
 
   _type == "textModule" => {
-    tag,
     title,
+    tag,
     body,
-    backgroundColor,
-    textColor
+    textColor {
+      ${projections.color}
+    }
   },
 
   _type == "textImageModule" => {
     title,
     body,
-    image {
-      ${projections.image}
+    textColor {
+      ${projections.color}
     },
-    backgroundColor,
-    textColor
+    ${projections.image}
   },
 
   _type == "videoModule" => {
-    backgroundColor,
-    textColor,
-    videos[]{
+    videos[] {
+      ${projections.videoItem}
+    }
+  },
+
+  _type == "carouselModule" => {
+    images[] {
       _key,
       _type,
-      title,
-      ${projections.video},
-      poster{
-        ${projections.image}
-      }
+      ${projections.imageItem}
     }
   },
 
   _type == "impactModule" => {
     layout,
-    textBlock1{
-      title,
-      body
+    textColor {
+      ${projections.color}
     },
-    textBlock2{
-      title,
-      body
+    ${projections.image},
+    textBlock1 {
+      ${projections.textBlock}
     },
-    textBlock3{
-      title,
-      body
+    textBlock2 {
+      ${projections.textBlock}
     },
-    image {
-      ${projections.image},
-      crop,
-      hotspot
-    },
-    backgroundColor,
-    textColor
+    textBlock3 {
+      ${projections.textBlock}
+    }
   },
+
+  _type == "servicesModule" => {
+    ${projections.services}
+  },
+
+  _type == "deliverablesModule" => {
+    ${projections.deliverables}
+  }
 `;
-
-export const filters = {
-  published: `!(_id in path("drafts.**"))`,
-  byType: (type: string) => `_type == "${type}"`,
-};
-
-export const orderings = {
-  newest: `| order(_createdAt desc)`,
-  oldest: `| order(_createdAt asc)`,
-};

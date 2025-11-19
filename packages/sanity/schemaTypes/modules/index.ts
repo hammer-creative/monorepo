@@ -8,6 +8,7 @@ import {textModule} from './textModule'
 import {textImageModule} from './textImageModule'
 import {singleImageModule} from './singleImageModule'
 import {servicesModule} from './servicesModule'
+import {deliverablesModule} from './deliverablesModule'
 import {videoModule} from './videoModule'
 
 export const moduleTypes = [
@@ -18,5 +19,6 @@ export const moduleTypes = [
   textImageModule,
   singleImageModule,
   servicesModule,
+  deliverablesModule,
   videoModule,
 ]
