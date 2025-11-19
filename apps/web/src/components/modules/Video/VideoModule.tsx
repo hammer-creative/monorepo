@@ -42,7 +42,7 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
     };
 
     return (
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative' }} className="single-video">
         {!isPlaying ? (
           <VideoPoster
             video={v.video}
