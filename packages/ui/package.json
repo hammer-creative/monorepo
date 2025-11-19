@@ -17,7 +17,6 @@
     "dist"
   ],
   "scripts": {
-    "postinstall": "eslint-init react",
     "clean": "rm -rf dist node_modules .turbo",
     "dev:watch": "pnpm build -- --watch",
     "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist",
