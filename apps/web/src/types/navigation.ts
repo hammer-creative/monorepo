@@ -6,14 +6,16 @@ export interface MenuItem {
   href: string;
 }
 
-export interface FooterSection {
+export interface Address {
   id: string;
-  title: string;
-  items: MenuItem[];
+  label: string;
+  line1: string;
 }
 
-export interface SocialMenuItem extends MenuItem {
-  platform: string;
+export interface SocialMenuItem {
+  id: string;
+  label: string;
+  href: string;
 }
 
 export interface NavigationData {
@@ -22,7 +24,8 @@ export interface NavigationData {
     href: string;
   };
   main: MenuItem[];
-  footer: FooterSection[];
+  addresses: Address[];
+  legal: MenuItem[];
   social: SocialMenuItem[];
 }
 
