@@ -39,8 +39,5 @@
       "eslint --fix",
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "@hmidmismi/commitlint-config": "^1.0.1"
   }
 }

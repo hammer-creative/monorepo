@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@hmidmismi/commitlint-config':
-        specifier: ^1.0.1
-        version: 1.0.1(@commitlint/cli@20.1.0(@types/node@20.19.25)(typescript@5.9.3))(@commitlint/config-conventional@20.0.0)
     devDependencies:
       '@chorusworks/eslint-config':
         specifier: workspace:*
@@ -1967,12 +1963,6 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
-
-  '@hmidmismi/commitlint-config@1.0.1':
-    resolution: {integrity: sha512-cVJ6K7P2jqCbpy5Q8gjPMxtwAfdFw/0cEqfP0lMui+QQnKwTBA2jM1eCh2MBbkQE9euHYXcjg2dub8VQYNL68Q==, tarball: https://npm.pkg.github.com/download/@hmidmismi/commitlint-config/1.0.1/4549ff1e2ab11cd7587ddb9d56492c924ce1dede}
-    peerDependencies:
-      '@commitlint/cli': ^19.0.0
-      '@commitlint/config-conventional': ^19.0.0
 
   '@hookform/resolvers@3.10.0':
     resolution: {integrity: sha512-79Dv+3mDF7i+2ajj7SkypSKHhl1cbln1OGavqrsF7p6mbUv11xpqpacPsGDCTRvCSjEEIez2ef1NveSVL3b0Ag==}
@@ -12389,11 +12379,6 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
 
   '@floating-ui/utils@0.2.10': {}
-
-  '@hmidmismi/commitlint-config@1.0.1(@commitlint/cli@20.1.0(@types/node@20.19.25)(typescript@5.9.3))(@commitlint/config-conventional@20.0.0)':
-    dependencies:
-      '@commitlint/cli': 20.1.0(@types/node@20.19.25)(typescript@5.9.3)
-      '@commitlint/config-conventional': 20.0.0
 
   '@hookform/resolvers@3.10.0(react-hook-form@7.66.0(react@19.1.0))':
     dependencies:
