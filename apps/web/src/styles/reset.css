@@ -102,3 +102,7 @@ select {
 :target {
   scroll-margin-block: 5ex;
 }
+
+address {
+  font-style: normal;
+}
