@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm --filter @chorusworks/contentful... build && pnpm --filter hammer/web build"
+  command = "pnpm build && pnpm --filter @hammer/web build"
   publish = "apps/web/.next"
 
 [build.environment]
@@ -7,7 +7,7 @@
   PNPM_VERSION = "10.12.4"
 
 [dev]
-  command = "pnpm --filter hammer/web dev"
+  command = "pnpm --filter @hammer/web dev"
   framework = "#custom"
   targetPort = 3000
   port = 8888
