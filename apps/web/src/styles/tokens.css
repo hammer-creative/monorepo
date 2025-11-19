@@ -17,9 +17,68 @@ max viewport width.
   /* VIEWPORTS */
   --viewport-layout: 120rem; /* 1920px */
   --viewport-jumbo: 80rem; /* 1280px */
-  --viewport-wide: 60rem;
+  --viewport-wide: 60rem; /* 960px */
   --viewport-default: 45rem; /* 720px */
+  --viewport-medium: 40rem; /* 640px */
   --viewport-narrow: 20rem; /* 320px */
+
+  /* BREAKPOINTS */
+  --breakpoint-wide: var(--viewport-wide);
+
+  /* FIXED SPACING TOKENS – 20px increments */
+  --space-20: 1.25rem; /* 20px */
+  --space-30: 1.875rem; /* 30px */
+  --space-40: 2.5rem; /* 40px */
+  --space-60: 3.75rem; /* 60px */
+  --space-80: 5rem; /* 80px */
+  --space-100: 6.25rem; /* 100px */
+  --space-120: 7.5rem; /* 120px */
+  --space-140: 8.75rem; /* 140px */
+  --space-160: 10rem; /* 160px */
+  --space-180: 11.25rem; /* 180px */
+  --space-200: 12.5rem; /* 200px */
+
+  /* FLUID SPACING – 20px increments with viewport scaling */
+  --space-fluid-20-40: clamp(
+    1.25rem,
+    calc(1.25rem + ((1vw - 3.2px) * 2.0833)),
+    2.5rem
+  );
+  --space-fluid-20-60: clamp(
+    1.25rem,
+    calc(1.25rem + ((1vw - 3.2px) * 4.1667)),
+    3.75rem
+  );
+  --space-fluid-20-80: clamp(
+    1.25rem,
+    calc(1.25rem + ((1vw - 3.2px) * 6.25)),
+    5rem
+  );
+  --space-fluid-40-80: clamp(
+    2.5rem,
+    calc(2.5rem + ((1vw - 3.2px) * 4.1667)),
+    5rem
+  );
+  --space-fluid-20-100: clamp(
+    1.25rem,
+    calc(1.25rem + ((1vw - 3.2px) * 8.3333)),
+    6.25rem
+  );
+  --space-fluid-40-120: clamp(
+    2.5rem,
+    calc(2.5rem + ((1vw - 3.2px) * 8.3333)),
+    7.5rem
+  );
+  --space-fluid-60-120: clamp(
+    3.75rem,
+    calc(3.75rem + ((1vw - 3.2px) * 6.25)),
+    7.5rem
+  );
+  --space-fluid-80-160: clamp(
+    5rem,
+    calc(5rem + ((1vw - 3.2px) * 8.3333)),
+    10rem
+  );
 
   /* TYPEFACES */
   --font-sans: var(--font-diatype-medium);
@@ -47,6 +106,11 @@ max viewport width.
     calc(1.25rem + ((1vw - 3.2px) * 4.1667)),
     60px
   );
+  --font-size-fluid-impact-headline: clamp(
+    20px,
+    calc(1.25rem + ((1vw - 3.2px) * 1.5)),
+    60px
+  );
   --font-size-fluid-large: clamp(
     10px,
     calc(0.625rem + ((1vw - 3.2px) * 5.2083)),
@@ -59,15 +123,14 @@ max viewport width.
   );
   --font-size-fluid-small: clamp(
     10px,
-    calc(0.625rem + ((1vw - 3.2px) * 1.25)),
-    24px
+    calc(0.625rem + ((1vw - 3.2px) * 0.625)),
+    20px
   );
   --font-size-fluid-tag: clamp(
     10px,
-    calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
+    calc(0.625rem + ((1vw - 3.2px) * 0.4545)),
     14px
   );
-
   /* FONT WEIGHTS */
   --font-weight-default: 500;
   --font-weight-light: 100;
@@ -80,13 +143,6 @@ max viewport width.
     2
   ); /* 2 at narrow → 1 at wide */
   --line-height-loose: 2;
-
-  /* SPACING TOKENS – fixed units */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 1rem;
-  --space-4: 2rem;
-  --space-5: 4rem;
 
   /* STACK SCALE – fluid rhythm derived from base spacing */
   --stack-tight: clamp(var(--space-1), 0.5vw + var(--space-1), var(--space-2));
@@ -102,7 +158,7 @@ max viewport width.
   --stack-gap: var(--stack-regular);
 
   /* LETTER SPACING */
-  --letter-spacing-default: normal;
+  --letter-spacing-default: 1;
   --letter-spacing-tight: -0.06em;
-  --letter-spacing-loose: -0.01em;
+  --letter-spacing-loose: -0.03em;
 }

@@ -7,7 +7,7 @@ import {createTextField, createSingleImageField} from '../factories'
 interface VideoItemConfig {
   name: string
   title: string
-  posterLabel: string // clearer: this layout affects POSTER ONLY
+  posterLabel: string
   minWidth: number
   minHeight: number
   aspectRatio: number
@@ -22,7 +22,6 @@ export function createVideoItem(config: VideoItemConfig) {
     title,
     type: 'object',
     icon: PlayIcon,
-
     fields: [
       createTextField({
         name: 'title',
@@ -30,15 +29,12 @@ export function createVideoItem(config: VideoItemConfig) {
         required: true,
         maxLength: 100,
       }),
-
       {
         name: 'video',
         title: 'Video',
         type: 'mux.video',
-        validation: (Rule) => Rule.required(), // always required
+        validation: (Rule) => Rule.required(),
       },
-
-      // POSTER RULES — the ONLY part that differs by item type
       createSingleImageField({
         name: 'poster',
         title: 'Poster Image',
@@ -46,7 +42,7 @@ export function createVideoItem(config: VideoItemConfig) {
         required: true,
         minWidth,
         minHeight,
-        maxFileSize: 5, // MB
+        maxFileSize: 5,
         imageOptions: {
           hotspot: {
             previews: [{title: aspectRatioLabel, aspectRatio}],
@@ -54,7 +50,6 @@ export function createVideoItem(config: VideoItemConfig) {
         },
       }),
     ],
-
     preview: {
       select: {
         title: 'title',
@@ -62,7 +57,6 @@ export function createVideoItem(config: VideoItemConfig) {
         resolution: 'video.asset.data.max_stored_resolution',
         media: 'poster',
       },
-
       prepare({title, duration, resolution, media}) {
         const formatDuration = (seconds: number) => {
           const mins = Math.floor(seconds / 60)

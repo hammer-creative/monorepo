@@ -1,7 +1,10 @@
 // apps/web/src/lib/sanity/groq/builders.ts
 
+// apps/web/src/lib/sanity/groq/builders.ts
+
 export const projections = {
   slug: `"slug": slug.current`,
+
   image: `
     image {
       asset,
@@ -10,6 +13,7 @@ export const projections = {
       hotspot
     }
   `,
+
   imageItem: `
     image {
       asset,
@@ -18,32 +22,49 @@ export const projections = {
       hotspot
     }
   `,
+
+  poster: `
+    poster {
+      "asset": asset->,
+      alt,
+      crop,
+      hotspot
+    }
+  `,
+
   videoItem: `
     _key,
     _type,
     title,
     video {
-      asset->
+      "playbackId": asset->playbackId,
+      "aspectRatio": asset->data.aspect_ratio
     },
     poster {
-      asset->,
-      alt
+      "asset": asset->,
+      alt,
+      crop,
+      hotspot
     }
   `,
+
   textBlock: `
     title,
     body
   `,
+
   color: `
     enabled,
     name
   `,
+
   services: `
     services[]-> {
       _id,
       name
     }
   `,
+
   deliverables: `
     deliverables[]-> {
       _id,
@@ -55,11 +76,11 @@ export const projections = {
 export const moduleProjections = `
   _key,
   _type,
+
   backgroundColor {
     ${projections.color}
   },
 
-  // Hero Module
   _type == "heroModule" => {
     title,
     body,
@@ -70,7 +91,6 @@ export const moduleProjections = `
     ${projections.image}
   },
 
-  // Text Module
   _type == "textModule" => {
     title,
     tag,
@@ -80,7 +100,6 @@ export const moduleProjections = `
     }
   },
 
-  // Text + Image Module
   _type == "textImageModule" => {
     title,
     body,
@@ -90,14 +109,12 @@ export const moduleProjections = `
     ${projections.image}
   },
 
-  // Video Module
   _type == "videoModule" => {
     videos[] {
       ${projections.videoItem}
     }
   },
 
-  // Carousel Module (Multi Image)
   _type == "carouselModule" => {
     images[] {
       _key,
@@ -106,7 +123,6 @@ export const moduleProjections = `
     }
   },
 
-  // Impact Module
   _type == "impactModule" => {
     layout,
     textColor {
@@ -118,6 +134,17 @@ export const moduleProjections = `
     },
     textBlock2 {
       ${projections.textBlock}
+    },
+    textBlock3 {
+      ${projections.textBlock}
     }
+  },
+
+  _type == "servicesModule" => {
+    ${projections.services}
+  },
+
+  _type == "deliverablesModule" => {
+    ${projections.deliverables}
   }
 `;

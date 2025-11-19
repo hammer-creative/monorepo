@@ -1,5 +1,7 @@
 /* apps/web/src/styles/layout.css */
 
+@import './mixins.css';
+
 .layout-container {
   max-width: var(--viewport-layout);
   margin-left: auto;
