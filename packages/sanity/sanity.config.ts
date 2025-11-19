@@ -8,8 +8,8 @@ import {muxInput} from 'sanity-plugin-mux-input'
 export default defineConfig({
   name: 'hammer-creative-sanity-studio',
   title: 'Hammer Creative Sanity Studio',
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
+  dataset: process.env.SANITY_STUDIO_DATASET!,
   plugins: [
     structureTool(),
     visionTool(),
