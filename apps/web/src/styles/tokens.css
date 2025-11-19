@@ -26,6 +26,7 @@ max viewport width.
   --breakpoint-wide: var(--viewport-wide);
 
   /* FIXED SPACING TOKENS – 20px increments */
+  --space-10: 0.625rem; /* 10px */
   --space-20: 1.25rem; /* 20px */
   --space-30: 1.875rem; /* 30px */
   --space-40: 2.5rem; /* 40px */
@@ -96,6 +97,11 @@ max viewport width.
   --font-size-extra-small: 0.625rem; /* 10px */
 
   /* FLUID FONT SIZES */
+  --font-size-fluid-menu: clamp(
+    56px,
+    calc(3.5rem + ((1vw - 3.2px) * 9.5455)),
+    140px
+  );
   --font-size-fluid-headline: clamp(
     20px,
     calc(1.25rem + ((1vw - 3.2px) * 6.25)),
