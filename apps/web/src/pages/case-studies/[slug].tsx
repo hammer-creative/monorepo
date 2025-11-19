@@ -1,5 +1,4 @@
 // apps/web/src/pages/work/[slug].tsx
-// apps/web/src/pages/work/[slug].tsx
 import {
   CarouselModule,
   DeliverablesModule,
@@ -63,6 +62,21 @@ const moduleComponents: Record<
 export default function CaseStudyPage({ caseStudy }: Props) {
   const resolvedModules = caseStudy.modules.map(resolveModuleColors);
 
+  // --- EXTRACT SERVICES + DELIVERABLES ---
+  const services = resolvedModules.find(
+    (m) => m._type === ModuleType.Services,
+  ) as ServicesModuleType | undefined;
+
+  const deliverables = resolvedModules.find(
+    (m) => m._type === ModuleType.Deliverables,
+  ) as ServicesModuleType | undefined;
+
+  // --- REMOVE THEM FROM THE LOOP ---
+  const filteredModules = resolvedModules.filter(
+    (m) =>
+      m._type !== ModuleType.Services && m._type !== ModuleType.Deliverables,
+  );
+
   return (
     <>
       <NextSeo
@@ -70,8 +84,9 @@ export default function CaseStudyPage({ caseStudy }: Props) {
         titleTemplate="%s | Hammer Creative"
         openGraph={{ title: caseStudy.title, type: 'article' }}
       />
+
       <article className="case-study">
-        {resolvedModules.map((mod, index) => {
+        {filteredModules.map((mod, index) => {
           const Component = moduleComponents[mod._type];
 
           if (!Component) {
@@ -93,14 +108,20 @@ export default function CaseStudyPage({ caseStudy }: Props) {
                 {
                   '--module-bg': backgroundHex,
                   '--module-text': textHex,
-                  backgroundColor: 'var(--module-bg)',
-                  color: 'var(--module-text)',
+                  backgroundColor: backgroundHex, // Set it directly here
+                  color: textHex,
                 } as React.CSSProperties
               }
             >
-              <Component
-                data={mod as Extract<Module, { _type: typeof mod._type }>}
-              />
+              {mod._type === ModuleType.Hero ? (
+                <HeroModule
+                  data={mod as HeroModuleType}
+                  services={services}
+                  deliverables={deliverables}
+                />
+              ) : (
+                <Component data={mod as any} />
+              )}
             </section>
           );
         })}

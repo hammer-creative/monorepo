@@ -1,111 +1,259 @@
+/* TODO: refactor to use common text components, fix order issues */
+
 /* apps/web/src/components/modules/Hero/HeroModule.tsx */
 
-/* HERO MODULE STYLES */
-.hero {
-  position: relative;
+@import './mixins.css';
+
+/* Inherits from computed styles */
+.module {
+  background-color: var(--module-bg);
+  color: var(--module-text);
 }
 
 .hero-marquee {
-  position: absolute;
-  z-index: 10;
-  bottom: 0;
-  left: 0;
-  width: 50%;
-  padding: 1.75rem 1rem 3rem 3rem;
+  background-color: var(--module-bg);
 }
 
-.hero-image {
-  position: relative;
-  width: 100%;
-  overflow: hidden; /* ✅ this is your clipping mask */
-}
+/* HERO MODULE STYLES */
+/* Hero image and marquee positioning and temp. image animation */
+.hero-module {
+  .hero {
+    @mixin flex-base column, wrap;
+    position: relative;
+    overflow: hidden;
+  }
 
-.hero-image img {
-  display: block;
-  width: 100%;
-  transform: scale(1); /* start slightly zoomed in */
-  transform-origin: center center;
-  animation: heroZoomOut 1s ease-out forwards;
-}
+  .hero-marquee {
+    order: 2;
+    width: 100%;
+    min-width: 100%;
+  }
 
-.hero-description {
-  width: 50%;
-  padding: 0 1rem 12rem 3rem;
-}
+  .hero-marquee {
+    width: 350px;
+  }
 
-.hero-accent-bar {
-  padding-bottom: 3rem;
-}
+  .hero-image {
+    order: 1;
+  }
 
-@keyframes heroZoomOut {
-  to {
-    transform: scale(1.1); /* tween down to 100% */
+  .hero-accent-bar {
+    display: none;
+  }
+
+  @media screen and (min-width: 50rem) {
+    .hero-marquee {
+      position: absolute;
+      z-index: 10;
+      bottom: 0;
+      left: 0;
+      max-width: 100%;
+    }
+    .hero-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      animation: hero-zoom-out 1s ease-out forwards;
+    }
+    .hero-accent-bar {
+      display: block;
+    }
   }
 }
 
-.text-module {
-  padding: 5rem 3rem;
-  .flow {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
-    gap: var(--space-4);
-    align-items: start;
+/* HERO MODULE STYLES */
+/* Flex box layout */
+.hero-module .hero-description {
+  .flex {
+    @mixin flex initial, initial, initial, column, row, 50rem;
   }
-
-  @media (max-width: 60rem) {
-    .flow {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto;
+  .flex-item:last-child {
+    @mixin flex-base row, nowrap;
+  }
+  .flex-item:last-child {
+    ul {
+      flex-basis: 50%;
     }
   }
 
-  .flow h3 {
-    grid-column: 1;
-    grid-row: 1;
-    align-self: start;
-  }
-
-  .flow h2 {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: end;
-  }
-
-  .flow .body {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    align-self: start;
-  }
-  .body {
-    hyphens: none;
-    text-wrap: balance;
-    text-justify: inter-word;
+  @media screen and (min-width: 50rem) {
+    .flex-item {
+      flex-basis: 50%;
+    }
   }
 }
 
-.text-image-module .flow {
-  gap: 0 !important;
+/* HERO MODULE STYLES */
+/* Remaining spacing styles and logic */
+.hero-module {
+  .hero-marquee {
+    padding-top: var(--space-fluid-20-40);
+    padding-left: var(--space-fluid-20-40);
+  }
+  .hero-description {
+    padding-left: var(--space-fluid-20-40);
+    padding-bottom: var(--space-60);
+  }
+  .portable-text,
+  .hero-client-name {
+    padding-bottom: var(--space-30);
+  }
+  .tag {
+    padding-bottom: 1rem;
+  }
 }
 
-.text-image-module .body {
-  flex: none !important;
-  width: 50% !important;
-  padding: 3rem 15% 3rem 3rem !important;
+/* TEXT IMAGE MODULE STYLES */
+.text-image-module {
+  /* Container */
+  .flex {
+    @mixin flex initial, initial, initial, column, row, 50rem;
+    align-items: stretch;
+  }
+
+  /* Items */
+
+  .flex-item:first-child {
+    order: 2;
+  }
+
+  .flex-item:last-child {
+    order: 1;
+    display: flex;
+  }
+
+  .flex-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Desktop adjustments */
+  @media screen and (min-width: 50rem) {
+    .flex {
+      /* gap: var(--space-60); */
+    }
+    .flex-item {
+      flex-basis: 50%;
+    }
+    .flex-item:first-child {
+      order: 1;
+      padding: var(--space-fluid-40-80);
+    }
+
+    .flex-item:last-child {
+      order: 2;
+    }
+  }
 }
 
-blockquote {
-  font-weight: 900;
+/* TEXT MODULE STYLES */
+
+/* TODO: Refine fluid spacing */
+
+.text-module {
+  /* Container */
+  .flex {
+    @mixin flex initial, initial, initial, column, row, 50rem;
+    padding: var(--space-fluid-40-80) var(--space-fluid-20-40);
+  }
+
+  /* Items */
+
+  .tag {
+    padding-bottom: var(--space-50);
+  }
+
+  .flex-item:first-child {
+    padding-bottom: var(--space-30);
+  }
+
+  /* Desktop adjustments */
+  @media screen and (min-width: 50rem) {
+    .flex {
+      gap: var(--space-30);
+    }
+    .flex-item {
+      flex-basis: 50%;
+    }
+
+    .flex-item:first-child {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0rem;
+    }
+
+    h2 {
+      /* max-width: 75%; */
+    }
+  }
 }
 
-.video-module {
-  padding: 1rem;
-}
+/* IMPACT MODULE STYLES */
 
-.text-module[data-module-index='5'] {
-  color: #778888 !important;
-}
+/* TODO:
 
-.text-module h2 {
-  padding-right: 2rem;
+need SVG for vertical border at wide viewport
+adaptive width for h3 and p at wide viewport
+fix flex-item flex definition
+
+*/
+
+.impact-module {
+  /* Container */
+  .flex {
+    @mixin flex initial, initial, initial, column, row, 50rem;
+  }
+
+  /* Items */
+  .flex-item {
+    flex-basis: 100%;
+    padding: var(--space-fluid-20-60) var(--space-fluid-20-60)
+      var(--space-fluid-60-120);
+    display: flex;
+    flex-direction: column;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height=".5"><line x1="0" y1="0" x2="100" y2="0" stroke="%23C7D3D3" stroke-width="1"/></svg>')
+      repeat-x;
+  }
+
+  /* Headings */
+  h3 {
+    min-height: 1em;
+    margin: 0;
+    padding-bottom: var(--space-30);
+  }
+
+  /* Content */
+  h3,
+  .portable-text {
+    max-width: 75%;
+  }
+
+  p {
+    line-height: 2;
+  }
+
+  /* Desktop adjustments */
+  @media screen and (min-width: 50rem) {
+    .flex {
+      min-height: 400px;
+    }
+
+    .flex-item {
+      flex-basis: 33%;
+    }
+
+    .flex-item:nth-child(2) {
+      border-right: 1px solid $color-aircutter;
+      border-left: 1px solid $color-aircutter;
+    }
+
+    h3 {
+      min-height: 3em;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+  }
 }

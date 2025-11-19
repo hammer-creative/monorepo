@@ -2,7 +2,7 @@
 
 Contains typographic rhythm, scaling, and sizing. Does not contain spacing, color, or special effects */
 
-@import './tokens.css';
+/* @import './tokens.css'; */
 @import './mixins';
 
 body {
@@ -11,9 +11,15 @@ body {
 
 /* HEADINGS */
 h1,
+h2,
+h3 {
+  line-height: var(--line-height-default);
+  font-weight: 100;
+}
+
+h1,
 h2 {
   text-transform: uppercase;
-  line-height: var(--line-height-default);
 }
 
 h1 {
@@ -27,7 +33,17 @@ h2 {
   @mixin letter-spacing-responsive var(--letter-spacing-loose);
 }
 
+h3 {
+  @mixin typography var(--font-sans), var(--font-size-fluid-impact-headline);
+  line-height: var(--line-height-default);
+}
+
 /* PARAGRAPHS & BLOCKS */
+p {
+  @mixin letter-spacing-responsive var(--letter-spacing-normal),
+    var(--letter-spacing-loose);
+}
+
 p.large {
   @mixin typography var(--font-sans), var(--font-size-fluid-large);
   line-height: var(--line-height-fluid-reverse);
@@ -44,20 +60,20 @@ div.client {
   line-height: var(--line-height-fluid-reverse);
 }
 
+p.body {
+  hyphens: none;
+  text-wrap: balance;
+  text-justify: inter-word;
+}
+
 ul li {
-  @mixin typography var(--font-sans), var(--font-size-fluid-small);
+  @mixin typography var(--font-sans), var(--font-size-fluid-xsmall);
   line-height: var(--line-height-loose);
 }
 
-ul li:first-of-type {
-  text-transform: uppercase;
-  @mixin letter-spacing-responsive var(--letter-spacing-wide);
-}
-
-div.rubric {
+.tag {
   @mixin all-caps-accent;
-  text-transform: lowercase;
-  font-variant: small-caps;
+  @mixin typography var(--font-sans), var(--font-size-fluid-tag);
   letter-spacing: 0.1em;
   font-weight: 900;
 }
@@ -66,5 +82,6 @@ div.rubric {
 .case-study blockquote {
   @mixin typography var(--font-sans), var(--font-size-fluid-small);
   line-height: var(--line-height-fluid-reverse);
-  padding: 2rem 0;
+  padding: var(--space-fluid-20-60) 0;
+  font-weight: 900;
 }

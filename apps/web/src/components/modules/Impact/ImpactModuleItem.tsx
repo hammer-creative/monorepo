@@ -4,10 +4,10 @@ import type { TextBlock } from '@/types/sanity';
 
 export function ImpactModuleItem({ item }: { item: TextBlock }) {
   return (
-    <div className="impact-item">
+    <div className="flex-item">
       {item.title && <h3>{item.title}</h3>}
       {item.body && (
-        <PortableTextRenderer value={item.body} className="medium" />
+        <PortableTextRenderer value={item.body} className="small" />
       )}
     </div>
   );

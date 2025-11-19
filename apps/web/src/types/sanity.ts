@@ -35,7 +35,6 @@ export type ColorValue = {
   hex?: string;
 };
 
-// apps/web/src/types/sanity.ts
 export type ProjectedImage = {
   asset?: {
     _ref: string;
@@ -82,7 +81,7 @@ export type HeroModuleType = {
 
 export type VideoItem = {
   _key: string;
-  _type: 'videoItem';
+  _type: 'videoItemFullWidth' | 'videoItem50' | 'videoItem33';
   title: string;
   video: MuxVideo;
   poster?: ProjectedImage;
