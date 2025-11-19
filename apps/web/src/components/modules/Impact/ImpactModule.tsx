@@ -4,11 +4,6 @@ import type { ImpactModuleType, TextBlock } from '@/types/sanity';
 import { ImpactModuleItem } from './ImpactModuleItem';
 
 export function ImpactModule({ data }: { data: ImpactModuleType }) {
-  const bgColor =
-    data.backgroundColor?.enabled && data.backgroundColor?.hex
-      ? data.backgroundColor.hex
-      : 'transparent';
-
   console.log('ImpactModule data:', data);
 
   const blocks: TextBlock[] = [
@@ -19,16 +14,11 @@ export function ImpactModule({ data }: { data: ImpactModuleType }) {
 
   return (
     <>
-      Impact
-      {/* your original commented code */}
-      {/* <div className="flow">
-        <h2>{data.title}</h2>
-        <div className="rubric">{data.tag}</div>
-        <PortableTextRenderer value={data.body} className="medium" />
-      </div> */}
-      {blocks.map((block, i) => (
-        <ImpactModuleItem key={i} item={block} />
-      ))}
+      <div className="flex">
+        {blocks.map((block, i) => (
+          <ImpactModuleItem key={i} item={block} />
+        ))}
+      </div>
     </>
   );
 }

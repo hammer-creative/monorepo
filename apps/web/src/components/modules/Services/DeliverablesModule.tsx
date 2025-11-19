@@ -14,12 +14,13 @@ export function DeliverablesModule({ data }: Props) {
   }
 
   return (
-    <div className="deliverables-module">
+    <>
       <ul className="deliverables-list">
+        <div className="tag">Delivered Elements</div>
         {deliverables.map((deliverable) => (
           <ServiceItem key={deliverable._id} item={deliverable} />
         ))}
       </ul>
-    </div>
+    </>
   );
 }

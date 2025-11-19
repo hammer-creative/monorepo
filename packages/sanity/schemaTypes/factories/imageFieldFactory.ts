@@ -1,7 +1,5 @@
 // packages/sanity/schemaTypes/factories/imageFieldFactory.ts
 
-// packages/sanity/schemaTypes/factories/imageFieldFactory.ts
-
 import {defineField} from 'sanity'
 import {addRequiredLabel} from '../utils/fieldHelpers'
 import {createTextField} from './textFieldFactory'
@@ -41,7 +39,7 @@ interface SingleImageConfig extends BaseImageConfig {
   description?: string
 }
 
-interface MultiImageConfig {
+interface MultiImageConfig extends BaseImageConfig {
   name?: string
   title?: string
   required?: boolean
@@ -123,63 +121,37 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
         : []),
     ],
     validation: (Rule: ImageRule) => {
-      console.log('🔧 Setting up validation with:', {minWidth, minHeight, maxFileSize, required})
-
       return Rule.custom((image: any) => {
-        console.log('🔍 Custom validation running for:', image)
-
-        // Check required first
         if (required && !image?.asset) {
-          console.log('❌ Required check failed - no image')
           return `${baseField.title} is required`
         }
 
-        // If not required and no image, that's fine
-        if (!image?.asset) {
-          console.log('⚠️ No asset, skipping dimension checks')
+        if (!image?.asset || (!minWidth && !minHeight && !maxFileSize)) {
           return true
         }
-
-        // No dimension/filesize constraints to check
-        if (!minWidth && !minHeight && !maxFileSize) {
-          console.log('✅ No constraints to check')
-          return true
-        }
-
-        console.log('📎 Asset ref:', image.asset._ref)
 
         return new Promise((resolve) => {
           const query = `*[_id == "${image.asset._ref}"][0]{
-        "dimensions": metadata.dimensions,
-        "size": size
-      }`
-
-          console.log('🔎 Running query:', query)
+            "dimensions": metadata.dimensions,
+            "size": size
+          }`
 
           import('../../src/lib/sanity')
             .then(({client}) => {
-              console.log('✅ Client imported successfully')
               client
                 .fetch(query)
                 .then((asset: any) => {
-                  console.log('📊 Asset data received:', asset)
-
-                  if (!asset) {
-                    console.log('❌ No asset data returned')
-                    return resolve(true)
-                  }
+                  if (!asset) return resolve(true)
 
                   const {dimensions, size} = asset
 
                   if (minWidth && dimensions?.width < minWidth) {
-                    console.log(`❌ WIDTH FAIL: ${dimensions.width} < ${minWidth}`)
                     return resolve(
                       `Image must be at least ${minWidth}px wide (currently ${dimensions.width}px)`,
                     )
                   }
 
                   if (minHeight && dimensions?.height < minHeight) {
-                    console.log(`❌ HEIGHT FAIL: ${dimensions.height} < ${minHeight}`)
                     return resolve(
                       `Image must be at least ${minHeight}px tall (currently ${dimensions.height}px)`,
                     )
@@ -189,25 +161,17 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
                     const maxBytes = maxFileSize * 1024 * 1024
                     if (size > maxBytes) {
                       const sizeMB = (size / (1024 * 1024)).toFixed(2)
-                      console.log(`❌ FILESIZE FAIL: ${sizeMB}MB > ${maxFileSize}MB`)
                       return resolve(
                         `Image must be smaller than ${maxFileSize}MB (currently ${sizeMB}MB)`,
                       )
                     }
                   }
 
-                  console.log('✅ All dimension/filesize checks passed')
                   resolve(true)
                 })
-                .catch((err) => {
-                  console.error('❌ Fetch error:', err)
-                  resolve(true)
-                })
+                .catch(() => resolve(true))
             })
-            .catch((err) => {
-              console.error('❌ Import error:', err)
-              resolve(true)
-            })
+            .catch(() => resolve(true))
         })
       })
     },
@@ -215,7 +179,7 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
 }
 
 /**
- * Creates a multi-image array field using imageItem objects
+ * Creates a multi-image array field with optional per-image dimension/size constraints
  * For galleries, grids, and collections of images
  */
 export const createMultiImageField = (config: MultiImageConfig = {}) => {
@@ -226,23 +190,112 @@ export const createMultiImageField = (config: MultiImageConfig = {}) => {
     minImages = 2,
     maxImages = 20,
     description = '',
+    altMaxLength = 150,
+    imageOptions = {hotspot: true},
+    minWidth,
+    minHeight,
+    maxFileSize,
   } = config
+
+  // Create inline imageItem with validation
+  const imageItemType = {
+    type: 'object' as const,
+    fields: [
+      {
+        name: 'image',
+        title: 'Image',
+        type: 'image' as const,
+        options: imageOptions,
+        fields: [
+          createTextField({
+            name: 'alt',
+            title: 'Alt Text',
+            required: true,
+            maxLength: altMaxLength,
+            description: 'Describe the image for accessibility',
+          }),
+        ],
+        validation: (Rule: ImageRule) => {
+          if (!minWidth && !minHeight && !maxFileSize) {
+            return Rule.required()
+          }
+
+          return Rule.required().custom((image: any) => {
+            if (!image?.asset) return true
+
+            return new Promise((resolve) => {
+              const query = `*[_id == "${image.asset._ref}"][0]{
+                "dimensions": metadata.dimensions,
+                "size": size
+              }`
+
+              import('../../src/lib/sanity')
+                .then(({client}) => {
+                  client
+                    .fetch(query)
+                    .then((asset: any) => {
+                      if (!asset) return resolve(true)
+
+                      const {dimensions, size} = asset
+
+                      if (minWidth && dimensions?.width < minWidth) {
+                        return resolve(
+                          `Image must be at least ${minWidth}px wide (currently ${dimensions.width}px)`,
+                        )
+                      }
+
+                      if (minHeight && dimensions?.height < minHeight) {
+                        return resolve(
+                          `Image must be at least ${minHeight}px tall (currently ${dimensions.height}px)`,
+                        )
+                      }
+
+                      if (maxFileSize) {
+                        const maxBytes = maxFileSize * 1024 * 1024
+                        if (size > maxBytes) {
+                          const sizeMB = (size / (1024 * 1024)).toFixed(2)
+                          return resolve(
+                            `Image must be smaller than ${maxFileSize}MB (currently ${sizeMB}MB)`,
+                          )
+                        }
+                      }
+
+                      resolve(true)
+                    })
+                    .catch(() => resolve(true))
+                })
+                .catch(() => resolve(true))
+            })
+          })
+        },
+      },
+    ],
+    preview: {
+      select: {media: 'image', alt: 'image.alt'},
+      prepare({media, alt}: {media: any; alt: string}) {
+        return {
+          title: alt || 'Image',
+          media,
+        }
+      },
+    },
+  }
 
   return defineField({
     name,
     title,
     type: 'array',
-    of: [{type: 'imageItem'}],
+    of: [imageItemType],
     description: addRequiredLabel(description, required),
     validation: required
-      ? (Rule: ArrayRule<any>) =>
+      ? (Rule: ArrayRule) =>
           Rule.required()
             .min(minImages)
             .max(maxImages)
             .error(
               `${title} must include ${minImages}-${maxImages} image${maxImages !== 1 ? 's' : ''}`,
             )
-      : (Rule: ArrayRule<any>) =>
+      : (Rule: ArrayRule) =>
           Rule.min(minImages)
             .max(maxImages)
             .error(

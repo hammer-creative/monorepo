@@ -14,12 +14,11 @@ export function ServicesModule({ data }: Props) {
   }
 
   return (
-    <div className="services-module">
-      <ul className="services-list">
-        {services.map((service) => (
-          <ServiceItem key={service._id} item={service} />
-        ))}
-      </ul>
-    </div>
+    <ul className="services-list">
+      <div className="tag">Services</div>
+      {services.map((service) => (
+        <ServiceItem key={service._id} item={service} />
+      ))}
+    </ul>
   );
 }

@@ -75,7 +75,7 @@ export function PortableTextRenderer({
   };
 
   return (
-    <div className="body">
+    <div className="portable-text">
       <PortableText value={value} components={components} />
     </div>
   );
