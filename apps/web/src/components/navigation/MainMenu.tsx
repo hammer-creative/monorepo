@@ -1,26 +1,19 @@
 // apps/web/src/components/navigation/MainMenu.tsx
 import { MenuItem } from '@/types/navigation';
-import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import Link from 'next/link';
+import { Menu } from './Menu';
 
-interface MainMenuProps {
+interface MenuProps {
   items: MenuItem[];
 }
 
-export function MainMenu({ items }: MainMenuProps) {
+export function MainMenu({ items }: MenuProps) {
   return (
-    <NavigationMenu.Root className="main-menu">
-      <NavigationMenu.List className="main-menu-list">
-        {items.map((item) => (
-          <NavigationMenu.Item key={item.id} className="main-menu-item">
-            <NavigationMenu.Link asChild>
-              <Link href={item.href} className="main-menu-link">
-                {item.label}
-              </Link>
-            </NavigationMenu.Link>
-          </NavigationMenu.Item>
-        ))}
-      </NavigationMenu.List>
-    </NavigationMenu.Root>
+    <Menu
+      items={items}
+      className="main-menu"
+      listClassName="main-menu-list"
+      itemClassName="main-menu-item"
+      linkClassName="main-menu-link"
+    />
   );
 }
