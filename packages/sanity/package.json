@@ -9,7 +9,7 @@
     "dev:watch": "sanity dev",
     "build": "sanity build",
     "start": "sanity start",
-    "deploy": "sanity deploy",
+    "deploy:studio": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
