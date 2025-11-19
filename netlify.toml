@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm --filter @hammer/web build"
+  command = "pnpm --filter @hammercreative/web build"
   publish = "apps/web/.next"
 
 [build.environment]
