@@ -7,9 +7,9 @@
 footer .flex {
   @mixin flex column;
   @media screen and (min-width: 50rem) {
-    gap: var(--space-fluid-40-80);
+    gap: var(--space-fluid-20-40);
   }
-  padding: var(--space-fluid-40-80) var(--space-fluid-20-60);
+  padding: var(--space-fluid-20-60) var(--space-fluid-20-40);
 }
 
 footer .flex-item.group {
