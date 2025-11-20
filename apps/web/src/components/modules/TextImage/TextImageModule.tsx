@@ -6,17 +6,11 @@ import type { TextImageModuleType } from '@/types/sanity';
 export function TextImageModule({ data }: { data: TextImageModuleType }) {
   return (
     <div className="flex">
-      <div className="flex-item">
+      <div className="flex-item text">
         <TextBlock body={data.body} className="text small" />
       </div>
-      <div className="flex-item">
-        <ImageBlock
-          image={data.image}
-          className="hero-image"
-          width={1200}
-          height={800}
-          priority
-        />
+      <div className="flex-item image">
+        <ImageBlock image={data.image} width={1200} height={800} priority />
       </div>
     </div>
   );

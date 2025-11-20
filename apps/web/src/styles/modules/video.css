@@ -1,0 +1,131 @@
+/* apps/web/src/styles/videos.css */
+
+/* LAYOUT */
+.video-module {
+  padding: var(--space-20);
+}
+
+/* MULTI VIDEO LAYOUT */
+
+.multi-video-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.multi-video-item {
+  flex: 1 1 0;
+  overflow: hidden;
+  gap: 3rem;
+}
+
+@media (max-width: 900px) {
+  .multi-video-flex {
+    flex-direction: column;
+  }
+
+  .multi-video-item {
+    width: 100%;
+  }
+}
+
+/* VIDEO POSTER */
+
+.video-poster {
+  position: relative;
+  display: block;
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.video-poster img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* PLAY ICON */
+
+.video-poster-play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.video-poster-play-icon svg {
+  display: none;
+}
+
+.video-poster-play-icon::before {
+  content: '';
+  display: block;
+  width: 1.45em;
+  height: 1em;
+  font-size: var(--font-size-fluid-large);
+  background-image: url('data:image/svg+xml,<svg width="113" height="78" viewBox="0 0 113 78" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M112.5 38.9712L-3.6705e-06 77.9423L-2.6353e-07 4.46735e-05L112.5 38.9712Z" fill="%23FFCC98"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 16px;
+}
+
+.single-video .video-poster-play-icon::after {
+  content: 'Play';
+  color: #ffcc98;
+  font-size: var(--font-size-fluid-large);
+  font-weight: 500;
+  font-family: var(--font-serif);
+  text-transform: uppercase;
+  line-height: 0;
+}
+
+/* VIDEO MODAL */
+
+.video-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+}
+
+.video-modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 1280px;
+  background: #000;
+  z-index: 1000;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+}
+
+.video-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: white;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* MUX PLAYER */
+
+mux-player::part(control-bar),
+mux-player::part(progress-bar) {
+  display: none;
+}
