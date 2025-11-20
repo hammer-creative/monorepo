@@ -11,13 +11,13 @@ interface AddressesProps {
 
 export function Addresses({ items }: AddressesProps) {
   return (
-    <div className="addresses">
+    <>
       {items.map((item) => (
         <address key={item.id} className="address">
-          <p className="address-label">{item.label}</p>
-          <p className="address-line">{item.line1}</p>
+          <p className="text">{item.label}</p>
+          <p className="text">{item.line1}</p>
         </address>
       ))}
-    </div>
+    </>
   );
 }

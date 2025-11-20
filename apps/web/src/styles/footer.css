@@ -1,0 +1,49 @@
+/* apps/web/src/styles/footer.css */
+
+@import './mixins';
+
+/* FOOTER */
+
+footer .flex {
+  @mixin flex column;
+  @media screen and (min-width: 50rem) {
+    gap: var(--space-fluid-40-80);
+  }
+  padding: var(--space-fluid-40-80) var(--space-fluid-20-60);
+}
+
+footer .flex-item.group {
+  @mixin flex-responsive column, row;
+  justify-content: space-between;
+  gap: var(--space-fluid-20-40);
+}
+
+footer .flex-item.utilities,
+footer .flex-item.social {
+  @mixin flex-responsive column, row;
+  justify-content: space-between;
+}
+
+footer .flex-item.utilities {
+  @mixin flex-responsive column, row, 40rem;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+footer .flex-item.social {
+  @mixin flex-responsive column, row, 40rem;
+
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+footer .flex-item.social ul {
+  @mixin flex row;
+  gap: var(--space-fluid-20-40);
+}
+
+footer .addresses {
+  @mixin flex column;
+  gap: var(--space-fluid-20-40);
+  padding-bottom: var(--space-fluid-20-40);
+}

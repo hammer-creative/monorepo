@@ -1,6 +1,6 @@
-/* ============================================================================
-   HEADROOM
-   ========================================================================== */
+/* apps/web/src/styles/navigation.css */
+
+/* HEADROOM */
 
 .headroom {
   top: 0;
@@ -39,24 +39,7 @@
   transform: translateY(0%);
 }
 
-/* ============================================================================
-   HEADER
-   ========================================================================== */
-
-header .wordmark {
-  display: inline-block;
-}
-
-header .wordmark svg {
-  display: block;
-  width: auto;
-  height: 20px;
-  color: $color-hyperbeam;
-}
-
-/* ============================================================================
-   MENU TOGGLE
-   ========================================================================== */
+/* MENU TOGGLE */
 
 .menu-toggle {
   position: fixed;
@@ -83,13 +66,7 @@ header .wordmark svg {
   height: 10px;
 }
 
-/* ============================================================================
-   MAIN MENU
-   ========================================================================== */
-
-.main-menu {
-  /* display: none; */
-}
+/* MAIN MENU */
 
 .main-menu-item {
   font-family: var(--font-serif);
@@ -99,14 +76,12 @@ header .wordmark svg {
   text-transform: uppercase;
 }
 
-/* ============================================================================
-   MOBILE MENU
-   ========================================================================== */
+/* MOBILE MENU */
 
 .mobile-menu-content {
   position: fixed;
   inset: 0;
-  background-color: $color-nightshade;
+  background-color: var(--color-nightshade);
   padding: var(--space-20);
   padding-top: 80px;
   z-index: 9000;
@@ -117,149 +92,6 @@ header .wordmark svg {
   font-family: var(--font-serif);
   font-size: var(--font-size-fluid-headline);
   text-transform: uppercase;
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
   line-height: 1.1;
-}
-
-/* ============================================================================
-   FOOTER
-   ========================================================================== */
-
-.footer {
-  @mixin flex initial, initial, space-between, column, row, 50em;
-  padding-top: var(--space-20);
-  background: $color-sandstorm;
-}
-
-/* Footer Container
-   -------------------------------------------------------------------------- */
-
-.footer-container .flex-item {
-  display: flex;
-}
-
-.footer-container > *:not(:last-child) {
-  padding: var(--space-20);
-}
-
-/* Footer Column: Menu & Addresses (1st child - contains both)
-   -------------------------------------------------------------------------- */
-
-.footer-container .flex-item:first-child {
-  flex-direction: column;
-  gap: var(--space-20);
-}
-
-.footer-menu,
-.addresses {
-  flex: 1;
-}
-
-.addresses {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-20);
-}
-
-.footer .address {
-  text-align: right;
-}
-
-/* Footer Column: Email/Privacy (2nd child)
-   -------------------------------------------------------------------------- */
-
-.footer-container .flex-item:nth-child(2) {
-  margin-right: auto;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Footer Column: Social (3rd child)
-   -------------------------------------------------------------------------- */
-
-.footer-container .flex-item:nth-child(3) {
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-container .flex-item:nth-child(3) .social-menu-list {
-  display: flex;
-  gap: var(--space-20);
-}
-
-/* Footer Column: Wordmark (4th/last child)
-   -------------------------------------------------------------------------- */
-
-.footer-container > .flex-item:last-child a {
-  display: block;
-  line-height: 0;
-}
-
-.footer-container > .flex-item:last-child svg {
-  display: block;
-  vertical-align: bottom;
-}
-
-footer .wordmark svg {
-  width: 100vw;
-  height: auto;
-  color: $color-nightshade;
-}
-
-/* Footer Typography
-   -------------------------------------------------------------------------- */
-
-.footer a:not(.footer-menu-link),
-.footer p {
-  font-size: 16px;
-  line-height: 2;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.footer-menu-item {
-  font-family: var(--font-serif);
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.footer-menu-link {
-  margin: 0;
-  padding: 0;
-  font-size: 40px;
-  line-height: 1.5;
-}
-
-/* Footer Responsive
-   -------------------------------------------------------------------------- */
-
-@media screen and (min-width: 50rem) {
-  .footer-container .flex-item:first-child {
-    flex-direction: row;
-  }
-
-  .footer-menu,
-  .addresses {
-    flex: 1;
-  }
-}
-
-.menu-toggle {
-  position: fixed !important;
-  top: var(--space-20) !important;
-  right: var(--space-20) !important;
-  z-index: 2147483647 !important; /* Maximum z-index value */
-  appearance: none;
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font-family: var(--font-serif);
-  text-transform: uppercase;
-  color: $color-hyperbeam;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }

@@ -9,14 +9,13 @@ interface WordmarkProps {
 
 export function Wordmark({ text, href, className = '' }: WordmarkProps) {
   return (
-    <Link href={href} className={`wordmark ${className}`}>
+    <Link href={href} className={`${className}`}>
       <WordmarkSVG />
       <span className="sr-only">{text}</span>
     </Link>
   );
 }
 
-// apps/web/src/components/Common/WordmarkSVG.tsx
 export function WordmarkSVG() {
   return (
     <svg

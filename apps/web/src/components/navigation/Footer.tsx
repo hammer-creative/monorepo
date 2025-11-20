@@ -2,9 +2,9 @@
 import { Wordmark } from '@/components/common/Wordmark';
 import { NavigationData } from '@/types/navigation';
 import { Addresses } from './Addresses';
-import { Copyright } from './Copyright';
 import { FooterMenu } from './FooterMenu';
 import { SocialMenu } from './SocialMenu';
+import { Utilities } from './Utitities';
 
 interface FooterProps {
   navigationData: NavigationData;
@@ -12,26 +12,28 @@ interface FooterProps {
 
 export function Footer({ navigationData }: FooterProps) {
   return (
-    <footer className="footer">
-      <div className="footer-container flex">
-        <div className="footer-column flex-item">
-          <FooterMenu items={navigationData.main} />
-          <Addresses items={navigationData.addresses} />
+    <footer>
+      <div className="flex">
+        <div className="flex-item group">
+          <div className="menu">
+            <FooterMenu items={navigationData.main} />
+          </div>
+          <div className="addresses">
+            <Addresses items={navigationData.addresses} />
+          </div>
         </div>
-        <div className="footer-column flex-item">
-          <a href="mailto:">info@hammercreative.com</a>
-          <a href="/">Privacy Policy</a>
+        <div className="flex-item utilities">
+          <Utilities />
         </div>
-        <div className="footer-column flex-item">
+        <div className="flex-item social">
           <SocialMenu items={navigationData.social} />
-          <Copyright />
         </div>
-        <div className="footer-column flex-item">
-          <Wordmark
-            text={navigationData.wordmark.text}
-            href={navigationData.wordmark.href}
-          />
-        </div>
+      </div>
+      <div className="wordmark">
+        <Wordmark
+          text={navigationData.wordmark.text}
+          href={navigationData.wordmark.href}
+        />
       </div>
     </footer>
   );

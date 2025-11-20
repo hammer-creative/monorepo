@@ -1,19 +1,11 @@
-// apps/web/src/components/Navigation/FooterMenu.tsx
+// apps/web/src/components/navigation/FooterMenu.tsx
+import { LinkList } from '@/components/ui/LinkList';
 import { MenuItem } from '@/types/navigation';
-import { Menu } from './Menu';
 
 interface MenuProps {
   items: MenuItem[];
 }
 
 export function FooterMenu({ items }: MenuProps) {
-  return (
-    <Menu
-      items={items}
-      className="footer-menu"
-      listClassName="footer-menu-list"
-      itemClassName="footer-menu-item"
-      linkClassName="footer-menu-link"
-    />
-  );
+  return <LinkList items={items} itemClassName="item" linkClassName="link" />;
 }
