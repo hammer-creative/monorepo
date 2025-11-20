@@ -143,16 +143,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
-  const slug = params?.slug as string;
-
-  console.log('=== BUILDING PAGE FOR SLUG:', slug);
-
-  if (!slug) return { notFound: true };
-
   try {
-    const caseStudy = await getCaseStudy(slug);
-    console.log('=== CASE STUDY RESULT:', caseStudy ? 'Found' : 'NULL');
+    const slug = params?.slug as string;
+    if (!slug) return { notFound: true };
 
+    const caseStudy = await getCaseStudy(slug);
     if (!caseStudy) return { notFound: true };
 
     return {
@@ -160,7 +155,10 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
       revalidate: 60,
     };
   } catch (error) {
-    console.error('=== ERROR FETCHING CASE STUDY:', error);
-    throw error;
+    console.error('getStaticProps error:', error);
+    return {
+      props: { error: String(error) } as any,
+      revalidate: 60,
+    };
   }
 };
