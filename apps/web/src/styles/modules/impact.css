@@ -15,13 +15,13 @@
 }
 
 .impact-module .flex-item {
-  padding: var(--space-fluid-20-80);
+  padding: var(--space-fluid-40-80);
 }
 
 .impact-module h3 {
-  width: 25%;
+  width: 50%;
   max-width: 55%;
-  padding-bottom: var(--space-30);
+  padding-bottom: var(--space-40);
   min-height: 1em;
   margin: 0;
 }
