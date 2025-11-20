@@ -52,10 +52,8 @@ p.medium {
   line-height: var(--line-height-fluid-reverse);
 }
 
-p.small,
-div.client {
+p.small {
   @mixin typography var(--font-sans), var(--font-size-fluid-small);
-  line-height: var(--line-height-fluid-reverse);
 }
 
 p.body {
@@ -70,10 +68,10 @@ ul li {
 }
 
 .tag {
-  @mixin all-caps-accent;
-  @mixin typography var(--font-sans), var(--font-size-fluid-tag);
+  @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
   letter-spacing: var(--letter-spacing-loose);
-  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 2;
 }
 
 /* BLOCKQUOTE OVERRIDE */
