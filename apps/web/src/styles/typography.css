@@ -13,7 +13,6 @@ body {
 h1,
 h2,
 h3 {
-  line-height: var(--line-height-default);
   font-weight: 100;
 }
 
@@ -24,13 +23,12 @@ h2 {
 
 h1 {
   @mixin typography var(--font-serif), var(--font-size-fluid-headline);
-  @mixin letter-spacing-responsive var(--letter-spacing-loose),
-    var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
 }
 
 h2 {
   @mixin typography var(--font-serif), var(--font-size-fluid-subheadline);
-  @mixin letter-spacing-responsive var(--letter-spacing-loose);
+  /* @mixin letter-spacing-responsive var(--letter-spacing-loose); */
 }
 
 h3 {
@@ -40,8 +38,8 @@ h3 {
 
 /* PARAGRAPHS & BLOCKS */
 p {
-  @mixin letter-spacing-responsive var(--letter-spacing-normal),
-    var(--letter-spacing-loose);
+  /* @mixin letter-spacing-responsive var(--letter-spacing-normal),
+    var(--letter-spacing-loose); */
 }
 
 p.large {
@@ -74,7 +72,7 @@ ul li {
 .tag {
   @mixin all-caps-accent;
   @mixin typography var(--font-sans), var(--font-size-fluid-tag);
-  letter-spacing: 0.1em;
+  letter-spacing: var(--letter-spacing-loose);
   font-weight: 900;
 }
 

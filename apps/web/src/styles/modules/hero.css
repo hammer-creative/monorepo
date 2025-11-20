@@ -1,0 +1,65 @@
+/* apps/web/src/styles/modules/hero.css */
+
+@import '../mixins.css';
+
+.hero-marquee {
+  background-color: var(--module-bg);
+}
+
+/* Layout */
+.hero-module .hero {
+  @mixin flex column, wrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-module .hero-image {
+  order: 1;
+}
+
+.hero-module .hero-marquee {
+  order: 2;
+  width: 100%;
+}
+
+.hero-module .hero-accent-bar {
+  display: none;
+}
+
+.hero-module .hero-description .flex {
+  @mixin flex-responsive;
+}
+
+.hero-module .hero-description .flex-item:last-child {
+  @mixin flex row, nowrap;
+}
+
+.hero-module .hero-description .flex-item:last-child ul {
+  flex-basis: 50%;
+}
+
+@media screen and (min-width: 50rem) {
+  .hero-module .hero-marquee {
+    position: absolute;
+    padding: 2rem;
+    z-index: 10;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+  }
+
+  .hero-module .hero-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    animation: hero-zoom-out 1s ease-out forwards;
+  }
+
+  .hero-module .hero-accent-bar {
+    display: block;
+  }
+
+  .hero-module .hero-description .flex-item {
+    flex-basis: 50%;
+  }
+}
