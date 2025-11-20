@@ -91,7 +91,7 @@ footer a.link,
 footer p.text {
   @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-loose);
   line-height: 2;
   display: block;
 }
@@ -102,5 +102,9 @@ footer .address {
 
 footer .menu a.link {
   @mixin typography var(--font-serif), var(--font-size-fluid-menu-reverse);
-  line-height: 1.2;
+  line-height: 1;
+  letter-spacing: var(--letter-spacing-default);
+  @media screen and (min-width: 50rem) {
+    line-height: 1.2;
+  }
 }

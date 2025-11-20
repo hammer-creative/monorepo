@@ -167,5 +167,5 @@ max viewport width.
   /* LETTER SPACING */
   --letter-spacing-default: 1;
   --letter-spacing-tight: -0.06em;
-  --letter-spacing-loose: -0.03em;
+  --letter-spacing-loose: 0.1em;
 }
