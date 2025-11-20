@@ -1,0 +1,23 @@
+/* apps/web/src/styles/modules/text.css */
+
+@import '../mixins.css';
+
+.text-module .flex {
+  @mixin flex-responsive;
+}
+
+@media screen and (min-width: 50rem) {
+  .text-module .flex {
+    gap: var(--space-30);
+  }
+
+  .text-module .flex-item {
+    flex-basis: 50%;
+  }
+
+  .text-module .flex-item:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}

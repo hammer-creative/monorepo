@@ -149,6 +149,7 @@ max viewport width.
     calc(2 - ((100vw - 20rem) / 60rem)),
     2
   ); /* 2 at narrow → 1 at wide */
+  --line-height-tight: 0.9;
   --line-height-loose: 2;
 
   /* STACK SCALE – fluid rhythm derived from base spacing */
