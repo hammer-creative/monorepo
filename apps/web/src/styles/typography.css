@@ -102,5 +102,5 @@ footer .address {
 
 footer .menu a.link {
   @mixin typography var(--font-serif), var(--font-size-fluid-menu-reverse);
-  line-height: 1;
+  line-height: 1.2;
 }
