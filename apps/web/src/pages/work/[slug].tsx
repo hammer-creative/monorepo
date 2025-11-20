@@ -131,12 +131,12 @@ export default function CaseStudyPage({ caseStudy }: Props) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  console.log('=== GET STATIC PATHS RUNNING ===');
   const slugs = await getCaseStudySlugs();
+  console.log('=== SLUGS FOUND:', slugs);
   return {
     paths: slugs.map((item) => ({
-      params: {
-        slug: item.slug,
-      },
+      params: { slug: item.slug },
     })),
     fallback: false,
   };
