@@ -3,8 +3,10 @@
 import { PortableTextRenderer } from '@/components/common/PortableTextRenderer';
 import { SanityImage } from '@/components/common/SanityImage';
 import { TextBlock } from '@/components/common/TextBlock';
-import { DeliverablesModule } from '@/components/modules/Services/DeliverablesModule';
-import { ServicesModule } from '@/components/modules/Services/ServicesModule';
+import {
+  ServicesModule,
+  DeliverablesModule,
+} from '@/components/modules/Services/ServicesModule';
 import type { HeroModuleType, ServicesModuleType } from '@/types/sanity';
 
 export function HeroModule({
@@ -34,25 +36,22 @@ export function HeroModule({
         )}
       </div>
 
-      <div className="hero-description">
+      <div className="hero-accent-bar">
+        <svg width="80" height="10" viewBox="0 0 80 10">
+          <rect width="80" height="10" fill="#FFCC98" />
+        </svg>
+      </div>
+      <div className="hero-metadata">
         <div className="flex">
-          <div className="flex-item">
-            <svg width="80" height="10" viewBox="0 0 80 10">
-              <rect
-                width="80"
-                height="10"
-                fill="#FFCC98"
-                className="hero-accent-bar"
-              />
-            </svg>
+          <div className="flex-item description">
             {data.body && <TextBlock body={data.body} className="medium" />}
             <div className="tag">Client</div>
             {data.client && (
-              <div className="hero-client-name">{data.client.name}</div>
+              <p className="hero-client-name small">{data.client.name}</p>
             )}
           </div>
 
-          <div className="flex-item">
+          <div className="flex-item services">
             {services && <ServicesModule data={services} />}
             {deliverables && <DeliverablesModule data={deliverables} />}
           </div>

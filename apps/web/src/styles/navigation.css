@@ -6,7 +6,7 @@
   top: 0;
   left: 0;
   right: 0;
-  padding: var(--space-20);
+  padding: var(--space-40);
   display: flex;
   justify-content: space-between;
   align-items: center;

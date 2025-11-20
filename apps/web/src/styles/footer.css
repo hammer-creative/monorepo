@@ -4,6 +4,10 @@
 
 /* FOOTER */
 
+footer {
+  background: $color-sandstorm;
+}
+
 footer .flex {
   @mixin flex column;
   padding: var(--space-fluid-20-40) var(--space-fluid-20-40)

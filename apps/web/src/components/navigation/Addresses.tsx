@@ -3,6 +3,7 @@ interface Address {
   id: string;
   label: string;
   line1: string;
+  telephone: string;
 }
 
 interface AddressesProps {
@@ -15,6 +16,7 @@ export function Addresses({ items }: AddressesProps) {
       {items.map((item) => (
         <address key={item.id} className="address">
           <p className="text">{item.label}</p>
+          <p className="text">{item.telephone}</p>
           <p className="text">{item.line1}</p>
         </address>
       ))}

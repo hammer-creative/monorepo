@@ -7,8 +7,8 @@ interface Props {
 
 export function ServiceItem({ item }: Props) {
   return (
-    <li className="service-item">
-      <span className="service-name">{item.name}</span>
+    <li className="item">
+      <p className="name small">{item.name}</p>
     </li>
   );
 }
