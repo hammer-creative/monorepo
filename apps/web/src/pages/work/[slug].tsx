@@ -145,14 +145,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const slug = params?.slug as string;
 
+  console.log('=== BUILDING PAGE FOR SLUG:', slug);
+
   if (!slug) return { notFound: true };
 
-  const caseStudy = await getCaseStudy(slug);
+  try {
+    const caseStudy = await getCaseStudy(slug);
+    console.log('=== CASE STUDY RESULT:', caseStudy ? 'Found' : 'NULL');
 
-  if (!caseStudy) return { notFound: true };
+    if (!caseStudy) return { notFound: true };
 
-  return {
-    props: { caseStudy },
-    revalidate: 60,
-  };
+    return {
+      props: { caseStudy },
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error('=== ERROR FETCHING CASE STUDY:', error);
+    throw error;
+  }
 };
