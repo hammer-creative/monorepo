@@ -7,6 +7,10 @@ export default function Document() {
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="preconnect" href="https://image.mux.com" />
         <link rel="dns-prefetch" href="https://stream.mux.com" />
+        <meta
+          name="format-detection"
+          content="telephone=no, email=no, address=no"
+        />
       </Head>
       <body>
         <Main />
