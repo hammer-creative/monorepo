@@ -10,5 +10,6 @@
 @import './wordmark.css';
 @import './navigation.css';
 @import './footer.css';
-@import './components.css';
+/* @import './components.css'; */
 @import './videos.css';
+@import './modules/hero.css';

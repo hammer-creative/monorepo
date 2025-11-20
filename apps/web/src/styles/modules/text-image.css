@@ -1,0 +1,37 @@
+/* apps/web/src/styles/modules/text-image.css */
+
+@import '../mixins.css';
+
+.text-image-module .flex {
+  @mixin flex-responsive;
+  align-items: stretch;
+}
+
+.text-image-module .flex-item:first-child {
+  order: 2;
+}
+
+.text-image-module .flex-item:last-child {
+  order: 1;
+  display: flex;
+}
+
+.text-image-module .flex-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (min-width: 50rem) {
+  .text-image-module .flex-item {
+    flex-basis: 50%;
+  }
+
+  .text-image-module .flex-item:first-child {
+    order: 1;
+  }
+
+  .text-image-module .flex-item:last-child {
+    order: 2;
+  }
+}
