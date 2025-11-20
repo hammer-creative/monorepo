@@ -2,5 +2,5 @@
 
 export function Copyright() {
   const currentYear = new Date().getFullYear();
-  return <p className="copyright">&copy; Hammer Creative {currentYear}</p>;
+  return <p className="text">&copy; Hammer Creative {currentYear}</p>;
 }

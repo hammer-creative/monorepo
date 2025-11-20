@@ -5,9 +5,11 @@
 @import './tokens.css';
 @import './base.css';
 @import './utils.css';
-@import './headroom.css';
 @import './layout.css';
 @import './typography.css';
+@import './wordmark.css';
 @import './navigation.css';
-@import './components.css';
+@import './footer.css';
+/* @import './components.css'; */
 @import './videos.css';
+@import './modules/hero.css';

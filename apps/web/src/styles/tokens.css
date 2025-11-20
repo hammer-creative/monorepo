@@ -102,6 +102,7 @@ max viewport width.
     calc(3.5rem + ((1vw - 3.2px) * 9.5455)),
     140px
   );
+  --font-size-fluid-menu-reverse: clamp(40px, calc(56px - 1vw), 56px);
   --font-size-fluid-headline: clamp(
     20px,
     calc(1.25rem + ((1vw - 3.2px) * 6.25)),
@@ -132,7 +133,7 @@ max viewport width.
     calc(0.625rem + ((1vw - 3.2px) * 0.625)),
     20px
   );
-  --font-size-fluid-tag: clamp(
+  --font-size-fluid-extra-small: clamp(
     10px,
     calc(0.625rem + ((1vw - 3.2px) * 0.4545)),
     14px
@@ -148,6 +149,7 @@ max viewport width.
     calc(2 - ((100vw - 20rem) / 60rem)),
     2
   ); /* 2 at narrow → 1 at wide */
+  --line-height-tight: 0.9;
   --line-height-loose: 2;
 
   /* STACK SCALE – fluid rhythm derived from base spacing */
@@ -166,5 +168,5 @@ max viewport width.
   /* LETTER SPACING */
   --letter-spacing-default: 1;
   --letter-spacing-tight: -0.06em;
-  --letter-spacing-loose: -0.03em;
+  --letter-spacing-loose: 0.1em;
 }

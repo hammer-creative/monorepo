@@ -2,152 +2,45 @@
 
 @import './tokens.css';
 
-/* @define-mixin name $param1: default1, $param2: default2 {
-  property: $param1;
-  property: $param2;
-} */
+/* LAYOUT MIXINS */
 
-/* ============================================
-   LAYOUT MIXINS
-   ============================================ */
+/**
+ * Basic flex container
+ * @param {string} $direction - flex-direction (default: column)
+ * @param {string} $wrap - flex-wrap (default: nowrap)
+ */
+@define-mixin flex $direction: column, $wrap: nowrap {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+}
 
-/* FLEX PRIMITIVES */
+/**
+ * Responsive flex container - changes direction at breakpoint
+ * @param {string} $mobile-direction - flex-direction on mobile (default: column)
+ * @param {string} $desktop-direction - flex-direction on desktop (default: row)
+ * @param {string} $breakpoint - when to switch (default: 50rem)
+ */
+@define-mixin flex-responsive $mobile-direction: column,
+  $desktop-direction: row, $breakpoint: 50rem {
+  display: flex;
+  flex-direction: $mobile-direction;
 
+  @media screen and (min-width: $breakpoint) {
+    flex-direction: $desktop-direction;
+  }
+}
+
+/**
+ * Base flex (legacy - keeping for compatibility)
+ */
 @define-mixin flex-base $direction: column, $wrap: nowrap {
   display: flex;
   flex-direction: $direction;
   flex-wrap: $wrap;
 }
 
-@define-mixin flex-align $justify: initial, $align: initial {
-  justify-content: $justify;
-  align-items: $align;
-}
-
-@define-mixin flex-gap $gap: initial {
-  gap: $gap;
-}
-
-@define-mixin flex-item $grow: 0, $shrink: 1, $basis: auto {
-  flex: $grow $shrink $basis;
-}
-
-/* FLEX PATTERNS */
-
-@define-mixin vstack $gap: initial, $align: initial, $justify: initial {
-  @mixin flex-base;
-  @mixin flex-gap $gap;
-  @mixin flex-align $justify, $align;
-}
-
-@define-mixin hstack $gap: initial, $align: initial, $justify: initial {
-  @mixin flex row;
-  @mixin flex-gap $gap;
-  @mixin flex-align $justify, $align;
-}
-
-@define-mixin center {
-  @mixin flex-base;
-  @mixin flex-align center, center;
-}
-
-@define-mixin flex $gap: initial, $align: initial, $justify: initial,
-  $mobile: column, $desktop: row, $breakpoint: 50rem {
-  @mixin flex-base $mobile;
-  @mixin flex-gap $gap;
-  @mixin flex-align $justify, $align;
-
-  @media (min-width: $breakpoint) {
-    flex-direction: $desktop;
-  }
-}
-
-/* .feature-grid {
-  @mixin flex-responsive 2rem, center, space-between, column, row, 48rem;
-}
-
-  gap: 2rem
-  align-items: center
-  justify-content: space-between
-  mobile: column (stacked)
-  desktop: row (side-by-side)
-  breakpoint: 48rem (768px) */
-
-/* GRID PRIMITIVES */
-
-@define-mixin grid $columns: 1fr, $rows: auto {
-  display: grid;
-  grid-template-columns: $columns;
-  grid-template-rows: $rows;
-}
-
-@define-mixin grid-gap $gap: 1rem {
-  gap: $gap;
-}
-
-@define-mixin grid-align $justify: stretch, $align: stretch {
-  justify-items: $justify;
-  align-items: $align;
-}
-
-@define-mixin grid-item $column: auto, $row: auto {
-  grid-column: $column;
-  grid-row: $row;
-}
-
-@define-mixin grid-full-bleed {
-  grid-column: 1 / -1;
-}
-
-/* GRID PATTERNS */
-
-@define-mixin grid-auto-fit $min: 250px, $max: 1fr {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax($min, $max));
-  grid-template-rows: auto;
-}
-
-@define-mixin grid-auto-fill $min: 250px, $max: 1fr {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax($min, $max));
-  grid-template-rows: auto;
-}
-
-@define-mixin grid-2col $gap: 1rem {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto;
-  gap: $gap;
-}
-
-@define-mixin grid-3col $gap: 1rem {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto;
-  gap: $gap;
-}
-
-@define-mixin grid-4col $gap: 1rem {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto;
-  gap: $gap;
-}
-
-@define-mixin grid-responsive $default: 1fr, $desktop: repeat(3, 1fr),
-  $breakpoint: var(--viewport-wide) {
-  display: grid;
-  grid-template-columns: $default;
-  grid-template-rows: auto;
-
-  @media (min-width: $breakpoint) {
-    grid-template-columns: $desktop;
-  }
-}
-
-/* ============================================
-   TYPOGRAPHY MIXINS
-   ============================================ */
+/* TYPOGRAPHY MIXINS */
 
 @define-mixin typography $font-family, $font-size {
   font-family: $font-family;
@@ -158,9 +51,7 @@
   letter-spacing: $narrow;
 
   @media (min-width: 80rem) {
-    & {
-      letter-spacing: $wide;
-    }
+    letter-spacing: $wide;
   }
 }
 

@@ -1,20 +1,18 @@
 import { DefaultSeoProps } from 'next-seo';
 
 const SEO: DefaultSeoProps = {
-  title: 'YVML Capital Campaign',
-  titleTemplate: 'YVML Capital Campaign',
-  defaultTitle: 'YVML Capital Campaign',
-  description:
-    'An independent creative marketing studio built to subvert expectations.',
-  canonical: 'https://campaign.yvml.org',
+  title: 'Hammer Creative',
+  titleTemplate: 'Hammer Creative',
+  defaultTitle: 'Hammer Creative',
+  description: '',
+  canonical: 'https://hammercreative.com',
   openGraph: {
-    url: 'https://campaign.yvml.org',
-    title: 'YVML Yucca Valley Material Lab',
-    description:
-      'Yucca Valley Material Lab is dedicated to hands-on learning, transformative residencies, and community engagement in the Mojave Desert.',
+    url: 'https://hammercreative.com',
+    title: 'Hammer Creative',
+    description: '',
     type: 'website',
     locale: 'en_US',
-    site_name: 'Yucca Valley Material Lab Capital Campaign',
+    site_name: 'Hammer Creative',
   },
   additionalMetaTags: [
     {
@@ -27,11 +25,11 @@ const SEO: DefaultSeoProps = {
     },
     {
       name: 'author',
-      content: 'Yucca Valley Material Lab Capital Campaign',
+      content: 'Hammer Creative',
     },
     {
       property: 'dc:creator',
-      content: 'Yucca Valley Material Lab Capital Campaign',
+      content: 'Hammer Creative',
     },
     { name: 'msapplication-TileColor', content: '#2d89ef' },
     { name: 'msapplication-config', content: '/favicons/browserconfig.xml' },
