@@ -1,4 +1,4 @@
-// apps/web/src/pages/case-studies/index.tsx
+// apps/web/src/pages/work/index.tsx
 import { getAllCaseStudies } from '@/lib/sanity';
 import type { CaseStudyListItem } from '@/types/sanity';
 import type { GetStaticProps } from 'next';
@@ -11,11 +11,11 @@ type Props = {
 export default function CaseStudiesPage({ caseStudies }: Props) {
   return (
     <div>
-      <h1>Case Studies</h1>
+      <h1>Work</h1>
       <ul>
         {caseStudies.map((study) => (
           <li key={study._id}>
-            <Link href={`/case-studies/${study.slug}`}>{study.title}</Link>
+            <Link href={`/work/${study.slug}`}>{study.title}</Link>
           </li>
         ))}
       </ul>
