@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  distDir: '.next', // Explicitly set this
   compiler: {
     removeConsole: false,
   },
@@ -29,7 +30,6 @@ const nextConfig: NextConfig = {
     ],
   },
   webpack: (config) => {
-    // Add configuration to handle SVGs with @svgr/webpack
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
@@ -40,8 +40,5 @@ const nextConfig: NextConfig = {
 };
 
 export const sizes = nextConfig.images?.deviceSizes ?? [];
-
-console.log('Current directory:', process.cwd());
-console.log('SANITY_STUDIO_PROJECT_ID:', process.env.SANITY_STUDIO_PROJECT_ID);
 
 export default nextConfig;
