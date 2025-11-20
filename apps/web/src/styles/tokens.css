@@ -105,7 +105,7 @@ max viewport width.
   --font-size-fluid-menu-reverse: clamp(40px, calc(56px - 1vw), 56px);
   --font-size-fluid-headline: clamp(
     20px,
-    calc(1.25rem + ((1vw - 3.2px) * 6.25)),
+    calc(1.25rem + ((1vw - 3.2px) * 4.1667)),
     80px
   );
   --font-size-fluid-subheadline: clamp(
