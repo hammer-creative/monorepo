@@ -1,0 +1,12 @@
+header svg {
+  display: block;
+  color: $color-hyperbeam;
+  width: 100px;
+  height: auto;
+}
+
+footer svg {
+  display: block;
+  width: 100vw;
+  height: auto;
+}
