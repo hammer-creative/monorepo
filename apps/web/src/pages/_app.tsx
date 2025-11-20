@@ -16,6 +16,11 @@ import Head from 'next/head';
 const isStaging = process.env.CONTEXT !== 'production';
 
 export default function App({ Component, pageProps }: AppProps) {
+  // Log any errors passed through pageProps
+  if (pageProps.error) {
+    console.error('Page error from getStaticProps:', pageProps.error);
+  }
+
   return (
     <>
       {/* eslint-disable-next-line react/no-unknown-property */}
