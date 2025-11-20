@@ -1,7 +1,5 @@
 // apps/web/src/lib/sanity/groq/builders.ts
 
-// apps/web/src/lib/sanity/groq/builders.ts
-
 export const projections = {
   slug: `"slug": slug.current`,
 
