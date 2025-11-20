@@ -14,14 +14,20 @@
     repeat-x;
 }
 
+.impact-module .flex-item {
+  padding: var(--space-fluid-20-80);
+}
+
 .impact-module h3 {
+  width: 25%;
+  max-width: 55%;
+  padding-bottom: var(--space-30);
   min-height: 1em;
   margin: 0;
 }
 
-.impact-module h3,
 .impact-module .portable-text {
-  max-width: 75%;
+  padding-bottom: var(--space-100);
 }
 
 .impact-module p {
@@ -44,6 +50,8 @@
 
   .impact-module h3 {
     min-height: 3em;
+    max-width: 100%;
+    width: 100%;
   }
 
   .impact-module p {

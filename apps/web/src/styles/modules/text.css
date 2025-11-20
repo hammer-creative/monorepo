@@ -2,22 +2,37 @@
 
 @import '../mixins.css';
 
+/* layout */
 .text-module .flex {
-  @mixin flex-responsive;
+  @mixin flex-responsive column;
+  padding: var(--space-fluid-20-80);
+}
+
+.text-module h2,
+.text-module .portable-text {
+  padding-right: 10vw;
+}
+
+.text-module .tag {
+  padding-bottom: var(--space-fluid-20-40);
+}
+
+.text-module h2 {
+  padding-bottom: var(--space-fluid-20-80);
 }
 
 @media screen and (min-width: 50rem) {
-  .text-module .flex {
-    gap: var(--space-30);
+  .text-module h2 {
+    padding-bottom: 0rem;
+  }
+
+  .text-module .portable-text {
+    padding-right: 0rem;
   }
 
   .text-module .flex-item {
+    @mixin flex column;
     flex-basis: 50%;
-  }
-
-  .text-module .flex-item:first-child {
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
   }
 }

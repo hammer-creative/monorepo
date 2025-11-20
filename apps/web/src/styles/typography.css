@@ -28,6 +28,8 @@ h1 {
 
 h2 {
   @mixin typography var(--font-serif), var(--font-size-fluid-subheadline);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
   /* @mixin letter-spacing-responsive var(--letter-spacing-loose); */
 }
 
