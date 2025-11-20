@@ -11,5 +11,8 @@
 @import './navigation.css';
 @import './footer.css';
 /* @import './components.css'; */
-@import './videos.css';
 @import './modules/hero.css';
+@import './modules/text-image.css';
+@import './modules/video.css';
+@import './modules/text.css';
+@import './modules/impact.css';

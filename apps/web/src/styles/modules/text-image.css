@@ -2,16 +2,21 @@
 
 @import '../mixins.css';
 
+/* layout */
 .text-image-module .flex {
   @mixin flex-responsive;
-  align-items: stretch;
 }
 
-.text-image-module .flex-item:first-child {
+.text-image-module .flex-item.text {
+  padding: var(--space-fluid-20-80);
   order: 2;
 }
 
-.text-image-module .flex-item:last-child {
+.text-image-module .portable-text {
+  padding-right: 5vw;
+}
+
+.text-image-module .flex-item.image {
   order: 1;
   display: flex;
 }

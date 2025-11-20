@@ -14,11 +14,11 @@ export function TextModule({ data }: { data: TextModuleType }) {
   return (
     <>
       <div className="flex">
-        <div className="flex-item">
+        <div className="flex-item headline">
           {data.tag && <div className="tag">{data.tag}</div>}
           <h2>{data.title}</h2>
         </div>
-        <div className="flex-item">
+        <div className="flex-item copy">
           <TextBlock body={data.body} className="text medium" />
         </div>
       </div>
