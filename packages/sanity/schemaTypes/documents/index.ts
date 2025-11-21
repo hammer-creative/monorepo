@@ -5,5 +5,6 @@ import {caseStudy} from './caseStudy'
 import {client} from './client'
 import {deliverable} from './deliverable'
 import {service} from './service'
+import {servicesPage} from './services'
 
-export const documentTypes = [client, caseStudy, deliverable, service]
+export const documentTypes = [client, caseStudy, servicesPage, deliverable, service]
