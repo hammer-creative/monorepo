@@ -11,3 +11,4 @@ packages/eslint-config
 
 .turbo
 *.tsbuildinfo
+apps/text-image/.env
