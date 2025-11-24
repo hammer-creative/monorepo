@@ -1,5 +1,4 @@
 // packages/sanity/schemaTypes/documents/deliverable.ts
-
 import {PackageIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 
@@ -10,7 +9,7 @@ export const deliverable = defineType({
   icon: PackageIcon,
   fields: [
     {
-      name: 'name',
+      name: 'title',
       title: 'Deliverable Name',
       type: 'string',
       validation: (Rule) => Rule.required(),
@@ -18,7 +17,7 @@ export const deliverable = defineType({
   ],
   preview: {
     select: {
-      title: 'name',
+      title: 'title',
     },
   },
 })

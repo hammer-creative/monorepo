@@ -55,20 +55,6 @@ export const projections = {
     enabled,
     name
   `,
-
-  services: `
-    services[]-> {
-      _id,
-      name
-    }
-  `,
-
-  deliverables: `
-    deliverables[]-> {
-      _id,
-      name
-    }
-  `,
 };
 
 export const moduleProjections = `
@@ -86,10 +72,19 @@ export const moduleProjections = `
       ${projections.color}
     },
     client->,
-    ${projections.image}
+    ${projections.image},
+    services[]-> {
+      _id,
+      title
+    },
+    deliverables[]-> {
+      _id,
+      title
+    }
   },
 
   _type == "textModule" => {
+    layout,
     title,
     tag,
     body,
@@ -99,6 +94,7 @@ export const moduleProjections = `
   },
 
   _type == "textImageModule" => {
+    layout,
     title,
     body,
     textColor {
@@ -136,13 +132,5 @@ export const moduleProjections = `
     textBlock3 {
       ${projections.textBlock}
     }
-  },
-
-  _type == "servicesModule" => {
-    ${projections.services}
-  },
-
-  _type == "deliverablesModule" => {
-    ${projections.deliverables}
   }
 `;

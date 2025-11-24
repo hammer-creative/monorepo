@@ -11,39 +11,76 @@ export const textModule = defineType({
   type: 'object',
   icon: TextIcon,
   fields: [
-    createTextField({
-      name: 'tag',
-      title: 'Tag',
-      required: true,
-      maxLength: 50,
-    }),
-    titleField(),
-    portableTextField(),
-    createColorField({
-      name: 'backgroundColor',
-      title: 'Background Color',
-      required: true,
-    }),
-    createColorField({
-      name: 'textColor',
-      title: 'Text Color',
-      required: true,
-      initialValue: {
-        enabled: true,
-        name: 'nightshade',
+    {
+      name: 'layout',
+      title: 'Layout',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Headline Left + Copy Right', value: 'headlineLeft'},
+          {title: 'Headline Middle', value: 'headlineMiddle'},
+        ],
+        layout: 'radio',
       },
-    }),
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      ...createTextField({
+        name: 'tag',
+        title: 'Tag',
+        required: true,
+        maxLength: 50,
+      }),
+      hidden: ({parent}) => !parent?.layout,
+    },
+    {
+      ...titleField(),
+      hidden: ({parent}) => !parent?.layout,
+    },
+    {
+      ...portableTextField(),
+      hidden: ({parent}) => !parent?.layout || parent?.layout === 'headlineMiddle',
+    },
+    {
+      ...createColorField({
+        name: 'backgroundColor',
+        title: 'Background Color',
+        required: true,
+      }),
+      hidden: ({parent}) => !parent?.layout,
+    },
+    {
+      ...createColorField({
+        name: 'textColor',
+        title: 'Text Color',
+        required: true,
+        initialValue: {
+          enabled: true,
+          name: 'nightshade',
+        },
+      }),
+      hidden: ({parent}) => !parent?.layout,
+    },
   ],
   preview: {
     select: {
       title: 'title',
       tag: 'tag',
+      layout: 'layout',
       backgroundColor: 'backgroundColor',
     },
-    prepare({title, tag, backgroundColor}) {
+    prepare({title, tag, layout, backgroundColor}) {
+      const layoutLabels: Record<string, string> = {
+        headlineLeft: 'Headline Left + Copy Right',
+        headlineMiddle: 'Headline Middle',
+      }
       return {
         title: title || 'Text Module',
-        subtitle: [tag, backgroundColor?.enabled ? `BG: ${backgroundColor.name}` : null]
+        subtitle: [
+          tag,
+          layoutLabels[layout],
+          backgroundColor?.enabled ? `Background color: ${backgroundColor.name}` : null,
+        ]
           .filter(Boolean)
           .join(' • '),
       }

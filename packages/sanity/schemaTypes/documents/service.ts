@@ -1,5 +1,4 @@
 // packages/sanity/schemaTypes/documents/service.ts
-
 import {CaseIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 
@@ -10,7 +9,7 @@ export const service = defineType({
   icon: CaseIcon,
   fields: [
     {
-      name: 'name',
+      name: 'title',
       title: 'Service Name',
       type: 'string',
       validation: (Rule) => Rule.required(),
@@ -18,7 +17,7 @@ export const service = defineType({
   ],
   preview: {
     select: {
-      title: 'name',
+      title: 'title',
     },
   },
 })

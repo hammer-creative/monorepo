@@ -65,19 +65,40 @@ export type ClientReference = {
   };
 };
 
+export type ServiceReference = {
+  _id: string;
+  title: string;
+  slug?: {
+    current: string;
+  };
+  description?: string;
+};
+
+export type DeliverableReference = {
+  _id: string;
+  title: string;
+  slug?: {
+    current: string;
+  };
+  description?: string;
+};
+
 // --------------------
 // Module definitions
 // --------------------
-export type HeroModuleType = {
+
+export interface HeroModuleType {
   _type: ModuleType.Hero;
   _key: string;
+  client: ClientReference;
   title: string;
   body?: PortableTextBlock[];
-  image?: ProjectedImage;
-  backgroundColor?: ColorValue;
-  textColor?: ColorValue;
-  client?: ClientReference;
-};
+  image: ProjectedImage;
+  services?: ServiceReference[];
+  deliverables?: DeliverableReference[];
+  backgroundColor: ColorValue;
+  textColor: ColorValue;
+}
 
 export type VideoItem = {
   _key: string;
@@ -103,6 +124,9 @@ export type TextModuleType = {
   body?: PortableTextBlock[];
   backgroundColor?: ColorValue;
   textColor?: ColorValue;
+  layout?: string;
+  data: TextModuleType;
+  clientName?: string;
 };
 
 export type TextImageModuleType = {
@@ -113,6 +137,7 @@ export type TextImageModuleType = {
   image?: ProjectedImage;
   backgroundColor?: ColorValue;
   textColor?: ColorValue;
+  layout?: string;
 };
 
 export type TextBlock = {
@@ -162,16 +187,6 @@ export type CarouselModuleType = {
   _key: string;
   images?: ImageItem[];
   backgroundColor?: ColorValue;
-};
-
-export type ServiceReference = {
-  _id: string;
-  name: string;
-};
-
-export type DeliverableReference = {
-  _id: string;
-  name: string;
 };
 
 export type ServicesModuleType = {

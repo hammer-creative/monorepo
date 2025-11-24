@@ -10,6 +10,7 @@ import {singleImageModule} from './singleImageModule'
 import {servicesModule} from './servicesModule'
 import {deliverablesModule} from './deliverablesModule'
 import {videoModule} from './videoModule'
+import {serviceCard} from './serviceCard'
 
 export const moduleTypes = [
   heroModule,
@@ -21,4 +22,5 @@ export const moduleTypes = [
   servicesModule,
   deliverablesModule,
   videoModule,
+  serviceCard,
 ]

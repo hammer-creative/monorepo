@@ -1,12 +1,10 @@
 // apps/web/src/pages/work/[slug].tsx
 import {
   CarouselModule,
-  DeliverablesModule,
   HeroModule,
   ImpactModule,
   TextModule,
   TextImageModule,
-  ServicesModule,
   VideoModule,
 } from '@/components/modules';
 import { getCaseStudy, getCaseStudySlugs } from '@/lib/sanity';
@@ -14,14 +12,12 @@ import { resolveModuleColors } from '@/lib/sanity/colors';
 import { ModuleType } from '@/types/sanity';
 import type {
   CaseStudy,
-  Module,
   HeroModuleType,
   ImpactModuleType,
   TextModuleType,
   TextImageModuleType,
   VideoModuleType,
   CarouselModuleType,
-  ServicesModuleType,
 } from '@/types/sanity';
 import { toKebab } from '@/utils/stringUtils';
 import type { GetStaticPaths, GetStaticProps } from 'next';
@@ -35,12 +31,13 @@ interface Props {
 type KnownModules = {
   [ModuleType.Hero]: ComponentType<{ data: HeroModuleType }>;
   [ModuleType.Impact]: ComponentType<{ data: ImpactModuleType }>;
-  [ModuleType.Text]: ComponentType<{ data: TextModuleType }>;
+  [ModuleType.Text]: ComponentType<{
+    data: TextModuleType;
+    clientName?: string;
+  }>;
   [ModuleType.TextImage]: ComponentType<{ data: TextImageModuleType }>;
   [ModuleType.Video]: ComponentType<{ data: VideoModuleType }>;
   [ModuleType.Carousel]: ComponentType<{ data: CarouselModuleType }>;
-  [ModuleType.Services]: ComponentType<{ data: ServicesModuleType }>;
-  [ModuleType.Deliverables]: ComponentType<{ data: ServicesModuleType }>;
 };
 
 const knownModuleComponents: KnownModules = {
@@ -50,8 +47,6 @@ const knownModuleComponents: KnownModules = {
   [ModuleType.TextImage]: TextImageModule,
   [ModuleType.Impact]: ImpactModule,
   [ModuleType.Carousel]: CarouselModule,
-  [ModuleType.Services]: ServicesModule,
-  [ModuleType.Deliverables]: DeliverablesModule,
 };
 
 const moduleComponents: Record<
@@ -62,20 +57,17 @@ const moduleComponents: Record<
 export default function CaseStudyPage({ caseStudy }: Props) {
   const resolvedModules = caseStudy.modules.map(resolveModuleColors);
 
-  // --- EXTRACT SERVICES + DELIVERABLES ---
-  const services = resolvedModules.find(
-    (m) => m._type === ModuleType.Services,
-  ) as ServicesModuleType | undefined;
-
-  const deliverables = resolvedModules.find(
-    (m) => m._type === ModuleType.Deliverables,
-  ) as ServicesModuleType | undefined;
-
-  // --- REMOVE THEM FROM THE LOOP ---
+  // Filter out standalone Services and Deliverables modules (if they still exist)
   const filteredModules = resolvedModules.filter(
     (m) =>
       m._type !== ModuleType.Services && m._type !== ModuleType.Deliverables,
   );
+
+  // Extract client name from hero module
+  const heroModule = filteredModules.find(
+    (m) => m._type === ModuleType.Hero,
+  ) as HeroModuleType | undefined;
+  const clientName = heroModule?.client?.name;
 
   return (
     <>
@@ -99,6 +91,12 @@ export default function CaseStudyPage({ caseStudy }: Props) {
           const textHex =
             'textColor' in mod ? (mod.textColor?.hex ?? 'inherit') : 'inherit';
 
+          // Pass clientName to TextModule
+          const componentProps =
+            mod._type === ModuleType.Text
+              ? { data: mod, clientName }
+              : { data: mod };
+
           return (
             <section
               key={mod._key}
@@ -108,20 +106,12 @@ export default function CaseStudyPage({ caseStudy }: Props) {
                 {
                   '--module-bg': backgroundHex,
                   '--module-text': textHex,
-                  backgroundColor: backgroundHex, // Set it directly here
+                  backgroundColor: backgroundHex,
                   color: textHex,
                 } as React.CSSProperties
               }
             >
-              {mod._type === ModuleType.Hero ? (
-                <HeroModule
-                  data={mod as HeroModuleType}
-                  services={services}
-                  deliverables={deliverables}
-                />
-              ) : (
-                <Component data={mod as any} />
-              )}
+              <Component {...(componentProps as any)} />
             </section>
           );
         })}
