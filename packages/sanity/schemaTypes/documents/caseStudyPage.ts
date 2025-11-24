@@ -4,7 +4,7 @@ import {defineType} from 'sanity'
 import {titleField, slugField} from '../fields/textField'
 import {ModulesArrayInput} from '../components/ModulesArrayInput'
 
-export const caseStudy = defineType({
+export const caseStudyPage = defineType({
   name: 'caseStudy',
   title: 'Case Study',
   type: 'document',
@@ -12,26 +12,12 @@ export const caseStudy = defineType({
     titleField(), // ✅ now a function call
     slugField(), // ✅ now a function call
     {
-      name: 'services',
-      title: 'Services',
-      type: 'array',
-      of: [{type: 'reference', to: [{type: 'service'}]}],
-    },
-    {
-      name: 'deliverables',
-      title: 'Deliverables',
-      type: 'array',
-      of: [{type: 'reference', to: [{type: 'deliverable'}]}],
-    },
-    {
       name: 'modules',
       title: 'Content Modules',
       type: 'array',
       components: {input: ModulesArrayInput},
       of: [
         {type: 'heroModule'},
-        {type: 'servicesModule'},
-        {type: 'deliverablesModule'},
         {type: 'textImageModule'},
         {type: 'videoModule'},
         {type: 'textModule'},

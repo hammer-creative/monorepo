@@ -1,23 +1,20 @@
-// TODO: add common title component, add common body component
 // apps/web/src/components/Hero/HeroModule.tsx
-import { PortableTextRenderer } from '@/components/common/PortableTextRenderer';
 import { SanityImage } from '@/components/common/SanityImage';
 import { TextBlock } from '@/components/common/TextBlock';
 import {
   ServicesModule,
   DeliverablesModule,
 } from '@/components/modules/Services/ServicesModule';
-import type { HeroModuleType, ServicesModuleType } from '@/types/sanity';
+import type { HeroModuleType } from '@/types/sanity';
 
-export function HeroModule({
-  data,
-  services,
-  deliverables,
-}: {
-  data: HeroModuleType;
-  services: ServicesModuleType | undefined;
-  deliverables: ServicesModuleType | undefined;
-}) {
+export function HeroModule({ data }: { data: HeroModuleType }) {
+  const hasServicesOrDeliverables =
+    (data.services && data.services.length > 0) ||
+    (data.deliverables && data.deliverables.length > 0);
+
+  console.log('services:', data.services);
+  console.log('deliverables:', data.deliverables);
+
   return (
     <>
       <div className="hero">
@@ -41,6 +38,7 @@ export function HeroModule({
           <rect width="80" height="10" fill="#FFCC98" />
         </svg>
       </div>
+
       <div className="hero-metadata">
         <div className="flex">
           <div className="flex-item description">
@@ -51,10 +49,28 @@ export function HeroModule({
             )}
           </div>
 
-          <div className="flex-item services">
-            {services && <ServicesModule data={services} />}
-            {deliverables && <DeliverablesModule data={deliverables} />}
-          </div>
+          {hasServicesOrDeliverables && (
+            <div className="flex-item services">
+              {data.services && data.services.length > 0 && (
+                <ServicesModule
+                  data={{
+                    _type: 'servicesModule',
+                    _key: 'hero-services',
+                    services: data.services,
+                  }}
+                />
+              )}
+              {data.deliverables && data.deliverables.length > 0 && (
+                <DeliverablesModule
+                  data={{
+                    _type: 'deliverablesModule',
+                    _key: 'hero-deliverables',
+                    deliverables: data.deliverables,
+                  }}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
