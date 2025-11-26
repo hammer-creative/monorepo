@@ -2,7 +2,7 @@
 
 import {ImageIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-import {titleField, portableTextField} from '../fields/textField'
+import {portableTextField} from '../fields/textField'
 import {createSingleImageField, createColorField} from '../factories'
 
 export const textImageModule = defineType({
@@ -25,11 +25,8 @@ export const textImageModule = defineType({
       validation: (Rule) => Rule.required(),
     },
     {
-      ...titleField(),
-      hidden: ({parent}) => !parent?.layout,
-    },
-    {
       ...portableTextField(),
+      validation: (Rule) => Rule.required(),
       hidden: ({parent}) => !parent?.layout,
     },
     {
@@ -72,18 +69,17 @@ export const textImageModule = defineType({
   ],
   preview: {
     select: {
-      title: 'title',
       layout: 'layout',
       media: 'image',
       backgroundColor: 'backgroundColor',
     },
-    prepare({title, layout, media, backgroundColor}) {
+    prepare({layout, media, backgroundColor}) {
       const layoutLabels: Record<string, string> = {
         textRight: 'Text Right + Image Left',
         textLeft: 'Text Left + Image Right',
       }
       return {
-        title: title || 'Text + Image Module',
+        title: 'Text + Image Module',
         subtitle: [
           layoutLabels[layout],
           backgroundColor?.enabled ? `Background color: ${backgroundColor.name}` : null,

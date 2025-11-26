@@ -1,4 +1,5 @@
 // apps/web/src/pages/work/[slug].tsx
+// apps/web/src/pages/work/[slug].tsx
 import {
   CarouselModule,
   HeroModule,
@@ -8,6 +9,7 @@ import {
   VideoModule,
 } from '@/components/modules';
 import { getCaseStudy, getCaseStudySlugs } from '@/lib/sanity';
+import { client } from '@/lib/sanity/client';
 import { resolveModuleColors } from '@/lib/sanity/colors';
 import { ModuleType } from '@/types/sanity';
 import type {
@@ -26,6 +28,7 @@ import type { ComponentType } from 'react';
 
 interface Props {
   caseStudy: CaseStudy;
+  draftMode?: boolean;
 }
 
 type KnownModules = {
@@ -55,15 +58,18 @@ const moduleComponents: Record<
 > = knownModuleComponents;
 
 export default function CaseStudyPage({ caseStudy }: Props) {
-  const resolvedModules = caseStudy.modules.map(resolveModuleColors);
+  if (!caseStudy) return null;
 
-  // Filter out standalone Services and Deliverables modules (if they still exist)
+  console.log('=== BG COLOR:', caseStudy.modules[0]?.backgroundColor);
+  console.log('=== TEXT COLOR:', caseStudy.modules[0]?.textColor);
+
+  const resolvedModules = caseStudy.modules?.map(resolveModuleColors) || [];
+
   const filteredModules = resolvedModules.filter(
     (m) =>
       m._type !== ModuleType.Services && m._type !== ModuleType.Deliverables,
   );
 
-  // Extract client name from hero module
   const heroModule = filteredModules.find(
     (m) => m._type === ModuleType.Hero,
   ) as HeroModuleType | undefined;
@@ -91,7 +97,6 @@ export default function CaseStudyPage({ caseStudy }: Props) {
           const textHex =
             'textColor' in mod ? (mod.textColor?.hex ?? 'inherit') : 'inherit';
 
-          // Pass clientName to TextModule
           const componentProps =
             mod._type === ModuleType.Text
               ? { data: mod, clientName }
@@ -121,9 +126,7 @@ export default function CaseStudyPage({ caseStudy }: Props) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  console.log('=== GET STATIC PATHS RUNNING ===');
   const slugs = await getCaseStudySlugs();
-  console.log('=== SLUGS FOUND:', slugs);
   return {
     paths: slugs.map((item) => ({
       params: { slug: item.slug },
@@ -132,16 +135,33 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<Props> = async ({
+  params,
+  draftMode = false,
+}) => {
+  console.log('=== DRAFT MODE:', draftMode);
+
   try {
     const slug = params?.slug as string;
     if (!slug) return { notFound: true };
 
-    const caseStudy = await getCaseStudy(slug);
+    const sanityClient = draftMode
+      ? client.withConfig({
+          useCdn: false,
+          token: process.env.SANITY_API_PREVIEW_TOKEN,
+          perspective: 'previewDrafts',
+          stega: { enabled: true, studioUrl: 'http://localhost:3333' },
+        })
+      : client;
+
+    const caseStudy = await getCaseStudy(slug, sanityClient);
     if (!caseStudy) return { notFound: true };
 
     return {
-      props: { caseStudy },
+      props: {
+        caseStudy,
+        draftMode,
+      },
       revalidate: 60,
     };
   } catch (error) {

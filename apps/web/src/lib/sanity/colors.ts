@@ -1,5 +1,6 @@
 // apps/web/src/lib/sanity/colors.ts
 import type { Module } from '@/types/sanity';
+import { stegaClean } from 'next-sanity';
 import { DEFAULT_COLORS } from '@chorusworks/ui';
 
 export function resolveBackgroundColor(
@@ -9,10 +10,12 @@ export function resolveBackgroundColor(
     return undefined;
   }
 
+  const cleanName = stegaClean(backgroundColor.name);
+
   return {
     enabled: true,
     name: backgroundColor.name,
-    hex: DEFAULT_COLORS[backgroundColor.name as keyof typeof DEFAULT_COLORS],
+    hex: DEFAULT_COLORS[cleanName as keyof typeof DEFAULT_COLORS],
   };
 }
 
@@ -23,10 +26,12 @@ export function resolveTextColor(
     return undefined;
   }
 
+  const cleanName = stegaClean(textColor.name);
+
   return {
     enabled: true,
     name: textColor.name,
-    hex: DEFAULT_COLORS[textColor.name as keyof typeof DEFAULT_COLORS],
+    hex: DEFAULT_COLORS[cleanName as keyof typeof DEFAULT_COLORS],
   };
 }
 

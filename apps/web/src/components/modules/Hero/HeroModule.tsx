@@ -12,8 +12,8 @@ export function HeroModule({ data }: { data: HeroModuleType }) {
     (data.services && data.services.length > 0) ||
     (data.deliverables && data.deliverables.length > 0);
 
-  console.log('services:', data.services);
-  console.log('deliverables:', data.deliverables);
+  // console.log('services:', data.services);
+  // console.log('deliverables:', data.deliverables);
 
   return (
     <>
