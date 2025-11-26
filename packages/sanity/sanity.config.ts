@@ -22,9 +22,6 @@ export default defineConfig({
         previewMode: {
           enable: '/api/enable-draft',
         },
-        draftMode: {
-          enable: '/api/enable-draft',
-        },
       },
       resolve: {
         mainDocuments: defineDocuments([
