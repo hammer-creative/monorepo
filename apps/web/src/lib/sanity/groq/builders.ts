@@ -53,7 +53,8 @@ export const projections = {
 
   color: `
     enabled,
-    name
+    name,
+    hex
   `,
 };
 

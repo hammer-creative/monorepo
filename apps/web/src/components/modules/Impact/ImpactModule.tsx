@@ -4,7 +4,7 @@ import type { ImpactModuleType, TextBlock } from '@/types/sanity';
 import { ImpactModuleItem } from './ImpactModuleItem';
 
 export function ImpactModule({ data }: { data: ImpactModuleType }) {
-  console.log('ImpactModule data:', data);
+  // console.log('ImpactModule data:', data);
 
   const blocks: TextBlock[] = [
     data.textBlock1,

@@ -9,7 +9,7 @@ export function TextModule({ data, clientName }: { data: TextModuleType }) {
       ? data.backgroundColor.hex
       : 'transparent';
 
-  console.log(clientName);
+  // console.log(clientName);
 
   const layoutClass =
     data.layout === 'headlineLeft' ? 'headline-left' : 'headline-middle';

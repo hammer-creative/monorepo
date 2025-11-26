@@ -6,7 +6,7 @@ interface Props {
 }
 
 export function ServiceItem({ item }: Props) {
-  console.log(item);
+  // console.log(item);
   return (
     <li className="item">
       <p className="name small">{item.title}</p>

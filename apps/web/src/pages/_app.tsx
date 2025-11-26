@@ -11,9 +11,14 @@ import {
 import { DefaultSeo } from 'next-seo';
 import SEO from 'next-seo.config';
 import type { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 const isStaging = process.env.CONTEXT !== 'production';
+
+const SanityVisualEditing = dynamic(
+  () => import('@/components/SanityVisualEditing'),
+);
 
 export default function App({ Component, pageProps }: AppProps) {
   // Log any errors passed through pageProps
@@ -45,6 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Layout>
             <DefaultSeo {...SEO} />
             <Component {...pageProps} />
+            {pageProps.draftMode && <SanityVisualEditing />}
           </Layout>
         </NavigationProvider>
       </div>

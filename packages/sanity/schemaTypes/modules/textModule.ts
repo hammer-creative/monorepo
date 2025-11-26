@@ -28,18 +28,41 @@ export const textModule = defineType({
       ...createTextField({
         name: 'tag',
         title: 'Tag',
-        required: true,
         maxLength: 50,
       }),
-      hidden: ({parent}) => !parent?.layout,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as any
+          if (parent?.layout === 'headlineLeft' && !value) {
+            return 'Tag is required for Headline Left layout'
+          }
+          return true
+        }),
+      hidden: ({parent}) => !parent?.layout || parent?.layout === 'headlineMiddle',
     },
     {
       ...titleField(),
-      hidden: ({parent}) => !parent?.layout,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as any
+          if (parent?.layout === 'headlineLeft' && !value) {
+            return 'Title is required for Headline Left layout'
+          }
+          return true
+        }),
+      hidden: ({parent}) => !parent?.layout || parent?.layout === 'headlineMiddle',
     },
     {
       ...portableTextField(),
-      hidden: ({parent}) => !parent?.layout || parent?.layout === 'headlineMiddle',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as any
+          if (!value) {
+            return 'Body is required'
+          }
+          return true
+        }),
+      hidden: ({parent}) => !parent?.layout,
     },
     {
       ...createColorField({
