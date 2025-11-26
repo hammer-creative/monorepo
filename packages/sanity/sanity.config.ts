@@ -18,7 +18,10 @@ export default defineConfig({
     }),
     presentationTool({
       previewUrl: {
-        origin: process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000',
+        origin:
+          typeof window !== 'undefined' && window.location.hostname.includes('sanity.studio')
+            ? 'https://hammercreative.netlify.com'
+            : 'http://localhost:3000',
         previewMode: {
           enable: '/api/enable-draft',
         },
