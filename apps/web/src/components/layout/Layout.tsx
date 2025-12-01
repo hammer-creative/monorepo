@@ -15,9 +15,9 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <>
-      <Headroom tag="header" disableInlineStyles>
+      {/* <Headroom tag="header" disableInlineStyles>
         <Header navigationData={navData} />
-      </Headroom>
+      </Headroom> */}
 
       <div className="layout-container">
         <main>{children}</main>
