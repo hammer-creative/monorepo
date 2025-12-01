@@ -1,3 +1,5 @@
+// packages/sanity/sanity.config.ts
+
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
@@ -18,12 +20,10 @@ export default defineConfig({
     }),
     presentationTool({
       previewUrl: {
-        origin:
-          typeof window !== 'undefined' && window.location.hostname.includes('sanity.studio')
-            ? 'https://hammercreative.netlify.app'
-            : 'http://localhost:3000',
-        previewMode: {
+        origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localhost:3000',
+        draftMode: {
           enable: '/api/enable-draft',
+          disable: '/api/disable-draft',
         },
       },
       resolve: {
@@ -39,14 +39,18 @@ export default defineConfig({
               title: 'title',
               slug: 'slug.current',
             },
-            resolve: (doc) => ({
-              locations: [
-                {
-                  title: doc?.title || 'Untitled',
-                  href: `/work/${doc?.slug}`,
-                },
-              ],
-            }),
+            resolve: (doc) => {
+              if (!doc?.slug) return {locations: []}
+
+              return {
+                locations: [
+                  {
+                    title: doc.title || 'Untitled',
+                    href: `/work/${doc.slug}`,
+                  },
+                ],
+              }
+            },
           }),
         },
       },

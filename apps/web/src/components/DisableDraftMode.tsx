@@ -8,5 +8,5 @@ export function DisableDraftMode() {
     setShow(window.top === window);
   }, []);
 
-  return show ? <a href="/api/disable-draft">Disable Draft Mode</a> : null;
+  return show && <a href={'/api/disable-draft'}>Disable Draft Mode</a>;
 }

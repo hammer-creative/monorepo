@@ -1,5 +1,4 @@
 // apps/web/src/pages/work/[slug].tsx
-// apps/web/src/pages/work/[slug].tsx
 import {
   CarouselModule,
   HeroModule,
@@ -9,7 +8,7 @@ import {
   VideoModule,
 } from '@/components/modules';
 import { getCaseStudy, getCaseStudySlugs } from '@/lib/sanity';
-import { client } from '@/lib/sanity/client';
+import { client, draftClient } from '@/lib/sanity/client';
 import { resolveModuleColors } from '@/lib/sanity/colors';
 import { ModuleType } from '@/types/sanity';
 import type {
@@ -135,40 +134,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<Props> = async ({
-  params,
-  draftMode = false,
-}) => {
-  console.log('=== DRAFT MODE:', draftMode);
+export const getStaticProps: GetStaticProps<Props> = async (context) => {
+  const { params, draftMode = false } = context;
+  const slug = params?.slug as string;
 
-  try {
-    const slug = params?.slug as string;
-    if (!slug) return { notFound: true };
+  if (!slug) return { notFound: true };
 
-    const sanityClient = draftMode
-      ? client.withConfig({
-          useCdn: false,
-          token: process.env.SANITY_API_PREVIEW_TOKEN,
-          perspective: 'previewDrafts',
-          stega: { enabled: true, studioUrl: 'http://localhost:3333' },
-        })
-      : client;
+  const sanityClient = draftMode ? draftClient : client;
+  const caseStudy = await getCaseStudy(slug, sanityClient);
 
-    const caseStudy = await getCaseStudy(slug, sanityClient);
-    if (!caseStudy) return { notFound: true };
+  if (!caseStudy) return { notFound: true };
 
-    return {
-      props: {
-        caseStudy,
-        draftMode,
-      },
-      revalidate: 60,
-    };
-  } catch (error) {
-    console.error('getStaticProps error:', error);
-    return {
-      props: { error: String(error) } as any,
-      revalidate: 60,
-    };
-  }
+  return {
+    props: {
+      caseStudy,
+      draftMode,
+    },
+    revalidate: 60,
+  };
 };
