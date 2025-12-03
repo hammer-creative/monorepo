@@ -2,16 +2,20 @@
 import type {
   ServicesModuleType,
   DeliverablesModuleType,
+  ServiceReference,
+  DeliverableReference,
 } from '@/types/sanity';
 import { ServiceItem } from './ServiceItem';
 
 interface ServicesProps {
-  data: ServicesModuleType;
+  data?: ServicesModuleType;
+  services?: ServiceReference[];
   heading?: string;
 }
 
 interface DeliverablesProps {
-  data: DeliverablesModuleType;
+  data?: DeliverablesModuleType;
+  deliverables?: DeliverableReference[];
   heading?: string;
 }
 
@@ -32,13 +36,20 @@ function ServicesList({ items, heading }: { items: any[]; heading: string }) {
   );
 }
 
-export function ServicesModule({ data, heading = 'Services' }: ServicesProps) {
-  return <ServicesList items={data.services} heading={heading} />;
+export function ServicesModule({
+  data,
+  services,
+  heading = 'Services',
+}: ServicesProps) {
+  const items = services || data?.services;
+  return <ServicesList items={items || []} heading={heading} />;
 }
 
 export function DeliverablesModule({
   data,
+  deliverables,
   heading = 'Delivered Elements',
 }: DeliverablesProps) {
-  return <ServicesList items={data.deliverables} heading={heading} />;
+  const items = deliverables || data?.deliverables;
+  return <ServicesList items={items || []} heading={heading} />;
 }

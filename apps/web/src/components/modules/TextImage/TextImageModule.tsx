@@ -4,6 +4,8 @@ import { TextBlock } from '@/components/common/TextBlock';
 import type { TextImageModuleType } from '@/types/sanity';
 
 export function TextImageModule({ data }: { data: TextImageModuleType }) {
+  const { body, image } = data;
+
   return (
     <div className="flex">
       <div className="flex-item text">

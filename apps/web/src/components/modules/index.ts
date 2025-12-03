@@ -6,4 +6,5 @@ export * from './Impact';
 export * from './Text';
 export * from './TextImage';
 export * from './Services';
+export * from './ServicesPage';
 export * from './Video';

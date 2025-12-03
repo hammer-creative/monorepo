@@ -9,36 +9,37 @@ import {addRequiredLabel} from '../utils/fieldHelpers'
 /**
  * Standard title text field with character counter
  */
-export const titleField = () =>
+export const titleField = (options?: {maxLength?: number}) =>
   createTextField({
     name: 'title',
     title: 'Title',
     required: true,
-    maxLength: 100,
+    maxLength: options?.maxLength ?? 100,
     withCounter: true,
   })
 
 /**
  * Rich text body field with optional length limit
  */
-export const portableTextField = () =>
-  createPortableTextField({
+export const portableTextField = (options?: {maxLength?: number}) => {
+  return createPortableTextField({
     name: 'body',
     title: 'Body',
     required: true,
-    maxLength: 600,
+    maxLength: options?.maxLength ?? 600,
   })
+}
 
 /**
  * Optional image/video caption text field
  */
-export const captionField = () =>
+export const captionField = (options?: {maxLength?: number}) =>
   createTextField({
     name: 'caption',
     title: 'Caption',
     multiline: true,
     rows: 2,
-    maxLength: 200,
+    maxLength: options?.maxLength ?? 200,
     withCounter: true,
   })
 
@@ -50,7 +51,7 @@ export const slugField = () =>
     name: 'slug',
     title: 'Slug',
     type: 'slug',
-    description: addRequiredLabel('Auto-generated from title', true),
+    description: addRequiredLabel('Click Generate to auto-generate a unique slug', true),
     components: {
       input: SlugInputWithCounter,
     },

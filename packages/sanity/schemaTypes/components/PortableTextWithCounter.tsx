@@ -23,6 +23,9 @@ export function PortableTextWithCounter(props: ArrayOfObjectsInputProps) {
   const maxLength =
     validation?.[0]?._rules?.find((rule: any) => rule.flag === 'max')?.constraint || 1000
 
+  // console.log('validation rules:', validation?.[0]?._rules)
+  // console.log('maxLength found:', maxLength)
+
   return (
     <Stack space={2}>
       {renderDefault(props)}

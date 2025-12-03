@@ -1,0 +1,187 @@
+/* Services Page Card Module */
+
+.page.services .services-heading {
+  @mixin typography var(--font-sans), var(--font-size-fluid-subheadline);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  padding: var(--space-fluid-20-80);
+  padding-bottom: var(--space-60);
+}
+
+.page.services .cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+}
+
+.page.services .services-page-card-module:not(:first-child):not(:last-child) {
+  padding-left: var(--space-20);
+  padding-right: var(--space-20);
+}
+
+/* Card Layout - With Image */
+.page.services .services-page-card-module:not(:last-child) .card {
+  position: relative;
+  overflow: hidden;
+}
+
+.page.services .services-page-card-module:not(:last-child) .card-marquee {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: var(--space-fluid-40-80);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-40);
+}
+
+/* Card Layout - Last Card (No Image) */
+.page.services .services-page-card-module:last-child .card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-40);
+}
+
+.page.services .services-page-card-module:last-child .card-marquee {
+  padding: var(--space-fluid-20-60);
+  order: 2;
+}
+
+.page.services .services-page-card-module:last-child .card-icons {
+  padding-top: var(--space-40);
+  order: 1;
+}
+
+/* Card Display - Image */
+.page.services .card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75);
+}
+
+/* Card Display - Text */
+.page.services .card-marquee .heading {
+  padding-bottom: var(--space-30);
+}
+
+.page.services
+  .services-page-card-module:not(:last-child)
+  .card-marquee
+  .heading,
+.page.services
+  .services-page-card-module:not(:last-child)
+  .card-marquee
+  .description {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Client Icons - Default Marquee */
+.card-icons {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: 0rem;
+  gap: var(--space-40);
+}
+
+.card-icons-row {
+  display: flex;
+  gap: var(--space-20);
+  animation: scroll-left 15s linear infinite;
+  will-change: transform;
+  width: max-content;
+}
+
+.card-icons-row:nth-child(2) {
+  animation: scroll-right 15s linear infinite;
+}
+
+.card-icons .icon-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-icons svg {
+  width: 120px;
+  height: auto;
+  max-height: 70px;
+}
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - var(--space-40) / 2));
+  }
+}
+
+@keyframes scroll-right {
+  from {
+    transform: translateX(calc(-50% - var(--space-40) / 2));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 50rem) {
+  .page.services .services-page-card-module:not(:last-child) .card-marquee {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  .page.services .services-page-card-module:not(:last-child) .card-metadata {
+    grid-column: 1;
+  }
+
+  .page.services .services-page-card-module:not(:last-child) .list {
+    grid-column: 3;
+  }
+
+  .page.services .services-page-card-module:last-child .card {
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 1.5fr;
+    gap: var(--space-40);
+    align-items: end;
+    padding: var(--space-fluid-40-80);
+  }
+
+  .page.services .services-page-card-module:last-child .card-marquee {
+    padding: 0;
+    order: unset;
+  }
+
+  .page.services .services-page-card-module:last-child .card-metadata {
+    grid-column: 1;
+  }
+
+  .page.services .services-page-card-module:last-child .card-icons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column: 3;
+    overflow: visible;
+    order: unset;
+  }
+
+  .page.services .services-page-card-module:last-child .card-icons-row {
+    display: contents;
+    animation: none;
+  }
+
+  .page.services
+    .services-page-card-module:last-child
+    .card-icons-row
+    .icon-item:nth-child(n + 8) {
+    display: none;
+  }
+}

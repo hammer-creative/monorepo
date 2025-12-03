@@ -11,3 +11,7 @@
 main {
   flex: 1;
 }
+
+.page.services {
+  background: $color-sandstorm;
+}

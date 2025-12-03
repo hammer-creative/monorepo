@@ -52,6 +52,9 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     },
   ]
 
+  console.log('createPortableTextField config:', config)
+  console.log('createPortableTextField maxLength:', maxLength)
+
   return defineField({
     name,
     title,
@@ -59,9 +62,20 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     of: blocks || defaultBlocks,
     description: addRequiredLabel(description, required),
     components: {input: PortableTextWithCounter},
-    // Change both ArrayRule to ArrayRule<any> to avoid generic type issues
-    validation: required
-      ? (rule: ArrayRule<any>) => rule.required().max(maxLength).error(`${title} is required`)
-      : (rule: ArrayRule<any>) => rule.max(maxLength),
+    validation: (rule: ArrayRule<any>) => {
+      const baseRule = required ? rule.required().error(`${title} is required`) : rule
+
+      return baseRule.max(maxLength).custom((value: any[] = []) => {
+        const charCount = value
+          .filter((block: any) => block._type === 'block')
+          .map((block: any) => block.children?.map((child: any) => child.text || '').join('') || '')
+          .join('').length
+
+        if (charCount > maxLength) {
+          return `Must be ${maxLength} characters or less (currently ${charCount})`
+        }
+        return true
+      })
+    },
   })
 }

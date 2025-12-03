@@ -59,9 +59,6 @@ const moduleComponents: Record<
 export default function CaseStudyPage({ caseStudy }: Props) {
   if (!caseStudy) return null;
 
-  console.log('=== BG COLOR:', caseStudy.modules[0]?.backgroundColor);
-  console.log('=== TEXT COLOR:', caseStudy.modules[0]?.textColor);
-
   const resolvedModules = caseStudy.modules?.map(resolveModuleColors) || [];
 
   const filteredModules = resolvedModules.filter(
@@ -82,7 +79,7 @@ export default function CaseStudyPage({ caseStudy }: Props) {
         openGraph={{ title: caseStudy.title, type: 'article' }}
       />
 
-      <article className="case-study">
+      <article className="page case-study">
         {filteredModules.map((mod, index) => {
           const Component = moduleComponents[mod._type];
 
@@ -126,9 +123,10 @@ export default function CaseStudyPage({ caseStudy }: Props) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await getCaseStudySlugs();
+
   return {
     paths: slugs.map((item) => ({
-      params: { slug: item.slug },
+      params: { slug: String(item.slug) },
     })),
     fallback: false,
   };
