@@ -15,6 +15,8 @@ export type MuxVideo = {
 // --------------------
 export enum ModuleType {
   Hero = 'heroModule',
+  ServicesPageHero = 'servicesPageHeroModule',
+  ServicesPageCard = 'servicesPageCardModule',
   Video = 'videoModule',
   Text = 'textModule',
   TextImage = 'textImageModule',
@@ -96,6 +98,27 @@ export interface HeroModuleType {
   image: ProjectedImage;
   services?: ServiceReference[];
   deliverables?: DeliverableReference[];
+  backgroundColor: ColorValue;
+  textColor: ColorValue;
+}
+
+export interface ServicesPageHeroModuleType {
+  _type: ModuleType.ServicesPageHero;
+  _key: string;
+  title: string;
+  body?: PortableTextBlock[];
+  image: ProjectedImage;
+  backgroundColor: ColorValue;
+  textColor: ColorValue;
+}
+
+export interface ServicesPageCardModuleType {
+  _type: ModuleType.ServicesPageCard;
+  _key: string;
+  title: string;
+  body?: PortableTextBlock[];
+  image: ProjectedImage;
+  services?: ServiceReference[];
   backgroundColor: ColorValue;
   textColor: ColorValue;
 }
@@ -208,6 +231,8 @@ export type DeliverablesModuleType = {
 // --------------------
 export type Module =
   | HeroModuleType
+  | ServicesPageHeroModuleType
+  | ServicesPageCardModuleType
   | VideoModuleType
   | TextModuleType
   | TextImageModuleType
@@ -234,4 +259,14 @@ export type CaseStudyListItem = {
   _id: string;
   title: string;
   slug: string;
+};
+
+// ---------------------
+// Services page structure
+// ---------------------
+export type ServicesPageType = {
+  _id: string;
+  title: string;
+  slug: string;
+  modules: Module[];
 };

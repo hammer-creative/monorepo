@@ -17,9 +17,12 @@ export function ModulesArrayInput(props: ArrayOfObjectsInputProps) {
   // Cast array items to include _type property
   const modules = (value || []) as Array<{_key: string; _type: string}>
 
+  // Define all hero module variants
+  const HERO_TYPES = ['heroModule', 'servicesPageHeroModule']
+
   // Count hero modules and check first position
-  const heroCount = modules.filter((m) => m._type === 'heroModule').length
-  const firstIsHero = modules.length > 0 && modules[0]._type === 'heroModule'
+  const heroCount = modules.filter((m) => HERO_TYPES.includes(m._type)).length
+  const firstIsHero = modules.length > 0 && HERO_TYPES.includes(modules[0]._type)
 
   // Determine validation error message
   let errorMessage = ''

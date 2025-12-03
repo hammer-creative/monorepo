@@ -1,6 +1,3 @@
-// apps/src/components/Modules/index.ts
+// apps/src/components/Modules/Hero/index.ts
 
 export * from './HeroModule';
-// export * from './HeroCopy';
-// export * from './HeroHeadline';
-// export * from './HeroImage';

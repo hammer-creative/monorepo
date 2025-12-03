@@ -61,11 +61,9 @@ export const projections = {
 export const moduleProjections = `
   _key,
   _type,
-
   backgroundColor {
     ${projections.color}
   },
-
   _type == "heroModule" => {
     title,
     body,
@@ -83,7 +81,26 @@ export const moduleProjections = `
       title
     }
   },
-
+  _type == "servicesPageHeroModule" => {
+    title,
+    body,
+    textColor {
+      ${projections.color}
+    },
+    ${projections.image}
+  },
+  _type == "servicesPageCardModule" => {
+    title,
+    body,
+    textColor {
+      ${projections.color}
+    },
+    ${projections.image},
+    services[]-> {
+      _id,
+      title
+    }
+  },
   _type == "textModule" => {
     layout,
     title,
@@ -93,7 +110,6 @@ export const moduleProjections = `
       ${projections.color}
     }
   },
-
   _type == "textImageModule" => {
     layout,
     title,
@@ -103,13 +119,11 @@ export const moduleProjections = `
     },
     ${projections.image}
   },
-
   _type == "videoModule" => {
     videos[] {
       ${projections.videoItem}
     }
   },
-
   _type == "carouselModule" => {
     images[] {
       _key,
@@ -117,7 +131,6 @@ export const moduleProjections = `
       ${projections.imageItem}
     }
   },
-
   _type == "impactModule" => {
     layout,
     textColor {

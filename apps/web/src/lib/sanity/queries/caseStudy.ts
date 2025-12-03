@@ -1,37 +1,30 @@
-// apps/web/src/lib/queries/caseStudy.ts
-import type { CaseStudy, CaseStudyListItem } from '@/types/sanity';
+// apps/web/src/lib/sanity/index.ts
+import { fetchOne, fetchSlugs } from '@/lib/sanity';
+import { projections, moduleProjections } from '@/lib/sanity/groq';
+import type { CaseStudy } from '@/types/sanity';
 import type { SanityClient } from 'next-sanity';
-import { projections, moduleProjections } from '../groq/builders';
-import { fetchOne, fetchAll, fetchSlugs } from '../groq/helpers';
 
-const fullProjection = `
+const caseStudyProjection = `
   _id,
   title,
   ${projections.slug},
-  modules[]{
+  modules[] {
     ${moduleProjections}
   }
 `;
 
-const listProjection = `
-  _id,
-  title,
-  ${projections.slug}
-`;
-
-export async function getCaseStudySlugs(sanityClient?: SanityClient) {
-  return fetchSlugs('caseStudy', sanityClient);
-}
-
-export async function getCaseStudy(slug: string, sanityClient?: SanityClient) {
-  return fetchOne<CaseStudy>('caseStudy', slug, fullProjection, sanityClient);
-}
-
-export async function getAllCaseStudies(sanityClient?: SanityClient) {
-  return fetchAll<CaseStudyListItem>(
+export async function getCaseStudy(
+  slug: string,
+  sanityClient?: SanityClient,
+): Promise<CaseStudy | null> {
+  return fetchOne<CaseStudy>(
     'caseStudy',
-    listProjection,
-    '| order(_createdAt desc)',
+    slug,
+    caseStudyProjection,
     sanityClient,
   );
+}
+
+export async function getCaseStudySlugs(): Promise<{ slug: string }[]> {
+  return fetchSlugs('caseStudy');
 }

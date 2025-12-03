@@ -1,0 +1,14 @@
+export { TwoKIcon } from './TwoKIcon';
+export { BandaiIcon } from './BandaiIcon';
+export { BethesedaIcon } from './BethesedaIcon';
+export { BlizzardIcon } from './BlizzardIcon';
+export { CrystalDynamicsIcon } from './CrystalDynamicsIcon';
+export { DeepSilverIcon } from './DeepSilverIcon';
+export { EaIcon } from './EaIcon';
+export { EidosIcon } from './EidosIcon';
+export { EpicIcon } from './EpicIcon';
+export { MarvelIcon } from './MarvelIcon';
+export { RiotGamesIcon } from './RiotGamesIcon';
+export { SquareEnixIcon } from './SquareEnixIcon';
+export { UbisoftIcon } from './UbisoftIcon';
+export { WizardsIcon } from './WizardsIcon';

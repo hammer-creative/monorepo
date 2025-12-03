@@ -1,7 +1,5 @@
 // packages/sanity/schemaTypes/modules/heroModule.ts
 
-// packages/sanity/schemaTypes/modules/heroModule.ts
-
 import {StarIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {titleField, portableTextField} from '../fields/textField'
