@@ -7,5 +7,6 @@ interface Props {
 }
 
 export function TextBlock({ body, className }: Props) {
+  console.log('this is the body ' + body);
   return <PortableTextRenderer value={body} className={className} />;
 }

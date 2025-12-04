@@ -1,7 +1,6 @@
 // schemaTypes/documents/homePage.ts
 
 import {defineType} from 'sanity'
-import {titleField, slugField} from '../fields/textField'
 
 export const homePage = defineType({
   name: 'homePage',
@@ -12,7 +11,7 @@ export const homePage = defineType({
       name: 'modules',
       title: 'Content Modules',
       type: 'array',
-      of: [{type: 'caseStudyCardModule'}],
+      of: [{type: 'caseStudyCardModule'}, {type: 'textModule'}],
     },
   ],
   preview: {
@@ -23,7 +22,7 @@ export const homePage = defineType({
     prepare({title, modules}) {
       const moduleCount = modules?.length || 0
       return {
-        title: title || 'Untitled',
+        title: title || 'hammercreative.com',
         subtitle: `${moduleCount} module${moduleCount !== 1 ? 's' : ''}`,
       }
     },
