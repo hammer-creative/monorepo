@@ -1,36 +1,41 @@
-// TODO: add common title component, add common text component
-// apps/web/src/components/modules/TextImage/TextModule.ts
+// apps/web/src/components/modules/TextImage/TextModule.tsx
 import { TextBlock } from '@/components/common/TextBlock';
 import type { TextModuleType } from '@/types/sanity';
 
-export function TextModule({ data, clientName }: { data: TextModuleType }) {
-  const bgColor =
-    data.backgroundColor?.enabled && data.backgroundColor?.hex
-      ? data.backgroundColor.hex
-      : 'transparent';
+const LAYOUT_CLASS_MAP = {
+  headlineLeft: 'headline-left',
+  headlineMiddle: 'headline-middle',
+  homePage: 'home-page',
+} as const;
 
-  // console.log(clientName);
-
+export function TextModule({ data }: { data: TextModuleType }) {
+  const { title, body, layout, tag } = data;
   const layoutClass =
-    data.layout === 'headlineLeft' ? 'headline-left' : 'headline-middle';
+    LAYOUT_CLASS_MAP[layout as keyof typeof LAYOUT_CLASS_MAP] || '';
 
   return (
     <>
       <div className={`flex ${layoutClass}`}>
-        {data.layout === 'headlineLeft' && (
+        {layout === 'headlineLeft' && (
           <div className="flex-item headline">
-            {data.tag && <div className="tag">{data.tag}</div>}
-            {data.title && data.layout === 'headlineLeft' && (
-              <h2>{data.title}</h2>
-            )}
+            {tag && <div className="tag">{tag}</div>}
+            {title && <h2>{title}</h2>}
           </div>
         )}
 
-        {data.body && (
+        {layout === 'homePage' && (
+          <div className="flex-item home-page-content">
+            {tag && <div className="tag">{tag}</div>}
+            {title && <h2>{title}</h2>}
+            {body && <TextBlock body={body} className="text medium" />}
+          </div>
+        )}
+
+        {(layout === 'headlineLeft' || layout === 'headlineMiddle') && body && (
           <div className="flex-item copy">
-            <TextBlock body={data.body} className="text medium" />
-            {data.layout === 'headlineMiddle' && (
-              <div className="tag">{clientName}</div>
+            <TextBlock body={body} className="text medium" />
+            {layout === 'headlineMiddle' && tag && (
+              <div className="tag">{tag}</div>
             )}
           </div>
         )}

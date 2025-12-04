@@ -19,6 +19,7 @@ export const textModule = defineType({
         list: [
           {title: 'Headline Left + Copy Right', value: 'headlineLeft'},
           {title: 'Headline Middle', value: 'headlineMiddle'},
+          {title: 'Homepage', value: 'homePage'},
         ],
         layout: 'radio',
       },
@@ -30,18 +31,10 @@ export const textModule = defineType({
         title: 'Tag',
         maxLength: 50,
       }),
-      validation: (Rule) =>
-        Rule.custom((value, context) => {
-          const parent = context.parent as any
-          if (parent?.layout === 'headlineLeft' && !value) {
-            return 'Tag is required for Headline Left layout'
-          }
-          return true
-        }),
       hidden: ({parent}) => !parent?.layout || parent?.layout === 'headlineMiddle',
     },
     {
-      ...titleField(),
+      ...titleField({required: false}),
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const parent = context.parent as any
@@ -55,8 +48,7 @@ export const textModule = defineType({
     {
       ...portableTextField(),
       validation: (Rule) =>
-        Rule.custom((value, context) => {
-          const parent = context.parent as any
+        Rule.custom((value) => {
           if (!value) {
             return 'Body is required'
           }
@@ -96,6 +88,7 @@ export const textModule = defineType({
       const layoutLabels: Record<string, string> = {
         headlineLeft: 'Headline Left + Copy Right',
         headlineMiddle: 'Headline Middle',
+        homePage: 'Homepage',
       }
       return {
         title: title || 'Text Module',

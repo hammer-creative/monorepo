@@ -14,6 +14,7 @@ export type MuxVideo = {
 // Enum for module types
 // --------------------
 export enum ModuleType {
+  CaseStudyCard = 'caseStudyCardModule',
   Hero = 'heroModule',
   ServicesPageHero = 'servicesPageHeroModule',
   ServicesPageCard = 'servicesPageCardModule',
@@ -62,7 +63,7 @@ export type ProjectedImage = {
 export type ClientReference = {
   _id: string;
   name: string;
-  slug: {
+  slug?: {
     current: string;
   };
 };
@@ -230,6 +231,7 @@ export type DeliverablesModuleType = {
 // Union of all modules
 // --------------------
 export type Module =
+  | CaseStudyCardModuleType
   | HeroModuleType
   | ServicesPageHeroModuleType
   | ServicesPageCardModuleType
@@ -269,4 +271,32 @@ export type ServicesPageType = {
   title: string;
   slug: string;
   modules: Module[];
+};
+
+// ---------------------
+// Services page structure
+// ---------------------
+export type HomePageType = {
+  _id: string;
+  title: string;
+  slug: string;
+  modules: Module[];
+};
+
+// FIX CaseStudyCardModuleType.modules (OBJECT, NOT ARRAY)
+export type CaseStudyCardModuleType = {
+  _type: ModuleType.CaseStudyCard;
+  _key: string;
+  caseStudies?: {
+    _id: string;
+    title: string;
+    slug: string;
+    modules: {
+      client: ClientReference;
+      title: string;
+      image: ProjectedImage;
+    };
+  }[];
+  backgroundColor?: ColorValue;
+  textColor?: ColorValue;
 };

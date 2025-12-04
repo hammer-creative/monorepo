@@ -101,6 +101,21 @@ export const moduleProjections = `
       title
     }
   },
+  _type == "caseStudyCardModule" => {
+    textColor {
+      ${projections.color}
+    },
+    caseStudies[]-> {
+      _id,
+      title,
+      ${projections.slug},
+      modules[_type == "heroModule"][0] {
+        client->,
+        title,
+        ${projections.image}
+      }
+    }
+  },
   _type == "textModule" => {
     layout,
     title,
