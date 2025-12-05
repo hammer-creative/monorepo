@@ -100,26 +100,17 @@ export const impactModule = defineType({
   preview: {
     select: {
       layout: 'layout',
-      title: 'textBlock1.title',
-      media: 'image',
-      backgroundColor: 'backgroundColor',
     },
-    prepare({layout, title, media, backgroundColor}) {
-      const layoutLabels = {
+    prepare({layout}) {
+      const layoutLabels: Record<string, string> = {
         threeText: '3 Text Blocks',
         twoTextOneImage: '2 Text + 1 Image',
         oneTextOneImage: '1 Text + 1 Image',
       }
 
       return {
-        title: title || 'Impact Module',
-        subtitle: [
-          layoutLabels[layout as keyof typeof layoutLabels],
-          backgroundColor?.enabled ? backgroundColor.name : undefined,
-        ]
-          .filter(Boolean)
-          .join(' • '),
-        media,
+        title: 'Impact Module',
+        subtitle: layoutLabels[layout as keyof typeof layoutLabels],
       }
     },
   },

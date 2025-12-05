@@ -1,21 +1,23 @@
 // packages/sanity/schemaTypes/modules/heroModule.ts
 
-import {StarIcon} from '@sanity/icons'
+import {AsteriskIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {titleField, portableTextField} from '../fields/textField'
-import {createClientField, createSingleImageField, createColorField} from '../factories'
+import {createSingleImageField, createColorField} from '../factories'
 
 export const heroModule = defineType({
   name: 'heroModule',
   title: 'Hero Module',
   type: 'object',
-  icon: StarIcon,
+  icon: AsteriskIcon,
   fields: [
-    createClientField({
-      name: 'client',
-      title: 'Client',
-      required: true,
-    }),
+    {
+      name: 'clients',
+      title: 'Clients',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'client'}]}],
+      validation: (Rule) => Rule.required().min(1),
+    },
     titleField(),
     portableTextField(),
     createSingleImageField({
@@ -29,6 +31,20 @@ export const heroModule = defineType({
       imageOptions: {
         hotspot: {
           previews: [{title: '16:9 Landscape', aspectRatio: 16 / 9}],
+        },
+      },
+    }),
+    createSingleImageField({
+      name: 'teaserImage',
+      title: 'Teaser Image',
+      required: true,
+      minWidth: 1380,
+      minHeight: 800,
+      maxFileSize: 2,
+      description: 'Minimum dimensions 1380 px × 800 px, maximum file size 2 MB.',
+      imageOptions: {
+        hotspot: {
+          previews: [{title: '17:10 Landscape', aspectRatio: 17 / 10}],
         },
       },
     }),
@@ -64,25 +80,11 @@ export const heroModule = defineType({
   preview: {
     select: {
       title: 'title',
-      backgroundColor: 'backgroundColor',
-      services: 'services',
-      deliverables: 'deliverables',
     },
-    prepare({title, backgroundColor, services, deliverables}) {
-      const serviceCount = services?.length || 0
-      const deliverableCount = deliverables?.length || 0
-      const counts = [
-        serviceCount > 0 && `${serviceCount} service${serviceCount !== 1 ? 's' : ''}`,
-        deliverableCount > 0 &&
-          `${deliverableCount} deliverable${deliverableCount !== 1 ? 's' : ''}`,
-      ]
-        .filter(Boolean)
-        .join(' • ')
-
+    prepare({title}) {
       return {
-        title: title || 'Hero Module',
-        subtitle:
-          counts || (backgroundColor?.enabled ? `Background: ${backgroundColor.name}` : 'Hero'),
+        title: 'Hero Module',
+        subtitle: title || 'Missing Case Study Title',
       }
     },
   },

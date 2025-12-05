@@ -9,8 +9,8 @@ export const caseStudyPage = defineType({
   title: 'Case Study',
   type: 'document',
   fields: [
-    titleField(), // ✅ now a function call
-    slugField(), // ✅ now a function call
+    titleField(),
+    slugField(),
     {
       name: 'modules',
       title: 'Content Modules',

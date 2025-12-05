@@ -1,7 +1,7 @@
 // apps/web/src/components/modules/ServicesPageCardModule.tsx
 import { Title, TextBlock, SanityImage } from '@/components/common';
 import { ClientIcons } from '@/components/common/ClientIcons';
-import { ServicesModule } from '@/components/modules/Services/ServicesModule';
+import { ServicesListModule } from '@/components/modules/ServicesList/';
 import type { ServicesPageCardModuleType } from '@/types/sanity';
 
 interface ServicesPageCardModuleProps {
@@ -27,7 +27,7 @@ export function ServicesPageCardModule({
           )}
         </div>
 
-        {services && <ServicesModule services={services} />}
+        {services && <ServicesListModule services={services} />}
       </div>
 
       {image && (

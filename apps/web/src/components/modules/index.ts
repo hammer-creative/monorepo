@@ -6,6 +6,6 @@ export * from './Hero';
 export * from './Impact';
 export * from './Text';
 export * from './TextImage';
-export * from './Services';
+export * from './ServicesList';
 export * from './ServicesPage';
 export * from './Video';

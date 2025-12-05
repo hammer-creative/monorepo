@@ -1,130 +1,88 @@
-// apps/web/src/pages/index.tsx
-import { CaseStudyCardModule, TextModule } from '@/components/modules';
+// apps/web/src/pages/services.tsx
+import { ClientIcons } from '@/components/common/ClientIcons';
+import {
+  ServicesPageHeroModule,
+  ServicesPageCardModule,
+} from '@/components/modules';
 import {
   client,
   draftClient,
-  getHomePage,
+  getServicesPage,
   resolveModuleColors,
 } from '@/lib/sanity';
-import type { HomePageType } from '@/types/sanity';
+import type { ServicesPageType } from '@/types/sanity';
 import type { GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
 
 interface Props {
-  homePage: HomePageType;
+  servicesPage: ServicesPageType;
   draftMode?: boolean;
 }
 
-export default function HomePage({ homePage }: Props) {
-  if (!homePage) return null;
+export default function ServicesPage({ servicesPage }: Props) {
+  if (!servicesPage) return null;
 
-  const [caseStudyCard, textModule1, textModule2, textModule3] =
-    homePage.modules?.map(resolveModuleColors) || [];
+  const [hero, ...cards] = servicesPage.modules?.map(resolveModuleColors) || [];
 
   return (
     <>
       <NextSeo
-        title="Home"
+        title="Services"
         titleTemplate="%s | Hammer Creative"
-        openGraph={{ title: 'Home', type: 'website' }}
+        openGraph={{ title: 'Services', type: 'website' }}
       />
 
-      <article className="page home">
-        {caseStudyCard && (
+      <article className="page services">
+        {hero && (
           <section
-            className="module case-study-card-module"
+            className="module services-page-hero-module"
             style={
               {
-                '--module-bg':
-                  caseStudyCard.backgroundColor?.hex ?? 'transparent',
+                '--module-bg': hero.backgroundColor?.hex ?? 'transparent',
                 '--module-text':
-                  'textColor' in caseStudyCard
-                    ? (caseStudyCard.textColor?.hex ?? 'inherit')
+                  'textColor' in hero
+                    ? (hero.textColor?.hex ?? 'inherit')
                     : 'inherit',
-                backgroundColor:
-                  caseStudyCard.backgroundColor?.hex ?? 'transparent',
+                backgroundColor: hero.backgroundColor?.hex ?? 'transparent',
                 color:
-                  'textColor' in caseStudyCard
-                    ? (caseStudyCard.textColor?.hex ?? 'inherit')
+                  'textColor' in hero
+                    ? (hero.textColor?.hex ?? 'inherit')
                     : 'inherit',
               } as React.CSSProperties
             }
           >
-            <CaseStudyCardModule data={caseStudyCard as any} />
+            <ServicesPageHeroModule data={hero as any} />
           </section>
         )}
 
-        {textModule1 && (
-          <section
-            className="module text-module"
-            style={
-              {
-                '--module-bg':
-                  textModule1.backgroundColor?.hex ?? 'transparent',
-                '--module-text':
-                  'textColor' in textModule1
-                    ? (textModule1.textColor?.hex ?? 'inherit')
-                    : 'inherit',
-                backgroundColor:
-                  textModule1.backgroundColor?.hex ?? 'transparent',
-                color:
-                  'textColor' in textModule1
-                    ? (textModule1.textColor?.hex ?? 'inherit')
-                    : 'inherit',
-              } as React.CSSProperties
-            }
-          >
-            <TextModule data={textModule1 as any} />
-          </section>
-        )}
-
-        {textModule2 && (
-          <section
-            className="module text-module"
-            style={
-              {
-                '--module-bg':
-                  textModule2.backgroundColor?.hex ?? 'transparent',
-                '--module-text':
-                  'textColor' in textModule2
-                    ? (textModule2.textColor?.hex ?? 'inherit')
-                    : 'inherit',
-                backgroundColor:
-                  textModule2.backgroundColor?.hex ?? 'transparent',
-                color:
-                  'textColor' in textModule2
-                    ? (textModule2.textColor?.hex ?? 'inherit')
-                    : 'inherit',
-              } as React.CSSProperties
-            }
-          >
-            <TextModule data={textModule2 as any} />
-          </section>
-        )}
-
-        {textModule3 && (
-          <section
-            className="module text-module"
-            style={
-              {
-                '--module-bg':
-                  textModule3.backgroundColor?.hex ?? 'transparent',
-                '--module-text':
-                  'textColor' in textModule3
-                    ? (textModule3.textColor?.hex ?? 'inherit')
-                    : 'inherit',
-                backgroundColor:
-                  textModule3.backgroundColor?.hex ?? 'transparent',
-                color:
-                  'textColor' in textModule3
-                    ? (textModule3.textColor?.hex ?? 'inherit')
-                    : 'inherit',
-              } as React.CSSProperties
-            }
-          >
-            <TextModule data={textModule3 as any} />
-          </section>
-        )}
+        <div className="cards">
+          <div className="services-heading">Services</div>
+          {cards.map((card, index) => (
+            <section
+              key={card._key}
+              className="module services-page-card-module"
+              style={
+                {
+                  '--module-bg': card.backgroundColor?.hex ?? 'transparent',
+                  '--module-text':
+                    'textColor' in card
+                      ? (card.textColor?.hex ?? 'inherit')
+                      : 'inherit',
+                  backgroundColor: card.backgroundColor?.hex ?? 'transparent',
+                  color:
+                    'textColor' in card
+                      ? (card.textColor?.hex ?? 'inherit')
+                      : 'inherit',
+                } as React.CSSProperties
+              }
+            >
+              <ServicesPageCardModule
+                data={card as any}
+                showClientIcons={index === cards.length - 1}
+              />
+            </section>
+          ))}
+        </div>
       </article>
     </>
   );
@@ -133,13 +91,13 @@ export default function HomePage({ homePage }: Props) {
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const { draftMode = false } = context;
   const sanityClient = draftMode ? draftClient : client;
-  const homePage = await getHomePage(sanityClient);
+  const servicesPage = await getServicesPage(sanityClient);
 
-  if (!homePage) return { notFound: true };
+  if (!servicesPage) return { notFound: true };
 
   return {
     props: {
-      homePage,
+      servicesPage,
       draftMode,
     },
     revalidate: 60,

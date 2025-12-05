@@ -1,12 +1,12 @@
 // packages/sanity/schemaTypes/documents/client.ts
-import {UsersIcon} from '@sanity/icons'
+import {CaseIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 
 export const client = defineType({
   name: 'client',
   title: 'Client',
   type: 'document',
-  icon: UsersIcon,
+  icon: CaseIcon,
   fields: [
     {
       name: 'name',
@@ -18,9 +18,6 @@ export const client = defineType({
       name: 'logo',
       title: 'Client Logo',
       type: 'image',
-      options: {
-        hotspot: true,
-      },
     },
     {
       name: 'website',

@@ -40,14 +40,12 @@ export const carouselModule = defineType({
   preview: {
     select: {
       images: 'images',
-      backgroundColor: 'backgroundColor',
     },
-    prepare({images, backgroundColor}) {
+    prepare({images}) {
       const count = images?.length || 0
       return {
-        title: `Carousel Module (${count} image${count !== 1 ? 's' : ''})`,
-        subtitle: backgroundColor?.enabled ? `Background: ${backgroundColor.name}` : undefined,
-        media: images?.[0]?.image,
+        title: `Carousel Module`,
+        subtitle: `${count} image${count !== 1 ? 's' : ''}`,
       }
     },
   },

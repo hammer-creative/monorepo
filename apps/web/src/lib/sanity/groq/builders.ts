@@ -21,6 +21,15 @@ export const projections = {
     }
   `,
 
+  teaserImage: `
+    teaserImage {
+      asset,
+      alt,
+      crop,
+      hotspot
+    }
+  `,
+
   poster: `
     poster {
       "asset": asset->,
@@ -56,6 +65,10 @@ export const projections = {
     name,
     hex
   `,
+
+  client: `
+    name,
+  `,
 };
 
 export const moduleProjections = `
@@ -70,8 +83,11 @@ export const moduleProjections = `
     textColor {
       ${projections.color}
     },
-    client->,
+    clients[]-> {
+      ${projections.client}
+    },
     ${projections.image},
+    ${projections.teaserImage},
     services[]-> {
       _id,
       title
@@ -102,17 +118,15 @@ export const moduleProjections = `
     }
   },
   _type == "caseStudyCardModule" => {
-    textColor {
-      ${projections.color}
-    },
     caseStudies[]-> {
       _id,
       title,
       ${projections.slug},
       modules[_type == "heroModule"][0] {
-        client->,
-        title,
-        ${projections.image}
+        clients[]-> {
+          ${projections.client}
+        },
+        ${projections.teaserImage}
       }
     }
   },
@@ -120,6 +134,7 @@ export const moduleProjections = `
     layout,
     title,
     tag,
+    client->,
     body,
     textColor {
       ${projections.color}

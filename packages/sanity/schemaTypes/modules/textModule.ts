@@ -3,7 +3,7 @@
 import {TextIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {titleField, portableTextField} from '../fields/textField'
-import {createTextField, createColorField} from '../factories'
+import {createTextField, createColorField, createClientField} from '../factories'
 
 export const textModule = defineType({
   name: 'textModule',
@@ -25,6 +25,12 @@ export const textModule = defineType({
       },
       validation: (Rule) => Rule.required(),
     },
+    createClientField({
+      name: 'client',
+      title: 'Client',
+      required: false,
+      hidden: ({parent}: any) => !parent?.layout || parent?.layout !== 'headlineMiddle',
+    }),
     {
       ...createTextField({
         name: 'tag',
@@ -79,26 +85,39 @@ export const textModule = defineType({
   ],
   preview: {
     select: {
+      backgroundColor: 'backgroundColor',
+      layout: 'layout',
       title: 'title',
       tag: 'tag',
-      layout: 'layout',
-      backgroundColor: 'backgroundColor',
+      body: 'body',
     },
-    prepare({title, tag, layout, backgroundColor}) {
+    prepare({title, layout, body}) {
       const layoutLabels: Record<string, string> = {
         headlineLeft: 'Headline Left + Copy Right',
         headlineMiddle: 'Headline Middle',
         homePage: 'Homepage',
       }
+
+      let subtitle = 'Text Module'
+
+      if (layout === 'headlineLeft' || layout === 'headlineMiddle') {
+        subtitle = title || 'Text Module'
+      } else if (layout === 'homePage') {
+        const bodyText = body
+          ?.map((block: any) =>
+            block._type === 'block' && block.children
+              ? block.children.map((child: any) => child.text).join('')
+              : '',
+          )
+          .join(' ')
+
+        const words = bodyText?.split(/\s+/).filter(Boolean).slice(0, 20).join(' ')
+        subtitle = words ? `${words}...` : 'Text Module'
+      }
+
       return {
-        title: title || 'Text Module',
-        subtitle: [
-          tag,
-          layoutLabels[layout],
-          backgroundColor?.enabled ? `Background color: ${backgroundColor.name}` : null,
-        ]
-          .filter(Boolean)
-          .join(' • '),
+        title: ['Text Module', layoutLabels[layout]].filter(Boolean).join(' • '),
+        subtitle,
       }
     },
   },

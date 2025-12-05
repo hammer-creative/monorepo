@@ -1,6 +1,6 @@
 /* Services Page Card Module */
 
-.page.services .services-heading {
+.services .services-heading {
   @mixin typography var(--font-sans), var(--font-size-fluid-subheadline);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
@@ -8,24 +8,24 @@
   padding-bottom: var(--space-60);
 }
 
-.page.services .cards {
+.services .cards {
   display: flex;
   flex-direction: column;
   gap: var(--space-20);
 }
 
-.page.services .services-page-card-module:not(:first-child):not(:last-child) {
+.services .services-page-card-module:not(:first-child):not(:last-child) {
   padding-left: var(--space-20);
   padding-right: var(--space-20);
 }
 
 /* Card Layout - With Image */
-.page.services .services-page-card-module:not(:last-child) .card {
+.services .services-page-card-module:not(:last-child) .card {
   position: relative;
   overflow: hidden;
 }
 
-.page.services .services-page-card-module:not(:last-child) .card-marquee {
+.services .services-page-card-module:not(:last-child) .card-marquee {
   position: relative;
   z-index: 10;
   width: 100%;
@@ -36,24 +36,24 @@
 }
 
 /* Card Layout - Last Card (No Image) */
-.page.services .services-page-card-module:last-child .card {
+.services .services-page-card-module:last-child .card {
   display: flex;
   flex-direction: column;
   gap: var(--space-40);
 }
 
-.page.services .services-page-card-module:last-child .card-marquee {
+.services .services-page-card-module:last-child .card-marquee {
   padding: var(--space-fluid-20-60);
   order: 2;
 }
 
-.page.services .services-page-card-module:last-child .card-icons {
+.services .services-page-card-module:last-child .card-icons {
   padding-top: var(--space-40);
   order: 1;
 }
 
 /* Card Display - Image */
-.page.services .card-image {
+.services .card-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -64,15 +64,12 @@
 }
 
 /* Card Display - Text */
-.page.services .card-marquee .heading {
+.services .card-marquee .heading {
   padding-bottom: var(--space-30);
 }
 
-.page.services
-  .services-page-card-module:not(:last-child)
-  .card-marquee
-  .heading,
-.page.services
+.services .services-page-card-module:not(:last-child) .card-marquee .heading,
+.services
   .services-page-card-module:not(:last-child)
   .card-marquee
   .description {
@@ -133,22 +130,22 @@
 
 /* Desktop */
 @media screen and (min-width: 50rem) {
-  .page.services .services-page-card-module:not(:last-child) .card-marquee {
+  .services .services-page-card-module:not(:last-child) .card-marquee {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 0;
     align-items: start;
   }
 
-  .page.services .services-page-card-module:not(:last-child) .card-metadata {
+  .services .services-page-card-module:not(:last-child) .card-metadata {
     grid-column: 1;
   }
 
-  .page.services .services-page-card-module:not(:last-child) .list {
+  .services .services-page-card-module:not(:last-child) .list {
     grid-column: 3;
   }
 
-  .page.services .services-page-card-module:last-child .card {
+  .services .services-page-card-module:last-child .card {
     display: grid;
     grid-template-columns: 1fr 0.5fr 1.5fr;
     gap: var(--space-40);
@@ -156,16 +153,16 @@
     padding: var(--space-fluid-40-80);
   }
 
-  .page.services .services-page-card-module:last-child .card-marquee {
+  .services .services-page-card-module:last-child .card-marquee {
     padding: 0;
     order: unset;
   }
 
-  .page.services .services-page-card-module:last-child .card-metadata {
+  .services .services-page-card-module:last-child .card-metadata {
     grid-column: 1;
   }
 
-  .page.services .services-page-card-module:last-child .card-icons {
+  .services .services-page-card-module:last-child .card-icons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column: 3;
@@ -173,12 +170,12 @@
     order: unset;
   }
 
-  .page.services .services-page-card-module:last-child .card-icons-row {
+  .services .services-page-card-module:last-child .card-icons-row {
     display: contents;
     animation: none;
   }
 
-  .page.services
+  .services
     .services-page-card-module:last-child
     .card-icons-row
     .icon-item:nth-child(n + 8) {

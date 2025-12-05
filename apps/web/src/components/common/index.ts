@@ -1,6 +1,7 @@
 // apps/web/src/components/common/index.ts
 
 export { ClientIcons } from './ClientIcons';
+export { ClientNames } from './ClientNames';
 export { PortableTextRenderer } from './PortableTextRenderer';
 export { SanityImage } from './SanityImage';
 export { Title } from './Title';
