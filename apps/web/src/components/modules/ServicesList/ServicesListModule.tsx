@@ -26,7 +26,7 @@ function ListRenderer({ items, heading }: { items: Item[]; heading: string }) {
   if (!items.length) return null;
 
   return (
-    <div className="services-list">
+    <div className="list">
       <p className="tag">{heading}</p>
       <ul>
         {items.map((item) => {
@@ -35,7 +35,7 @@ function ListRenderer({ items, heading }: { items: Item[]; heading: string }) {
 
           return (
             <li key={_id} className="item">
-              <p className="name small">{title}</p>
+              <p className="small">{title}</p>
             </li>
           );
         })}

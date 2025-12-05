@@ -15,3 +15,9 @@ main {
 .page.services {
   background: $color-sandstorm;
 }
+
+.image {
+  position: relative;
+  object-fit: cover;
+  overflow: hidden;
+}

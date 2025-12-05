@@ -2,41 +2,36 @@
 
 @import '../mixins.css';
 
-/* layout */
-.text-image-module .flex {
-  @mixin flex-responsive;
-}
+.text-image-module {
+  /* Layout */
 
-.text-image-module .flex-item.text {
-  padding: var(--space-fluid-20-80);
-  order: 2;
-}
-
-.text-image-module .portable-text {
-  padding-right: 5vw;
-}
-
-.text-image-module .flex-item.image {
-  order: 1;
-  display: flex;
-}
-
-.text-image-module .flex-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-@media screen and (min-width: 50rem) {
-  .text-image-module .flex-item {
-    flex-basis: 50%;
+  .container {
+    @mixin flex-responsive column, row;
   }
 
-  .text-image-module .flex-item:first-child {
-    order: 1;
-  }
-
-  .text-image-module .flex-item:last-child {
+  .row.text {
     order: 2;
+  }
+
+  .row.image {
+    order: 1;
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Wide viewport */
+
+  @media screen and (min-width: 50rem) {
+    .row {
+      flex-basis: 50%;
+    }
+
+    .row.text {
+      order: 1;
+    }
+
+    .row.image {
+      order: 2;
+      aspect-ratio: 7 / 5;
+    }
   }
 }

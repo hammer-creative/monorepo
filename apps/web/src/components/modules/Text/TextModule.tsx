@@ -16,25 +16,25 @@ export function TextModule({ data }: { data: TextModuleType | null }) {
     LAYOUT_CLASS_MAP[layout as keyof typeof LAYOUT_CLASS_MAP] ?? '';
 
   return (
-    <div className={`flex ${layoutClass}`}>
+    <div className={`container ${layoutClass}`}>
       {layout === 'headlineLeft' && (
-        <div className="flex-item headline">
+        <div className="row headline">
           {tag && <div className="tag">{tag}</div>}
           {title && <h2>{title}</h2>}
         </div>
       )}
 
       {layout === 'homePage' && (
-        <div className="flex-item home-page-content">
+        <div className="row">
           {tag && <div className="tag">{tag}</div>}
           {title && <h2>{title}</h2>}
-          {body && <TextBlock body={body} className="text medium" />}
+          {body && <TextBlock body={body} className="medium" />}
         </div>
       )}
 
       {(layout === 'headlineLeft' || layout === 'headlineMiddle') && body && (
-        <div className="flex-item copy">
-          <TextBlock body={body} className="text medium" />
+        <div className="row text">
+          <TextBlock body={body} className="medium" />
           {layout === 'headlineMiddle' && tag && (
             <div className="tag">{tag}</div>
           )}

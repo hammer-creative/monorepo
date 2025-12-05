@@ -4,7 +4,7 @@ import type { ProjectedImage } from '@/types/sanity';
 import Image from 'next/image';
 
 interface SanityImageProps {
-  image: ProjectedImage;
+  image: ProjectedImage | null;
   width?: number;
   height?: number;
   fill?: boolean;
@@ -28,7 +28,7 @@ export function SanityImage({
     return (
       <Image
         src={urlFor(image).url()}
-        alt={image.alt || ''}
+        alt={image.alt ?? ''}
         fill
         sizes={sizes}
         priority={priority}
@@ -38,10 +38,13 @@ export function SanityImage({
     );
   }
 
+  // STRICT: require explicit width + height
+  if (!width || !height) return null;
+
   return (
     <Image
-      src={urlFor(image).width(width!).height(height!).fit('crop').url()}
-      alt={image.alt || ''}
+      src={urlFor(image).width(width).height(height).fit('crop').url()}
+      alt={image.alt ?? ''}
       width={width}
       height={height}
       sizes={sizes}

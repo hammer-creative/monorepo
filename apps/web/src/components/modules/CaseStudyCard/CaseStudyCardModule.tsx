@@ -10,12 +10,20 @@ type CaseStudyItemType = NonNullable<
 function CaseStudyCardItem({ item }: { item: CaseStudyItemType }) {
   if (!item) return null;
 
-  const { slug, title, modules } = item;
+  const { slug = null, title = null, modules = null } = item;
+
+  if (!slug) return null;
+
   const hero = Array.isArray(modules) ? modules[0] : modules;
-  const { clients = [], teaserImage } = hero;
+  if (!hero) return null;
+
+  const { clients = [], teaserImage = null } = hero;
+
   const clientNames = clients
-    .map((client: any) => client?.name)
-    .filter(Boolean);
+    .map((client: any) => client?.name ?? null)
+    .filter(Boolean) as string[];
+
+  if (!title && !teaserImage && !clientNames.length) return null;
 
   return (
     <article className="card">
@@ -25,7 +33,9 @@ function CaseStudyCardItem({ item }: { item: CaseStudyItemType }) {
             <ClientNames clientNames={clientNames} />
           </div>
         )}
+
         {title && <Title title={title} className="case-study-title" as="h3" />}
+
         {teaserImage && (
           <SanityImage
             image={teaserImage}
@@ -45,11 +55,14 @@ export function CaseStudyCardModule({
 }: {
   data: CaseStudyCardModuleType | null;
 }) {
-  if (!data?.caseStudies?.length) return null;
+  if (!data) return null;
+
+  const { caseStudies = [] } = data;
+  if (!caseStudies.length) return null;
 
   return (
     <>
-      {data.caseStudies.map((caseStudy) => (
+      {caseStudies.map((caseStudy) => (
         <CaseStudyCardItem key={caseStudy._id} item={caseStudy} />
       ))}
     </>
