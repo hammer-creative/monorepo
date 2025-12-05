@@ -36,7 +36,7 @@ export function VideoPoster({
           borderRadius: '4px',
         }}
       />
-      <div className="video-poster-play-icon">
+      <div className="poster-play-button">
         <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
           <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.5" />
           <path d="M26 20L44 32L26 44V20Z" fill="white" />

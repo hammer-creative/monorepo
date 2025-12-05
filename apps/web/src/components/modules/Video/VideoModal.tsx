@@ -22,33 +22,46 @@ export function VideoModal({
 }: VideoModalProps) {
   const [muted, setMuted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+
+  // Mux Player exposes control on the underlying <mux-player> element
   const videoRef = useRef<any>(null);
 
   const handlePause = () => {
-    if (videoRef.current) {
-      if (isPaused) {
-        videoRef.current.play();
-      } else {
-        videoRef.current.pause();
-      }
-      setIsPaused(!isPaused);
+    const host = videoRef.current;
+    if (!host) return;
+
+    // get the actual HTMLVideoElement inside mux-player
+    const video = host.querySelector('video') as HTMLVideoElement | null;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play();
+      setIsPaused(false);
+    } else {
+      video.pause();
+      setIsPaused(true);
     }
   };
-
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="video-modal-overlay" />
+        <Dialog.Overlay className="video-modal" />
+
         <Dialog.Content className="video-modal-content">
           <CloseButton
             className="video-modal-close"
             onClick={() => onOpenChange(false)}
           />
 
-          <PauseButton className="video-modal-pause" onClick={handlePause} />
+          {/* TOGGLE PLAY / PAUSE */}
+          <PauseButton
+            className="video-modal-play"
+            onClick={handlePause}
+            paused={isPaused}
+          />
 
           <MuteButton
-            className="video-modal-mute"
+            className="button video-modal-volume"
             muted={muted}
             onToggle={() => setMuted((m) => !m)}
           />
