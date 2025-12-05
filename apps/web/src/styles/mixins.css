@@ -22,7 +22,7 @@
  * @param {string} $breakpoint - when to switch (default: 50rem)
  */
 @define-mixin flex-responsive $mobile-direction: column,
-  $desktop-direction: row, $breakpoint: 50rem {
+  $desktop-direction: $mobile-direction, $breakpoint: 50rem {
   display: flex;
   flex-direction: $mobile-direction;
 

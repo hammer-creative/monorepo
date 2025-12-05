@@ -14,7 +14,7 @@ export function SquareEnixIcon({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <g clip-path="url(#clip0_1339_13914)">
+      <g clipPath="url(#clip0_1339_13914)">
         <path
           d="M110.957 5.47656H105.963V8.09015H110.957V5.47656Z"
           fill={fill}

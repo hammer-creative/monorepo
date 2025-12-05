@@ -2,141 +2,42 @@
 
 @import '../mixins.css';
 
-/* Base Hero Styles */
+.hero-module {
+  /* Layout */
 
-.hero {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero .hero-image {
-  filter: brightness(0.75);
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero .hero-marquee {
-  width: 100%;
-  padding: var(--space-fluid-20-40) var(--space-fluid-20-80);
-}
-
-/* Services Page Hero */
-
-.services {
-  .hero {
-    height: 100vh;
-    width: 100%;
+  .marquee {
+    @mixin flex-responsive column;
+    position: relative;
   }
 
-  .hero .hero-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .image {
+    /* aspect-ratio: 16 / 9; */
+    aspect-ratio: 1 / 1;
   }
 
-  .hero .hero-marquee {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 10;
-    width: 100%;
-    padding: var(--space-fluid-40-80);
-  }
-
-  .hero .heading {
-    padding-bottom: var(--space-30);
-  }
-
-  .hero .heading,
-  .hero .description {
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-  }
-}
-
-/* Case Study Hero */
-
-.case-study {
-  .hero {
-    @mixin flex column, wrap;
-  }
-
-  .hero-marquee {
+  .text {
     background-color: var(--module-bg);
-    order: 2;
-  }
-
-  .hero-image {
-    order: 1;
-  }
-
-  .hero-accent-bar {
-    display: none;
-  }
-
-  /* Metadata Section */
-  .hero-metadata {
-    padding: var(--space-fluid-20-60) var(--space-fluid-20-80);
-  }
-
-  .hero-metadata .flex {
-    @mixin flex-responsive;
-  }
-
-  .hero-metadata .portable-text {
-    padding-right: 5vw;
-    padding-bottom: var(--space-fluid-40-120);
-  }
-
-  .hero-metadata .description {
-    @mixin flex column;
-    justify-content: space-between;
-    height: 100%;
-    padding-bottom: var(--space-fluid-20-80);
-  }
-
-  .hero-metadata .services {
-    @mixin flex row, nowrap;
-    gap: var(--space-fluid-40-120);
   }
 }
 
-/* Desktop Styles */
+/* Wide viewport */
 
 @media screen and (min-width: 50rem) {
-  .hero-image {
-    display: block;
-  }
-
-  .services .hero .hero-marquee {
-    max-width: 50%;
-  }
-
-  .case-study {
-    .hero-marquee {
+  .hero-module {
+    .image {
+      aspect-ratio: 16 / 9;
+      height: 100vh;
+      width: 100%;
+    }
+    .text {
       position: absolute;
-      z-index: 10;
       bottom: 0;
       left: 0;
       width: 50%;
     }
-
-    .hero-accent-bar {
-      display: block;
-      padding-left: var(--space-fluid-20-80);
-    }
-
-    .hero-metadata .flex-item {
-      flex-basis: 50%;
-    }
-
-    .hero-metadata .services {
-      align-items: flex-start;
-      justify-content: center;
-      gap: var(--space-fluid-40-120);
-    }
   }
+}
+
+.hero .description {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
