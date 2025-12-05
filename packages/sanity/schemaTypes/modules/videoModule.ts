@@ -104,20 +104,13 @@ export const videoModule = defineType({
   preview: {
     select: {
       videos: 'videos',
-      backgroundColor: 'backgroundColor',
     },
-    prepare({
-      videos,
-      backgroundColor,
-    }: {
-      videos: VideoItem[]
-      backgroundColor?: {enabled?: boolean; name?: string}
-    }) {
+    prepare({videos}: {videos: VideoItem[]}) {
       const count = Array.isArray(videos) ? videos.length : 0
       const plural = count === 1 ? '' : 's'
       return {
-        title: `Video Module (${count} video${plural})`,
-        subtitle: backgroundColor?.enabled ? `Background: ${backgroundColor.name}` : undefined,
+        subtitle: `${count} video${plural}` || 'Video Module',
+        title: 'Video Module',
       }
     },
   },

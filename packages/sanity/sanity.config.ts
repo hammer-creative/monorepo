@@ -29,11 +29,28 @@ export default defineConfig({
       resolve: {
         mainDocuments: defineDocuments([
           {
+            route: '/',
+            filter: `_type == "homePage"`,
+          },
+          {
             route: '/work/:slug',
             filter: `_type == "caseStudy" && slug.current == $slug`,
           },
         ]),
         locations: {
+          homePage: defineLocations({
+            select: {
+              title: 'title',
+            },
+            resolve: () => ({
+              locations: [
+                {
+                  title: 'Home',
+                  href: '/',
+                },
+              ],
+            }),
+          }),
           caseStudy: defineLocations({
             select: {
               title: 'title',

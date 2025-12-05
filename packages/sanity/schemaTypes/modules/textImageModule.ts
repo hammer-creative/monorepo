@@ -69,24 +69,29 @@ export const textImageModule = defineType({
   ],
   preview: {
     select: {
+      body: 'body',
+      title: 'title',
       layout: 'layout',
-      media: 'image',
-      backgroundColor: 'backgroundColor',
     },
-    prepare({layout, media, backgroundColor}) {
+    prepare({layout, body}) {
       const layoutLabels: Record<string, string> = {
         textRight: 'Text Right + Image Left',
         textLeft: 'Text Left + Image Right',
       }
+      // Extract text from portable text body
+      const bodyText = body
+        ?.map((block: any) =>
+          block._type === 'block' && block.children
+            ? block.children.map((child: any) => child.text).join('')
+            : '',
+        )
+        .join(' ')
+
+      const words = bodyText?.split(/\s+/).filter(Boolean).slice(0, 10).join(' ')
+
       return {
-        title: 'Text + Image Module',
-        subtitle: [
-          layoutLabels[layout],
-          backgroundColor?.enabled ? `Background color: ${backgroundColor.name}` : null,
-        ]
-          .filter(Boolean)
-          .join(' • '),
-        media,
+        title: ['Text + Image', layoutLabels[layout]].filter(Boolean).join(' · ') || 'Text + Image',
+        subtitle: words ? `${words}...` : layoutLabels[layout] || 'Text + Image Module',
       }
     },
   },

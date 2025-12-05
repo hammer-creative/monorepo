@@ -16,8 +16,8 @@ interface ClientFieldConfig {
  * Creates a reference field for linking to a Client document
  * Supports optional required validation and label annotation
  */
-export const createClientField = (config: ClientFieldConfig = {}) => {
-  const {name = 'client', title = 'Client', required = false, description = ''} = config
+export const createClientField = (config: ClientFieldConfig & {hidden?: any} = {}) => {
+  const {name = 'client', title = 'Client', required = false, description = '', hidden} = config
 
   return defineField({
     name,
@@ -32,5 +32,6 @@ export const createClientField = (config: ClientFieldConfig = {}) => {
     validation: required
       ? (rule: ReferenceRule) => rule.required().error(`${title} is required`)
       : undefined,
+    ...(hidden && {hidden}),
   })
 }

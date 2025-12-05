@@ -52,8 +52,8 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     },
   ]
 
-  console.log('createPortableTextField config:', config)
-  console.log('createPortableTextField maxLength:', maxLength)
+  // console.log('createPortableTextField config:', config)
+  // console.log('createPortableTextField maxLength:', maxLength)
 
   return defineField({
     name,

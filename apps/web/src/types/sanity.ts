@@ -93,7 +93,7 @@ export type DeliverableReference = {
 export interface HeroModuleType {
   _type: ModuleType.Hero;
   _key: string;
-  client: ClientReference;
+  clients: ClientReference;
   title: string;
   body?: PortableTextBlock[];
   image: ProjectedImage;
@@ -150,7 +150,7 @@ export type TextModuleType = {
   textColor?: ColorValue;
   layout?: string;
   data: TextModuleType;
-  clientName?: string;
+  client?: string;
 };
 
 export type TextImageModuleType = {

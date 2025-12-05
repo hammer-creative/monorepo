@@ -26,12 +26,6 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
 
     const handlePause = () => {
       if (videoRef.current) {
-        // console.log('videoRef.current:', videoRef.current);
-        // console.log(
-        //   'Available methods:',
-        //   Object.getOwnPropertyNames(Object.getPrototypeOf(videoRef.current)),
-        // );
-
         if (isPaused) {
           videoRef.current.play?.();
         } else {

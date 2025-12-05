@@ -1,17 +1,37 @@
 // apps/web/src/components/Hero/HeroModule.tsx
-import { Title, TextBlock, SanityImage } from '@/components/common';
 import {
-  ServicesModule,
-  DeliverablesModule,
-} from '@/components/modules/Services/ServicesModule';
+  ClientNames,
+  Title,
+  TextBlock,
+  SanityImage,
+} from '@/components/common';
+import {
+  ServicesListModule,
+  DeliverablesListModule,
+} from '@/components/modules/ServicesList';
 import type { HeroModuleType } from '@/types/sanity';
 
-export function HeroModule({ data }: { data: HeroModuleType }) {
-  const { title, body, image, client, services, deliverables } = data;
+export function HeroModule({ data }: { data: HeroModuleType | null }) {
+  if (!data) return null;
 
-  const hasServicesOrDeliverables =
-    (services && services.length > 0) ||
-    (deliverables && deliverables.length > 0);
+  const {
+    title = null,
+    body = null,
+    image = null,
+    services = [],
+    deliverables = [],
+    clients = [],
+  } = data;
+
+  const clientNames = clients
+    .map((client) => client?.name)
+    .filter((name): name is string => typeof name === 'string');
+
+  const hasServices = services.length > 0;
+  const hasDeliverables = deliverables.length > 0;
+  const hasMeta = Boolean(
+    body || hasServices || hasDeliverables || clientNames.length,
+  );
 
   return (
     <>
@@ -34,28 +54,30 @@ export function HeroModule({ data }: { data: HeroModuleType }) {
       </div>
 
       <div className="hero-accent-bar">
-        <svg width="80" height="10" viewBox="0 0 80 10">
+        <svg width="80" height="10" viewBox="0 0 80 10" aria-hidden>
           <rect width="80" height="10" fill="#FFCC98" />
         </svg>
       </div>
 
-      {(body || hasServicesOrDeliverables) && (
+      {hasMeta && (
         <div className="hero-metadata">
           <div className="flex">
             <div className="flex-item description">
-              <TextBlock body={body} className="medium" />
-              {client && (
-                <>
-                  <div className="tag">Client</div>
-                  <p className="hero-client-name small">{client.name}</p>
-                </>
+              {body && <TextBlock body={body} className="medium" />}
+
+              {clientNames.length > 0 && (
+                <div className="case-study-clients">
+                  <ClientNames clientNames={clientNames} />
+                </div>
               )}
             </div>
 
-            {hasServicesOrDeliverables && (
+            {(hasServices || hasDeliverables) && (
               <div className="flex-item services">
-                <ServicesModule services={services} />
-                <DeliverablesModule deliverables={deliverables} />
+                <ServicesListModule services={hasServices ? services : []} />
+                <DeliverablesListModule
+                  deliverables={hasDeliverables ? deliverables : []}
+                />
               </div>
             )}
           </div>

@@ -35,7 +35,7 @@ type KnownModules = {
   [ModuleType.Impact]: ComponentType<{ data: ImpactModuleType }>;
   [ModuleType.Text]: ComponentType<{
     data: TextModuleType;
-    clientName?: string;
+    client?: string;
   }>;
   [ModuleType.TextImage]: ComponentType<{ data: TextImageModuleType }>;
   [ModuleType.Video]: ComponentType<{ data: VideoModuleType }>;
@@ -69,7 +69,7 @@ export default function CaseStudyPage({ caseStudy }: Props) {
   const heroModule = filteredModules.find(
     (m) => m._type === ModuleType.Hero,
   ) as HeroModuleType | undefined;
-  const clientName = heroModule?.client?.name;
+  const client = heroModule?.client?.name;
 
   return (
     <>
@@ -79,7 +79,7 @@ export default function CaseStudyPage({ caseStudy }: Props) {
         openGraph={{ title: caseStudy.title, type: 'article' }}
       />
 
-      <article className="page case-study">
+      <article className="case-study">
         {filteredModules.map((mod, index) => {
           const Component = moduleComponents[mod._type];
 
@@ -95,7 +95,7 @@ export default function CaseStudyPage({ caseStudy }: Props) {
 
           const componentProps =
             mod._type === ModuleType.Text
-              ? { data: mod, clientName }
+              ? { data: mod, client }
               : { data: mod };
 
           return (

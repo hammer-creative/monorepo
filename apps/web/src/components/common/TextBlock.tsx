@@ -2,11 +2,12 @@
 import { PortableTextRenderer } from '@/components/common/PortableTextRenderer';
 
 interface Props {
-  body: any;
+  body?: any | null;
   className?: string;
 }
 
 export function TextBlock({ body, className }: Props) {
-  console.log('this is the body ' + body);
+  if (!body) return null;
+
   return <PortableTextRenderer value={body} className={className} />;
 }
