@@ -11,32 +11,37 @@ type VideoItem = VideoModuleType['videos'][number];
 
 export function VideoModule({ data }: { data: VideoModuleType }) {
   const videos: VideoItem[] = data.videos || [];
-  const [activeVideo, setActiveVideo] = useState<number | null>(null);
   const count = videos.length;
+
+  // State for single full-width video
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // State for multi-video modal
+  const [activeVideo, setActiveVideo] = useState<number | null>(null);
 
   if (count === 0) return null;
 
   // Single full-width video
   if (count === 1) {
     const v = videos[0];
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [muted, setMuted] = useState(false);
-    const [isPaused, setIsPaused] = useState(false);
-    const videoRef = useRef<any>(null);
 
     const handlePause = () => {
-      if (videoRef.current) {
-        if (isPaused) {
-          videoRef.current.play?.();
-        } else {
-          videoRef.current.pause?.();
-        }
-        setIsPaused(!isPaused);
+      if (!videoRef.current) return;
+
+      if (isPaused) {
+        videoRef.current.play?.();
+      } else {
+        videoRef.current.pause?.();
       }
+
+      setIsPaused(!isPaused);
     };
 
     return (
-      <div style={{ position: 'relative' }} className="single-video">
+      <div style={{ position: 'relative' }} className="container single-video">
         {!isPlaying ? (
           <VideoPoster
             video={v.video}
@@ -72,9 +77,9 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
   // Multiple videos (flex layout)
   return (
     <>
-      <div className="multi-video-flex">
+      <div className="container multi-video">
         {videos.map((v, i) => (
-          <div key={v._key || i} className="multi-video-item">
+          <div key={v._key || i} className="row video-item">
             <VideoPoster
               video={v.video}
               title={v.title}
