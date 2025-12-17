@@ -9,31 +9,25 @@
 }
 
 .text-module .flex.headline-left {
-  padding: var(--space-20) var(--space-fluid-40-80) var(--space-fluid-40-120);
-
   h2,
   .portable-text {
     padding-right: 10vw;
   }
 
   h2 {
-    padding-bottom: var(--space-fluid-20-80);
   }
 
   .tag {
-    padding-bottom: var(--space-fluid-20-40);
   }
 }
 
 .text-module .flex.headline-middle {
   .flex-item.copy {
     margin: 0 auto;
-    padding: var(--space-80) clamp(5vw, 15vw + 6.25rem, 10vw);
     width: 100%;
   }
 
   .portable-text {
-    padding-bottom: var(--space-60);
   }
 
   .portable-text p,
@@ -46,7 +40,6 @@
   .text-module .flex.headline-left {
     .flex-item {
       @mixin flex column;
-      flex-basis: 50%;
       justify-content: space-between;
     }
 

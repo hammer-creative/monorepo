@@ -13,6 +13,7 @@ import SEO from 'next-seo.config';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const SanityVisualEditing = dynamic(
   () => import('@/components/SanityVisualEditing'),
@@ -22,6 +23,8 @@ const isStaging = process.env.CONTEXT !== 'production';
 
 export default function App({ Component, pageProps }: AppProps) {
   // Log any errors passed through pageProps
+  const router = useRouter();
+
   if (pageProps.error) {
     console.error('Page error from getStaticProps:', pageProps.error);
   }
@@ -47,7 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </Head>
         )}
         <NavigationProvider>
-          <Layout>
+          <Layout pathname={router.pathname}>
             <DefaultSeo {...SEO} />
             <Component {...pageProps} />
             {pageProps.draftMode && <SanityVisualEditing />}

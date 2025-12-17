@@ -1,15 +1,15 @@
 // apps/web/src/components/modules/Carousel/CarouselModule.tsx
 import { SanityImage } from '@/components/common/SanityImage';
+import { urlFor } from '@/lib/sanity/image';
 import type { CarouselModuleType } from '@/types/sanity';
+import Image from 'next/image';
 import 'swiper/css';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-interface Props {
-  data: CarouselModuleType;
-}
+export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
+  if (!data) return null;
 
-export function CarouselModule({ data }: Props) {
   const { images } = data;
 
   if (!images || images.length === 0) {
@@ -19,34 +19,22 @@ export function CarouselModule({ data }: Props) {
   return (
     <div className="carousel-module">
       <Swiper
-        modules={[Autoplay]}
+        spaceBetween={30}
+        centeredSlides={true}
         autoplay={{
-          delay: 3000,
+          delay: 2500,
           disableOnInteraction: false,
         }}
-        loop={images.length >= 6}
-        loopAdditionalSlides={3}
-        spaceBetween={20}
-        slidesPerView={1}
-        breakpoints={{
-          600: {
-            slidesPerView: 3,
-            spaceBetween: 20,
-          },
+        pagination={{
+          clickable: true,
         }}
-        className="h-[680px]"
+        navigation={true}
+        modules={[Autoplay, Pagination, Navigation]}
+        className="mySwiper"
       >
         {images.map((item) => (
-          <SwiperSlide key={item._key} className="h-full">
-            {item.image && (
-              <SanityImage
-                image={item.image}
-                width={680}
-                height={680}
-                sizes="(max-width: 600px) 100vw, 33vw"
-                className="h-full w-full object-cover"
-              />
-            )}
+          <SwiperSlide key={item._key}>
+            <SanityImage image={item.image} width={100} height={100} fill />
           </SwiperSlide>
         ))}
       </Swiper>

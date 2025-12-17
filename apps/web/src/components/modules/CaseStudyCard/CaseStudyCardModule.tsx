@@ -1,5 +1,5 @@
 // apps/web/src/components/modules/CaseStudyCard/CaseStudyCardModule.tsx
-import { ClientNames, Title, SanityImage } from '@/components/common';
+import { ClientNames, Title, SanityHomePageCard } from '@/components/common';
 import type { CaseStudyCardModuleType } from '@/types/sanity';
 import Link from 'next/link';
 
@@ -26,27 +26,35 @@ function CaseStudyCardItem({ item }: { item: CaseStudyItemType }) {
   if (!title && !teaserImage && !clientNames.length) return null;
 
   return (
-    <article className="card">
+    <div className="case-study-card">
       <Link href={`/work/${slug}`}>
-        {clientNames.length > 0 && (
-          <div className="case-study-clients">
-            <ClientNames clientNames={clientNames} />
+        {/* Image */}
+        {teaserImage && (
+          <div className="image">
+            <SanityHomePageCard
+              image={teaserImage}
+              sizes="(max-width: 800px) 100vw, 690px"
+              width={690}
+              height={400}
+            />
           </div>
         )}
 
-        {title && <Title title={title} className="case-study-title" as="h3" />}
+        <div className="meta">
+          {/* Clients */}
+          {clientNames.length > 0 && (
+            <div className="case-study-clients">
+              <ClientNames clientNames={clientNames} />
+            </div>
+          )}
 
-        {teaserImage && (
-          <SanityImage
-            image={teaserImage}
-            width={1200}
-            height={800}
-            className="hero-image"
-            priority
-          />
-        )}
+          {/* Title */}
+          {title && (
+            <Title title={title} className="case-study-title" as="h3" />
+          )}
+        </div>
       </Link>
-    </article>
+    </div>
   );
 }
 
@@ -60,11 +68,15 @@ export function CaseStudyCardModule({
   const { caseStudies = [] } = data;
   if (!caseStudies.length) return null;
 
+  console.log(caseStudies);
+
   return (
-    <>
+    <div className="case-study-cards">
       {caseStudies.map((caseStudy) => (
-        <CaseStudyCardItem key={caseStudy._id} item={caseStudy} />
+        <>
+          <CaseStudyCardItem key={caseStudy._id} item={caseStudy} />
+        </>
       ))}
-    </>
+    </div>
   );
 }

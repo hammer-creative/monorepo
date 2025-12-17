@@ -1,10 +1,10 @@
 // apps/web/src/components/Video/MuxVideo.tsx
 import type { MuxVideo as MuxVideoType } from '@/types/sanity';
 import dynamic from 'next/dynamic';
-import { forwardRef } from 'react';
+import { forwardRef, useCallback, useRef } from 'react';
 import { parseAspectRatio } from './utils';
 
-const MuxPlayer = dynamic(() => import('@mux/mux-player-react'), {
+const MuxVideoElement = dynamic(() => import('@mux/mux-video-react'), {
   ssr: false,
 });
 
@@ -15,9 +15,10 @@ interface MuxVideoProps {
   autoPlay?: boolean;
   priority?: boolean;
   muted?: boolean;
+  onEnded?: () => void;
 }
 
-export const MuxVideo = forwardRef<any, MuxVideoProps>(
+export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
   (
     {
       video,
@@ -26,9 +27,32 @@ export const MuxVideo = forwardRef<any, MuxVideoProps>(
       autoPlay = false,
       priority = false,
       muted = false,
+      onEnded,
     },
-    ref,
+    forwardedRef,
   ) => {
+    const internalRef = useRef<any>(null);
+
+    const setRefs = useCallback(
+      (element: any) => {
+        // Get the actual video element
+        const videoElement = element?.el || element;
+
+        // Set internal ref
+        internalRef.current = videoElement;
+
+        // Set forwarded ref
+        if (typeof forwardedRef === 'function') {
+          forwardedRef(videoElement);
+        } else if (forwardedRef) {
+          forwardedRef.current = videoElement;
+        }
+
+        console.log('MuxVideo ref set to:', videoElement);
+      },
+      [forwardedRef],
+    );
+
     if (!video?.playbackId) return null;
 
     const aspectRatio = parseAspectRatio(video.aspectRatio);
@@ -39,11 +63,10 @@ export const MuxVideo = forwardRef<any, MuxVideoProps>(
           position: 'relative',
           width: '100%',
           aspectRatio,
-          backgroundColor: '#000',
-          overflow: 'hidden',
         }}
       >
-        <MuxPlayer
+        <MuxVideoElement
+          ref={setRefs}
           playbackId={video.playbackId}
           streamType="on-demand"
           playsInline
@@ -51,17 +74,12 @@ export const MuxVideo = forwardRef<any, MuxVideoProps>(
           muted={muted}
           preload={priority ? 'auto' : 'metadata'}
           poster={posterUrl}
-          metadata={{ video_title: title }}
-          ref={ref}
-          style={
-            {
-              width: '100%',
-              height: '100%',
-              display: 'block',
-              '--media-object-fit': 'cover',
-              '--media-object-position': 'center',
-            } as React.CSSProperties
-          }
+          onEnded={onEnded}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+          }}
         />
       </div>
     );

@@ -3,7 +3,7 @@ import {
   ClientNames,
   Title,
   TextBlock,
-  SanityImage,
+  SanityHeroImage,
 } from '@/components/common';
 import {
   ServicesListModule,
@@ -36,14 +36,14 @@ export function HeroModule({ data }: { data: HeroModuleType | null }) {
   return (
     <>
       <div className="row marquee">
-        {/* Image column */}
+        {/* Image */}
         {image && (
           <div className="image">
-            <SanityImage image={image} fill priority />
+            <SanityHeroImage image={image} fill priority />
           </div>
         )}
 
-        {/* Image column */}
+        {/* Title */}
         {title && (
           <div className="text">
             <Title title={title} as="h1" />
@@ -51,7 +51,7 @@ export function HeroModule({ data }: { data: HeroModuleType | null }) {
         )}
       </div>
 
-      {/* Accent bar */}
+      {/* Accent */}
       <div className="row bar">
         <svg width="80" height="10" viewBox="0 0 80 10" aria-hidden>
           <rect width="80" height="10" fill="#FFCC98" />

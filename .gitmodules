@@ -1,3 +1,0 @@
-[submodule "packages/contentful"]
-	path = packages/contentful
-	url = git@github.com:chorusworks/contentful.git

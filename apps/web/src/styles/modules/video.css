@@ -34,8 +34,6 @@
   aspect-ratio: 3 / 5;
 }
 
-/* Video Controls */
-
 mux-player {
   --play-button: none;
   --pause-button: none;
@@ -43,7 +41,6 @@ mux-player {
   --seek-forward-button: none;
   --mute-button: none;
   --volume-range: none;
-  --time-range: none;
   --time-display: none;
   --duration-display: none;
   --fullscreen-button: none;
@@ -51,7 +48,18 @@ mux-player {
   --airplay-button: none;
   --cast-button: none;
   --captions-button: none;
-  --settings-button: none;
+  --rendition-selectmenu: none;
+  --playback-rate-button: none;
+
+  /* Progress bar colors */
+  --media-range-track-height: var(--space-10);
+  /* --media-accent-color: $color-aircutter; */
+  --media-accent-color: red;
+}
+
+mux-player {
+  --media-control-height: 0;
+  --media-control-padding: 0;
 }
 
 .poster-play-button svg {
@@ -90,20 +98,9 @@ mux-player {
   line-height: 0;
 }
 
-/* .video-modal-content {
+.video-modal-content {
+  width: 100vw;
 }
-
-.video-modal-content button {
-}
-
-.video-modal-content .video-modal-close {
-}
-.video-modal-content .video-modal-play {
-}
-.video-modal-content .video-modal-volume {
-} */
-
-/* Video Modal Overlay */
 
 /* VIDEO MODAL OVERLAY */
 .video-modal {
@@ -123,7 +120,6 @@ mux-player {
   z-index: 1000;
   overflow: hidden;
   border: none;
-  padding: 2vw;
 }
 
 /* BASE BUTTON STYLES */
@@ -138,23 +134,33 @@ mux-player {
 
 /* CLOSE BUTTON — TOP RIGHT */
 .video-modal-content .video-modal-close {
-  top: 1rem;
-  right: 1rem;
+  top: var(--space-20);
+  right: var(--space-20);
 }
 
 /* PLAY / PAUSE — BOTTOM LEFT */
 .video-modal-content .video-modal-pause,
 .video-modal-content .video-modal-play {
-  bottom: 1rem;
-  left: 1rem;
+  bottom: var(--space-40);
+  left: var(--space-40);
 }
 
 /* VOLUME / MUTE — BOTTOM RIGHT */
 .video-modal-content .video-modal-volume {
-  bottom: 1rem;
-  right: 1rem;
+  bottom: var(--space-40);
+  right: var(--space-40);
 }
 
 .video-modal-content mux-player {
   pointer-events: none;
+}
+
+/* apps/web/src/styles/videos.css */
+
+.video-modal-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
 }

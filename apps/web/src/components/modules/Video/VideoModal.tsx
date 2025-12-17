@@ -1,9 +1,11 @@
 // apps/web/src/components/Video/VideoModal.tsx
 import type { MuxVideo as MuxVideoType } from '@/types/sanity';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useRef, useState } from 'react';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import { useEffect, useRef, useState } from 'react';
 import { MuxVideo } from './MuxVideo';
 import { CloseButton, MuteButton, PauseButton } from './VideoControls';
+import { VideoProgressBar } from './VideoProgressBar';
 
 interface VideoModalProps {
   video: MuxVideoType;
@@ -22,38 +24,89 @@ export function VideoModal({
 }: VideoModalProps) {
   const [muted, setMuted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Mux Player exposes control on the underlying <mux-player> element
-  const videoRef = useRef<any>(null);
+  const handleVideoEnded = () => {
+    console.log('Video ended, closing modal');
+    onOpenChange(false);
+  };
+
+  // Get the actual video element from the DOM
+  const getVideoElement = (): HTMLVideoElement | null => {
+    if (!containerRef.current) return null;
+    return containerRef.current.querySelector('video');
+  };
+
+  // Sync paused state with video element
+  useEffect(() => {
+    const video = getVideoElement();
+    console.log('useEffect - found video:', video);
+
+    if (!video) {
+      console.log('No video element found in DOM');
+      return;
+    }
+
+    const handlePlay = () => {
+      console.log('Video playing');
+      setIsPaused(false);
+    };
+
+    const handlePause = () => {
+      console.log('Video paused');
+      setIsPaused(true);
+    };
+
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+
+    return () => {
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+    };
+  }, [open]);
 
   const handlePause = () => {
-    const host = videoRef.current;
-    if (!host) return;
+    const video = getVideoElement();
+    console.log('handlePause - found video:', video);
 
-    // get the actual HTMLVideoElement inside mux-player
-    const video = host.querySelector('video') as HTMLVideoElement | null;
-    if (!video) return;
+    if (!video) {
+      console.log('No video element found');
+      return;
+    }
+
+    console.log('Video paused state:', video.paused);
 
     if (video.paused) {
-      video.play();
-      setIsPaused(false);
+      console.log('Calling play()');
+      video.play().catch((err) => console.error('Play failed:', err));
     } else {
+      console.log('Calling pause()');
       video.pause();
-      setIsPaused(true);
     }
   };
+
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="video-modal" />
 
-        <Dialog.Content className="video-modal-content">
+        <Dialog.Content className="video-modal-content" ref={containerRef}>
+          <VisuallyHidden.Root>
+            <Dialog.Title>{title}</Dialog.Title>
+          </VisuallyHidden.Root>
+
+          {description && (
+            <VisuallyHidden.Root>
+              <Dialog.Description>{description}</Dialog.Description>
+            </VisuallyHidden.Root>
+          )}
+
           <CloseButton
             className="video-modal-close"
             onClick={() => onOpenChange(false)}
           />
 
-          {/* TOGGLE PLAY / PAUSE */}
           <PauseButton
             className="video-modal-play"
             onClick={handlePause}
@@ -67,21 +120,24 @@ export function VideoModal({
           />
 
           <MuxVideo
-            ref={videoRef}
             video={video}
             title={title}
             autoPlay
             priority
             muted={muted}
+            onEnded={handleVideoEnded}
+            progressBar={
+              <VideoProgressBar
+                videoElement={getVideoElement()}
+                className="video-modal-progress"
+              />
+            }
           />
 
-          {(title || description) && (
-            <div className="video-modal-info">
-              {description && (
-                <Dialog.Description>{description}</Dialog.Description>
-              )}
-            </div>
-          )}
+          <VideoProgressBar
+            videoElement={getVideoElement()}
+            className="video-modal-progress"
+          />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

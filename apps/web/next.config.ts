@@ -14,6 +14,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   crossOrigin: 'anonymous',
   images: {
+    formats: ['image/avif', 'image/webp'],
+    qualities: [75, 80, 85, 90, 100],
     deviceSizes: [576, 768, 992, 1200],
     imageSizes: [16, 32, 48, 64, 96],
     remotePatterns: [
