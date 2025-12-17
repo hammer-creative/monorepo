@@ -1,35 +1,25 @@
-// apps/web/src/pages/work/index.tsx
-import { getAllCaseStudies } from '@/lib/sanity';
-import type { CaseStudyListItem } from '@/types/sanity';
-import type { GetStaticProps } from 'next';
-import Link from 'next/link';
+// apps/web/src/lib/sanity/index.ts
+import { fetchOne, fetchAll, fetchSlugs } from '@/lib/sanity';
+import { projections, moduleProjections } from '@/lib/sanity/groq';
+import type { CaseStudy } from '@/types/sanity';
 
-type Props = {
-  caseStudies: CaseStudyListItem[];
-};
+const caseStudyProjection = `
+  _id,
+  title,
+  ${projections.slug},
+  modules[] {
+    ${moduleProjections}
+  }
+`;
 
-export default function CaseStudiesPage({ caseStudies }: Props) {
-  return (
-    <div>
-      <h1>Work</h1>
-      <ul>
-        {caseStudies.map((study) => (
-          <li key={study._id}>
-            <Link href={`/work/${study.slug}`}>{study.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+export async function getCaseStudy(slug: string): Promise<CaseStudy | null> {
+  return fetchOne<CaseStudy>('caseStudy', slug, caseStudyProjection);
 }
 
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const caseStudies = await getAllCaseStudies();
+export async function getAllCaseStudies(): Promise<CaseStudy[]> {
+  return fetchAll<CaseStudy>('caseStudy', caseStudyProjection);
+}
 
-  return {
-    props: {
-      caseStudies,
-    },
-    revalidate: 60, // ISR: revalidate every 60 seconds
-  };
-};
+export async function getCaseStudySlugs(): Promise<{ slug: string }[]> {
+  return fetchSlugs('caseStudy');
+}
