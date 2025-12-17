@@ -14,5 +14,28 @@ const imageClient = createClient({
 const builder = imageUrlBuilder(imageClient);
 
 export function urlFor(source: SanityImageSource) {
-  return builder.image(source);
+  const imageBuilder = builder.image(source);
+
+  // Check if source contains a PNG reference
+  let isPng = false;
+
+  if (typeof source === 'object' && source !== null && 'asset' in source) {
+    const asset = source.asset;
+
+    if (typeof asset === 'string') {
+      isPng = asset.includes('-png') || asset.endsWith('.png');
+    } else if (typeof asset === 'object' && asset !== null && '_ref' in asset) {
+      isPng =
+        typeof asset._ref === 'string' &&
+        (asset._ref.includes('-png') || asset._ref.endsWith('.png'));
+    }
+  }
+
+  // For PNGs, return without any format parameter
+  // For other formats, use auto format optimization
+  if (isPng) {
+    return imageBuilder;
+  }
+
+  return imageBuilder.auto('format');
 }

@@ -50,7 +50,7 @@ export default function HomePage({ homePage }: Props) {
         openGraph={{ title: 'Home', type: 'website' }}
       />
 
-      <article className="page home">
+      <article>
         {resolvedModules.map((mod, index) => {
           const Component = moduleComponents[mod._type];
 

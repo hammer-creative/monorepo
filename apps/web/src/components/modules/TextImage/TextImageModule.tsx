@@ -11,8 +11,6 @@ export function TextImageModule({
   // Guard: no module data
   if (!data) return null;
 
-  console.log(data);
-
   // Safe destructuring with defaults
   const { body = null, image = null } = data;
 

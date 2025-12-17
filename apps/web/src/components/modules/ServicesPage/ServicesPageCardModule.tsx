@@ -1,3 +1,4 @@
+// TODO: normalize destructuring across modules
 // apps/web/src/components/modules/ServicesPageCardModule.tsx
 import { Title, TextBlock, SanityImage } from '@/components/common';
 import { ClientIcons } from '@/components/common/ClientIcons';

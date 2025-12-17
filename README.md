@@ -13,7 +13,7 @@ Carousel image 1360 × 1360 1:1
 
 Homepage
 Homepage hero image 3840 × 2160 16:9
-Homepage teaser image 1360 × 800 5:3-ish
+Homepage teaser image 1380 × 800 5:3-ish
 
 Services Page
 Services page hero image 3840 × 2160 16:9
