@@ -126,12 +126,6 @@ export function VideoModal({
             priority
             muted={muted}
             onEnded={handleVideoEnded}
-            progressBar={
-              <VideoProgressBar
-                videoElement={getVideoElement()}
-                className="video-modal-progress"
-              />
-            }
           />
 
           <VideoProgressBar

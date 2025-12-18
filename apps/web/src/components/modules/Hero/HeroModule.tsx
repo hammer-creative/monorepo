@@ -23,7 +23,10 @@ export function HeroModule({ data }: { data: HeroModuleType | null }) {
     clients = [],
   } = data;
 
-  const clientNames = clients
+  // Normalize clients to array
+  const clientsArray = Array.isArray(clients) ? clients : [clients];
+
+  const clientNames = clientsArray
     .map((client) => client?.name)
     .filter((name): name is string => typeof name === 'string');
 
@@ -58,6 +61,7 @@ export function HeroModule({ data }: { data: HeroModuleType | null }) {
         </svg>
       </div>
 
+      {/* Metadata */}
       {hasMeta && (
         <div className="row meta">
           <div className="text">

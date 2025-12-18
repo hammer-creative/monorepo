@@ -1,6 +1,7 @@
 // apps/web/src/types/sanity.ts
 import type { PortableTextBlock } from '@portabletext/types';
 
+// apps/web/src/types/sanity.ts
 // --------------------
 // Base video type
 // --------------------

@@ -1,11 +1,12 @@
 // apps/web/src/lib/sanity/ssr.ts
-import * as serverOnly from '@sanity/react-loader';
+// import * as serverOnly from '@sanity/react-loader';
 import { ClientPerspective } from 'next-sanity';
-import { client } from './client';
 
-const { loadQuery, setServerClient } = serverOnly;
+// import { client } from './client';
 
-setServerClient(client);
+// const { loadQuery, setServerClient } = serverOnly;
+
+// setServerClient(client);
 
 const loadQueryOptions = (context: { draftMode?: boolean }) => {
   const { draftMode } = context;
@@ -18,4 +19,6 @@ const loadQueryOptions = (context: { draftMode?: boolean }) => {
     : {};
 };
 
-export { loadQuery, loadQueryOptions };
+// export { loadQuery, loadQueryOptions };
+
+export { loadQueryOptions };
