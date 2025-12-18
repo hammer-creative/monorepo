@@ -1,11 +1,10 @@
 // commitlint.config.cjs
 module.exports = {
-  extends: ["@hmidmismi/commitlint-config"],
   rules: {
-    "scope-enum": [
+    'scope-enum': [
       2,
-      "always",
-      ["web", "api", "contentful", "ui", "utils", "infra", "design"],
+      'always',
+      ['web', 'api', 'contentful', 'ui', 'utils', 'infra', 'design'],
     ],
   },
 };
