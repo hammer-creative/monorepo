@@ -1,4 +1,4 @@
-import { DEFAULT_COLORS } from '@chorusworks/ui';
+import { DEFAULT_COLORS } from '@hammercreative/ui';
 
 console.log('🔧 PostCSS config loaded!');
 

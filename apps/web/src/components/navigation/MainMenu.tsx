@@ -11,7 +11,6 @@ export function MainMenu({ items }: MenuProps) {
     <Menu
       items={items}
       className="main-menu"
-      listClassName="main-menu-list"
       itemClassName="main-menu-item"
       linkClassName="main-menu-link"
     />

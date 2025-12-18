@@ -69,7 +69,7 @@ export default function CaseStudyPage({ caseStudy }: Props) {
   const heroModule = filteredModules.find(
     (m) => m._type === ModuleType.Hero,
   ) as HeroModuleType | undefined;
-  const client = heroModule?.client?.name;
+  const client = heroModule?.clients?.name;
 
   return (
     <>

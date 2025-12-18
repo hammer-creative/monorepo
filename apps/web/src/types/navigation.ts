@@ -10,12 +10,7 @@ export interface Address {
   id: string;
   label: string;
   line1: string;
-}
-
-export interface SocialMenuItem {
-  id: string;
-  label: string;
-  href: string;
+  telephone?: string;
 }
 
 export interface NavigationData {
@@ -24,9 +19,9 @@ export interface NavigationData {
     href: string;
   };
   main: MenuItem[];
-  addresses: Address[];
   legal: MenuItem[];
-  social: SocialMenuItem[];
+  social: MenuItem[];
+  addresses: Address[];
 }
 
 export interface NavigationContextState {

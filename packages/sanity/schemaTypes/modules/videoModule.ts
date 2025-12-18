@@ -105,12 +105,10 @@ export const videoModule = defineType({
     select: {
       videos: 'videos',
     },
-    prepare({videos}: {videos: VideoItem[]}) {
-      const count = Array.isArray(videos) ? videos.length : 0
-      const plural = count === 1 ? '' : 's'
+    prepare({videos}: any) {
       return {
-        subtitle: `${count} video${plural}` || 'Video Module',
-        title: 'Video Module',
+        title: `${videos?.length || 0} video${videos?.length !== 1 ? 's' : ''}`,
+        subtitle: 'Video Module',
       }
     },
   },

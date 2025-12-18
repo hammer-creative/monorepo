@@ -1,12 +1,18 @@
+// turbo.json
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
+    "typegen": {
+      "outputs": ["../../apps/web/src/types/sanity.generated.ts"],
+      "cache": true
+    },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "typegen"],
       "outputs": ["dist/**", ".next/**", "out/**"],
       "cache": true
     },
     "dev:watch": {
+      "dependsOn": ["typegen"],
       "cache": false,
       "persistent": true
     },
@@ -20,7 +26,7 @@
       "outputs": []
     },
     "typecheck": {
-      "dependsOn": ["^typecheck"],
+      "dependsOn": ["^typecheck", "typegen"],
       "cache": true,
       "outputs": []
     },

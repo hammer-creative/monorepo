@@ -1,11 +1,11 @@
 // apps/web/src/components/modules/Video/VideoModule.tsx
+import { urlFor } from '@/lib/sanity/image';
 import type { VideoModuleType } from '@/types/sanity';
 import { useRef, useState } from 'react';
 import { MuxVideo } from './MuxVideo';
 import { MuteButton, PauseButton } from './VideoControls';
 import { VideoModal } from './VideoModal';
 import { VideoPoster } from './VideoPoster';
-import { getPosterUrl } from './utils';
 
 type VideoItem = VideoModuleType['videos'][number];
 
@@ -13,18 +13,19 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
   const videos: VideoItem[] = data.videos || [];
   const count = videos.length;
 
-  // State for single full-width video
   const [isPlaying, setIsPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // State for multi-video modal
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
 
   if (count === 0) return null;
 
-  // Single full-width video
+  const getPosterUrl = (video: VideoItem) => {
+    return video.poster?.asset ? urlFor(video.poster).url() : '';
+  };
+
   if (count === 1) {
     const v = videos[0];
 
@@ -74,7 +75,6 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
     );
   }
 
-  // Multiple videos (flex layout)
   return (
     <>
       <div className="container multi-video">

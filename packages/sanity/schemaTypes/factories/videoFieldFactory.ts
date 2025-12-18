@@ -2,7 +2,6 @@
 
 import {defineField} from 'sanity'
 import {addRequiredLabel} from '../utils/fieldHelpers'
-import type {ArrayRule} from 'sanity'
 
 interface VideoFieldConfig {
   name?: string
@@ -29,7 +28,7 @@ export const createVideoField = (config: VideoFieldConfig = {}) => {
     type: 'array',
     of: [{type: 'videoItem'}],
     description: addRequiredLabel(description, required),
-    validation: (Rule: ArrayRule) => {
+    validation: (Rule) => {
       let validation = Rule.min(minVideos).max(maxVideos)
       return required ? validation.required() : validation
     },
