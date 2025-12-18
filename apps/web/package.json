@@ -15,7 +15,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "dependencies": {
-    "@chorusworks/ui": "workspace:*",
+    "@hammercreative/ui": "workspace:*",
     "@mux/mux-player-react": "^3.8.0",
     "@mux/mux-video-react": "^0.29.0",
     "@portabletext/react": "^5.0.0",

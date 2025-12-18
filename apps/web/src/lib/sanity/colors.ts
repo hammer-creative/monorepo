@@ -1,7 +1,7 @@
 // apps/web/src/lib/sanity/colors.ts
 import type { Module } from '@/types/sanity';
 import { stegaClean } from 'next-sanity';
-import { DEFAULT_COLORS } from '@chorusworks/ui';
+import { DEFAULT_COLORS } from '@hammercreative/ui';
 
 export function resolveBackgroundColor(
   backgroundColor: { enabled: boolean; name: string } | null | undefined,

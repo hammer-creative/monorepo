@@ -3,7 +3,7 @@
 import {defineField} from 'sanity'
 import type {ObjectRule} from 'sanity'
 import React from 'react'
-import {DEFAULT_COLORS} from '@chorusworks/ui'
+import {DEFAULT_COLORS} from '@hammercreative/ui'
 import {addRequiredLabel} from '../utils/fieldHelpers'
 
 interface ColorFieldConfig {

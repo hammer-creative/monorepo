@@ -29,18 +29,20 @@ export function PlayButton({
 export function PauseButton({
   onClick,
   className,
+  paused = false,
 }: {
   onClick?: () => void;
   className?: string;
+  paused?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       className={className}
-      aria-label="Pause"
+      aria-label={paused ? 'Play' : 'Pause'}
     >
-      <PauseIcon />
+      {paused ? <PlayIcon /> : <PauseIcon />}
     </button>
   );
 }
