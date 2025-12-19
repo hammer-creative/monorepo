@@ -7,8 +7,10 @@ interface TagProps {
   as?: ElementType;
 }
 
-export function Tag({ title, className = '', as: Tag = 'span' }: TagProps) {
+export function Tag({ title, className = '', as = 'span' }: TagProps) {
   if (!title) return null;
 
-  return <Tag className={className}>{title}</Tag>;
+  const Component = as as any;
+
+  return <Component className={className}>{title}</Component>;
 }

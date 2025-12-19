@@ -7,13 +7,14 @@ interface TitleProps {
   as?: ElementType;
 }
 
-export function Title({ title, className, as: Tag = 'div' }: TitleProps) {
-  // Guard: nothing to render if no title
+export function Title({ title, className, as = 'div' }: TitleProps) {
   if (!title) return null;
 
+  const Component = as as any;
+
   return className ? (
-    <Tag className={className}>{title}</Tag>
+    <Component className={className}>{title}</Component>
   ) : (
-    <Tag>{title}</Tag>
+    <Component>{title}</Component>
   );
 }
