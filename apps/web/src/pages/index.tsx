@@ -1,4 +1,5 @@
 // apps/web/src/pages/index.tsx
+import { Masthead } from '@/components/common/Masthead';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
 import {
   client,
@@ -15,7 +16,8 @@ import type {
 import { toKebab } from '@/utils/stringUtils';
 import type { GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
-import type { ComponentType } from 'react';
+import dynamic from 'next/dynamic';
+import type { ComponentType, ReactNode } from 'react';
 
 interface Props {
   homePage: HomePageType;
@@ -27,6 +29,10 @@ type KnownModules = {
   [ModuleType.Text]: ComponentType<{ data: TextModuleType }>;
 };
 
+const Scene = dynamic(() => import('../components/common/Scene'), {
+  ssr: false,
+});
+
 const knownModuleComponents: KnownModules = {
   [ModuleType.CaseStudyCard]: CaseStudyCardModule,
   [ModuleType.Text]: TextModule,
@@ -36,6 +42,19 @@ const moduleComponents: Record<
   string,
   ComponentType<any>
 > = knownModuleComponents;
+
+// Define what to inject at specific indices
+const injections: Record<
+  number,
+  {
+    before?: ReactNode;
+    after?: ReactNode;
+  }
+> = {
+  0: {
+    before: <section className="case-study-hero">Eye goes here</section>,
+  },
+};
 
 export default function HomePage({ homePage }: Props) {
   if (!homePage) return null;
@@ -50,7 +69,11 @@ export default function HomePage({ homePage }: Props) {
         openGraph={{ title: 'Home', type: 'website' }}
       />
 
-      <article>
+      <div className="container">
+        <div className="marquee">
+          <Masthead />
+          <Scene />
+        </div>
         {resolvedModules.map((mod, index) => {
           const Component = moduleComponents[mod._type];
 
@@ -60,29 +83,34 @@ export default function HomePage({ homePage }: Props) {
           }
 
           const moduleClass = `module ${toKebab(mod._type)}`;
-          const backgroundHex = mod.backgroundColor?.hex ?? 'transparent';
           const textHex =
             'textColor' in mod ? (mod.textColor?.hex ?? 'inherit') : 'inherit';
 
+          const injection = injections[index];
+
           return (
-            <section
-              key={mod._key}
-              className={moduleClass}
-              data-module-index={index}
-              style={
-                {
-                  '--module-bg': backgroundHex,
-                  '--module-text': textHex,
-                  backgroundColor: backgroundHex,
-                  color: textHex,
-                } as React.CSSProperties
-              }
-            >
-              <Component data={mod} />
-            </section>
+            <>
+              {/* {injection?.before} */}
+
+              <section
+                key={mod._key}
+                className={moduleClass}
+                data-module-index={index}
+                style={
+                  {
+                    '--module-text': textHex,
+                    color: textHex,
+                  } as React.CSSProperties
+                }
+              >
+                <Component data={mod} />
+              </section>
+
+              {/* {injection?.after} */}
+            </>
           );
         })}
-      </article>
+      </div>
     </>
   );
 }
