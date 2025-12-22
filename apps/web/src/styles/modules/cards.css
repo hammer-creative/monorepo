@@ -80,7 +80,6 @@
 
 .services .services-page-card-module:not(:last-child) .card-marquee {
   position: relative;
-  z-index: 10;
   width: 100%;
   padding: var(--space-fluid-40-80);
   display: flex;

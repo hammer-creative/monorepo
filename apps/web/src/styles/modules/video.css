@@ -73,7 +73,6 @@ mux-player {
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  z-index: 2;
 }
 
 .poster-play-button::before {
@@ -107,7 +106,6 @@ mux-player {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 999;
 }
 
 /* VIDEO MODAL CONTAINER */
@@ -117,7 +115,6 @@ mux-player {
   left: 50%;
   transform: translate(-50%, -50%);
   background: #000;
-  z-index: 1000;
   overflow: hidden;
   border: none;
 }
@@ -125,7 +122,6 @@ mux-player {
 /* BASE BUTTON STYLES */
 .video-modal-content button {
   position: absolute;
-  z-index: 10;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -162,5 +158,4 @@ mux-player {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 5;
 }

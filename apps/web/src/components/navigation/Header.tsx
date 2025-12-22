@@ -1,6 +1,6 @@
 // apps/web/src/components/navigation/Header.tsx
 import { Wordmark } from '@/components/common';
-import { NavigationData } from '@/types/navigation';
+import type { NavigationData } from '@/types/navigation';
 import { MenuToggle } from './MenuToggle';
 
 interface HeaderProps {

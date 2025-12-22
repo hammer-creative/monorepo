@@ -54,7 +54,11 @@ export const textModule = defineType({
     {
       ...portableTextField(),
       validation: (Rule) =>
-        Rule.custom((value) => {
+        Rule.custom((value, context) => {
+          const parent = context.parent as any
+          if (parent?.layout === 'homePage') {
+            return true // body is optional for homepage layout
+          }
           if (!value) {
             return 'Body is required'
           }

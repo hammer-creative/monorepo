@@ -26,20 +26,20 @@ const SceneContent = ({
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 10, 5]} intensity={0.8} />
-      {helpersVisible && (
+      {/* {helpersVisible && (
         <>
           <gridHelper args={[10, 10]} />
           <axesHelper args={[5]} />
         </>
-      )}
+      )} */}
       <Suspense fallback={null}>
         <Model url="/model/model-v2.glb" />
       </Suspense>
-      <OrbitControls
+      {/* <OrbitControls
         enabled={orbitEnabled}
         enableDamping
         dampingFactor={0.05}
-      />
+      /> */}
     </>
   );
 };
@@ -49,7 +49,7 @@ export default function Scene() {
 
   return (
     <div className="model">
-      <button
+      {/* <button
         onClick={() => setHelpersVisible(!helpersVisible)}
         style={{
           position: 'absolute',
@@ -66,7 +66,7 @@ export default function Scene() {
         }}
       >
         Helpers/Orbit: {helpersVisible ? 'ON' : 'OFF'}
-      </button>
+      </button> */}
 
       <Canvas camera={{ position: [0, 0, 2], fov: 50 }}>
         <SceneContent
