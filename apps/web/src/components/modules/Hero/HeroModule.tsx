@@ -30,8 +30,8 @@ export function HeroModule({ data }: { data: HeroModuleType | null }) {
     .map((client) => client?.name)
     .filter((name): name is string => typeof name === 'string');
 
-  const hasServices = services.length > 0;
-  const hasDeliverables = deliverables.length > 0;
+  const hasServices = (services ?? []).length > 0;
+  const hasDeliverables = (deliverables ?? []).length > 0;
   const hasMeta = Boolean(
     body || hasServices || hasDeliverables || clientNames.length,
   );

@@ -94,12 +94,12 @@ export type DeliverableReference = {
 export interface HeroModuleType {
   _type: ModuleType.Hero;
   _key: string;
-  clients: ClientReference;
-  title: string;
-  body?: PortableTextBlock[];
-  image: ProjectedImage;
-  services?: ServiceReference[];
-  deliverables?: DeliverableReference[];
+  clients: ClientReference | null;
+  title: string | null;
+  body?: PortableTextBlock[] | null;
+  image: ProjectedImage | null;
+  services?: ServiceReference[] | null;
+  deliverables?: DeliverableReference[] | null;
   backgroundColor: ColorValue;
   textColor: ColorValue;
 }
