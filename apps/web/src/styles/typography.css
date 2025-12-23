@@ -38,6 +38,10 @@ h3 {
   line-height: var(--line-height-default);
 }
 
+h3 {
+  font-family: var(--font-serif);
+}
+
 /* PARAGRAPHS & BLOCKS */
 p {
   /* @mixin letter-spacing-responsive var(--letter-spacing-normal),

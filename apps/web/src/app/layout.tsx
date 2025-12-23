@@ -28,27 +28,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`
+        ${DIATYPE_MEDIUM.variable}
+        ${DIATYPE_MEDIUM_ITALIC.variable}
+        ${MOHOL_REGULAR.variable}
+        ${MOHOL_BOLD.variable}
+      `}
+    >
       <head>
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="preconnect" href="https://image.mux.com" />
         <link rel="dns-prefetch" href="https://stream.mux.com" />
-        {/* <style
-          dangerouslySetInnerHTML={{
-            __html: `
-            :root {
-              --font-diatype-medium: ${DIATYPE_MEDIUM.style.fontFamily};
-              --font-diatype-medium-italic: ${DIATYPE_MEDIUM_ITALIC.style.fontFamily};
-              --font-mohol-regular: ${MOHOL_REGULAR.style.fontFamily};
-              --font-mohol-bold: ${MOHOL_BOLD.style.fontFamily};
-            }
-          `,
-          }}
-        /> */}
       </head>
-      <body
-        className={`${DIATYPE_MEDIUM.variable} ${DIATYPE_MEDIUM_ITALIC.variable} ${MOHOL_REGULAR.variable} ${MOHOL_BOLD.variable}`}
-      >
+      <body>
         <NavigationProvider>{children}</NavigationProvider>
       </body>
     </html>
