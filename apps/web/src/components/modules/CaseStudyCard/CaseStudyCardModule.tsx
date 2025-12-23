@@ -73,9 +73,7 @@ export function CaseStudyCardModule({
   return (
     <div className="case-study-cards">
       {caseStudies.map((caseStudy) => (
-        <>
-          <CaseStudyCardItem key={caseStudy._id} item={caseStudy} />
-        </>
+        <CaseStudyCardItem key={caseStudy._id} item={caseStudy} />
       ))}
     </div>
   );

@@ -1,7 +1,12 @@
 // apps/web/src/components/marquee/Scene.tsx
+
+'use client';
+
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useState } from 'react';
+
+// apps/web/src/components/marquee/Scene.tsx
 
 function Model({ url }: { url: string }) {
   const gltf = useGLTF(url);

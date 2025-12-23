@@ -1,4 +1,6 @@
 // apps/web/src/components/Video/VideoModal.tsx
+'use client';
+
 import type { MuxVideo as MuxVideoType } from '@/types/sanity';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
@@ -6,6 +8,8 @@ import { useEffect, useRef, useState } from 'react';
 import { MuxVideo } from './MuxVideo';
 import { CloseButton, MuteButton, PauseButton } from './VideoControls';
 import { VideoProgressBar } from './VideoProgressBar';
+
+// apps/web/src/components/Video/VideoModal.tsx
 
 interface VideoModalProps {
   video: MuxVideoType;

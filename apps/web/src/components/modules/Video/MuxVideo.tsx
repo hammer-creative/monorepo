@@ -1,8 +1,12 @@
 // apps/web/src/components/Video/MuxVideo.tsx
+'use client';
+
 import type { MuxVideo as MuxVideoType } from '@/types/sanity';
 import dynamic from 'next/dynamic';
 import { forwardRef, useCallback, useRef } from 'react';
 import { parseAspectRatio } from './utils';
+
+// apps/web/src/components/Video/MuxVideo.tsx
 
 const MuxVideoElement = dynamic(() => import('@mux/mux-video-react'), {
   ssr: false,

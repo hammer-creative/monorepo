@@ -1,4 +1,6 @@
 // apps/web/src/components/modules/Video/VideoModule.tsx
+'use client';
+
 import { urlFor } from '@/lib/sanity/image';
 import type { VideoModuleType } from '@/types/sanity';
 import { useRef, useState } from 'react';
@@ -6,6 +8,8 @@ import { MuxVideo } from './MuxVideo';
 import { MuteButton, PauseButton } from './VideoControls';
 import { VideoModal } from './VideoModal';
 import { VideoPoster } from './VideoPoster';
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
 
 type VideoItem = VideoModuleType['videos'][number];
 

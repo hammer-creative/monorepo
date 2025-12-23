@@ -1,9 +1,14 @@
 // apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+'use client';
+
 import { SanityImage } from '@/components/common/SanityImage';
 import type { CarouselModuleType } from '@/types/sanity';
 import 'swiper/css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
 
 export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
   if (!data) return null;
