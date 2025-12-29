@@ -1,12 +1,12 @@
 // apps/web/src/components/modules/Services/ServicesModule.tsx
 import type {
-  ServicesModuleType,
-  DeliverablesModuleType,
-  ServiceReference,
-  DeliverableReference,
-} from '@/types/sanity';
+  ServicesModule as ServicesModuleType,
+  DeliverablesModule as DeliverablesModuleType,
+  Service,
+  Deliverable,
+} from '@/types/sanity.generated';
 
-type Item = ServiceReference | DeliverableReference;
+type Item = Service | Deliverable;
 
 interface BaseProps {
   heading?: string;
@@ -14,12 +14,12 @@ interface BaseProps {
 
 interface ServicesProps extends BaseProps {
   data?: ServicesModuleType | null;
-  services?: ServiceReference[] | null;
+  services?: any[] | null;
 }
 
 interface DeliverablesProps extends BaseProps {
   data?: DeliverablesModuleType | null;
-  deliverables?: DeliverableReference[] | null;
+  deliverables?: any[] | null;
 }
 
 function ListRenderer({ items, heading }: { items: Item[]; heading: string }) {
@@ -29,7 +29,7 @@ function ListRenderer({ items, heading }: { items: Item[]; heading: string }) {
     <div className="list">
       <p className="tag">{heading}</p>
       <ul>
-        {items.map((item) => {
+        {items.map((item: Item) => {
           const { _id = null, title = null } = item || {};
           if (!_id || !title) return null;
 
@@ -52,7 +52,7 @@ export function ServicesListModule({
   const items = services ?? data?.services ?? [];
   if (!items.length) return null;
 
-  return <ListRenderer items={items} heading={heading} />;
+  return <ListRenderer items={items as Item[]} heading={heading} />;
 }
 
 export function DeliverablesListModule({
@@ -63,5 +63,5 @@ export function DeliverablesListModule({
   const items = deliverables ?? data?.deliverables ?? [];
   if (!items.length) return null;
 
-  return <ListRenderer items={items} heading={heading} />;
+  return <ListRenderer items={items as Item[]} heading={heading} />;
 }

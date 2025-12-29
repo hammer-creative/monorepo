@@ -1,12 +1,11 @@
 // apps/web/src/components/Video/MuxVideo.tsx
 'use client';
 
-import type { MuxVideoAsset } from '@/types';
+import { urlFor } from '@/lib/sanity/image';
+import type { VideoItem } from '@/types/sanity.generated';
 import dynamic from 'next/dynamic';
 import { forwardRef, useCallback, useRef } from 'react';
 import { parseAspectRatio } from './utils';
-
-// apps/web/src/components/Video/MuxVideo.tsx
 
 // apps/web/src/components/Video/MuxVideo.tsx
 
@@ -15,9 +14,7 @@ const MuxVideoElement = dynamic(() => import('@mux/mux-video-react'), {
 });
 
 interface MuxVideoProps {
-  video: MuxVideoAsset;
-  title: string;
-  posterUrl?: string;
+  videoItem: VideoItem;
   autoPlay?: boolean;
   priority?: boolean;
   muted?: boolean;
@@ -26,42 +23,37 @@ interface MuxVideoProps {
 
 export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
   (
-    {
-      video,
-      title,
-      posterUrl,
-      autoPlay = false,
-      priority = false,
-      muted = false,
-      onEnded,
-    },
+    { videoItem, autoPlay = false, priority = false, muted = false, onEnded },
     forwardedRef,
   ) => {
-    const internalRef = useRef<any>(null);
+    const internalRef = useRef<HTMLVideoElement | null>(null);
 
     const setRefs = useCallback(
       (element: any) => {
-        // Get the actual video element
         const videoElement = element?.el || element;
-
-        // Set internal ref
         internalRef.current = videoElement;
 
-        // Set forwarded ref
         if (typeof forwardedRef === 'function') {
           forwardedRef(videoElement);
         } else if (forwardedRef) {
           forwardedRef.current = videoElement;
         }
-
-        console.log('MuxVideo ref set to:', videoElement);
       },
       [forwardedRef],
     );
 
-    if (!video?.playbackId) return null;
+    const { video, title, poster } = videoItem;
+    const videoAsset = video?.asset as any;
 
-    const aspectRatio = parseAspectRatio(video.aspectRatio);
+    if (!videoAsset?.playbackId) {
+      console.warn('MuxVideo: missing video playbackId');
+      return null;
+    }
+
+    const aspectRatio = parseAspectRatio(videoAsset.aspectRatio);
+    const posterUrl = poster?.asset
+      ? urlFor(poster).auto('format').url()
+      : undefined;
 
     return (
       <div
@@ -73,7 +65,7 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
       >
         <MuxVideoElement
           ref={setRefs}
-          playbackId={video.playbackId}
+          playbackId={videoAsset.playbackId}
           streamType="on-demand"
           playsInline
           autoPlay={autoPlay}
@@ -81,6 +73,7 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
           preload={priority ? 'auto' : 'metadata'}
           poster={posterUrl}
           onEnded={onEnded}
+          title={title}
           style={{
             width: '100%',
             height: '100%',

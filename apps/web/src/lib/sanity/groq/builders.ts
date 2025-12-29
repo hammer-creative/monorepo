@@ -44,11 +44,20 @@ export const projections = {
     _type,
     title,
     video {
-      "playbackId": asset->playbackId,
-      "aspectRatio": asset->data.aspect_ratio
+      _type,
+      asset {
+        _ref,
+        _type,
+        "playbackId": @->playbackId,
+        "aspectRatio": @->data.aspect_ratio
+      }
     },
     poster {
-      "asset": asset->,
+      _type,
+      asset {
+        _ref,
+        _type
+      },
       alt,
       crop,
       hotspot

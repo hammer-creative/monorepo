@@ -1,6 +1,6 @@
 // apps/web/src/components/modules/Text/TextModule.tsx
 import { TextBlock } from '@/components/common/TextBlock';
-import type { TextModuleType } from '@/types/sanity';
+import type { TextModule as TextModuleType } from '@/types/sanity.generated';
 
 const LAYOUT_CLASS_MAP = {
   headlineLeft: 'headline-left',

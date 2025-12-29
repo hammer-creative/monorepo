@@ -1,7 +1,7 @@
 // apps/web/src/components/modules/TextImage/TextImageModule.tsx
 import { SanityImage } from '@/components/common';
 import { TextBlock } from '@/components/common/TextBlock';
-import type { TextImageModuleType } from '@/types/sanity';
+import type { TextImageModule as TextImageModuleType } from '@/types/sanity.generated';
 
 export function TextImageModule({
   data,

@@ -3,7 +3,7 @@
 'use client';
 
 import { SanityImage } from '@/components/common/SanityImage';
-import type { CarouselModuleType } from '@/types/sanity';
+import type { CarouselModule as CarouselModuleType } from '@/types/sanity.generated';
 import 'swiper/css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -35,16 +35,18 @@ export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
         modules={[Autoplay, Pagination, Navigation]}
         className="swiper-container"
       >
-        {images.map((item) => (
-          <SwiperSlide key={item._key}>
-            <SanityImage
-              image={item.image ?? null}
-              width={100}
-              height={100}
-              fill
-            />
-          </SwiperSlide>
-        ))}
+        {images.map(
+          (item: NonNullable<CarouselModuleType['images']>[number]) => (
+            <SwiperSlide key={item._key}>
+              <SanityImage
+                image={item.image ?? null}
+                width={100}
+                height={100}
+                fill
+              />
+            </SwiperSlide>
+          ),
+        )}
       </Swiper>
     </div>
   );

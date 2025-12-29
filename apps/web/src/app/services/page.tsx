@@ -9,7 +9,6 @@ import {
   getServicesPage,
   resolveModuleColors,
 } from '@/lib/sanity';
-import type { ServicesPageType } from '@/types/sanity';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 
@@ -35,7 +34,8 @@ export default async function ServicesPage() {
 
   if (!servicesPage) return null;
 
-  const [hero, ...cards] = servicesPage.modules?.map(resolveModuleColors) || [];
+  const modules = servicesPage.modules?.map(resolveModuleColors) || [];
+  const [hero, ...cards] = modules;
 
   return (
     <article className="page services">
@@ -44,16 +44,8 @@ export default async function ServicesPage() {
           className="module services-page-hero-module"
           style={
             {
-              '--module-bg': hero.backgroundColor?.hex ?? 'transparent',
-              '--module-text':
-                'textColor' in hero
-                  ? (hero.textColor?.hex ?? 'inherit')
-                  : 'inherit',
-              backgroundColor: hero.backgroundColor?.hex ?? 'transparent',
-              color:
-                'textColor' in hero
-                  ? (hero.textColor?.hex ?? 'inherit')
-                  : 'inherit',
+              '--module-bg': hero.backgroundColor?.hex,
+              '--module-text': hero.textColor?.hex,
             } as React.CSSProperties
           }
         >
@@ -63,27 +55,19 @@ export default async function ServicesPage() {
 
       <div className="cards">
         <div className="services-heading">Services</div>
-        {cards.map((card, index) => (
+        {cards.map((card: any, index: number) => (
           <section
             key={card._key}
             className="module services-page-card-module"
             style={
               {
-                '--module-bg': card.backgroundColor?.hex ?? 'transparent',
-                '--module-text':
-                  'textColor' in card
-                    ? (card.textColor?.hex ?? 'inherit')
-                    : 'inherit',
-                backgroundColor: card.backgroundColor?.hex ?? 'transparent',
-                color:
-                  'textColor' in card
-                    ? (card.textColor?.hex ?? 'inherit')
-                    : 'inherit',
+                '--module-bg': card.backgroundColor?.hex,
+                '--module-text': card.textColor?.hex,
               } as React.CSSProperties
             }
           >
             <ServicesPageCardModule
-              data={card as any}
+              data={card}
               showClientIcons={index === cards.length - 1}
             />
           </section>

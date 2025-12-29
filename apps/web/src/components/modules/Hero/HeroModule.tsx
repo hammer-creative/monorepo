@@ -9,7 +9,7 @@ import {
   ServicesListModule,
   DeliverablesListModule,
 } from '@/components/modules/ServicesList';
-import type { HeroModuleType } from '@/types/sanity';
+import type { HeroModule as HeroModuleType } from '@/types/sanity.generated';
 
 export function HeroModule({ data }: { data: HeroModuleType | null }) {
   if (!data) return null;
@@ -27,7 +27,7 @@ export function HeroModule({ data }: { data: HeroModuleType | null }) {
   const clientsArray = Array.isArray(clients) ? clients : [clients];
 
   const clientNames = clientsArray
-    .map((client) => client?.name)
+    .map((client: any) => client?.name)
     .filter((name): name is string => typeof name === 'string');
 
   const hasServices = (services ?? []).length > 0;

@@ -1,6 +1,6 @@
 // apps/web/src/components/modules/ServicesHeroModule.tsx
 import { Title, TextBlock, SanityImage } from '@/components/common';
-import type { ServicesPageHeroModuleType } from '@/types/sanity';
+import type { ServicesPageHeroModule as ServicesPageHeroModuleType } from '@/types/sanity.generated';
 
 export function ServicesPageHeroModule({
   data,
