@@ -11,7 +11,7 @@ const LAYOUT_CLASS_MAP = {
 export function TextModule({ data }: { data: TextModuleType | null }) {
   if (!data) return null;
 
-  const { title, body, layout, tag, client } = data;
+  const { title, body, layout, tag } = data;
   const layoutClass =
     LAYOUT_CLASS_MAP[layout as keyof typeof LAYOUT_CLASS_MAP] ?? '';
 
