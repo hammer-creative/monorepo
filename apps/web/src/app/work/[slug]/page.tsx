@@ -7,18 +7,21 @@ import {
   TextImageModule,
   VideoModule,
 } from '@/components/modules';
-import { getCaseStudy, getCaseStudySlugs } from '@/lib/sanity';
-import { client, draftClient } from '@/lib/sanity/client';
-import { resolveModuleColors } from '@/lib/sanity/colors';
-import { ModuleType } from '@/types/sanity';
+import {
+  getCaseStudy,
+  getCaseStudySlugs,
+  client,
+  draftClient,
+  resolveModuleColors,
+} from '@/lib/sanity';
 import type {
-  HeroModuleType,
-  ImpactModuleType,
-  TextModuleType,
-  TextImageModuleType,
-  VideoModuleType,
-  CarouselModuleType,
-} from '@/types/sanity';
+  HeroModule as HeroModuleType,
+  ImpactModule as ImpactModuleType,
+  TextModule as TextModuleType,
+  TextImageModule as TextImageModuleType,
+  VideoModule as VideoModuleType,
+  CarouselModule as CarouselModuleType,
+} from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
@@ -26,21 +29,21 @@ import { notFound } from 'next/navigation';
 import type { ComponentType } from 'react';
 
 type KnownModules = {
-  [ModuleType.Hero]: ComponentType<{ data: HeroModuleType }>;
-  [ModuleType.Impact]: ComponentType<{ data: ImpactModuleType }>;
-  [ModuleType.Text]: ComponentType<{ data: TextModuleType }>;
-  [ModuleType.TextImage]: ComponentType<{ data: TextImageModuleType }>;
-  [ModuleType.Video]: ComponentType<{ data: VideoModuleType }>;
-  [ModuleType.Carousel]: ComponentType<{ data: CarouselModuleType }>;
+  heroModule: ComponentType<{ data: HeroModuleType }>;
+  impactModule: ComponentType<{ data: ImpactModuleType }>;
+  textModule: ComponentType<{ data: TextModuleType }>;
+  textImageModule: ComponentType<{ data: TextImageModuleType }>;
+  videoModule: ComponentType<{ data: VideoModuleType }>;
+  carouselModule: ComponentType<{ data: CarouselModuleType }>;
 };
 
 const knownModuleComponents: KnownModules = {
-  [ModuleType.Hero]: HeroModule,
-  [ModuleType.Video]: VideoModule,
-  [ModuleType.Text]: TextModule,
-  [ModuleType.TextImage]: TextImageModule,
-  [ModuleType.Impact]: ImpactModule,
-  [ModuleType.Carousel]: CarouselModule,
+  heroModule: HeroModule,
+  videoModule: VideoModule,
+  textModule: TextModule,
+  textImageModule: TextImageModule,
+  impactModule: ImpactModule,
+  carouselModule: CarouselModule,
 };
 
 const moduleComponents: Record<
@@ -52,7 +55,7 @@ export const revalidate = 60;
 
 export async function generateStaticParams() {
   const slugs = await getCaseStudySlugs();
-  return slugs.map((item) => ({
+  return slugs.map((item: any) => ({
     slug: String(item.slug),
   }));
 }
@@ -89,38 +92,25 @@ export default async function CaseStudyPage({
   if (!caseStudy) notFound();
 
   const resolvedModules = caseStudy.modules?.map(resolveModuleColors) || [];
-
   const filteredModules = resolvedModules.filter(
-    (m) =>
-      m._type !== ModuleType.Services && m._type !== ModuleType.Deliverables,
+    (m: any) =>
+      m._type !== 'servicesModule' && m._type !== 'deliverablesModule',
   );
 
   return (
     <article className="case-study">
-      {filteredModules.map((mod, index) => {
+      {filteredModules.map((mod: any) => {
         const Component = moduleComponents[mod._type];
-
-        if (!Component) {
-          console.warn(`No component found for module type "${mod._type}"`);
-          return null;
-        }
-
-        const moduleClass = `module ${toKebab(mod._type)}`;
-        const backgroundHex = mod.backgroundColor?.hex ?? 'transparent';
-        const textHex =
-          'textColor' in mod ? (mod.textColor?.hex ?? 'inherit') : 'inherit';
+        if (!Component) return null;
 
         return (
           <section
             key={mod._key}
-            className={moduleClass}
-            data-module-index={index}
+            className={`module ${toKebab(mod._type)}`}
             style={
               {
-                '--module-bg': backgroundHex,
-                '--module-text': textHex,
-                backgroundColor: backgroundHex,
-                color: textHex,
+                '--module-bg': mod.backgroundColor?.hex,
+                '--module-text': mod.textColor?.hex,
               } as React.CSSProperties
             }
           >

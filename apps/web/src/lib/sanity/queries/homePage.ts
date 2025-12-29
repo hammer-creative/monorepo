@@ -1,5 +1,5 @@
 // apps/web/src/lib/queries/homePage.ts
-import type { HomePageType } from '@/types/sanity';
+import type { HomePage as HomePageType } from '@/types/sanity.generated';
 import type { SanityClient } from 'next-sanity';
 import { projections, moduleProjections } from '../groq/builders';
 import { fetchOne } from '../groq/helpers';

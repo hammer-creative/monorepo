@@ -1,7 +1,7 @@
 // apps/web/src/components/Video/VideoModal.tsx
 'use client';
 
-import type { MuxVideo as MuxVideoType } from '@/types/sanity';
+import type { VideoItem } from '@/types/sanity.generated';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { useEffect, useRef, useState } from 'react';
@@ -12,42 +12,31 @@ import { VideoProgressBar } from './VideoProgressBar';
 // apps/web/src/components/Video/VideoModal.tsx
 
 interface VideoModalProps {
-  video: MuxVideoType;
-  title: string;
-  description?: string;
+  videoItem: VideoItem;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function VideoModal({
-  video,
-  title,
-  description,
-  open,
-  onOpenChange,
-}: VideoModalProps) {
+export function VideoModal({ videoItem, open, onOpenChange }: VideoModalProps) {
   const [muted, setMuted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const { title } = videoItem;
 
   const handleVideoEnded = () => {
     console.log('Video ended, closing modal');
     onOpenChange(false);
   };
 
-  // Get the actual video element from the DOM
-  const getVideoElement = (): HTMLVideoElement | null => {
-    if (!containerRef.current) return null;
-    return containerRef.current.querySelector('video');
-  };
-
   // Sync paused state with video element
   useEffect(() => {
-    const video = getVideoElement();
+    const video = videoRef.current;
     console.log('useEffect - found video:', video);
 
     if (!video) {
-      console.log('No video element found in DOM');
+      console.log('No video element found');
       return;
     }
 
@@ -71,7 +60,7 @@ export function VideoModal({
   }, [open]);
 
   const handlePause = () => {
-    const video = getVideoElement();
+    const video = videoRef.current;
     console.log('handlePause - found video:', video);
 
     if (!video) {
@@ -83,7 +72,7 @@ export function VideoModal({
 
     if (video.paused) {
       console.log('Calling play()');
-      video.play().catch((err) => console.error('Play failed:', err));
+      video.play().catch((err: Error) => console.error('Play failed:', err));
     } else {
       console.log('Calling pause()');
       video.pause();
@@ -99,12 +88,6 @@ export function VideoModal({
           <VisuallyHidden.Root>
             <Dialog.Title>{title}</Dialog.Title>
           </VisuallyHidden.Root>
-
-          {description && (
-            <VisuallyHidden.Root>
-              <Dialog.Description>{description}</Dialog.Description>
-            </VisuallyHidden.Root>
-          )}
 
           <CloseButton
             className="video-modal-close"
@@ -124,8 +107,8 @@ export function VideoModal({
           />
 
           <MuxVideo
-            video={video}
-            title={title}
+            ref={videoRef}
+            videoItem={videoItem}
             autoPlay
             priority
             muted={muted}
@@ -133,7 +116,7 @@ export function VideoModal({
           />
 
           <VideoProgressBar
-            videoElement={getVideoElement()}
+            videoElement={videoRef.current}
             className="video-modal-progress"
           />
         </Dialog.Content>

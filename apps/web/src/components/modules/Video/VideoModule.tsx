@@ -2,8 +2,8 @@
 'use client';
 
 import { urlFor } from '@/lib/sanity/image';
-import type { VideoModuleType } from '@/types/sanity';
-import { useRef, useState } from 'react';
+import type { VideoModule as VideoModuleType } from '@/types/sanity.generated';
+import { useRef, useState, useMemo } from 'react';
 import { MuxVideo } from './MuxVideo';
 import { MuteButton, PauseButton } from './VideoControls';
 import { VideoModal } from './VideoModal';
@@ -11,10 +11,10 @@ import { VideoPoster } from './VideoPoster';
 
 // apps/web/src/components/modules/Video/VideoModule.tsx
 
-type VideoItem = VideoModuleType['videos'][number];
+// apps/web/src/components/modules/Video/VideoModule.tsx
 
 export function VideoModule({ data }: { data: VideoModuleType }) {
-  const videos: VideoItem[] = data.videos || [];
+  const videos = data.videos || [];
   const count = videos.length;
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -24,14 +24,20 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
 
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
 
+  // Memoize poster URLs so they're only computed once
+  const videosWithPosters = useMemo(
+    () =>
+      videos.map((v) => ({
+        ...v,
+        posterUrl: v.poster?.asset ? urlFor(v.poster).auto('format').url() : '',
+      })),
+    [videos],
+  );
+
   if (count === 0) return null;
 
-  const getPosterUrl = (video: VideoItem) => {
-    return video.poster?.asset ? urlFor(video.poster).url() : '';
-  };
-
   if (count === 1) {
-    const v = videos[0];
+    const v = videosWithPosters[0];
 
     const handlePause = () => {
       if (!videoRef.current) return;
@@ -50,8 +56,8 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
         {!isPlaying ? (
           <VideoPoster
             video={v.video}
-            title={v.title}
-            posterUrl={getPosterUrl(v)}
+            title={v.title || ''}
+            posterUrl={v.posterUrl}
             onClick={() => setIsPlaying(true)}
           />
         ) : (
@@ -66,9 +72,7 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
 
             <MuxVideo
               ref={videoRef}
-              video={v.video}
-              title={v.title}
-              posterUrl={getPosterUrl(v)}
+              videoItem={v}
               autoPlay
               priority
               muted={muted}
@@ -82,12 +86,12 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
   return (
     <>
       <div className="container multi-video">
-        {videos.map((v, i) => (
+        {videosWithPosters.map((v, i) => (
           <div key={v._key || i} className="row video-item">
             <VideoPoster
               video={v.video}
-              title={v.title}
-              posterUrl={getPosterUrl(v)}
+              title={v.title || ''}
+              posterUrl={v.posterUrl}
               onClick={() => setActiveVideo(i)}
             />
           </div>
@@ -96,10 +100,9 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
 
       {activeVideo !== null && (
         <VideoModal
-          video={videos[activeVideo].video}
-          title={videos[activeVideo].title}
+          videoItem={videosWithPosters[activeVideo]}
           open
-          onOpenChange={(open) => !open && setActiveVideo(null)}
+          onOpenChange={(open: boolean) => !open && setActiveVideo(null)}
         />
       )}
     </>

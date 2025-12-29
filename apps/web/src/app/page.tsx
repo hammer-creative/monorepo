@@ -7,12 +7,11 @@ import {
   getHomePage,
   resolveModuleColors,
 } from '@/lib/sanity';
-import { ModuleType } from '@/types/sanity';
 import type {
-  HomePageType,
-  CaseStudyCardModuleType,
-  TextModuleType,
-} from '@/types/sanity';
+  HomePage as HomePageType,
+  CaseStudyCardModule as CaseStudyCardModuleType,
+  TextModule as TextModuleType,
+} from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
@@ -24,13 +23,13 @@ interface HomePageData {
 }
 
 type KnownModules = {
-  [ModuleType.CaseStudyCard]: ComponentType<{ data: CaseStudyCardModuleType }>;
-  [ModuleType.Text]: ComponentType<{ data: TextModuleType }>;
+  caseStudyCardModule: ComponentType<{ data: CaseStudyCardModuleType }>;
+  textModule: ComponentType<{ data: TextModuleType }>;
 };
 
 const knownModuleComponents: KnownModules = {
-  [ModuleType.CaseStudyCard]: CaseStudyCardModule,
-  [ModuleType.Text]: TextModule,
+  caseStudyCardModule: CaseStudyCardModule,
+  textModule: TextModule,
 };
 
 const moduleComponents: Record<
@@ -77,20 +76,17 @@ export default async function HomePage() {
         }
 
         const moduleClass = `module ${toKebab(mod._type)}`;
-        const textHex =
-          'textColor' in mod ? (mod.textColor?.hex ?? 'inherit') : 'inherit';
+        const textColorName =
+          'textColor' in mod && mod.textColor?.enabled && mod.textColor?.name
+            ? mod.textColor.name
+            : null;
 
         return (
           <section
             key={mod._key}
             className={moduleClass}
             data-module-index={index}
-            style={
-              {
-                '--module-text': textHex,
-                color: textHex,
-              } as React.CSSProperties
-            }
+            data-text-color={textColorName || undefined}
           >
             <Component data={mod} />
           </section>

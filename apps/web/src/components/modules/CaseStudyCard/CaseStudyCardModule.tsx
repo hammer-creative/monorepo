@@ -1,6 +1,6 @@
 // apps/web/src/components/modules/CaseStudyCard/CaseStudyCardModule.tsx
 import { ClientNames, Title, SanityHomePageCard } from '@/components/common';
-import type { CaseStudyCardModuleType } from '@/types/sanity';
+import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
 import Link from 'next/link';
 
 type CaseStudyItemType = NonNullable<
@@ -10,7 +10,7 @@ type CaseStudyItemType = NonNullable<
 function CaseStudyCardItem({ item }: { item: CaseStudyItemType }) {
   if (!item) return null;
 
-  const { slug = null, title = null, modules = null } = item;
+  const { slug = null, title = null, modules = null } = item as any;
 
   if (!slug) return null;
 
@@ -72,8 +72,8 @@ export function CaseStudyCardModule({
 
   return (
     <div className="case-study-cards">
-      {caseStudies.map((caseStudy) => (
-        <CaseStudyCardItem key={caseStudy._id} item={caseStudy} />
+      {caseStudies.map((caseStudy: CaseStudyItemType) => (
+        <CaseStudyCardItem key={(caseStudy as any)._id} item={caseStudy} />
       ))}
     </div>
   );

@@ -3,7 +3,7 @@
 import { Title, TextBlock, SanityImage } from '@/components/common';
 import { ClientIcons } from '@/components/common/ClientIcons';
 import { ServicesListModule } from '@/components/modules/ServicesList/';
-import type { ServicesPageCardModuleType } from '@/types/sanity';
+import type { ServicesPageCardModule as ServicesPageCardModuleType } from '@/types/sanity.generated';
 
 interface ServicesPageCardModuleProps {
   data: ServicesPageCardModuleType;
@@ -28,7 +28,7 @@ export function ServicesPageCardModule({
           )}
         </div>
 
-        {services && <ServicesListModule services={services} />}
+        {services && <ServicesListModule services={services as any} />}
       </div>
 
       {image && (

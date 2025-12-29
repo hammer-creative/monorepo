@@ -1,10 +1,9 @@
 // apps/web/src/lib/sanity/colors.ts
-import type { Module } from '@/types/sanity';
-import { stegaClean } from 'next-sanity';
 import { DEFAULT_COLORS } from '@hammercreative/ui';
+import { stegaClean } from 'next-sanity';
 
 export function resolveBackgroundColor(
-  backgroundColor: { enabled: boolean; name: string } | null | undefined,
+  backgroundColor: { enabled?: boolean; name?: string } | null | undefined,
 ) {
   if (!backgroundColor?.enabled || !backgroundColor?.name) {
     return undefined;
@@ -20,7 +19,7 @@ export function resolveBackgroundColor(
 }
 
 export function resolveTextColor(
-  textColor: { enabled: boolean; name: string } | null | undefined,
+  textColor: { enabled?: boolean; name?: string } | null | undefined,
 ) {
   if (!textColor?.enabled || !textColor?.name) {
     return undefined;
@@ -35,7 +34,9 @@ export function resolveTextColor(
   };
 }
 
-export function resolveModuleColors<T extends Module>(module: T): T {
+export function resolveModuleColors<T extends Record<string, any>>(
+  module: T,
+): T {
   const resolved = { ...module } as any;
 
   if (resolved.backgroundColor) {
