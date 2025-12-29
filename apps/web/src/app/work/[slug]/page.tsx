@@ -12,7 +12,6 @@ import { client, draftClient } from '@/lib/sanity/client';
 import { resolveModuleColors } from '@/lib/sanity/colors';
 import { ModuleType } from '@/types/sanity';
 import type {
-  CaseStudy,
   HeroModuleType,
   ImpactModuleType,
   TextModuleType,
@@ -29,10 +28,7 @@ import type { ComponentType } from 'react';
 type KnownModules = {
   [ModuleType.Hero]: ComponentType<{ data: HeroModuleType }>;
   [ModuleType.Impact]: ComponentType<{ data: ImpactModuleType }>;
-  [ModuleType.Text]: ComponentType<{
-    data: TextModuleType;
-    client?: string;
-  }>;
+  [ModuleType.Text]: ComponentType<{ data: TextModuleType }>;
   [ModuleType.TextImage]: ComponentType<{ data: TextImageModuleType }>;
   [ModuleType.Video]: ComponentType<{ data: VideoModuleType }>;
   [ModuleType.Carousel]: ComponentType<{ data: CarouselModuleType }>;
@@ -99,11 +95,6 @@ export default async function CaseStudyPage({
       m._type !== ModuleType.Services && m._type !== ModuleType.Deliverables,
   );
 
-  const heroModule = filteredModules.find(
-    (m) => m._type === ModuleType.Hero,
-  ) as HeroModuleType | undefined;
-  const client = heroModule?.clients?.name;
-
   return (
     <article className="case-study">
       {filteredModules.map((mod, index) => {
@@ -119,9 +110,6 @@ export default async function CaseStudyPage({
         const textHex =
           'textColor' in mod ? (mod.textColor?.hex ?? 'inherit') : 'inherit';
 
-        const componentProps =
-          mod._type === ModuleType.Text ? { data: mod, client } : { data: mod };
-
         return (
           <section
             key={mod._key}
@@ -136,7 +124,7 @@ export default async function CaseStudyPage({
               } as React.CSSProperties
             }
           >
-            <Component {...(componentProps as any)} />
+            <Component data={mod} />
           </section>
         );
       })}
