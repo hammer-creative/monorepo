@@ -1,4 +1,4 @@
-// apps/web/src/lib/queries/servicesPage.ts
+// apps/web/src/lib/sanity/queries/servicesPage.ts
 import type { ServicesPage as ServicesPageType } from '@/types/sanity.generated';
 import type { SanityClient } from 'next-sanity';
 import { projections, moduleProjections } from '../groq/builders';

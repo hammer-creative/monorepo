@@ -19,11 +19,27 @@ interface MuxVideoProps {
   priority?: boolean;
   muted?: boolean;
   onEnded?: () => void;
+  onPlay?: () => void;
+  onPause?: () => void;
+}
+
+// Type guard: Check if video item has required playback data
+function hasValidPlaybackId(videoItem: VideoItem): boolean {
+  const videoAsset = videoItem.video?.asset as any;
+  return Boolean(videoAsset?.playbackId);
 }
 
 export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
   (
-    { videoItem, autoPlay = false, priority = false, muted = false, onEnded },
+    {
+      videoItem,
+      autoPlay = false,
+      priority = false,
+      muted = false,
+      onEnded,
+      onPlay,
+      onPause,
+    },
     forwardedRef,
   ) => {
     const internalRef = useRef<HTMLVideoElement | null>(null);
@@ -42,14 +58,17 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
       [forwardedRef],
     );
 
-    const { video, title, poster } = videoItem;
-    const videoAsset = video?.asset as any;
-
-    if (!videoAsset?.playbackId) {
+    // Guard: Early return if no valid playback ID
+    if (!hasValidPlaybackId(videoItem)) {
       console.warn('MuxVideo: missing video playbackId');
       return null;
     }
 
+    // Destructure video data
+    const { video, title, poster } = videoItem;
+    const videoAsset = video?.asset as any;
+
+    // Generate aspect ratio and poster URL
     const aspectRatio = parseAspectRatio(videoAsset.aspectRatio);
     const posterUrl = poster?.asset
       ? urlFor(poster).auto('format').url()
@@ -73,6 +92,8 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
           preload={priority ? 'auto' : 'metadata'}
           poster={posterUrl}
           onEnded={onEnded}
+          onPlay={onPlay}
+          onPause={onPause}
           title={title}
           style={{
             width: '100%',

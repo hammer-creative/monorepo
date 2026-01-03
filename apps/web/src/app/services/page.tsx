@@ -3,14 +3,8 @@ import {
   ServicesPageHeroModule,
   ServicesPageCardModule,
 } from '@/components/modules';
-import {
-  client,
-  draftClient,
-  getServicesPage,
-  resolveModuleColors,
-} from '@/lib/sanity';
+import { client, getServicesPage, resolveModuleColors } from '@/lib/sanity';
 import type { Metadata } from 'next';
-import { draftMode } from 'next/headers';
 
 export const metadata: Metadata = {
   title: 'Services',
@@ -22,23 +16,20 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-async function getServicesPageData() {
-  const { isEnabled } = await draftMode();
-  const sanityClient = isEnabled ? draftClient : client;
-  const servicesPage = await getServicesPage(sanityClient);
-  return servicesPage;
-}
-
 export default async function ServicesPage() {
-  const servicesPage = await getServicesPageData();
+  // Fetch services page data
+  const servicesPage = await getServicesPage(client);
 
+  // Guard: Early return if no page data
   if (!servicesPage) return null;
 
+  // Resolve color values for all modules
   const modules = servicesPage.modules?.map(resolveModuleColors) || [];
   const [hero, ...cards] = modules;
 
   return (
     <article className="page services">
+      {/* Hero Module */}
       {hero && (
         <section
           className="module services-page-hero-module"
@@ -53,25 +44,31 @@ export default async function ServicesPage() {
         </section>
       )}
 
+      {/* Services Cards */}
       <div className="cards">
         <div className="services-heading">Services</div>
-        {cards.map((card: any, index: number) => (
-          <section
-            key={card._key}
-            className="module services-page-card-module"
-            style={
-              {
-                '--module-bg': card.backgroundColor?.hex,
-                '--module-text': card.textColor?.hex,
-              } as React.CSSProperties
-            }
-          >
-            <ServicesPageCardModule
-              data={card}
-              showClientIcons={index === cards.length - 1}
-            />
-          </section>
-        ))}
+        {cards.map((card: any, index: number) => {
+          const { _key, backgroundColor, textColor } = card;
+          const isLastCard = index === cards.length - 1;
+
+          return (
+            <section
+              key={_key}
+              className="module services-page-card-module"
+              style={
+                {
+                  '--module-bg': backgroundColor?.hex,
+                  '--module-text': textColor?.hex,
+                } as React.CSSProperties
+              }
+            >
+              <ServicesPageCardModule
+                data={card}
+                showClientIcons={isLastCard}
+              />
+            </section>
+          );
+        })}
       </div>
     </article>
   );

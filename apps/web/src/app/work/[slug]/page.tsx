@@ -11,7 +11,6 @@ import {
   getCaseStudy,
   getCaseStudySlugs,
   client,
-  draftClient,
   resolveModuleColors,
 } from '@/lib/sanity';
 import type {
@@ -24,17 +23,17 @@ import type {
 } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
-import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import type { ComponentType } from 'react';
 
+// Map of module types to their React components
 type KnownModules = {
-  heroModule: ComponentType<{ data: HeroModuleType }>;
-  impactModule: ComponentType<{ data: ImpactModuleType }>;
-  textModule: ComponentType<{ data: TextModuleType }>;
-  textImageModule: ComponentType<{ data: TextImageModuleType }>;
-  videoModule: ComponentType<{ data: VideoModuleType }>;
-  carouselModule: ComponentType<{ data: CarouselModuleType }>;
+  heroModule: ComponentType<{ data: HeroModuleType | null; clients?: any[] }>;
+  impactModule: ComponentType<{ data: ImpactModuleType | null }>;
+  textModule: ComponentType<{ data: TextModuleType | null; clients?: any[] }>;
+  textImageModule: ComponentType<{ data: TextImageModuleType | null }>;
+  videoModule: ComponentType<{ data: VideoModuleType | null }>;
+  carouselModule: ComponentType<{ data: CarouselModuleType | null }>;
 };
 
 const knownModuleComponents: KnownModules = {
@@ -53,6 +52,7 @@ const moduleComponents: Record<
 
 export const revalidate = 60;
 
+// Generate static paths for all case studies at build time
 export async function generateStaticParams() {
   const slugs = await getCaseStudySlugs();
   return slugs.map((item: any) => ({
@@ -60,21 +60,24 @@ export async function generateStaticParams() {
   }));
 }
 
+// Generate metadata for SEO
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { isEnabled } = await draftMode();
-  const sanityClient = isEnabled ? draftClient : client;
-  const caseStudy = await getCaseStudy(params.slug, sanityClient);
+  const { slug } = await params;
+  const caseStudy = await getCaseStudy(slug, client);
 
+  // Guard: Return empty metadata if case study not found
   if (!caseStudy) return {};
 
+  const { title = 'Case Study' } = caseStudy;
+
   return {
-    title: caseStudy.title,
+    title,
     openGraph: {
-      title: caseStudy.title,
+      title,
       type: 'article',
     },
   };
@@ -83,14 +86,21 @@ export async function generateMetadata({
 export default async function CaseStudyPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { isEnabled } = await draftMode();
-  const sanityClient = isEnabled ? draftClient : client;
-  const caseStudy = await getCaseStudy(params.slug, sanityClient);
+  // Get slug from params
+  const { slug } = await params;
 
+  // Fetch case study data
+  const caseStudy = await getCaseStudy(slug, client);
+
+  // Guard: Show 404 if case study not found
   if (!caseStudy) notFound();
 
+  // Extract clients from document level
+  const { clients = [] } = caseStudy;
+
+  // Resolve color values and filter out service/deliverable modules
   const resolvedModules = caseStudy.modules?.map(resolveModuleColors) || [];
   const filteredModules = resolvedModules.filter(
     (m: any) =>
@@ -101,20 +111,31 @@ export default async function CaseStudyPage({
     <article className="case-study">
       {filteredModules.map((mod: any) => {
         const Component = moduleComponents[mod._type];
+
+        // Guard: Skip unknown module types
         if (!Component) return null;
+
+        const { _key, _type, backgroundColor, textColor } = mod;
 
         return (
           <section
-            key={mod._key}
-            className={`module ${toKebab(mod._type)}`}
+            key={_key}
+            className={`module ${toKebab(_type)}`}
             style={
               {
-                '--module-bg': mod.backgroundColor?.hex,
-                '--module-text': mod.textColor?.hex,
+                '--module-bg': backgroundColor?.hex,
+                '--module-text': textColor?.hex,
               } as React.CSSProperties
             }
           >
-            <Component data={mod} />
+            <Component
+              data={mod}
+              clients={
+                _type === 'heroModule' || _type === 'textModule'
+                  ? clients
+                  : undefined
+              }
+            />
           </section>
         );
       })}

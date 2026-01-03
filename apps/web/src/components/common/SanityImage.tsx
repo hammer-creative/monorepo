@@ -89,6 +89,6 @@ export const SanityHeroImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => <SanityImage fill sizes="100vw" priority quality={90} {...props} />;
 
-export const SanityHomePageCard = (
+export const SanityHomePageCardImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => <SanityImage fill sizes="100vw" quality={80} {...props} />;
