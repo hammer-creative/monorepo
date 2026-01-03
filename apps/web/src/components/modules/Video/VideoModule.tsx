@@ -1,28 +1,45 @@
 // apps/web/src/components/modules/Video/VideoModule.tsx
 'use client';
 
+import { useVideoControls } from '@/hooks/useVideoControls';
 import { urlFor } from '@/lib/sanity/image';
 import type { VideoModule as VideoModuleType } from '@/types/sanity.generated';
-import { useRef, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { MuxVideo } from './MuxVideo';
 import { MuteButton, PauseButton } from './VideoControls';
 import { VideoModal } from './VideoModal';
 import { VideoPoster } from './VideoPoster';
+import { VideoProgressBar } from './VideoProgressBar';
 
 // apps/web/src/components/modules/Video/VideoModule.tsx
 
-// apps/web/src/components/modules/Video/VideoModule.tsx
+// Type guard: Check if module data exists and is valid
+function isValidVideoModule(
+  data: VideoModuleType | null,
+): data is VideoModuleType {
+  return data !== null && Array.isArray(data.videos) && data.videos.length > 0;
+}
 
-export function VideoModule({ data }: { data: VideoModuleType }) {
+export function VideoModule({ data }: { data: VideoModuleType | null }) {
+  // Guard: Early return if no valid data
+  if (!isValidVideoModule(data)) return null;
+
   const videos = data.videos || [];
   const count = videos.length;
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
+
+  // Use video controls hook for single video case
+  const {
+    videoRef,
+    muted,
+    isPaused,
+    handlePlay,
+    handlePause,
+    handleTogglePlay,
+    handleToggleMute,
+  } = useVideoControls();
 
   // Memoize poster URLs so they're only computed once
   const videosWithPosters = useMemo(
@@ -34,22 +51,9 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
     [videos],
   );
 
-  if (count === 0) return null;
-
+  // Single Video: Play inline with controls
   if (count === 1) {
     const v = videosWithPosters[0];
-
-    const handlePause = () => {
-      if (!videoRef.current) return;
-
-      if (isPaused) {
-        videoRef.current.play?.();
-      } else {
-        videoRef.current.pause?.();
-      }
-
-      setIsPaused(!isPaused);
-    };
 
     return (
       <div style={{ position: 'relative' }} className="container single-video">
@@ -62,20 +66,35 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
           />
         ) : (
           <>
-            <PauseButton className="video-modal-pause" onClick={handlePause} />
+            {/* Play/Pause Button */}
+            <PauseButton
+              className="video-modal-pause"
+              onClick={handleTogglePlay}
+              paused={isPaused}
+            />
 
+            {/* Mute Button */}
             <MuteButton
               className="video-modal-mute"
               muted={muted}
-              onToggle={() => setMuted((m) => !m)}
+              onToggle={handleToggleMute}
             />
 
+            {/* Video Player */}
             <MuxVideo
               ref={videoRef}
               videoItem={v}
               autoPlay
               priority
               muted={muted}
+              onPlay={handlePlay}
+              onPause={handlePause}
+            />
+
+            {/* Progress Bar */}
+            <VideoProgressBar
+              videoElement={videoRef.current}
+              className="video-modal-progress"
             />
           </>
         )}
@@ -83,6 +102,7 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
     );
   }
 
+  // Multiple Videos: Show posters and open in modal
   return (
     <>
       <div className="container multi-video">

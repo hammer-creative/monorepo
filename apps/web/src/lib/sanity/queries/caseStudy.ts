@@ -1,17 +1,8 @@
-// apps/web/src/lib/sanity/index.ts
-import { projections, moduleProjections } from '@/lib/sanity/groq';
+// apps/web/src/lib/sanity/queries/caseStudy.ts
+import { caseStudyProjection } from '@/lib/sanity/groq';
 import { fetchOne, fetchAll, fetchSlugs } from '@/lib/sanity/groq/helpers';
 import type { CaseStudy } from '@/types/sanity.generated';
 import type { SanityClient } from 'next-sanity';
-
-const caseStudyProjection = `
-  _id,
-  title,
-  ${projections.slug},
-  modules[] {
-    ${moduleProjections}
-  }
-`;
 
 export async function getCaseStudy(
   slug: string,

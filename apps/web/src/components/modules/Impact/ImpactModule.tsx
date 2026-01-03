@@ -5,20 +5,38 @@ import type {
   TextBlock,
 } from '@/types/sanity.generated';
 
+// Type guard: Check if module data exists and is valid
+function isValidImpactModule(
+  data: ImpactModuleType | null,
+): data is ImpactModuleType {
+  return data !== null;
+}
+
+// Type guard: Check if a text block has content
+function isValidTextBlock(block: TextBlock | undefined): block is TextBlock {
+  return block !== undefined && (Boolean(block.title) || Boolean(block.body));
+}
+
 export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
-  if (!data) return null;
+  // Guard: Early return if no valid data
+  if (!isValidImpactModule(data)) return null;
 
+  // Collect all text blocks and filter out empty ones
   const blocks = [data.textBlock1, data.textBlock2, data.textBlock3].filter(
-    Boolean,
-  ) as TextBlock[];
+    isValidTextBlock,
+  );
 
-  if (!blocks.length) return null;
+  // Guard: Early return if no blocks with content
+  if (blocks.length === 0) return null;
 
   return (
-    <div className="flex">
+    <div className="container">
       {blocks.map((item: TextBlock, i: number) => (
-        <div key={i} className="flex-item">
+        <div key={i} className="row">
+          {/* Block Title */}
           {item.title && <h3>{item.title}</h3>}
+
+          {/* Block Body (Portable Text) */}
           {item.body && (
             <PortableTextRenderer value={item.body as any} className="small" />
           )}

@@ -487,13 +487,6 @@ export type ImpactModule = {
 
 export type HeroModule = {
   _type: 'heroModule';
-  clients?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: 'client';
-  }>;
   title?: string;
   body?: Array<{
     children?: Array<{
@@ -641,6 +634,13 @@ export type CaseStudy = {
   _rev: string;
   title?: string;
   slug?: Slug;
+  clients?: Array<{
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: 'client';
+  }>;
   modules?: Array<
     | ({
         _key: string;

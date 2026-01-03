@@ -75,9 +75,16 @@ export const projections = {
     hex
   `,
 
-  client: `
-    name,
-  `,
+  clients: `clients[]-> {
+    _id,
+    name
+  }`,
+
+  caseStudyCard: `caseStudies[]-> {
+    _id,
+    title,
+    "slug": slug.current
+  }`,
 };
 
 export const moduleProjections = `
@@ -92,11 +99,9 @@ export const moduleProjections = `
     textColor {
       ${projections.color}
     },
-    clients[]-> {
-      ${projections.client}
-    },
     ${projections.image},
     ${projections.teaserImage},
+    ${projections.clients},
     services[]-> {
       _id,
       title
@@ -131,10 +136,8 @@ export const moduleProjections = `
       _id,
       title,
       ${projections.slug},
-      modules[_type == "heroModule"][0] {
-        clients[]-> {
-          ${projections.client}
-        },
+      ${projections.clients},
+      modules[_type == "heroModule"] {
         ${projections.teaserImage}
       }
     }
@@ -143,7 +146,6 @@ export const moduleProjections = `
     layout,
     title,
     tag,
-    client->,
     body,
     textColor {
       ${projections.color}
@@ -185,5 +187,15 @@ export const moduleProjections = `
     textBlock3 {
       ${projections.textBlock}
     }
+  }
+`;
+
+export const caseStudyProjection = `
+  _id,
+  title,
+  ${projections.slug},
+  ${projections.clients},
+  modules[] {
+    ${moduleProjections}
   }
 `;
