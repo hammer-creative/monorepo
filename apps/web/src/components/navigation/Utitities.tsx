@@ -1,14 +1,15 @@
 // apps/web/src/components/navigation/Utilities.tsx
+import Link from 'next/link';
 
 export function Utilities() {
   return (
     <>
-      <a href="mailto:" className="link email">
+      <a href="mailto:info@hammercreative.com" className="link email">
         info@hammercreative.com
       </a>
-      <a href="/" className="link privacy">
+      <Link href="/privacy" className="link privacy">
         Privacy Policy
-      </a>
+      </Link>
     </>
   );
 }

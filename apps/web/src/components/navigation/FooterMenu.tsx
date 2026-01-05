@@ -1,6 +1,6 @@
 // apps/web/src/components/navigation/FooterMenu.tsx
 import { LinkList } from '@/components/ui/LinkList';
-import { MenuItem } from '@/types/navigation';
+import { type MenuItem } from '@/types/navigation';
 
 interface MenuProps {
   items: MenuItem[];

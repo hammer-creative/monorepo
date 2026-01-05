@@ -1,7 +1,7 @@
 // src/app/services/page.tsx
 import {
-  ServicesPageHeroModule,
   ServicesPageCardModule,
+  ServicesPageHeroModule,
 } from '@/components/modules';
 import { client, getServicesPage, resolveModuleColors } from '@/lib/sanity';
 import type { Metadata } from 'next';

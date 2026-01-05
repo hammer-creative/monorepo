@@ -4,12 +4,73 @@
 import { useVideoControls } from '@/hooks/useVideoControls';
 import { urlFor } from '@/lib/sanity/image';
 import type { VideoModule as VideoModuleType } from '@/types/sanity.generated';
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
+
 import { MuxVideo } from './MuxVideo';
 import { MuteButton, PauseButton } from './VideoControls';
 import { VideoModal } from './VideoModal';
 import { VideoPoster } from './VideoPoster';
 import { VideoProgressBar } from './VideoProgressBar';
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
+
+// apps/web/src/components/modules/Video/VideoModule.tsx
 
 // apps/web/src/components/modules/Video/VideoModule.tsx
 

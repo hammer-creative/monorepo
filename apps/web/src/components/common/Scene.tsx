@@ -8,6 +8,66 @@ import { Suspense, useState } from 'react';
 
 // apps/web/src/components/marquee/Scene.tsx
 
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
+// apps/web/src/components/marquee/Scene.tsx
+
 function Model({ url }: { url: string }) {
   const gltf = useGLTF(url);
 

@@ -5,9 +5,70 @@ import { useVideoControls } from '@/hooks/useVideoControls';
 import type { VideoItem } from '@/types/sanity.generated';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+
 import { MuxVideo } from './MuxVideo';
 import { CloseButton, MuteButton, PauseButton } from './VideoControls';
 import { VideoProgressBar } from './VideoProgressBar';
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
+
+// apps/web/src/components/Video/VideoModal.tsx
 
 // apps/web/src/components/Video/VideoModal.tsx
 

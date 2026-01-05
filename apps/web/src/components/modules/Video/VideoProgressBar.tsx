@@ -27,8 +27,8 @@ export function VideoProgressBar({
     if (!videoElement) return;
 
     const updateProgress = () => {
-      const currentTime = videoElement.currentTime;
-      const duration = videoElement.duration;
+      const { currentTime } = videoElement;
+      const { duration } = videoElement;
       console.log(
         'updateProgress - currentTime:',
         currentTime,
@@ -47,7 +47,7 @@ export function VideoProgressBar({
         const bufferedEnd = videoElement.buffered.end(
           videoElement.buffered.length - 1,
         );
-        const duration = videoElement.duration;
+        const { duration } = videoElement;
         console.log(
           'updateBuffered - bufferedEnd:',
           bufferedEnd,

@@ -1,16 +1,19 @@
-// eslint/files/prettier.config.js
-
 /** @type {import("prettier").Config} */
 export default {
-  plugins: ["@trivago/prettier-plugin-sort-imports"],
+  plugins: ['@ianvs/prettier-plugin-sort-imports'],
   tabWidth: 2,
   semi: true,
   singleQuote: true,
   importOrder: [
-    "<THIRD_PARTY_MODULES>",
-    "^styled-system/(.*)$",
-    "^@chorusworks/(.*)$",
-    "^~/(.*)$",
-    "^[./]",
+    '<BUILTIN_MODULES>',
+    '<THIRD_PARTY_MODULES>',
+    '',
+    '^styled-system/(.*)$',
+    '^@hammercreative/(.*)$',
+    '^~/(.*)$',
+    '',
+    '^[./]',
   ],
+  importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
+  importOrderTypeScriptVersion: '5.0.0',
 };

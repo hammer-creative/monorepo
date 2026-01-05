@@ -7,8 +7,6 @@ node_modules/
 .env.local
 .netlify
 
-packages/eslint-config
-
 .turbo
 *.tsbuildinfo
 apps/text-image/.env

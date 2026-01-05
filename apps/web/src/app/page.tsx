@@ -8,8 +8,8 @@ import {
   resolveModuleColors,
 } from '@/lib/sanity';
 import type {
-  HomePage as HomePageType,
   CaseStudyCardModule as CaseStudyCardModuleType,
+  HomePage as HomePageType,
   TextModule as TextModuleType,
 } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';

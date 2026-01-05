@@ -42,7 +42,7 @@
     "three": "^0.182.0"
   },
   "devDependencies": {
-    "@chorusworks/eslint-config": "workspace:*",
+    "@hammercreative/eslint/eslint-next": "workspace:*",
     "@eslint/eslintrc": "^3.3.1",
     "@lehoczky/postcss-fluid": "^1.0.3",
     "@portabletext/types": "^3.0.0",

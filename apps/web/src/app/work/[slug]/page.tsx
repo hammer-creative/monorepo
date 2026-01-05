@@ -3,23 +3,23 @@ import {
   CarouselModule,
   HeroModule,
   ImpactModule,
-  TextModule,
   TextImageModule,
+  TextModule,
   VideoModule,
 } from '@/components/modules';
 import {
+  client,
   getCaseStudy,
   getCaseStudySlugs,
-  client,
   resolveModuleColors,
 } from '@/lib/sanity';
 import type {
+  CarouselModule as CarouselModuleType,
   HeroModule as HeroModuleType,
   ImpactModule as ImpactModuleType,
-  TextModule as TextModuleType,
   TextImageModule as TextImageModuleType,
+  TextModule as TextModuleType,
   VideoModule as VideoModuleType,
-  CarouselModule as CarouselModuleType,
 } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';

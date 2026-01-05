@@ -7,6 +7,66 @@ import { usePathname } from 'next/navigation';
 
 // apps/web/src/app/template.tsx
 
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
+// apps/web/src/app/template.tsx
+
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 

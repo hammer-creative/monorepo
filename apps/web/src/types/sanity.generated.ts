@@ -73,22 +73,6 @@ export type ImageItem = {
   caption?: string;
 };
 
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop';
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot';
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
 export type Seo = {
   _type: 'seo';
   title?: string;
@@ -106,6 +90,22 @@ export type Seo = {
     crop?: SanityImageCrop;
     _type: 'image';
   };
+};
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop';
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot';
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type VideoModule = {
@@ -415,23 +415,11 @@ export type CaseStudyCardModule = {
 
 export type CarouselModule = {
   _type: 'carouselModule';
-  images?: Array<{
-    image?: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: 'image';
-    };
-    _type: 'imageItem';
-    _key: string;
-  }>;
+  images?: Array<
+    {
+      _key: string;
+    } & ImageItem
+  >;
   backgroundColor?: {
     enabled?: boolean;
     name?:
@@ -884,9 +872,9 @@ export type AllSanitySchemaTypes =
   | VideoItem
   | TextBlock
   | ImageItem
+  | Seo
   | SanityImageCrop
   | SanityImageHotspot
-  | Seo
   | VideoModule
   | DeliverablesModule
   | ServicesModule

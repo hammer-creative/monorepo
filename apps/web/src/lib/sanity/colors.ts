@@ -35,10 +35,13 @@ export function resolveTextColor(
   };
 }
 
-export function resolveModuleColors<T extends Record<string, any>>(
+export function resolveModuleColors<T extends Record<string, unknown>>(
   module: T,
 ): T & { backgroundColor?: ColorWithHex; textColor?: ColorWithHex } {
-  const resolved = { ...module } as any;
+  const resolved = { ...module } as T & {
+    backgroundColor?: ColorWithHex;
+    textColor?: ColorWithHex;
+  };
 
   if (resolved.backgroundColor) {
     resolved.backgroundColor = resolveBackgroundColor(resolved.backgroundColor);

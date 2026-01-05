@@ -1,13 +1,13 @@
 // apps/web/src/components/modules/Hero/HeroModule.tsx
 import {
   ClientNames,
-  Title,
-  TextBlock,
   SanityHeroImage,
+  TextBlock,
+  Title,
 } from '@/components/common';
 import {
-  ServicesListModule,
   DeliverablesListModule,
+  ServicesListModule,
 } from '@/components/modules/ServicesList';
 import type { HeroModule as HeroModuleType } from '@/types/sanity.generated';
 
