@@ -1,6 +1,6 @@
 // apps/web/src/lib/sanity/ssr.ts
 // import * as serverOnly from '@sanity/react-loader';
-import { ClientPerspective } from 'next-sanity';
+import { type ClientPerspective } from 'next-sanity';
 
 // import { client } from './client';
 

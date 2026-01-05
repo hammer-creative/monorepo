@@ -1,8 +1,8 @@
 // apps/web/src/components/modules/CaseStudyCard/CaseStudyCardModule.tsx
 import {
   ClientNames,
-  Title,
   SanityHomePageCardImage,
+  Title,
 } from '@/components/common';
 import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
 import Link from 'next/link';

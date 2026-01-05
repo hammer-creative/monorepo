@@ -174,7 +174,7 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
 }
 
 /**
- * Creates a multi-image array field with optional per-image dimension/size constraints
+ * Creates a multi-image array field using the global imageItem type
  * For galleries, grids, and collections of images
  */
 export const createMultiImageField = (config: MultiImageConfig = {}) => {
@@ -185,98 +185,13 @@ export const createMultiImageField = (config: MultiImageConfig = {}) => {
     minImages = 2,
     maxImages = 20,
     description = '',
-    altMaxLength = 150,
-    imageOptions = {hotspot: true},
-    minWidth,
-    minHeight,
-    maxFileSize,
   } = config
 
   return defineField({
     name,
     title,
     type: 'array',
-    of: [
-      {
-        type: 'object',
-        name: 'imageItem',
-        fields: [
-          {
-            name: 'image',
-            title: 'Image',
-            type: 'image',
-            options: imageOptions,
-            fields: [
-              createTextField({
-                name: 'alt',
-                title: 'Alt Text',
-                required: true,
-                maxLength: altMaxLength,
-                description: 'Describe the image for accessibility',
-              }),
-            ],
-            validation: (Rule) =>
-              Rule.required().custom((image: any) => {
-                if (!image?.asset || (!minWidth && !minHeight && !maxFileSize)) {
-                  return true
-                }
-
-                return new Promise((resolve) => {
-                  const query = `*[_id == "${image.asset._ref}"][0]{
-                    "dimensions": metadata.dimensions,
-                    "size": size
-                  }`
-
-                  client
-                    .fetch(query)
-                    .then((asset: any) => {
-                      if (!asset) return resolve(true)
-
-                      const {dimensions, size} = asset
-
-                      if (minWidth && dimensions?.width < minWidth) {
-                        return resolve(
-                          `Image must be at least ${minWidth}px wide (currently ${dimensions.width}px)`,
-                        )
-                      }
-
-                      if (minHeight && dimensions?.height < minHeight) {
-                        return resolve(
-                          `Image must be at least ${minHeight}px tall (currently ${dimensions.height}px)`,
-                        )
-                      }
-
-                      if (maxFileSize) {
-                        const maxBytes = maxFileSize * 1024 * 1024
-                        if (size > maxBytes) {
-                          const sizeMB = (size / (1024 * 1024)).toFixed(2)
-                          return resolve(
-                            `Image must be smaller than ${maxFileSize}MB (currently ${sizeMB}MB)`,
-                          )
-                        }
-                      }
-
-                      resolve(true)
-                    })
-                    .catch(() => resolve(true))
-                })
-              }),
-          },
-        ],
-        preview: {
-          select: {
-            media: 'image',
-            alt: 'image.alt',
-          },
-          prepare({media, alt}) {
-            return {
-              title: alt || 'Image',
-              media,
-            }
-          },
-        },
-      },
-    ],
+    of: [{type: 'imageItem'}],
     description: addRequiredLabel(description, required),
     validation: required
       ? (Rule) =>

@@ -45,7 +45,7 @@ const STOP_WORDS = new Set([
  * and removes common stop words for cleaner URLs.
  */
 export function SlugInputWithCounter(props: SlugInputProps) {
-  const {value, schemaType, onChange, renderDefault} = props
+  const {value, schemaType, onChange} = props
   const slugValue = value?.current || ''
   const charCount = slugValue.length
   const maxLength = schemaType.options?.maxLength || 96
@@ -74,8 +74,8 @@ export function SlugInputWithCounter(props: SlugInputProps) {
     const baseSlug = sourceValue
       .toLowerCase()
       .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-')
+      .replace(/[^\w-]+/g, '')
+      .replace(/--+/g, '-')
       .replace(/^-+/, '')
       .replace(/-+$/, '')
 

@@ -5,7 +5,68 @@ import { urlFor } from '@/lib/sanity/image';
 import type { VideoItem } from '@/types/sanity.generated';
 import dynamic from 'next/dynamic';
 import { forwardRef, useCallback, useRef } from 'react';
+
 import { parseAspectRatio } from './utils';
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
+
+// apps/web/src/components/Video/MuxVideo.tsx
 
 // apps/web/src/components/Video/MuxVideo.tsx
 

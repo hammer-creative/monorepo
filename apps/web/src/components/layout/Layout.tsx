@@ -3,11 +3,11 @@ import { useNavigation } from '@/contexts/NavigationContext';
 import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useAnimate, stagger } from 'motion/react';
+import { stagger, useAnimate } from 'motion/react';
 // apps/web/src/components/Common/Wordmark.tsx
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useRef } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import Headroom from 'react-headroom';
 
 interface WordmarkProps {

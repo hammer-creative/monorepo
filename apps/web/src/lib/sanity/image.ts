@@ -20,7 +20,7 @@ export function urlFor(source: SanityImageSource) {
   let isPng = false;
 
   if (typeof source === 'object' && source !== null && 'asset' in source) {
-    const asset = source.asset;
+    const { asset } = source;
 
     if (typeof asset === 'string') {
       isPng = asset.includes('-png') || asset.endsWith('.png');

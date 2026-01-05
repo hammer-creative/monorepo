@@ -13,7 +13,36 @@ export default defineConfig({
   projectId: `n0pp6em3`,
   dataset: `production`,
   plugins: [
-    structureTool(),
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title('Content')
+          .items([
+            S.listItem()
+              .title('Pages')
+              .child(
+                S.list()
+                  .title('Pages')
+                  .items([
+                    S.documentTypeListItem('homePage').title('Home Page'),
+                    S.documentTypeListItem('servicesPage').title('Services Page'),
+                    S.documentTypeListItem('caseStudy').title('Case Studies'),
+                  ]),
+              ),
+            S.divider(),
+            S.listItem()
+              .title('Vocabularies')
+              .child(
+                S.list()
+                  .title('Vocabularies')
+                  .items([
+                    S.documentTypeListItem('client').title('Clients'),
+                    S.documentTypeListItem('deliverable').title('Deliverables'),
+                    S.documentTypeListItem('service').title('Services'),
+                  ]),
+              ),
+          ]),
+    }),
     visionTool(),
     muxInput({
       mp4_support: 'standard',

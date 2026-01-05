@@ -3,9 +3,71 @@
 
 import { SanityImage } from '@/components/common/SanityImage';
 import type { CarouselModule as CarouselModuleType } from '@/types/sanity.generated';
+
 import 'swiper/css';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
 
 // apps/web/src/components/modules/Carousel/CarouselModule.tsx
 

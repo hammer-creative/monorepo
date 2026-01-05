@@ -1,5 +1,5 @@
 // apps/web/src/components/navigation/Addresses.tsx
-import { Address } from '@/types/navigation';
+import { type Address } from '@/types/navigation';
 
 interface AddressesProps {
   items: Address[];
