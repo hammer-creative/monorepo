@@ -1,12 +1,23 @@
 // apps/web/src/components/modules/Services/ServicesModule.tsx
 import type {
-  ServicesModuleType,
-  DeliverablesModuleType,
-  ServiceReference,
-  DeliverableReference,
-} from '@/types/sanity';
+  ServicesModule as ServicesModuleType,
+  DeliverablesModule as DeliverablesModuleType,
+  Service,
+  Deliverable,
+} from '@/types/sanity.generated';
 
-type Item = ServiceReference | DeliverableReference;
+// The generated types show services/deliverables as references, but GROQ expands them
+// This type represents what we actually get at runtime after GROQ expansion
+type ExpandedService = Service;
+type ExpandedDeliverable = Deliverable;
+type ListItem = ExpandedService | ExpandedDeliverable;
+
+// Type guard: Check if item has required fields
+function isValidListItem(item: unknown): item is ListItem {
+  if (!item || typeof item !== 'object') return false;
+  const listItem = item as ListItem;
+  return Boolean(listItem._id && listItem.title);
+}
 
 interface BaseProps {
   heading?: string;
@@ -14,31 +25,36 @@ interface BaseProps {
 
 interface ServicesProps extends BaseProps {
   data?: ServicesModuleType | null;
-  services?: ServiceReference[] | null;
+  services?: unknown[] | null;
 }
 
 interface DeliverablesProps extends BaseProps {
   data?: DeliverablesModuleType | null;
-  deliverables?: DeliverableReference[] | null;
+  deliverables?: unknown[] | null;
 }
 
-function ListRenderer({ items, heading }: { items: Item[]; heading: string }) {
-  if (!items.length) return null;
+function ListRenderer({
+  items,
+  heading,
+}: {
+  items: unknown[];
+  heading: string;
+}) {
+  // Filter to only valid items
+  const validItems = items.filter(isValidListItem);
+
+  // Guard: Early return if no valid items
+  if (validItems.length === 0) return null;
 
   return (
     <div className="list">
       <p className="tag">{heading}</p>
       <ul>
-        {items.map((item) => {
-          const { _id = null, title = null } = item || {};
-          if (!_id || !title) return null;
-
-          return (
-            <li key={_id} className="item">
-              <p className="small">{title}</p>
-            </li>
-          );
-        })}
+        {validItems.map((item: ListItem) => (
+          <li key={item._id} className="item">
+            <p className="small">{item.title}</p>
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -49,8 +65,11 @@ export function ServicesListModule({
   services = null,
   heading = 'Services',
 }: ServicesProps) {
+  // Get items from either direct prop or from data module
   const items = services ?? data?.services ?? [];
-  if (!items.length) return null;
+
+  // Guard: Early return if no items
+  if (!Array.isArray(items) || items.length === 0) return null;
 
   return <ListRenderer items={items} heading={heading} />;
 }
@@ -60,8 +79,11 @@ export function DeliverablesListModule({
   deliverables = null,
   heading = 'Delivered Elements',
 }: DeliverablesProps) {
+  // Get items from either direct prop or from data module
   const items = deliverables ?? data?.deliverables ?? [];
-  if (!items.length) return null;
+
+  // Guard: Early return if no items
+  if (!Array.isArray(items) || items.length === 0) return null;
 
   return <ListRenderer items={items} heading={heading} />;
 }

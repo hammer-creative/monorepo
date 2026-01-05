@@ -12,6 +12,13 @@ export const caseStudyPage = defineType({
     titleField(),
     slugField(),
     {
+      name: 'clients',
+      title: 'Clients',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'client'}]}],
+      validation: (Rule) => Rule.required().min(1),
+    },
+    {
       name: 'modules',
       title: 'Content Modules',
       type: 'array',

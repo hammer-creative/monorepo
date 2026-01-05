@@ -1,9 +1,9 @@
 // apps/web/src/components/Video/VideoPoster.tsx
-import type { MuxVideo } from '@/types/sanity';
+import type { MuxVideo } from '@/types/sanity.generated';
 
 interface VideoPosterProps {
-  video: MuxVideo;
-  title: string;
+  video?: MuxVideo;
+  title?: string;
   posterUrl?: string;
   onClick: () => void;
 }
@@ -16,8 +16,8 @@ export function VideoPoster({
 }: VideoPosterProps) {
   const src =
     posterUrl ||
-    (video?.playbackId
-      ? `https://image.mux.com/${video.playbackId}/thumbnail.jpg?fit_mode=smartcrop`
+    ((video as any)?.playbackId
+      ? `https://image.mux.com/${(video as any).playbackId}/thumbnail.jpg?fit_mode=smartcrop`
       : '');
 
   if (!src) return null;
@@ -26,7 +26,7 @@ export function VideoPoster({
     <button onClick={onClick} className="video-poster" type="button">
       <img
         src={src}
-        alt={title}
+        alt={title || ''}
         loading="lazy"
         style={{
           width: '100%',

@@ -1,89 +1,38 @@
 // apps/web/src/components/Video/VideoModal.tsx
-import type { MuxVideo as MuxVideoType } from '@/types/sanity';
+'use client';
+
+import { useVideoControls } from '@/hooks/useVideoControls';
+import type { VideoItem } from '@/types/sanity.generated';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { useEffect, useRef, useState } from 'react';
 import { MuxVideo } from './MuxVideo';
 import { CloseButton, MuteButton, PauseButton } from './VideoControls';
 import { VideoProgressBar } from './VideoProgressBar';
 
+// apps/web/src/components/Video/VideoModal.tsx
+
 interface VideoModalProps {
-  video: MuxVideoType;
-  title: string;
-  description?: string;
+  videoItem: VideoItem;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function VideoModal({
-  video,
-  title,
-  description,
-  open,
-  onOpenChange,
-}: VideoModalProps) {
-  const [muted, setMuted] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+export function VideoModal({ videoItem, open, onOpenChange }: VideoModalProps) {
+  const { title } = videoItem;
+
+  // Use video controls hook for play/pause/mute state
+  const {
+    videoRef,
+    muted,
+    isPaused,
+    handlePlay,
+    handlePause,
+    handleTogglePlay,
+    handleToggleMute,
+  } = useVideoControls();
 
   const handleVideoEnded = () => {
-    console.log('Video ended, closing modal');
     onOpenChange(false);
-  };
-
-  // Get the actual video element from the DOM
-  const getVideoElement = (): HTMLVideoElement | null => {
-    if (!containerRef.current) return null;
-    return containerRef.current.querySelector('video');
-  };
-
-  // Sync paused state with video element
-  useEffect(() => {
-    const video = getVideoElement();
-    console.log('useEffect - found video:', video);
-
-    if (!video) {
-      console.log('No video element found in DOM');
-      return;
-    }
-
-    const handlePlay = () => {
-      console.log('Video playing');
-      setIsPaused(false);
-    };
-
-    const handlePause = () => {
-      console.log('Video paused');
-      setIsPaused(true);
-    };
-
-    video.addEventListener('play', handlePlay);
-    video.addEventListener('pause', handlePause);
-
-    return () => {
-      video.removeEventListener('play', handlePlay);
-      video.removeEventListener('pause', handlePause);
-    };
-  }, [open]);
-
-  const handlePause = () => {
-    const video = getVideoElement();
-    console.log('handlePause - found video:', video);
-
-    if (!video) {
-      console.log('No video element found');
-      return;
-    }
-
-    console.log('Video paused state:', video.paused);
-
-    if (video.paused) {
-      console.log('Calling play()');
-      video.play().catch((err) => console.error('Play failed:', err));
-    } else {
-      console.log('Calling pause()');
-      video.pause();
-    }
   };
 
   return (
@@ -91,45 +40,46 @@ export function VideoModal({
       <Dialog.Portal>
         <Dialog.Overlay className="video-modal" />
 
-        <Dialog.Content className="video-modal-content" ref={containerRef}>
+        <Dialog.Content className="video-modal-content">
           <VisuallyHidden.Root>
             <Dialog.Title>{title}</Dialog.Title>
           </VisuallyHidden.Root>
 
-          {description && (
-            <VisuallyHidden.Root>
-              <Dialog.Description>{description}</Dialog.Description>
-            </VisuallyHidden.Root>
-          )}
-
+          {/* Close Button */}
           <CloseButton
             className="video-modal-close"
             onClick={() => onOpenChange(false)}
           />
 
+          {/* Play/Pause Button */}
           <PauseButton
             className="video-modal-play"
-            onClick={handlePause}
+            onClick={handleTogglePlay}
             paused={isPaused}
           />
 
+          {/* Mute Button */}
           <MuteButton
             className="button video-modal-volume"
             muted={muted}
-            onToggle={() => setMuted((m) => !m)}
+            onToggle={handleToggleMute}
           />
 
+          {/* Video Player */}
           <MuxVideo
-            video={video}
-            title={title}
+            ref={videoRef}
+            videoItem={videoItem}
             autoPlay
             priority
             muted={muted}
             onEnded={handleVideoEnded}
+            onPlay={handlePlay}
+            onPause={handlePause}
           />
 
+          {/* Progress Bar */}
           <VideoProgressBar
-            videoElement={getVideoElement()}
+            videoElement={videoRef.current}
             className="video-modal-progress"
           />
         </Dialog.Content>
