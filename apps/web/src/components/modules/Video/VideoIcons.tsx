@@ -1,10 +1,17 @@
 // apps/web/src/components/Video/VideoIcons.tsx
-// apps/web/src/components/Video/VideoIcons.tsx
 export function PlayIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 64 64" fill="none">
-      <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.5" />
-      <path d="M26 20L44 32L26 44V20Z" fill="white" />
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 25.5 17.32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M25.5 8.66016L-8.15666e-07 17.3204L-5.85622e-08 -9.83894e-05L25.5 8.66016Z"
+        fill="#FFCC98"
+      />
     </svg>
   );
 }

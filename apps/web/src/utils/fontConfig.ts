@@ -34,5 +34,5 @@ export const MOHOL_BOLD = localFont({
     { path: '../../public/fonts/mohol/Mohol-Bold.woff' },
   ],
   display: 'swap',
-  variable: '--font-diatype-mohol-bold',
+  variable: '--font-mohol-bold',
 });

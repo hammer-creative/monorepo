@@ -1,18 +1,32 @@
 // apps/web/src/components/modules/Carousel/CarouselModule.tsx
+'use client';
+
 import { SanityImage } from '@/components/common/SanityImage';
-import type { CarouselModuleType } from '@/types/sanity';
+import type { CarouselModule as CarouselModuleType } from '@/types/sanity.generated';
 import 'swiper/css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// Extract image item type from generated schema
+type CarouselImageItem = NonNullable<CarouselModuleType['images']>[number];
+
+// Type guard: Check if module data exists and is valid
+function isValidCarouselModule(
+  data: CarouselModuleType | null,
+): data is CarouselModuleType {
+  return data !== null;
+}
+
 export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
-  if (!data) return null;
+  // Guard: Early return if no valid data
+  if (!isValidCarouselModule(data)) return null;
 
   const { images } = data;
 
-  if (!images || images.length === 0) {
-    return null;
-  }
+  // Guard: Early return if no images
+  if (!images || images.length === 0) return null;
 
   return (
     <div className="carousel-module">
@@ -28,9 +42,9 @@ export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="swiper-container"
+        className="mySwiper"
       >
-        {images.map((item) => (
+        {images.map((item: CarouselImageItem) => (
           <SwiperSlide key={item._key}>
             <SanityImage
               image={item.image ?? null}

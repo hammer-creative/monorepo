@@ -1,4 +1,6 @@
 // apps/web/src/contexts/NavigationContext.tsx
+'use client';
+
 import { NavigationContextState } from '@/types/navigation';
 import React, {
   createContext,
@@ -7,6 +9,8 @@ import React, {
   useCallback,
   ReactNode,
 } from 'react';
+
+// apps/web/src/contexts/NavigationContext.tsx
 
 const NavigationContext = createContext<NavigationContextState | undefined>(
   undefined,

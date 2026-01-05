@@ -1,73 +1,100 @@
 // apps/web/src/components/modules/Video/VideoModule.tsx
+'use client';
+
+import { useVideoControls } from '@/hooks/useVideoControls';
 import { urlFor } from '@/lib/sanity/image';
-import type { VideoModuleType } from '@/types/sanity';
-import { useRef, useState } from 'react';
+import type { VideoModule as VideoModuleType } from '@/types/sanity.generated';
+import { useState, useMemo } from 'react';
 import { MuxVideo } from './MuxVideo';
 import { MuteButton, PauseButton } from './VideoControls';
 import { VideoModal } from './VideoModal';
 import { VideoPoster } from './VideoPoster';
+import { VideoProgressBar } from './VideoProgressBar';
 
-type VideoItem = VideoModuleType['videos'][number];
+// apps/web/src/components/modules/Video/VideoModule.tsx
 
-export function VideoModule({ data }: { data: VideoModuleType }) {
-  const videos: VideoItem[] = data.videos || [];
+// Type guard: Check if module data exists and is valid
+function isValidVideoModule(
+  data: VideoModuleType | null,
+): data is VideoModuleType {
+  return data !== null && Array.isArray(data.videos) && data.videos.length > 0;
+}
+
+export function VideoModule({ data }: { data: VideoModuleType | null }) {
+  // Guard: Early return if no valid data
+  if (!isValidVideoModule(data)) return null;
+
+  const videos = data.videos || [];
   const count = videos.length;
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
 
-  if (count === 0) return null;
+  // Use video controls hook for single video case
+  const {
+    videoRef,
+    muted,
+    isPaused,
+    handlePlay,
+    handlePause,
+    handleTogglePlay,
+    handleToggleMute,
+  } = useVideoControls();
 
-  const getPosterUrl = (video: VideoItem) => {
-    return video.poster?.asset ? urlFor(video.poster).url() : '';
-  };
+  // Memoize poster URLs so they're only computed once
+  const videosWithPosters = useMemo(
+    () =>
+      videos.map((v) => ({
+        ...v,
+        posterUrl: v.poster?.asset ? urlFor(v.poster).auto('format').url() : '',
+      })),
+    [videos],
+  );
 
+  // Single Video: Play inline with controls
   if (count === 1) {
-    const v = videos[0];
-
-    const handlePause = () => {
-      if (!videoRef.current) return;
-
-      if (isPaused) {
-        videoRef.current.play?.();
-      } else {
-        videoRef.current.pause?.();
-      }
-
-      setIsPaused(!isPaused);
-    };
+    const v = videosWithPosters[0];
 
     return (
       <div style={{ position: 'relative' }} className="container single-video">
         {!isPlaying ? (
           <VideoPoster
             video={v.video}
-            title={v.title}
-            posterUrl={getPosterUrl(v)}
+            title={v.title || ''}
+            posterUrl={v.posterUrl}
             onClick={() => setIsPlaying(true)}
           />
         ) : (
           <>
-            <PauseButton className="video-modal-pause" onClick={handlePause} />
+            {/* Play/Pause Button */}
+            <PauseButton
+              className="video-modal-pause"
+              onClick={handleTogglePlay}
+              paused={isPaused}
+            />
 
+            {/* Mute Button */}
             <MuteButton
               className="video-modal-mute"
               muted={muted}
-              onToggle={() => setMuted((m) => !m)}
+              onToggle={handleToggleMute}
             />
 
+            {/* Video Player */}
             <MuxVideo
               ref={videoRef}
-              video={v.video}
-              title={v.title}
-              posterUrl={getPosterUrl(v)}
+              videoItem={v}
               autoPlay
               priority
               muted={muted}
+              onPlay={handlePlay}
+              onPause={handlePause}
+            />
+
+            {/* Progress Bar */}
+            <VideoProgressBar
+              videoElement={videoRef.current}
+              className="video-modal-progress"
             />
           </>
         )}
@@ -75,15 +102,16 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
     );
   }
 
+  // Multiple Videos: Show posters and open in modal
   return (
     <>
       <div className="container multi-video">
-        {videos.map((v, i) => (
+        {videosWithPosters.map((v, i) => (
           <div key={v._key || i} className="row video-item">
             <VideoPoster
               video={v.video}
-              title={v.title}
-              posterUrl={getPosterUrl(v)}
+              title={v.title || ''}
+              posterUrl={v.posterUrl}
               onClick={() => setActiveVideo(i)}
             />
           </div>
@@ -92,10 +120,9 @@ export function VideoModule({ data }: { data: VideoModuleType }) {
 
       {activeVideo !== null && (
         <VideoModal
-          video={videos[activeVideo].video}
-          title={videos[activeVideo].title}
+          videoItem={videosWithPosters[activeVideo]}
           open
-          onOpenChange={(open) => !open && setActiveVideo(null)}
+          onOpenChange={(open: boolean) => !open && setActiveVideo(null)}
         />
       )}
     </>

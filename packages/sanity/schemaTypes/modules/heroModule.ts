@@ -11,13 +11,6 @@ export const heroModule = defineType({
   type: 'object',
   icon: AsteriskIcon,
   fields: [
-    {
-      name: 'clients',
-      title: 'Clients',
-      type: 'array',
-      of: [{type: 'reference', to: [{type: 'client'}]}],
-      validation: (Rule) => Rule.required().min(1),
-    },
     titleField(),
     portableTextField(),
     createSingleImageField({
