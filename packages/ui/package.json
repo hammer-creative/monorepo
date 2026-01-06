@@ -31,7 +31,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.12.4",
   "devDependencies": {
-    "@hammercreative/eslint/eslint-base": "workspace:*",
+    "@hammercreative/eslint-base": "workspace:*",
     "tsup": "^7.3.0"
   }
 }

@@ -1,6 +1,7 @@
 // apps/web/src/components/navigation/SocialMenu.tsx
 import { LinkList } from '@/components/ui/LinkList';
 import type { MenuItem } from '@/types/navigation';
+
 import { Copyright } from './Copyright';
 
 interface SocialMenuProps {

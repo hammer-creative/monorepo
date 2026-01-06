@@ -1,9 +1,9 @@
 // apps/web/src/components/modules/Services/ServicesModule.tsx
 import type {
-  ServicesModule as ServicesModuleType,
+  Deliverable,
   DeliverablesModule as DeliverablesModuleType,
   Service,
-  Deliverable,
+  ServicesModule as ServicesModuleType,
 } from '@/types/sanity.generated';
 
 // The generated types show services/deliverables as references, but GROQ expands them

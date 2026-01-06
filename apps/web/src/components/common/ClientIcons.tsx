@@ -1,6 +1,5 @@
 // apps/web/src/components/common/ClientIcons.tsx
 import {
-  TwoKIcon,
   BandaiIcon,
   BethesedaIcon,
   BlizzardIcon,
@@ -12,6 +11,7 @@ import {
   MarvelIcon,
   RiotGamesIcon,
   SquareEnixIcon,
+  TwoKIcon,
   UbisoftIcon,
   WizardsIcon,
 } from './icons';

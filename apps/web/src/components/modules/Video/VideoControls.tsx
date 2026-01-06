@@ -1,10 +1,10 @@
 // apps/web/src/components/Video/VideoControls.tsx
 import {
+  CloseIcon,
   PauseIcon,
   PlayIcon,
-  CloseIcon,
-  VolumeOnIcon,
   VolumeOffIcon,
+  VolumeOnIcon,
 } from './VideoIcons';
 
 interface PlayButtonProps {
