@@ -1,5 +1,5 @@
 // apps/web/src/components/modules/ServicesHeroModule.tsx
-import { Title, TextBlock, SanityImage } from '@/components/common';
+import { SanityImage, TextBlock, Title } from '@/components/common';
 import type { ServicesPageHeroModule as ServicesPageHeroModuleType } from '@/types/sanity.generated';
 
 // Type guard: Check if module data exists and is valid

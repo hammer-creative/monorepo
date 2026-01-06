@@ -1,6 +1,7 @@
 // apps/web/src/components/Navigation/Footer.tsx
 import { Wordmark } from '@/components/common/Wordmark';
 import { type NavigationData } from '@/types/navigation';
+
 import { Addresses } from './Addresses';
 import { FooterMenu } from './FooterMenu';
 import { SocialMenu } from './SocialMenu';

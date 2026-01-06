@@ -1,5 +1,5 @@
 {
-  "name": "@hammercreative/eslint/eslint-base",
+  "name": "@hammercreative/eslint-base",
   "version": "0.0.0",
   "private": true,
   "type": "module",

@@ -1,6 +1,8 @@
 // apps/web/src/app/layout.tsx
 import { NavigationProvider } from '@/contexts/NavigationContext';
+
 import '@/styles/index.css';
+
 import {
   DIATYPE_MEDIUM,
   DIATYPE_MEDIUM_ITALIC,

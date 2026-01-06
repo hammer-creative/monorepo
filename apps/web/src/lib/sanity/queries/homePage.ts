@@ -1,7 +1,8 @@
 // apps/web/src/lib/sanity/queries/homePage.ts
 import type { HomePage as HomePageType } from '@/types/sanity.generated';
 import type { SanityClient } from 'next-sanity';
-import { projections, moduleProjections } from '../groq/builders';
+
+import { moduleProjections, projections } from '../groq/builders';
 import { fetchOne } from '../groq/helpers';
 
 const homePageProjection = `

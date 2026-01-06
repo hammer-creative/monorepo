@@ -2,7 +2,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
-import baseConfig from '@hammercreative/eslint/eslint-base';
+import baseConfig from '@hammercreative/eslint-base';
 
 export default [
   ...baseConfig,

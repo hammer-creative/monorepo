@@ -1,5 +1,5 @@
 // apps/web/src/components/modules/ServicesPageCardModule.tsx
-import { Title, TextBlock, SanityImage } from '@/components/common';
+import { SanityImage, TextBlock, Title } from '@/components/common';
 import { ClientIcons } from '@/components/common/ClientIcons';
 import { ServicesListModule } from '@/components/modules/ServicesList/';
 import type { ServicesPageCardModule as ServicesPageCardModuleType } from '@/types/sanity.generated';

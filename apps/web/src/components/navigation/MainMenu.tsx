@@ -1,5 +1,6 @@
 // apps/web/src/components/navigation/MainMenu.tsx
 import { type MenuItem } from '@/types/navigation';
+
 import { Menu } from './Menu';
 
 interface MenuProps {

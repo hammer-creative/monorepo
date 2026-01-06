@@ -23,7 +23,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@hammercreative/eslint/eslint-next": "workspace:*",
+    "@hammercreative/eslint-react": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@types/node": "^20.19.21",
     "concurrently": "^9.2.1",

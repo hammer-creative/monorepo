@@ -12,68 +12,6 @@ import { VideoModal } from './VideoModal';
 import { VideoPoster } from './VideoPoster';
 import { VideoProgressBar } from './VideoProgressBar';
 
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
-// apps/web/src/components/modules/Video/VideoModule.tsx
-
 // Type guard: Check if module data exists and is valid
 function isValidVideoModule(
   data: VideoModuleType | null,
