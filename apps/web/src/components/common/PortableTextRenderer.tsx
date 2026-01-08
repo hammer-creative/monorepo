@@ -2,13 +2,21 @@
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import type { PortableTextBlock } from '@portabletext/types';
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 
 interface PortableTextRendererProps {
-  value?: PortableTextBlock[]; // ✅ optional for safety
+  value?: PortableTextBlock[];
   className?: string;
 }
 
-function SmartLink({ value, children }: any) {
+interface SmartLinkProps {
+  value?: {
+    href?: string;
+  };
+  children?: ReactNode;
+}
+
+function SmartLink({ value, children }: SmartLinkProps) {
   const href = value?.href || '';
   const isInternal = href.startsWith('/') || href.startsWith('#');
   const isExternal = href.startsWith('http');
@@ -52,7 +60,9 @@ export function PortableTextRenderer({
       h5: ({ children }) => <h5>{children}</h5>,
       h6: ({ children }) => <h6>{children}</h6>,
       normal: ({ children }) => <p className={className}>{children}</p>,
-      blockquote: ({ children }: any) => <blockquote>{children}</blockquote>,
+      blockquote: ({ children }: { children?: ReactNode }) => (
+        <blockquote>{children}</blockquote>
+      ),
     },
     marks: {
       strong: ({ children }) => <strong>{children}</strong>,

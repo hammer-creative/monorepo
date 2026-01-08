@@ -1,22 +1,9 @@
 // apps/web/src/components/common/SanityImage.tsx
 import { urlFor } from '@/lib/sanity/image';
-import type {
-  SanityImageCrop,
-  SanityImageHotspot,
-} from '@/types/sanity.generated';
+import type { ImageItem } from '@/types/sanity.generated';
 import Image from 'next/image';
 
-type SanityImageType = {
-  asset?: {
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-  };
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt?: string;
-  _type: 'image';
-};
+type SanityImageType = ImageItem['image'];
 
 interface SanityImageProps {
   image: SanityImageType | null;
@@ -92,3 +79,11 @@ export const SanityHeroImage = (
 export const SanityHomePageCardImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => <SanityImage fill sizes="100vw" quality={80} {...props} />;
+
+export const SanityVideoPosterImage = (
+  props: Partial<SanityImageProps> & { image: SanityImageType | null },
+) => (
+  <SanityImage fill sizes="100vw" quality={90} objectFit="cover" {...props} />
+);
+
+export type { SanityImageType };

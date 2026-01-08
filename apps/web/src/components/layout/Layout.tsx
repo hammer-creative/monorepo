@@ -4,7 +4,6 @@ import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
 import * as Dialog from '@radix-ui/react-dialog';
 import { stagger, useAnimate } from 'motion/react';
-// apps/web/src/components/Common/Wordmark.tsx
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, type ReactNode } from 'react';
@@ -177,7 +176,7 @@ function LinkList({
   );
 }
 
-function Footer({ navigationData }: { navigationData: NavigationData }) {
+function Footer() {
   return <footer>{/* whatever */}</footer>;
 }
 
@@ -211,7 +210,7 @@ function MobileMenu() {
         { duration: 0.3, delay: stagger(0.05), ease: 'easeOut' },
       );
     });
-  }, [isOpen, animate]);
+  }, [isOpen, animate, scope]);
 
   const handleClose = async () => {
     if (!overlayRef.current || !scope.current) return;
@@ -274,7 +273,7 @@ function MobileMenu() {
           ref={scope}
           className="menu-content"
           aria-describedby={undefined}
-          style={{ pointerEvents: 'none' }} // Don't catch clicks on the container
+          style={{ pointerEvents: 'none' }}
         >
           <Dialog.Title className="sr-only">Navigation Menu</Dialog.Title>
           <LinkList
@@ -286,6 +285,7 @@ function MobileMenu() {
     </Dialog.Root>
   );
 }
+
 interface LayoutProps {
   children: ReactNode;
   pathname: string;
@@ -300,7 +300,7 @@ export function Layout({ children, pathname }: LayoutProps) {
 
       <div id="wrapper" data-page={pathname}>
         <main>{children}</main>
-        {/* <Footer navigationData={navigationData as NavigationData} /> */}
+        <Footer />
       </div>
 
       <MobileMenu />

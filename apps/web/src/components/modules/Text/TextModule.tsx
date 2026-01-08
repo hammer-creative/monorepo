@@ -25,7 +25,7 @@ export function TextModule({
   clients = [],
 }: {
   data: TextModuleType | null;
-  clients?: any[];
+  clients?: Array<{ _id: string; name?: string }>;
 }) {
   // Guard: Early return if no valid data
   if (!isValidTextModule(data)) return null;
@@ -39,8 +39,8 @@ export function TextModule({
   } = data;
 
   // Extract client names
-  const clientNames = clients
-    .map((c: any) => c?.name)
+  const clientNames = (clients || [])
+    .map((c) => c?.name)
     .filter((name): name is string => typeof name === 'string');
 
   // Get CSS class for current layout

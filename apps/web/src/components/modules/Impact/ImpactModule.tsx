@@ -4,6 +4,7 @@ import type {
   ImpactModule as ImpactModuleType,
   TextBlock,
 } from '@/types/sanity.generated';
+import type { PortableTextBlock } from '@portabletext/types';
 
 // Type guard: Check if module data exists and is valid
 function isValidImpactModule(
@@ -38,7 +39,10 @@ export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
 
           {/* Block Body (Portable Text) */}
           {item.body && (
-            <PortableTextRenderer value={item.body as any} className="small" />
+            <PortableTextRenderer
+              value={item.body as PortableTextBlock[]}
+              className="small"
+            />
           )}
         </div>
       ))}
