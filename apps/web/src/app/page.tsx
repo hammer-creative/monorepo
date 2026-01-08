@@ -7,35 +7,19 @@ import {
   getHomePage,
   resolveModuleColors,
 } from '@/lib/sanity';
-import type {
-  CaseStudyCardModule as CaseStudyCardModuleType,
-  HomePage as HomePageType,
-  TextModule as TextModuleType,
-} from '@/types/sanity.generated';
+import type { HomePage as HomePageType } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
-import type { ComponentType } from 'react';
 
 interface HomePageData {
   homePage: HomePageType | null;
-  draftMode: boolean;
 }
 
-type KnownModules = {
-  caseStudyCardModule: ComponentType<{ data: CaseStudyCardModuleType }>;
-  textModule: ComponentType<{ data: TextModuleType }>;
-};
-
-const knownModuleComponents: KnownModules = {
+const moduleComponents = {
   caseStudyCardModule: CaseStudyCardModule,
   textModule: TextModule,
-};
-
-const moduleComponents: Record<
-  string,
-  ComponentType<any>
-> = knownModuleComponents;
+} as const;
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -51,11 +35,11 @@ async function getHomePageData(): Promise<HomePageData> {
   const draft = await draftMode();
   const sanityClient = draft.isEnabled ? draftClient : client;
   const homePage = await getHomePage(sanityClient);
-  return { homePage, draftMode: draft.isEnabled };
+  return { homePage };
 }
 
 export default async function HomePage() {
-  const { homePage, draftMode: isDraftMode } = await getHomePageData();
+  const { homePage } = await getHomePageData();
 
   if (!homePage) return null;
 
@@ -67,31 +51,45 @@ export default async function HomePage() {
         <Masthead />
         <Scene />
       </div>
-      {resolvedModules.map((mod, index) => {
-        const Component = moduleComponents[mod._type];
+      {resolvedModules.map(
+        (
+          mod: {
+            _key: string;
+            _type: string;
+            backgroundColor?: { hex?: string };
+            textColor?: { hex?: string };
+          },
+          index,
+        ) => {
+          const Component =
+            moduleComponents[mod._type as keyof typeof moduleComponents];
 
-        if (!Component) {
-          console.warn(`No component found for module type "${mod._type}"`);
-          return null;
-        }
+          if (!Component) {
+            console.warn(`No component found for module type "${mod._type}"`);
+            return null;
+          }
 
-        const moduleClass = `module ${toKebab(mod._type)}`;
-        const textColorName =
-          'textColor' in mod && mod.textColor?.enabled && mod.textColor?.name
-            ? mod.textColor.name
-            : null;
+          const moduleClass = `module ${toKebab(mod._type)}`;
+          const { backgroundColor, textColor } = mod;
 
-        return (
-          <section
-            key={mod._key}
-            className={moduleClass}
-            data-module-index={index}
-            data-text-color={textColorName || undefined}
-          >
-            <Component data={mod} />
-          </section>
-        );
-      })}
+          return (
+            <section
+              key={mod._key}
+              className={moduleClass}
+              data-module-index={index}
+              style={
+                {
+                  '--module-bg': backgroundColor?.hex,
+                  '--module-text': textColor?.hex,
+                } as React.CSSProperties
+              }
+            >
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              <Component data={mod as any} />{' '}
+            </section>
+          );
+        },
+      )}
     </div>
   );
 }

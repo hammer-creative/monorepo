@@ -40,6 +40,7 @@ export default async function ServicesPage() {
             } as React.CSSProperties
           }
         >
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <ServicesPageHeroModule data={hero as any} />
         </section>
       )}
@@ -47,28 +48,37 @@ export default async function ServicesPage() {
       {/* Services Cards */}
       <div className="cards">
         <div className="services-heading">Services</div>
-        {cards.map((card: any, index: number) => {
-          const { _key, backgroundColor, textColor } = card;
-          const isLastCard = index === cards.length - 1;
+        {cards.map(
+          (
+            card: {
+              _key: string;
+              backgroundColor?: { hex?: string };
+              textColor?: { hex?: string };
+            },
+            index: number,
+          ) => {
+            const { _key, backgroundColor, textColor } = card;
+            const isLastCard = index === cards.length - 1;
 
-          return (
-            <section
-              key={_key}
-              className="module services-page-card-module"
-              style={
-                {
-                  '--module-bg': backgroundColor?.hex,
-                  '--module-text': textColor?.hex,
-                } as React.CSSProperties
-              }
-            >
-              <ServicesPageCardModule
-                data={card}
-                showClientIcons={isLastCard}
-              />
-            </section>
-          );
-        })}
+            return (
+              <section
+                key={_key}
+                className="module services-page-card-module"
+                style={
+                  {
+                    '--module-bg': backgroundColor?.hex,
+                    '--module-text': textColor?.hex,
+                  } as React.CSSProperties
+                }
+              >
+                <ServicesPageCardModule
+                  data={card as any} // eslint-disable-line @typescript-eslint/no-explicit-any
+                  showClientIcons={isLastCard}
+                />
+              </section>
+            );
+          },
+        )}
       </div>
     </article>
   );

@@ -4,6 +4,7 @@ import {
   SanityHomePageCardImage,
   Title,
 } from '@/components/common';
+import type { SanityImageType } from '@/components/common/SanityImage';
 import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
 import Link from 'next/link';
 
@@ -13,9 +14,9 @@ type ExpandedCaseStudy = {
   _id: string;
   slug?: string;
   title?: string;
-  clients?: any[];
+  clients?: Array<{ _id: string; name?: string }>;
   modules?: Array<{
-    teaserImage?: any;
+    teaserImage?: SanityImageType;
     [key: string]: unknown;
   }>;
   [key: string]: unknown;
@@ -40,7 +41,9 @@ function CaseStudyCardItem({ item }: { item: unknown }) {
 
   // Extract client names
   const clientNames = Array.isArray(clients)
-    ? clients.map((c: any) => c?.name).filter(Boolean)
+    ? clients
+        .map((c) => c?.name)
+        .filter((name): name is string => typeof name === 'string')
     : [];
 
   // Guard: Need at least title or image to render

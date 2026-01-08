@@ -9,68 +9,6 @@ import 'swiper/css';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
-// apps/web/src/components/modules/Carousel/CarouselModule.tsx
-
 // Extract image item type from generated schema
 type CarouselImageItem = NonNullable<CarouselModuleType['images']>[number];
 

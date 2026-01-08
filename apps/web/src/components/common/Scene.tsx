@@ -1,72 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, react/no-unknown-property */
+
 // apps/web/src/components/marquee/Scene.tsx
 
 'use client';
 
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { useGLTF } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useState } from 'react';
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
-
-// apps/web/src/components/marquee/Scene.tsx
 
 function Model({ url }: { url: string }) {
   const gltf = useGLTF(url);

@@ -9,7 +9,10 @@ import {
   DeliverablesListModule,
   ServicesListModule,
 } from '@/components/modules/ServicesList';
-import type { HeroModule as HeroModuleType } from '@/types/sanity.generated';
+import type {
+  Client,
+  HeroModule as HeroModuleType,
+} from '@/types/sanity.generated';
 
 // Type guard: Check if module data exists and is valid
 function isValidHeroModule(
@@ -23,7 +26,7 @@ export function HeroModule({
   clients = [],
 }: {
   data: HeroModuleType | null;
-  clients?: any[];
+  clients?: Client[];
 }) {
   // Guard: Early return if no valid data
   if (!isValidHeroModule(data)) return null;
@@ -38,13 +41,14 @@ export function HeroModule({
   } = data;
 
   // Extract client names
-  const clientNames = clients
-    .map((c: any) => c?.name)
+  const clientNames = (clients || [])
+    .map((c) => c?.name)
     .filter((name): name is string => typeof name === 'string');
 
   // Compute module visibility flags
-  const hasServices = services.length > 0;
-  const hasDeliverables = deliverables.length > 0;
+  const hasServices = Array.isArray(services) && services.length > 0;
+  const hasDeliverables =
+    Array.isArray(deliverables) && deliverables.length > 0;
   const hasClients = clientNames.length > 0;
   const hasMeta = Boolean(body || hasServices || hasDeliverables || hasClients);
 

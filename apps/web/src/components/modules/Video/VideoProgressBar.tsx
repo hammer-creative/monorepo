@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 // apps/web/src/components/Video/VideoProgressBar.tsx
 import { useEffect, useRef, useState } from 'react';
 
@@ -89,10 +91,31 @@ export function VideoProgressBar({
     videoElement.currentTime = newTime;
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === ' ' && videoElement) {
+      e.preventDefault();
+      if (videoElement.paused) {
+        videoElement.play();
+      } else {
+        videoElement.pause();
+      }
+    }
+  };
+
   console.log('Rendering with progress:', progress, 'buffered:', buffered);
 
   return (
-    <div ref={progressBarRef} className={className} onClick={handleSeek}>
+    <div
+      ref={progressBarRef}
+      className={className}
+      tabIndex={0}
+      onClick={handleSeek}
+      onKeyDown={handleKeyDown}
+      role="progressbar"
+      aria-valuenow={progress}
+      aria-valuemin={0}
+      aria-valuemax={100}
+    >
       <div
         className="video-progress-buffered"
         style={{

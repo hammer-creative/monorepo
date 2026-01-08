@@ -2,73 +2,11 @@
 'use client';
 
 import { urlFor } from '@/lib/sanity/image';
-import type { VideoItem } from '@/types/sanity.generated';
+import type { MuxVideoAsset, VideoItem } from '@/types/sanity.generated';
 import dynamic from 'next/dynamic';
 import { forwardRef, useCallback, useRef } from 'react';
 
 import { parseAspectRatio } from './utils';
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
-
-// apps/web/src/components/Video/MuxVideo.tsx
 
 const MuxVideoElement = dynamic(() => import('@mux/mux-video-react'), {
   ssr: false,
@@ -79,15 +17,17 @@ interface MuxVideoProps {
   autoPlay?: boolean;
   priority?: boolean;
   muted?: boolean;
+  loop?: boolean;
   onEnded?: () => void;
   onPlay?: () => void;
   onPause?: () => void;
+  onLoadedMetadata?: () => void;
 }
 
 // Type guard: Check if video item has required playback data
 function hasValidPlaybackId(videoItem: VideoItem): boolean {
-  const videoAsset = videoItem.video?.asset as any;
-  return Boolean(videoAsset?.playbackId);
+  const asset = videoItem.video?.asset as unknown as MuxVideoAsset | undefined;
+  return Boolean(asset?.playbackId);
 }
 
 export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
@@ -97,17 +37,31 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
       autoPlay = false,
       priority = false,
       muted = false,
+      loop = false,
       onEnded,
       onPlay,
       onPause,
+      onLoadedMetadata,
     },
     forwardedRef,
   ) => {
     const internalRef = useRef<HTMLVideoElement | null>(null);
 
     const setRefs = useCallback(
-      (element: any) => {
-        const videoElement = element?.el || element;
+      (
+        element: HTMLVideoElement | { el: HTMLVideoElement } | null | undefined,
+      ) => {
+        if (!element) {
+          internalRef.current = null;
+          if (typeof forwardedRef === 'function') {
+            forwardedRef(null);
+          } else if (forwardedRef) {
+            forwardedRef.current = null;
+          }
+          return;
+        }
+
+        const videoElement = 'el' in element ? element.el : element;
         internalRef.current = videoElement;
 
         if (typeof forwardedRef === 'function') {
@@ -127,10 +81,12 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
 
     // Destructure video data
     const { video, title, poster } = videoItem;
-    const videoAsset = video?.asset as any;
+
+    // Get the expanded video asset data
+    const videoAsset = video?.asset as unknown as MuxVideoAsset;
 
     // Generate aspect ratio and poster URL
-    const aspectRatio = parseAspectRatio(videoAsset.aspectRatio);
+    const aspectRatio = parseAspectRatio(videoAsset?.data?.aspect_ratio);
     const posterUrl = poster?.asset
       ? urlFor(poster).auto('format').url()
       : undefined;
@@ -145,16 +101,18 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
       >
         <MuxVideoElement
           ref={setRefs}
-          playbackId={videoAsset.playbackId}
+          playbackId={videoAsset?.playbackId || ''}
           streamType="on-demand"
           playsInline
           autoPlay={autoPlay}
           muted={muted}
+          loop={loop}
           preload={priority ? 'auto' : 'metadata'}
           poster={posterUrl}
           onEnded={onEnded}
           onPlay={onPlay}
           onPause={onPause}
+          onLoadedMetadata={onLoadedMetadata}
           title={title}
           style={{
             width: '100%',

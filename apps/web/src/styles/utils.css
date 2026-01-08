@@ -1,7 +1,7 @@
 /* apps/web/src/styles/utils.css */
 
 .module {
-  background-color: var(--module-bg);
+  background: var(--module-bg);
   color: var(--module-text);
 }
 

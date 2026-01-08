@@ -11,16 +11,17 @@ const __dirname = path.dirname(__filename);
 export default [
   {
     ignores: [
-      'node_modules/',
-      '.next/',
-      'out/',
-      'build/',
+      '**/node_modules/**',
+      '**/.next/**',
+      '**/.netlify/**',
+      '**/out/**',
+      '**/build/**',
+      '**/dist/**',
       'next-env.d.ts',
       '*.config.*',
       '**/*.config.*',
     ],
   },
-
   ...reactConfig,
 
   // Next.js rules via plugin (ESLint 9 flat-config friendly)

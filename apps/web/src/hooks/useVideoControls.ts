@@ -1,33 +1,27 @@
 // apps/web/src/hooks/useVideoControls.ts
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
-export function useVideoControls() {
+let currentlyPlayingVideo: HTMLVideoElement | null = null;
+
+export function useVideoControls(options?: { stopOthersOnPlay?: boolean }) {
   const [muted, setMuted] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  // Reset this video when another video starts playing
-  useEffect(() => {
-    const handleOtherVideoPlay = (event: CustomEvent) => {
-      if (event.detail.videoRef !== videoRef.current && videoRef.current) {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-        setIsPaused(true);
-      }
-    };
-
-    window.addEventListener('video-play' as any, handleOtherVideoPlay);
-    return () => {
-      window.removeEventListener('video-play' as any, handleOtherVideoPlay);
-    };
-  }, []);
+  const stopOthersOnPlay = options?.stopOthersOnPlay ?? false;
 
   const handlePlay = () => {
     setIsPaused(false);
-    // Broadcast that this video is playing
-    window.dispatchEvent(
-      new CustomEvent('video-play', { detail: { videoRef: videoRef.current } }),
-    );
+
+    // Only manage global playback if this video opts in
+    if (stopOthersOnPlay) {
+      // Pause the currently playing video if it's not this one
+      if (currentlyPlayingVideo && currentlyPlayingVideo !== videoRef.current) {
+        currentlyPlayingVideo.pause();
+        // currentlyPlayingVideo.currentTime = 0;
+      }
+
+      currentlyPlayingVideo = videoRef.current;
+    }
   };
 
   const handlePause = () => setIsPaused(true);

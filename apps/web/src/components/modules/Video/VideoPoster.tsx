@@ -1,43 +1,40 @@
 // apps/web/src/components/Video/VideoPoster.tsx
-import type { MuxVideo } from '@/types/sanity.generated';
-
-interface VideoPosterProps {
-  video?: MuxVideo;
-  title?: string;
-  posterUrl?: string;
-  onClick: () => void;
-}
+import {
+  SanityVideoPosterImage,
+  type SanityImageType,
+} from '@/components/common/SanityImage';
 
 export function VideoPoster({
-  video,
-  title,
-  posterUrl,
+  poster = null,
+  title = '',
   onClick,
-}: VideoPosterProps) {
-  const src =
-    posterUrl ||
-    ((video as any)?.playbackId
-      ? `https://image.mux.com/${(video as any).playbackId}/thumbnail.jpg?fit_mode=smartcrop`
-      : '');
-
-  if (!src) return null;
+}: {
+  poster?: SanityImageType | null;
+  title?: string;
+  onClick: () => void;
+}) {
+  // Guard: Early return if no poster image
+  if (!poster?.asset) return null;
 
   return (
-    <button onClick={onClick} className="video-poster" type="button">
-      <img
-        src={src}
-        alt={title || ''}
-        loading="lazy"
-        style={{
-          width: '100%',
-          height: 'auto',
-          objectFit: 'cover',
-          display: 'block',
-          borderRadius: '4px',
-        }}
-      />
+    <button
+      onClick={onClick}
+      className="video-poster"
+      type="button"
+      aria-label={title || 'Play video'}
+    >
+      {/* Poster Image */}
+      <SanityVideoPosterImage image={poster} />
+
+      {/* Play Button Overlay */}
       <div className="poster-play-button">
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <svg
+          width="64"
+          height="64"
+          viewBox="0 0 64 64"
+          fill="none"
+          aria-hidden="true"
+        >
           <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.5" />
           <path d="M26 20L44 32L26 44V20Z" fill="white" />
         </svg>
