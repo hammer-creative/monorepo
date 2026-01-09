@@ -50,7 +50,9 @@ export const projections = {
         _type,
         playbackId,
         data {
-          aspect_ratio
+          aspect_ratio,
+          max_stored_resolution,
+          max_stored_frame_rate
         }
       }
     },

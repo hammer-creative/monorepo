@@ -18,14 +18,14 @@ interface LayoutRequirements {
   label: string
 }
 
-// Layout-specific poster dimension requirements
-// Single video: 1880×1060 (hero layout)
-// Two videos: 940×940 (side-by-side)
-// Three videos: 600×1000 (vertical stack)
+// Layout-specific poster dimension requirements (1.5x for high DPI)
+// Single video: 2820×1590 (hero layout)
+// Two videos: 1410×1410 (side-by-side)
+// Three videos: 900×1500 (vertical stack)
 const LAYOUT_REQUIREMENTS: Record<number, LayoutRequirements> = {
-  1: {minWidth: 1880, minHeight: 1060, label: 'single-video'},
-  2: {minWidth: 940, minHeight: 940, label: 'two-video'},
-  3: {minWidth: 600, minHeight: 1000, label: 'three-video'},
+  1: {minWidth: 2820, minHeight: 1590, label: 'single-video'},
+  2: {minWidth: 1410, minHeight: 1410, label: 'two-video'},
+  3: {minWidth: 900, minHeight: 1500, label: 'three-video'},
 }
 
 const DIMENSION_REGEX = /-(\d+)x(\d+)-/
@@ -74,7 +74,7 @@ export const videoModule = defineType({
       title: 'Videos',
       type: 'array',
       description:
-        'Add 1-3 videos. Poster dimension requirements vary by count: 1 video requires 1880×1060px, 2 videos require 940×940px each, 3 videos require 600×1000px each.',
+        'Add 1-3 videos. Poster dimension requirements vary by count: 1 video requires 2820×1590px, 2 videos require 1410×1410px each, 3 videos require 900×1500px each.',
       of: [{type: 'videoItem'}],
       validation: (Rule) =>
         Rule.required()

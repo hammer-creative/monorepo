@@ -10,3 +10,7 @@ node_modules/
 .turbo
 *.tsbuildinfo
 apps/text-image/.env
+
+mux-uploads
+.eslintcache
+**/.eslintcache
