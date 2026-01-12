@@ -25,7 +25,7 @@ export const textImageModule = defineType({
       validation: (Rule) => Rule.required(),
     },
     {
-      ...portableTextField(),
+      ...portableTextField({enableColorAnnotations: true}),
       validation: (Rule) => Rule.required(),
       hidden: ({parent}) => !parent?.layout,
     },

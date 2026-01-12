@@ -21,12 +21,17 @@ export const titleField = (options?: {maxLength?: number; required?: boolean}) =
 /**
  * Rich text body field with optional length limit
  */
-export const portableTextField = (options?: {maxLength?: number; required?: boolean}) => {
+export const portableTextField = (options?: {
+  maxLength?: number
+  required?: boolean
+  enableColorAnnotations?: boolean
+}) => {
   return createPortableTextField({
     name: 'body',
     title: 'Body',
     required: options?.required ?? true,
     maxLength: options?.maxLength ?? 600,
+    enableColorAnnotations: options?.enableColorAnnotations ?? false,
   })
 }
 
