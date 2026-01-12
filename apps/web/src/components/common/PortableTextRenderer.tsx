@@ -4,6 +4,8 @@ import type { PortableTextBlock } from '@portabletext/types';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
+import { DEFAULT_COLORS } from '@hammercreative/ui';
+
 interface PortableTextRendererProps {
   value?: PortableTextBlock[];
   className?: string;
@@ -72,6 +74,15 @@ export function PortableTextRenderer({
         <span className="underline">{children}</span>
       ),
       'strike-through': ({ children }) => <s>{children}</s>,
+      color: ({ value, children }) => (
+        <span
+          style={{
+            color: DEFAULT_COLORS[value?.name as keyof typeof DEFAULT_COLORS],
+          }}
+        >
+          {children}
+        </span>
+      ),
       link: SmartLink,
     },
     list: {
