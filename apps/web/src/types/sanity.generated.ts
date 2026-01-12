@@ -307,11 +307,24 @@ export type TextImageModule = {
     }>;
     style?: 'normal' | 'blockquote';
     listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: 'link';
-      _key: string;
-    }>;
+    markDefs?: Array<
+      | {
+          href?: string;
+          _type: 'link';
+          _key: string;
+        }
+      | {
+          name?:
+            | 'nightshade'
+            | 'sandstorm'
+            | 'aircutter'
+            | 'hyperbeam'
+            | 'hydroblast'
+            | 'vinewhip';
+          _type: 'color';
+          _key: string;
+        }
+    >;
     level?: number;
     _type: 'block';
     _key: string;
