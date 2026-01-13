@@ -106,9 +106,20 @@ export const videoModule = defineType({
       videos: 'videos',
     },
     prepare({videos}: any) {
+      const videoCount = videos?.length || 0
+      let subtitle = 'Video Module'
+
+      if (videoCount === 1) {
+        subtitle = '1 Horizontal Video'
+      } else if (videoCount === 2) {
+        subtitle = '2 Square Videos'
+      } else if (videoCount === 3) {
+        subtitle = '3 Vertical Videos'
+      }
+
       return {
-        title: `${videos?.length || 0} video${videos?.length !== 1 ? 's' : ''}`,
-        subtitle: 'Video Module',
+        title: 'Video Module',
+        subtitle,
       }
     },
   },

@@ -53,52 +53,60 @@ export function HeroModule({
   const hasMeta = Boolean(body || hasServices || hasDeliverables || hasClients);
 
   return (
-    <>
+    <div className="wrapper">
       {/* Hero Section: Image + Title */}
       <div className="row marquee">
-        {image && (
-          <div className="image">
-            <SanityHeroImage image={image} fill priority />
-          </div>
-        )}
+        <div className="content">
+          {image && (
+            <div className="image">
+              <SanityHeroImage image={image} fill priority />
+            </div>
+          )}
 
-        {title && (
-          <div className="text">
-            <Title title={title} as="h1" />
-          </div>
-        )}
-      </div>
-
-      {/* Accent Bar */}
-      <div className="row bar">
-        <svg width="80" height="10" viewBox="0 0 80 10" aria-hidden>
-          <rect width="80" height="10" fill="#FFCC98" />
-        </svg>
+          {title && (
+            <div className="text">
+              <Title title={title} as="h1" />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Metadata Section: Body + Clients + Services/Deliverables */}
       {hasMeta && (
         <div className="row meta">
-          <div className="text">
-            {body && <TextBlock body={body} className="medium" />}
+          <div className="bar">
+            <svg
+              width="80"
+              height="10"
+              viewBox="0 0 80 10"
+              aria-hidden
+              style={{ display: 'block' }}
+            >
+              <rect width="80" height="10" fill="#FFCC98" />
+            </svg>
+          </div>
+          <div className="content">
+            <div className="text">
+              {body && <TextBlock body={body} className="medium" />}
 
-            {hasClients && (
-              <div className="clients">
-                <ClientNames clientNames={clientNames} />
+              {hasClients && (
+                <div className="clients">
+                  <ClientNames clientNames={clientNames} />
+                </div>
+              )}
+            </div>
+
+            {(hasServices || hasDeliverables) && (
+              <div className="services">
+                <ServicesListModule services={hasServices ? services : []} />
+                <DeliverablesListModule
+                  deliverables={hasDeliverables ? deliverables : []}
+                />
               </div>
             )}
           </div>
-
-          {(hasServices || hasDeliverables) && (
-            <div className="services">
-              <ServicesListModule services={hasServices ? services : []} />
-              <DeliverablesListModule
-                deliverables={hasDeliverables ? deliverables : []}
-              />
-            </div>
-          )}
         </div>
       )}
-    </>
+    </div>
   );
 }

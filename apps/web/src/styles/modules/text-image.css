@@ -2,36 +2,49 @@
 
 @import '../mixins.css';
 
-.text-image-module {
-  /* Layout */
+.text-image-module .wrapper {
+  @mixin flex-responsive column, row, 30em;
 
-  .container {
-    @mixin flex-responsive column, row;
+  .row {
+    flex: 1;
+  }
+
+  .row.image {
+    aspect-ratio: 1 / 1;
+    order: 1;
+
+    @media screen and (min-width: 30rem) {
+      aspect-ratio: 7 / 5;
+      order: 2;
+    }
   }
 
   .row.text {
     order: 2;
-  }
 
-  .row.image {
-    order: 1;
-    aspect-ratio: 1 / 1;
-  }
-
-  /* Wide viewport */
-
-  @media screen and (min-width: 50rem) {
-    .row {
-      flex-basis: 50%;
-    }
-
-    .row.text {
+    @media screen and (min-width: 30rem) {
       order: 1;
     }
+  }
 
-    .row.image {
-      order: 2;
-      aspect-ratio: 7 / 5;
+  .row.text .content {
+    @mixin gutters-text-small;
+    @mixin head-foot-text;
+
+    @media screen and (min-width: 30rem) {
+      width: 85%;
+    }
+  }
+
+  .row.text .content p {
+    line-height: 2;
+
+    &:not(:last-child) {
+      margin-bottom: var(--space-40);
+    }
+
+    @media screen and (min-width: 30rem) {
+      line-height: 1.5;
     }
   }
 }

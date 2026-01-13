@@ -64,6 +64,8 @@ export default async function CaseStudyPage({
   const { slug } = await params;
   const caseStudy = await getCaseStudy(slug, client);
 
+  console.log(caseStudy);
+
   if (!caseStudy) notFound();
 
   const { clients = [] } = caseStudy;

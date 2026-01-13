@@ -294,9 +294,9 @@ interface LayoutProps {
 export function Layout({ children, pathname }: LayoutProps) {
   return (
     <>
-      <Headroom tag="header" disableInlineStyles>
+      {/* <Headroom tag="header" disableInlineStyles>
         <Header navigationData={navigationData as NavigationData} />
-      </Headroom>
+      </Headroom> */}
 
       <div id="wrapper" data-page={pathname}>
         <main>{children}</main>

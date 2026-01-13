@@ -2,6 +2,7 @@
 
 import {VersionsIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
+import {titleField, portableTextField} from '../fields/textField'
 import {createSingleImageField, createColorField} from '../factories'
 
 /**
@@ -36,18 +37,21 @@ export const impactModule = defineType({
     {
       name: 'textBlock1',
       title: 'Text Block 1',
-      type: 'textBlock',
+      type: 'object',
+      fields: [titleField({required: false}), portableTextField({enableColorAnnotations: true})],
     },
     {
       name: 'textBlock2',
       title: 'Text Block 2',
-      type: 'textBlock',
+      type: 'object',
+      fields: [titleField({required: false}), portableTextField({enableColorAnnotations: true})],
       hidden: ({parent}: any) => parent?.layout === 'oneTextOneImage',
     },
     {
       name: 'textBlock3',
       title: 'Text Block 3',
-      type: 'textBlock',
+      type: 'object',
+      fields: [titleField({required: false}), portableTextField({enableColorAnnotations: true})],
       hidden: ({parent}: any) => parent?.layout !== 'threeText',
     },
     {

@@ -25,8 +25,8 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const multiVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [hasPlayedVideos, setHasPlayedVideos] = useState<Set<number>>(
-    new Set(),
+  const [overlayOpacity, setOverlayOpacity] = useState<Record<number, number>>(
+    {},
   );
 
   // Use video controls hook ONLY for single video case
@@ -40,7 +40,8 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
   useEffect(() => {
     if (count <= 1) return;
 
-    const STAGGER_DELAY = 500; // ms between each video start
+    const STAGGER_DELAY = 500;
+    const playedVideos = new Set<number>();
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -54,28 +55,25 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
           if (!video) return;
 
           if (entry.isIntersecting) {
-            // Play when scrolled into view
-            if (!hasPlayedVideos.has(index)) {
+            if (!playedVideos.has(index)) {
               setTimeout(() => {
                 video.play().catch((err: Error) => {
                   console.error(`Failed to autoplay video ${index}:`, err);
                 });
-                setHasPlayedVideos((prev) => new Set(prev).add(index));
+                playedVideos.add(index);
               }, index * STAGGER_DELAY);
             } else {
-              // Already played before, just resume
               video.play().catch((err: Error) => {
                 console.error(`Failed to play video ${index}:`, err);
               });
             }
           } else {
-            // Pause when scrolled out of view
             video.pause();
           }
         });
       },
       {
-        threshold: 0.5, // Play when 50% of video is visible
+        threshold: 0.5,
         rootMargin: '0px',
       },
     );
@@ -87,11 +85,83 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
       }
     });
 
-    // Cleanup
+    // Check for videos already in viewport on mount
+    setTimeout(() => {
+      containerRefs.current.forEach((container, index) => {
+        if (container) {
+          const rect = container.getBoundingClientRect();
+          const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+
+          if (isInViewport && !playedVideos.has(index)) {
+            const video = multiVideoRefs.current[index];
+            if (video) {
+              setTimeout(() => {
+                video.play().catch((err: Error) => {
+                  console.error(`Failed to autoplay video ${index}:`, err);
+                });
+                playedVideos.add(index);
+              }, index * STAGGER_DELAY);
+            }
+          }
+        }
+      });
+    }, 100);
+
     return () => {
       observer.disconnect();
     };
-  }, [count, videos, hasPlayedVideos]);
+  }, [count, videos]);
+
+  // Handle overlay fade effect
+  useEffect(() => {
+    if (count <= 1) return;
+
+    const FADE_DURATION = 0.5;
+
+    multiVideoRefs.current.forEach((video, index) => {
+      if (!video) return;
+
+      const handleTimeUpdate = () => {
+        if (!video.duration) return;
+
+        const timeRemaining = video.duration - video.currentTime;
+
+        // Fade to black when near end
+        if (timeRemaining <= FADE_DURATION) {
+          const opacity = 1 - timeRemaining / FADE_DURATION;
+          setOverlayOpacity((prev) => ({ ...prev, [index]: opacity }));
+        }
+        // Fade from black at start
+        else if (video.currentTime <= FADE_DURATION) {
+          const opacity = 1 - video.currentTime / FADE_DURATION;
+          setOverlayOpacity((prev) => ({ ...prev, [index]: opacity }));
+        }
+        // No overlay
+        else {
+          setOverlayOpacity((prev) => {
+            if (prev[index] !== 0) {
+              return { ...prev, [index]: 0 };
+            }
+            return prev;
+          });
+        }
+      };
+
+      video.addEventListener('timeupdate', handleTimeUpdate);
+      (video as any)._timeUpdateListener = handleTimeUpdate;
+    });
+
+    return () => {
+      multiVideoRefs.current.forEach((video) => {
+        if (video && (video as any)._timeUpdateListener) {
+          video.removeEventListener(
+            'timeupdate',
+            (video as any)._timeUpdateListener,
+          );
+        }
+      });
+    };
+  }, [count, videos]);
 
   // Guard: Early return if no valid data
   if (!isValidVideoModule(data)) return null;
@@ -119,21 +189,18 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
           />
         ) : (
           <>
-            {/* Play/Pause Button */}
             <PauseButton
               className="video-modal-pause"
               onClick={handleTogglePlay}
               paused={isPaused}
             />
 
-            {/* Mute Button */}
             <MuteButton
               className="video-modal-mute"
               muted={muted}
               onToggle={handleToggleMute}
             />
 
-            {/* Video Player */}
             <MuxVideo
               ref={videoRef}
               videoItem={v}
@@ -144,7 +211,6 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
               onPause={handlePause}
             />
 
-            {/* Progress Bar */}
             <VideoProgressBar
               videoElement={videoRef.current}
               className="video-modal-progress"
@@ -159,13 +225,12 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
   return (
     <div className="container multi-video">
       {videos.map((v, i) => {
-        // Get aspect ratio from Mux video data
         const videoAsset = v.video?.asset as unknown as
           | MuxVideoAsset
           | undefined;
         const aspectRatio = videoAsset?.data?.aspect_ratio
           ? parseAspectRatio(videoAsset.data.aspect_ratio)
-          : '16/9'; // fallback
+          : '16/9';
 
         return (
           <div
@@ -189,6 +254,19 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
               autoPlay={false}
               muted
               loop
+            />
+            {/* Black overlay for fade effect */}
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#000',
+                opacity: overlayOpacity[i] ?? 0,
+                pointerEvents: 'none',
+              }}
             />
           </div>
         );

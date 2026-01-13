@@ -48,7 +48,7 @@ export function TextModule({
   const hasClients = clientNames.length > 0;
 
   return (
-    <div className={`container ${layoutClass}`}>
+    <div className={`wrapper ${layoutClass}`}>
       {/* Headline Left Layout: Tag + Title in separate row */}
       {layout === 'headlineLeft' && (
         <div className="row headline">

@@ -9,8 +9,9 @@ export function ClientNames({ clientNames }: ClientNamesProps) {
 
   return (
     <>
+      <div className="tag">Client</div>
       {clientNames.map((clientName, index) => (
-        <span className="tag" key={`${clientName}-${index}`}>
+        <span className="client-name" key={`${clientName}-${index}`}>
           {clientName}
           {index < clientNames.length - 1 && ' + '}
         </span>
