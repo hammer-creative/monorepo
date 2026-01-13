@@ -25,7 +25,7 @@ export function TextImageModule({
   if (!body && !image) return null;
 
   return (
-    <div className="container">
+    <div className="wrapper">
       {/* Image Section */}
       {image && (
         <div className="row image">
@@ -36,7 +36,9 @@ export function TextImageModule({
       {/* Text Section */}
       {body && (
         <div className="row text">
-          <TextBlock body={body} className="small" />
+          <div className="content">
+            <TextBlock body={body} className="small" />
+          </div>
         </div>
       )}
     </div>

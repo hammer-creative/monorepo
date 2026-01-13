@@ -52,7 +52,7 @@ export const textModule = defineType({
       hidden: ({parent}) => !parent?.layout || parent?.layout === 'headlineMiddle',
     },
     {
-      ...portableTextField(),
+      ...portableTextField({enableColorAnnotations: true}),
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const parent = context.parent as any

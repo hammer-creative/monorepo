@@ -1,0 +1,7 @@
+/* apps/web/src/styles/modules/carousel.css */
+
+@import '../mixins.css';
+
+.swiper-slide {
+  aspect-ratio: 1 / 1;
+}
