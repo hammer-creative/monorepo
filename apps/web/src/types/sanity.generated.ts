@@ -384,11 +384,24 @@ export type TextModule = {
     }>;
     style?: 'normal' | 'blockquote';
     listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: 'link';
-      _key: string;
-    }>;
+    markDefs?: Array<
+      | {
+          href?: string;
+          _type: 'link';
+          _key: string;
+        }
+      | {
+          name?:
+            | 'nightshade'
+            | 'sandstorm'
+            | 'aircutter'
+            | 'hyperbeam'
+            | 'hydroblast'
+            | 'vinewhip';
+          _type: 'color';
+          _key: string;
+        }
+    >;
     level?: number;
     _type: 'block';
     _key: string;
@@ -448,9 +461,108 @@ export type CarouselModule = {
 export type ImpactModule = {
   _type: 'impactModule';
   layout?: 'threeText' | 'twoTextOneImage' | 'oneTextOneImage';
-  textBlock1?: TextBlock;
-  textBlock2?: TextBlock;
-  textBlock3?: TextBlock;
+  textBlock1?: {
+    title?: string;
+    body?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'normal' | 'blockquote';
+      listItem?: never;
+      markDefs?: Array<
+        | {
+            href?: string;
+            _type: 'link';
+            _key: string;
+          }
+        | {
+            name?:
+              | 'nightshade'
+              | 'sandstorm'
+              | 'aircutter'
+              | 'hyperbeam'
+              | 'hydroblast'
+              | 'vinewhip';
+            _type: 'color';
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }>;
+  };
+  textBlock2?: {
+    title?: string;
+    body?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'normal' | 'blockquote';
+      listItem?: never;
+      markDefs?: Array<
+        | {
+            href?: string;
+            _type: 'link';
+            _key: string;
+          }
+        | {
+            name?:
+              | 'nightshade'
+              | 'sandstorm'
+              | 'aircutter'
+              | 'hyperbeam'
+              | 'hydroblast'
+              | 'vinewhip';
+            _type: 'color';
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }>;
+  };
+  textBlock3?: {
+    title?: string;
+    body?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'normal' | 'blockquote';
+      listItem?: never;
+      markDefs?: Array<
+        | {
+            href?: string;
+            _type: 'link';
+            _key: string;
+          }
+        | {
+            name?:
+              | 'nightshade'
+              | 'sandstorm'
+              | 'aircutter'
+              | 'hyperbeam'
+              | 'hydroblast'
+              | 'vinewhip';
+            _type: 'color';
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }>;
+  };
   image?: {
     asset?: {
       _ref: string;

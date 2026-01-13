@@ -60,3 +60,36 @@
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
 }
+
+@define-mixin gutters-text-large {
+  padding-left: var(--space-fluid-20-40);
+  padding-right: var(--space-fluid-20-40);
+}
+
+@define-mixin gutters-text-impact {
+  padding-left: var(--space-fluid-20-40);
+  padding-right: var(--space-fluid-20-40);
+}
+
+@define-mixin gutters-text-small {
+  padding-left: var(--space-fluid-20-40);
+  padding-right: var(--space-fluid-20-40);
+}
+
+@define-mixin gutters-carousel {
+  padding: var(--space-fluid-20-40);
+}
+
+@define-mixin head-foot-text {
+  padding-top: var(--space-fluid-20-40);
+  padding-bottom: var(--space-fluid-20-60);
+}
+
+@define-mixin single-video-border {
+  padding: var(--space-fluid-20-40);
+  padding-bottom: 0;
+}
+
+@define-mixin multi-video-border {
+  padding: var(--space-fluid-20-40);
+}
