@@ -11,13 +11,13 @@ import {createMultiImageField, createColorField} from '../factories'
  */
 export const carouselModule = defineType({
   name: 'carouselModule',
-  title: 'Carousel Module',
+  title: 'Image Carousel',
   type: 'object',
   icon: ImageIcon,
   fields: [
     createMultiImageField({
       name: 'images',
-      title: 'Carousel Images',
+      title: 'Images',
       description:
         'Minimum 3 images. Each image should be square (1:1 aspect ratio), displayed at 680×680px.',
       required: true,
@@ -44,7 +44,7 @@ export const carouselModule = defineType({
     prepare({images}) {
       const count = images?.length || 0
       return {
-        title: `Carousel Module`,
+        title: `Image Carousel`,
         subtitle: `${count} image${count !== 1 ? 's' : ''}`,
       }
     },

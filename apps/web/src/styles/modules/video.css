@@ -24,11 +24,15 @@
 }
 
 /* LAYOUT */
-.video-module {
-  padding: var(--space-20);
 
+.video-module .single-video {
+  @mixin single-video-border;
+}
+
+.video-module {
   .multi-video {
     @mixin flex-responsive column, row;
+    @mixin multi-video-border;
     gap: var(--space-20);
   }
   .multi-video .video-item {
@@ -167,24 +171,24 @@ mux-player {
 /* PLAY / PAUSE — BOTTOM LEFT */
 .video-modal-content .video-modal-pause,
 .video-modal-content .video-modal-play {
-  bottom: var(--space-40);
+  bottom: var(--space-20);
   left: var(--space-40);
 }
 
 .single-video .video-modal-pause,
 .single-video .video-modal-play {
-  bottom: var(--space-40);
-  left: var(--space-40);
+  bottom: var(--space-20);
+  left: var(--space-50);
 }
 
 /* VOLUME / MUTE — BOTTOM RIGHT */
 .video-modal-content .video-modal-volume {
-  bottom: var(--space-40);
+  bottom: var(--space-20);
   right: var(--space-40);
 }
 
 .single-video .video-modal-mute {
-  bottom: var(--space-40);
+  bottom: var(--space-20);
   right: var(--space-40);
 }
 

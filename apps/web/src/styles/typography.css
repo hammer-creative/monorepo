@@ -11,7 +11,10 @@ body {
 
 /* HEADINGS */
 h1,
-h2,
+h2 {
+  font-weight: 700;
+}
+
 h3 {
   font-weight: 100;
 }
@@ -24,6 +27,7 @@ h2 {
 h1 {
   @mixin typography var(--font-serif), var(--font-size-fluid-headline);
   line-height: var(--line-height-tight);
+  letter-spacing: -0.06em;
 }
 
 h2 {
@@ -39,13 +43,14 @@ h3 {
 }
 
 h3 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
 }
 
 /* PARAGRAPHS & BLOCKS */
 p {
-  /* @mixin letter-spacing-responsive var(--letter-spacing-normal),
-    var(--letter-spacing-loose); */
+  hyphens: none;
+  text-wrap: balance;
+  text-justify: inter-word;
 }
 
 p.large {
@@ -55,17 +60,12 @@ p.large {
 
 p.medium {
   @mixin typography var(--font-sans), var(--font-size-fluid-medium);
-  line-height: var(--line-height-fluid-reverse);
+  line-height: 1.2;
 }
 
-p.small {
+p.small,
+.client-name {
   @mixin typography var(--font-sans), var(--font-size-fluid-small);
-}
-
-p.body {
-  hyphens: none;
-  text-wrap: balance;
-  text-justify: inter-word;
 }
 
 ul li {
