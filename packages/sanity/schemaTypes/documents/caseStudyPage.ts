@@ -1,4 +1,4 @@
-// schemaTypes/documents/caseStudy.ts
+// schemas/documents/caseStudyPage.ts
 
 import {defineType} from 'sanity'
 import {titleField, slugField} from '../fields/textField'
@@ -6,11 +6,18 @@ import {ModulesArrayInput} from '../components/ModulesArrayInput'
 
 export const caseStudyPage = defineType({
   name: 'caseStudy',
-  title: 'Case Study',
+  title: 'Case Study Pages',
   type: 'document',
   fields: [
     titleField(),
     slugField(),
+    {
+      name: 'clients',
+      title: 'Clients',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'client'}]}],
+      validation: (Rule) => Rule.required().min(1),
+    },
     {
       name: 'modules',
       title: 'Content Modules',

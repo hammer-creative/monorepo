@@ -1,40 +1,107 @@
 // apps/web/src/components/modules/Carousel/CarouselModule.tsx
-import { SanityImage } from '@/components/common/SanityImage';
-import { urlFor } from '@/lib/sanity/image';
-import type { CarouselModuleType } from '@/types/sanity';
-import Image from 'next/image';
+'use client';
+
+import { SanityCarouselImage } from '@/components/common/SanityImage';
+import type { CarouselModule as CarouselModuleType } from '@/types/sanity.generated';
+import { useEffect, useRef, useState } from 'react';
+
 import 'swiper/css';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
+import type { Swiper as SwiperType } from 'swiper';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+type CarouselImageItem = NonNullable<CarouselModuleType['images']>[number];
+
+function isValidCarouselModule(
+  data: CarouselModuleType | null,
+): data is CarouselModuleType {
+  return data !== null;
+}
+
 export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
-  if (!data) return null;
+  const swiperRef = useRef<SwiperType | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!hasEnteredViewport && swiperRef.current) {
+              setHasEnteredViewport(true);
+              const swiper = swiperRef.current;
+
+              swiper.params.autoplay = {
+                delay: 500,
+                disableOnInteraction: false,
+              };
+              swiper.autoplay.start();
+
+              const delays = [500, 700, 1000, 1500, 2000, 2500];
+              delays.forEach((delay, index) => {
+                setTimeout(() => {
+                  if (
+                    swiper.params.autoplay &&
+                    typeof swiper.params.autoplay !== 'boolean'
+                  ) {
+                    swiper.params.autoplay.delay = delay;
+                  }
+                }, index * delay);
+              });
+            } else if (swiperRef.current) {
+              swiperRef.current.autoplay.start();
+            }
+          } else {
+            swiperRef.current?.autoplay.stop();
+          }
+        });
+      },
+      { threshold: 0.1 },
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasEnteredViewport]);
+
+  if (!isValidCarouselModule(data)) return null;
 
   const { images } = data;
-
-  if (!images || images.length === 0) {
-    return null;
-  }
+  if (!images || images.length === 0) return null;
 
   return (
-    <div className="carousel-module">
+    <div
+      style={{ paddingLeft: '20px', paddingRight: '20px' }}
+      ref={containerRef}
+    >
       <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        spaceBetween={20} // Add this
+        loop={true}
         autoplay={{
-          delay: 2500,
           disableOnInteraction: false,
         }}
-        pagination={{
-          clickable: true,
+        breakpoints={{
+          480: {
+            slidesPerView: 2,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          1024: {
+            slidesPerView: 4,
+          },
         }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
+        modules={[Autoplay, Pagination]}
+        className="swiper-container"
       >
-        {images.map((item) => (
+        {images.map((item: CarouselImageItem) => (
           <SwiperSlide key={item._key}>
-            <SanityImage image={item.image} width={100} height={100} fill />
+            <SanityCarouselImage image={item.image ?? null} />
           </SwiperSlide>
         ))}
       </Swiper>

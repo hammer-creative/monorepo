@@ -1,36 +1,44 @@
 // apps/web/src/components/modules/TextImage/TextImageModule.tsx
 import { SanityImage } from '@/components/common';
 import { TextBlock } from '@/components/common/TextBlock';
-import type { TextImageModuleType } from '@/types/sanity';
+import type { TextImageModule as TextImageModuleType } from '@/types/sanity.generated';
+
+// Type guard: Check if module data exists and is valid
+function isValidTextImageModule(
+  data: TextImageModuleType | null,
+): data is TextImageModuleType {
+  return data !== null;
+}
 
 export function TextImageModule({
   data,
 }: {
   data: TextImageModuleType | null;
 }) {
-  // Guard: no module data
-  if (!data) return null;
+  // Guard: Early return if no valid data
+  if (!isValidTextImageModule(data)) return null;
 
-  // Safe destructuring with defaults
+  // Destructure with defaults for optional fields
   const { body = null, image = null } = data;
 
-  // Guard: nothing to render
-  const hasContent = Boolean(body || image);
-  if (!hasContent) return null;
+  // Guard: Early return if no content to display
+  if (!body && !image) return null;
 
   return (
-    <div className="container">
-      {/* Image column */}
+    <div className="wrapper">
+      {/* Image Section */}
       {image && (
         <div className="row image">
           <SanityImage image={image} fill />
         </div>
       )}
 
-      {/* Text column */}
+      {/* Text Section */}
       {body && (
         <div className="row text">
-          <TextBlock body={body} className="small" />
+          <div className="content">
+            <TextBlock body={body} className="small" />
+          </div>
         </div>
       )}
     </div>

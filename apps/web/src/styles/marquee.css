@@ -1,0 +1,56 @@
+/* apps/web/src/styles/marquee.css */
+
+@import './mixins.css';
+
+/* Homepage Marquee */
+
+[data-page='/'] {
+  /* Layout */
+  background: $color-aircutter;
+
+  .container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .model {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  /* Marquee */
+  .marquee {
+    position: relative;
+  }
+
+  .marquee .masthead {
+    position: absolute;
+    inset: 0;
+    /* z-index: 100; */
+  }
+
+  /* Marquee Graphics */
+  .marquee svg {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 300px;
+    height: auto;
+    margin-left: 2vw;
+    color: $color-nightshade;
+  }
+
+  /* Marquee Text */
+  .marquee .tagline {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-right: 2vw;
+
+    font-family: var(--font-sans);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+}

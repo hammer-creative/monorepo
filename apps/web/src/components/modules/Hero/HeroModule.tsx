@@ -1,85 +1,112 @@
-// apps/web/src/components/Hero/HeroModule.tsx
+// apps/web/src/components/modules/Hero/HeroModule.tsx
 import {
   ClientNames,
-  Title,
-  TextBlock,
   SanityHeroImage,
+  TextBlock,
+  Title,
 } from '@/components/common';
 import {
-  ServicesListModule,
   DeliverablesListModule,
+  ServicesListModule,
 } from '@/components/modules/ServicesList';
-import type { HeroModuleType } from '@/types/sanity';
+import type {
+  Client,
+  HeroModule as HeroModuleType,
+} from '@/types/sanity.generated';
 
-export function HeroModule({ data }: { data: HeroModuleType | null }) {
-  if (!data) return null;
+// Type guard: Check if module data exists and is valid
+function isValidHeroModule(
+  data: HeroModuleType | null,
+): data is HeroModuleType {
+  return data !== null;
+}
 
+export function HeroModule({
+  data,
+  clients = [],
+}: {
+  data: HeroModuleType | null;
+  clients?: Client[];
+}) {
+  // Guard: Early return if no valid data
+  if (!isValidHeroModule(data)) return null;
+
+  // Destructure with defaults for optional fields
   const {
     title = null,
     body = null,
     image = null,
     services = [],
     deliverables = [],
-    clients = [],
   } = data;
 
-  const clientNames = clients
-    .map((client) => client?.name)
+  // Extract client names
+  const clientNames = (clients || [])
+    .map((c) => c?.name)
     .filter((name): name is string => typeof name === 'string');
 
-  const hasServices = services.length > 0;
-  const hasDeliverables = deliverables.length > 0;
-  const hasMeta = Boolean(
-    body || hasServices || hasDeliverables || clientNames.length,
-  );
+  // Compute module visibility flags
+  const hasServices = Array.isArray(services) && services.length > 0;
+  const hasDeliverables =
+    Array.isArray(deliverables) && deliverables.length > 0;
+  const hasClients = clientNames.length > 0;
+  const hasMeta = Boolean(body || hasServices || hasDeliverables || hasClients);
 
   return (
-    <>
+    <div className="wrapper">
+      {/* Hero Section: Image + Title */}
       <div className="row marquee">
-        {/* Image */}
-        {image && (
-          <div className="image">
-            <SanityHeroImage image={image} fill priority />
-          </div>
-        )}
+        <div className="content">
+          {image && (
+            <div className="image">
+              <SanityHeroImage image={image} fill priority />
+            </div>
+          )}
 
-        {/* Title */}
-        {title && (
-          <div className="text">
-            <Title title={title} as="h1" />
-          </div>
-        )}
-      </div>
-
-      {/* Accent */}
-      <div className="row bar">
-        <svg width="80" height="10" viewBox="0 0 80 10" aria-hidden>
-          <rect width="80" height="10" fill="#FFCC98" />
-        </svg>
-      </div>
-
-      {hasMeta && (
-        <div className="row meta">
-          <div className="text">
-            {body && <TextBlock body={body} className="medium" />}
-
-            {clientNames.length > 0 && (
-              <div className="clients">
-                <ClientNames clientNames={clientNames} />
-              </div>
-            )}
-          </div>
-
-          {(hasServices || hasDeliverables) && (
-            <div className="services">
-              <ServicesListModule services={hasServices ? services : []} />
-              <DeliverablesListModule
-                deliverables={hasDeliverables ? deliverables : []}
-              />
+          {title && (
+            <div className="text">
+              <Title title={title} as="h1" />
             </div>
           )}
         </div>
+      </div>
+
+      {/* Metadata Section: Body + Clients + Services/Deliverables */}
+      {hasMeta && (
+        <div className="row meta">
+          <div className="bar">
+            <svg
+              width="80"
+              height="10"
+              viewBox="0 0 80 10"
+              aria-hidden
+              style={{ display: 'block' }}
+            >
+              <rect width="80" height="10" fill="#FFCC98" />
+            </svg>
+          </div>
+          <div className="content">
+            <div className="text">
+              {body && <TextBlock body={body} className="medium" />}
+
+              {hasClients && (
+                <div className="clients">
+                  <ClientNames clientNames={clientNames} />
+                </div>
+              )}
+            </div>
+
+            {(hasServices || hasDeliverables) && (
+              <div className="services">
+                <ServicesListModule services={hasServices ? services : []} />
+                <DeliverablesListModule
+                  deliverables={hasDeliverables ? deliverables : []}
+                />
+              </div>
+            )}
+          </div>
+        </div>
       )}
-    </>
+    </div>
   );
 }

@@ -1,32 +1,47 @@
-// apps/web/eslint.config.mjs
-
+// /Users/j/Documents/projects/hammer/monorepo/apps/web/eslint.config.mjs
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
-import reactConfig from '@chorusworks/eslint-config/react';
+import nextPlugin from '@next/eslint-plugin-next';
+
+import reactConfig from '@hammercreative/eslint-react';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// FlatCompat helps bridge Next.js configs to flat config
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
 export default [
   {
     ignores: [
-      'node_modules/',
-      '.next/',
-      'out/',
-      'build/',
+      '**/node_modules/**',
+      '**/.next/**',
+      '**/.netlify/**',
+      '**/out/**',
+      '**/build/**',
+      '**/dist/**',
       'next-env.d.ts',
       '*.config.*',
       '**/*.config.*',
     ],
   },
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   ...reactConfig,
+
+  // Next.js rules via plugin (ESLint 9 flat-config friendly)
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      '@next/next': nextPlugin,
+    },
+    rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+    },
+    settings: {
+      next: {
+        rootDir: __dirname,
+      },
+    },
+  },
+
+  // TS + resolver settings
   {
     languageOptions: {
       parserOptions: {

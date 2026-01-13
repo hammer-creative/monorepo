@@ -1,5 +1,6 @@
 // apps/web/src/components/navigation/MainMenu.tsx
-import { MenuItem } from '@/types/navigation';
+import { type MenuItem } from '@/types/navigation';
+
 import { Menu } from './Menu';
 
 interface MenuProps {
@@ -11,7 +12,6 @@ export function MainMenu({ items }: MenuProps) {
     <Menu
       items={items}
       className="main-menu"
-      listClassName="main-menu-list"
       itemClassName="main-menu-item"
       linkClassName="main-menu-link"
     />

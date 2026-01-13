@@ -1,54 +1,73 @@
 // apps/web/src/components/modules/CaseStudyCard/CaseStudyCardModule.tsx
-import { ClientNames, Title, SanityHomePageCard } from '@/components/common';
-import type { CaseStudyCardModuleType } from '@/types/sanity';
+import {
+  ClientNames,
+  SanityHomePageCardImage,
+  Title,
+} from '@/components/common';
+import type { SanityImageType } from '@/components/common/SanityImage';
+import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
 import Link from 'next/link';
 
-type CaseStudyItemType = NonNullable<
-  CaseStudyCardModuleType['caseStudies']
->[number];
+// The generated types show caseStudies as references, but GROQ expands them
+// This type represents what we actually get at runtime after GROQ expansion
+type ExpandedCaseStudy = {
+  _id: string;
+  slug?: string;
+  title?: string;
+  clients?: Array<{ _id: string; name?: string }>;
+  modules?: Array<{
+    teaserImage?: SanityImageType;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
+};
 
-function CaseStudyCardItem({ item }: { item: CaseStudyItemType }) {
-  if (!item) return null;
+// Type guard: Check if case study item has required data
+function isValidCaseStudy(item: unknown): item is ExpandedCaseStudy {
+  if (!item || typeof item !== 'object') return false;
+  const study = item as ExpandedCaseStudy;
+  return Boolean(study._id && study.slug);
+}
 
-  const { slug = null, title = null, modules = null } = item;
+function CaseStudyCardItem({ item }: { item: unknown }) {
+  // Guard: Early return if invalid case study
+  if (!isValidCaseStudy(item)) return null;
 
-  if (!slug) return null;
+  const { slug, title = null, clients = [], modules = [] } = item;
 
-  const hero = Array.isArray(modules) ? modules[0] : modules;
-  if (!hero) return null;
+  // Get hero module (first module in array)
+  const hero = Array.isArray(modules) && modules.length > 0 ? modules[0] : null;
+  const teaserImage = hero?.teaserImage ?? null;
 
-  const { clients = [], teaserImage = null } = hero;
+  // Extract client names
+  const clientNames = Array.isArray(clients)
+    ? clients
+        .map((c) => c?.name)
+        .filter((name): name is string => typeof name === 'string')
+    : [];
 
-  const clientNames = clients
-    .map((client: any) => client?.name ?? null)
-    .filter(Boolean) as string[];
+  // Guard: Need at least title or image to render
+  if (!title && !teaserImage) return null;
 
-  if (!title && !teaserImage && !clientNames.length) return null;
+  const hasClients = clientNames.length > 0;
 
   return (
     <div className="case-study-card">
       <Link href={`/work/${slug}`}>
-        {/* Image */}
+        {/* Teaser Image */}
         {teaserImage && (
           <div className="image">
-            <SanityHomePageCard
-              image={teaserImage}
-              sizes="(max-width: 800px) 100vw, 690px"
-              width={690}
-              height={400}
-            />
+            <SanityHomePageCardImage image={teaserImage} />
           </div>
         )}
 
+        {/* Title + Clients */}
         <div className="meta">
-          {/* Clients */}
-          {clientNames.length > 0 && (
-            <div className="case-study-clients">
+          {hasClients && (
+            <div className="clients">
               <ClientNames clientNames={clientNames} />
             </div>
           )}
-
-          {/* Title */}
           {title && (
             <Title title={title} className="case-study-title" as="h3" />
           )}
@@ -58,24 +77,34 @@ function CaseStudyCardItem({ item }: { item: CaseStudyItemType }) {
   );
 }
 
+// Type guard: Check if module data exists and is valid
+function isValidCaseStudyCardModule(
+  data: CaseStudyCardModuleType | null,
+): data is CaseStudyCardModuleType & { caseStudies: unknown[] } {
+  return (
+    data !== null &&
+    Array.isArray(data.caseStudies) &&
+    data.caseStudies.length > 0
+  );
+}
+
 export function CaseStudyCardModule({
   data,
 }: {
   data: CaseStudyCardModuleType | null;
 }) {
-  if (!data) return null;
+  // Guard: Early return if no valid data or empty case studies
+  if (!isValidCaseStudyCardModule(data)) return null;
 
-  const { caseStudies = [] } = data;
-  if (!caseStudies.length) return null;
-
-  console.log(caseStudies);
+  const { caseStudies } = data;
 
   return (
     <div className="case-study-cards">
-      {caseStudies.map((caseStudy) => (
-        <>
-          <CaseStudyCardItem key={caseStudy._id} item={caseStudy} />
-        </>
+      {caseStudies.map((caseStudy: unknown) => (
+        <CaseStudyCardItem
+          key={isValidCaseStudy(caseStudy) ? caseStudy._id : Math.random()}
+          item={caseStudy}
+        />
       ))}
     </div>
   );

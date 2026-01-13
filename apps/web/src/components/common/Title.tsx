@@ -1,19 +1,18 @@
 // apps/web/src/components/common/Title.tsx
-import type { ElementType, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 interface TitleProps {
   title?: ReactNode | null;
   className?: string;
-  as?: ElementType;
+  as?: 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' | 'p';
 }
 
-export function Title({ title, className, as: Tag = 'div' }: TitleProps) {
-  // Guard: nothing to render if no title
+export function Title({ title, className, as: Component = 'div' }: TitleProps) {
   if (!title) return null;
 
   return className ? (
-    <Tag className={className}>{title}</Tag>
+    <Component className={className}>{title}</Component>
   ) : (
-    <Tag>{title}</Tag>
+    <Component>{title}</Component>
   );
 }

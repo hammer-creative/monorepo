@@ -1,57 +1,67 @@
 // apps/web/src/components/Video/VideoControls.tsx
 import {
+  CloseIcon,
   PauseIcon,
   PlayIcon,
-  CloseIcon,
-  VolumeOnIcon,
   VolumeOffIcon,
+  VolumeOnIcon,
 } from './VideoIcons';
+
+interface PlayButtonProps {
+  withLabel?: boolean;
+  label?: string;
+  onClick?: () => void;
+  className?: string;
+}
 
 export function PlayButton({
   withLabel = false,
   label = 'Play',
   onClick,
   className,
-}: {
-  withLabel?: boolean;
-  label?: string;
-  onClick?: () => void;
-  className?: string;
-}) {
+}: PlayButtonProps) {
   return (
-    <button type="button" onClick={onClick} className={className}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={className}
+      aria-label="Play"
+    >
       <PlayIcon />
       {withLabel && <span>{label}</span>}
     </button>
   );
 }
 
+interface PauseButtonProps {
+  onClick?: () => void;
+  className?: string;
+  paused?: boolean;
+}
+
 export function PauseButton({
   onClick,
   className,
-}: {
-  onClick?: () => void;
-  className?: string;
-}) {
+  paused = false,
+}: PauseButtonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
       className={className}
-      aria-label="Pause"
+      aria-label={paused ? 'Play' : 'Pause'}
     >
-      <PauseIcon />
+      {paused ? <PlayIcon /> : <PauseIcon />}
     </button>
   );
 }
 
-export function CloseButton({
-  onClick,
-  className,
-}: {
+interface CloseButtonProps {
   onClick?: () => void;
   className?: string;
-}) {
+}
+
+export function CloseButton({ onClick, className }: CloseButtonProps) {
   return (
     <button
       type="button"
@@ -64,15 +74,13 @@ export function CloseButton({
   );
 }
 
-export function MuteButton({
-  muted,
-  onToggle,
-  className,
-}: {
+interface MuteButtonProps {
   muted: boolean;
   onToggle: () => void;
   className?: string;
-}) {
+}
+
+export function MuteButton({ muted, onToggle, className }: MuteButtonProps) {
   return (
     <button
       type="button"

@@ -1,64 +1,21 @@
 /* apps/web/src/styles/navigation.css */
 
-/* HEADROOM */
-
-.headroom {
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: var(--space-40);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 100;
-}
-
-.headroom-wrapper {
-  position: fixed;
-  width: 100%;
-  z-index: 100;
-}
-
-.headroom--unfixed {
-  position: fixed;
-  transform: translateY(0);
-}
-
-.headroom--scrolled {
-  transition: transform 200ms ease-in-out;
-}
-
-.headroom--unpinned {
-  position: fixed;
-  transform: translateY(-100%);
-  transition: transform 200ms ease-in-out;
-}
-
-.headroom--pinned {
-  position: fixed;
-  transform: translateY(0%);
-}
-
-/* MENU TOGGLE */
-
 .menu-toggle {
-  position: fixed;
-  top: var(--space-20);
-  right: var(--space-20);
-  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0;
+  margin: 0;
   appearance: none;
   background: none;
   border: none;
-  padding: 0;
-  margin: 0;
+  outline: none;
+
   font-family: var(--font-serif);
   text-transform: uppercase;
   color: $color-hyperbeam;
   cursor: pointer;
-  outline: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .menu-toggle svg {
@@ -66,7 +23,11 @@
   height: 10px;
 }
 
-/* MAIN MENU */
+.mobile-menu-list {
+  padding: 100px;
+}
+
+/* Desktop menu */
 
 .main-menu-item {
   font-family: var(--font-serif);
@@ -76,22 +37,60 @@
   text-transform: uppercase;
 }
 
-/* MOBILE MENU */
-
-.mobile-menu-content {
-  position: fixed;
-  inset: 0;
-  background-color: var(--color-nightshade);
-  padding: var(--space-20);
-  padding-top: 80px;
-  z-index: 9000;
-  overflow: hidden;
-}
+/* Mobile menu */
 
 .mobile-menu-item {
   font-family: var(--font-serif);
   font-size: var(--font-size-fluid-headline);
-  text-transform: uppercase;
-  color: var(--color-hyperbeam);
   line-height: 1.1;
+  text-transform: uppercase;
+  color: $color-hyperbeam;
+
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+/* Overlay */
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: $color-nightshade;
+  opacity: 0.9;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+/* Content */
+
+.menu-content {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+/* Header stacking */
+
+.headroom {
+  position: relative;
+}
+
+.menu-toggle {
+  position: relative;
+  z-index: 60;
+}
+
+.wordmark {
+  position: relative;
+  z-index: 30;
+}
+
+.menu-content {
+  z-index: 40;
+}
+
+.menu-overlay {
+  z-index: 30;
 }

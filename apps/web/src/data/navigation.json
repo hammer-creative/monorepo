@@ -17,12 +17,11 @@
     {
       "id": "jobs",
       "label": "Jobs",
-      "href": "/jobs"
+      "href": "https://hammercreative.com/careers"
     },
     {
       "id": "contact",
-      "label": "Contact",
-      "href": "/contact"
+      "label": "Contact"
     }
   ],
   "addresses": [

@@ -59,6 +59,7 @@
   letter-spacing: var(--letter-spacing-tight);
   padding: var(--space-fluid-20-80);
   padding-bottom: var(--space-60);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .services .cards {
@@ -80,7 +81,6 @@
 
 .services .services-page-card-module:not(:last-child) .card-marquee {
   position: relative;
-  z-index: 10;
   width: 100%;
   padding: var(--space-fluid-40-80);
   display: flex;

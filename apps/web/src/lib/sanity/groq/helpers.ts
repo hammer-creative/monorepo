@@ -1,10 +1,10 @@
 // apps/web/src/lib/sanity/groq/helpers.ts
-// apps/web/src/lib/sanity/groq/helpers.ts
 import type { SanityClient } from 'next-sanity';
+
 import { client as defaultClient } from '../client';
 
 type FetchOptions = {
-  params?: Record<string, any>;
+  params?: Record<string, unknown>;
   cache?: RequestCache;
   tags?: string[];
   revalidate?: number;

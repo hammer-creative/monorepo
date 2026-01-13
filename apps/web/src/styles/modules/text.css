@@ -2,54 +2,51 @@
 
 @import '../mixins.css';
 
-/* layout */
+.text-module .wrapper {
+  @mixin gutters-text-large;
+  @mixin head-foot-text;
 
-.text-module .flex {
-  @mixin flex-responsive column;
-}
+  .row {
+    margin-bottom: var(--space-20);
 
-.text-module .flex.headline-left {
-  h2,
-  .portable-text {
-    padding-right: 10vw;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
-  h2 {
+  .row.headline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-20);
   }
 
-  .tag {
-  }
-}
+  @media screen and (min-width: 50rem) {
+    @mixin flex-responsive column, row;
 
-.text-module .flex.headline-middle {
-  .flex-item.copy {
-    margin: 0 auto;
-    width: 100%;
-  }
+    .row {
+      flex: 1;
+      margin-bottom: 0;
+    }
 
-  .portable-text {
-  }
-
-  .portable-text p,
-  .tag {
-    text-align: center;
-  }
-}
-
-@media screen and (min-width: 50rem) {
-  .text-module .flex.headline-left {
-    .flex-item {
-      @mixin flex column;
+    .row.headline {
+      gap: 0;
       justify-content: space-between;
     }
 
-    padding: var(--space-fluid-20-40) var(--space-fluid-20-80)
-      var(--space-fluid-40-120);
-    h2 {
-      padding-bottom: 0rem;
-    }
-    .portable-text {
-      padding-right: 0rem;
+    .row.text p.medium {
+      line-height: 1.05;
     }
   }
+}
+
+.text-module.headline-left .wrapper {
+  /* specific styles for headline-left if needed */
+}
+
+.text-module.headline-middle .wrapper {
+  /* specific styles for headline-middle if needed */
+}
+
+.text-module.home-page .wrapper {
+  /* specific styles for home-page if needed */
 }

@@ -30,6 +30,7 @@ max viewport width.
   --space-20: 1.25rem; /* 20px */
   --space-30: 1.875rem; /* 30px */
   --space-40: 2.5rem; /* 40px */
+  --space-50: 3.125rem; /* 50px */
   --space-60: 3.75rem; /* 60px */
   --space-80: 5rem; /* 80px */
   --space-100: 6.25rem; /* 100px */
@@ -79,6 +80,11 @@ max viewport width.
     5rem,
     calc(5rem + ((1vw - 3.2px) * 8.3333)),
     10rem
+  );
+  --space-fluid-40-20: clamp(
+    1.25rem,
+    calc(2.5rem - ((1vw - 3.2px) * 2.0833)),
+    2.5rem
   );
 
   /* TYPEFACES */
@@ -130,7 +136,7 @@ max viewport width.
   );
   --font-size-fluid-small: clamp(
     10px,
-    calc(0.625rem + ((1vw - 3.2px) * 0.625)),
+    calc(0.625rem + ((1vw - 3.2px) * 1.0417)),
     20px
   );
   --font-size-fluid-extra-small: clamp(
@@ -151,6 +157,8 @@ max viewport width.
   ); /* 2 at narrow → 1 at wide */
   --line-height-tight: 0.9;
   --line-height-loose: 2;
+  --line-height-medium: 1.5;
+  --line-height-list: var(--line-height-medium);
 
   /* STACK SCALE – fluid rhythm derived from base spacing */
   --stack-tight: clamp(var(--space-1), 0.5vw + var(--space-1), var(--space-2));

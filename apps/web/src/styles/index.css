@@ -8,6 +8,8 @@
 @import './layout.css';
 @import './typography.css';
 @import './wordmark.css';
+@import './marquee.css';
+@import './headroom.css';
 @import './navigation.css';
 @import './footer.css';
 /* @import './components.css'; */
@@ -17,3 +19,4 @@
 @import './modules/text.css';
 @import './modules/impact.css';
 @import './modules/cards.css';
+@import './modules/carousel.css';

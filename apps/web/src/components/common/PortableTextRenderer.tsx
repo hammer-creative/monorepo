@@ -1,14 +1,24 @@
 // apps/web/src/components/common/PortableTextRenderer.tsx
-import { PortableText, PortableTextComponents } from '@portabletext/react';
+import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import type { PortableTextBlock } from '@portabletext/types';
 import Link from 'next/link';
+import type { ReactNode } from 'react';
+
+import { DEFAULT_COLORS } from '@hammercreative/ui';
 
 interface PortableTextRendererProps {
-  value?: PortableTextBlock[]; // ✅ optional for safety
+  value?: PortableTextBlock[];
   className?: string;
 }
 
-function SmartLink({ value, children }: any) {
+interface SmartLinkProps {
+  value?: {
+    href?: string;
+  };
+  children?: ReactNode;
+}
+
+function SmartLink({ value, children }: SmartLinkProps) {
   const href = value?.href || '';
   const isInternal = href.startsWith('/') || href.startsWith('#');
   const isExternal = href.startsWith('http');
@@ -52,7 +62,9 @@ export function PortableTextRenderer({
       h5: ({ children }) => <h5>{children}</h5>,
       h6: ({ children }) => <h6>{children}</h6>,
       normal: ({ children }) => <p className={className}>{children}</p>,
-      blockquote: ({ children }: any) => <blockquote>{children}</blockquote>,
+      blockquote: ({ children }: { children?: ReactNode }) => (
+        <blockquote>{children}</blockquote>
+      ),
     },
     marks: {
       strong: ({ children }) => <strong>{children}</strong>,
@@ -62,6 +74,15 @@ export function PortableTextRenderer({
         <span className="underline">{children}</span>
       ),
       'strike-through': ({ children }) => <s>{children}</s>,
+      color: ({ value, children }) => (
+        <span
+          style={{
+            color: DEFAULT_COLORS[value?.name as keyof typeof DEFAULT_COLORS],
+          }}
+        >
+          {children}
+        </span>
+      ),
       link: SmartLink,
     },
     list: {

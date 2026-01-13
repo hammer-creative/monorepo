@@ -3,6 +3,8 @@
 import {defineField, type ArrayRule} from 'sanity'
 import {PortableTextWithCounter} from '../components/PortableTextWithCounter'
 import {addRequiredLabel} from '../utils/fieldHelpers'
+import React from 'react'
+import {DEFAULT_COLORS} from '@hammercreative/ui'
 
 interface PortableTextConfig {
   name?: string
@@ -11,6 +13,7 @@ interface PortableTextConfig {
   maxLength?: number
   description?: string
   blocks?: any[]
+  enableColorAnnotations?: boolean
 }
 
 /**
@@ -25,7 +28,67 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     maxLength = 1000,
     description = '',
     blocks,
+    enableColorAnnotations = false,
   } = config
+
+  const annotations = [
+    {
+      name: 'link',
+      type: 'object',
+      title: 'Link',
+      fields: [{name: 'href', type: 'url', title: 'URL'}],
+    },
+  ]
+
+  if (enableColorAnnotations) {
+    annotations.push({
+      name: 'color',
+      type: 'object',
+      title: 'Text Color',
+      icon: () => '🎨',
+      fields: [
+        {
+          name: 'name',
+          title: 'Color',
+          type: 'string',
+          options: {
+            layout: 'radio',
+            direction: 'vertical',
+            list: Object.entries(DEFAULT_COLORS).map(([key, hex]) => ({
+              title: React.createElement(
+                'div',
+                {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                  },
+                },
+                [
+                  React.createElement('div', {
+                    key: `${key}-swatch`,
+                    style: {
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '3px',
+                      border: '1px solid #ccc',
+                      backgroundColor: hex,
+                    },
+                  }),
+                  React.createElement(
+                    'span',
+                    {key: `${key}-label`},
+                    key.charAt(0).toUpperCase() + key.slice(1),
+                  ),
+                ],
+              ),
+              value: key,
+            })),
+          },
+        },
+      ],
+    } as any)
+  }
 
   const defaultBlocks = [
     {
@@ -40,20 +103,10 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
           {title: 'Bold', value: 'strong'},
           {title: 'Italic', value: 'em'},
         ],
-        annotations: [
-          {
-            name: 'link',
-            type: 'object',
-            title: 'Link',
-            fields: [{name: 'href', type: 'url', title: 'URL'}],
-          },
-        ],
+        annotations,
       },
     },
   ]
-
-  // console.log('createPortableTextField config:', config)
-  // console.log('createPortableTextField maxLength:', maxLength)
 
   return defineField({
     name,

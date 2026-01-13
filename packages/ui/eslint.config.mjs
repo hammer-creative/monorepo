@@ -1,14 +1,14 @@
 // packages/ui/eslint.config.mjs
-
 import path from 'path';
 import { fileURLToPath } from 'url';
-import reactConfig from '@chorusworks/eslint-config/react';
+
+import baseConfig from '@hammercreative/eslint-base';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default [
-  ...reactConfig,
+  ...baseConfig,
   {
     ignores: ['*.config.*', '**/*.config.*'],
   },
