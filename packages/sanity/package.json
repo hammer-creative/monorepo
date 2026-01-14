@@ -30,7 +30,6 @@
     "@sanity/react-loader": "^2.0.0",
     "@sanity/ui": "^3.1.11",
     "@sanity/vision": "^4.13.0",
-    "@sanity/webhook": "^4.0.4",
     "react": "^19.2.2",
     "react-dom": "^19.2.2",
     "sanity": "^4.13.0",
