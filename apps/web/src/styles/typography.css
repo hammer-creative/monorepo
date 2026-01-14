@@ -73,7 +73,8 @@ ul li {
   line-height: var(--line-height-loose);
 }
 
-.tag {
+.tag,
+.impressum .text {
   @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
   letter-spacing: var(--letter-spacing-loose);
   text-transform: uppercase;

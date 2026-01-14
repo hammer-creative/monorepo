@@ -27,7 +27,6 @@
   .marquee .masthead {
     position: absolute;
     inset: 0;
-    /* z-index: 100; */
   }
 
   /* Marquee Graphics */
@@ -52,5 +51,28 @@
     font-weight: 900;
     letter-spacing: 0.2em;
     text-transform: uppercase;
+  }
+
+  /* Impressum */
+  .impressum {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .impressum-left {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+  }
+
+  .impressum-right {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .impressum .text {
+    letter-spacing: 0.25em;
   }
 }
