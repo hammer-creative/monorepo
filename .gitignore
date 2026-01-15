@@ -14,3 +14,5 @@ apps/text-image/.env
 mux-uploads
 .eslintcache
 **/.eslintcache
+
+apps/web/public/model/assets
