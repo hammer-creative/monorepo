@@ -16,6 +16,13 @@ import * as THREE from 'three';
 const MAX_ROTATION = 20; // Max rotation in degrees
 const LERP_SPEED = 0.05; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
 const PARALLAX_FACTOR = 0.5; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
+
+// EDGE GLOW PARAMETERS
+const EDGE_SCALE = 1.2; // 1.01-1.2, how much bigger the glow layer is
+const EDGE_GLOW_COLOR = new THREE.Color(0x88bbff); // Edge glow color
+const EDGE_GLOW_INTENSITY = 2.0; // 0-5, brightness
+const EDGE_GLOW_FALLOFF = 10; // 1-10, how sharp/soft the edge is (higher = softer)
+const EDGE_THICKNESS = 10; // 0-1, how thick the glow band is
 // ==========================================
 
 function Model({ url }: { url: string }) {
@@ -40,8 +47,63 @@ function Model({ url }: { url: string }) {
   // Ref to the pupil mesh for separate rotation control
   const pupilMeshRef = useRef(null);
 
+  // Store edge glow meshes
+  const edgeGlowMeshes = useRef([]);
+
   // Convert max rotation from degrees to radians
   const MAX_ROTATION_RAD = THREE.MathUtils.degToRad(MAX_ROTATION);
+
+  // Create edge glow material with soft falloff
+  const createEdgeGlowMaterial = () => {
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        glowColor: { value: EDGE_GLOW_COLOR },
+        intensity: { value: EDGE_GLOW_INTENSITY },
+        falloff: { value: EDGE_GLOW_FALLOFF },
+        thickness: { value: EDGE_THICKNESS },
+      },
+      vertexShader: `
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          vViewPosition = -mvPosition.xyz;
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 glowColor;
+        uniform float intensity;
+        uniform float falloff;
+        uniform float thickness;
+
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+
+        void main() {
+          vec3 viewDir = normalize(vViewPosition);
+          float fresnel = abs(dot(viewDir, vNormal));
+
+          // Create soft edge glow with adjustable falloff
+          float edgeFactor = 1.0 - fresnel;
+          float glow = pow(edgeFactor, falloff);
+
+          // Add thickness control - fade in/out
+          glow = smoothstep(0.0, thickness, glow) * smoothstep(1.0, thickness, glow);
+
+          vec3 finalColor = glowColor * intensity;
+
+          gl_FragColor = vec4(finalColor, glow);
+        }
+      `,
+      transparent: true,
+      side: THREE.BackSide,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+  };
 
   // Log everything in the model
   console.log('=== MODEL STRUCTURE ===');
@@ -65,6 +127,17 @@ function Model({ url }: { url: string }) {
       }
       console.log('  Vertex count:', child.geometry.attributes.position.count);
       console.log('---');
+
+      // Create edge glow layer for cornea and sclera
+      if (child.name === 'Cornea_Mesh' || child.name === 'Sclera_Mesh') {
+        const edgeGlowMesh = new THREE.Mesh(
+          child.geometry,
+          createEdgeGlowMaterial(),
+        );
+        edgeGlowMesh.scale.set(EDGE_SCALE, EDGE_SCALE, EDGE_SCALE);
+        child.add(edgeGlowMesh);
+        edgeGlowMeshes.current.push(edgeGlowMesh);
+      }
 
       // Replace pupil texture with video
       if (child.name === 'Pupil_Mesh' && videoTexture) {
