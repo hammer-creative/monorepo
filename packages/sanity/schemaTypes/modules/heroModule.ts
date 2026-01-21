@@ -31,10 +31,10 @@ export const heroModule = defineType({
       name: 'teaserImage',
       title: 'Teaser Image',
       required: true,
-      minWidth: 1890,
-      minHeight: 1130,
+      minWidth: 1380,
+      minHeight: 800,
       maxFileSize: 2,
-      description: 'Minimum dimensions 1890 px × 1130 px, maximum file size 2 MB.',
+      description: 'Minimum dimensions 1380 px × 800 px, maximum file size 2 MB.',
       imageOptions: {
         hotspot: {
           previews: [{title: '5:3 Landscape', aspectRatio: 5 / 3}],

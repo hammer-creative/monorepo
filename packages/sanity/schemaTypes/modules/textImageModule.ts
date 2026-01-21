@@ -90,7 +90,7 @@ export const textImageModule = defineType({
       const words = bodyText?.split(/\s+/).filter(Boolean).slice(0, 10).join(' ')
 
       return {
-        title: ['Text + Image', layoutLabels[layout]].filter(Boolean).join(' · ') || 'Text + Image',
+        title: ['Text + Image', layoutLabels[layout]].filter(Boolean).join(' • ') || 'Text + Image',
         subtitle: words ? `${words}...` : layoutLabels[layout] || 'Text + Image Module',
       }
     },

@@ -30,9 +30,9 @@ interface LayoutRequirements {
 // - Bitrate: 25-50 Mbps
 // - Format: MP4
 const LAYOUT_REQUIREMENTS: Record<number, LayoutRequirements> = {
-  1: {minWidth: 5640, minHeight: 3180, label: 'single-video'},
-  2: {minWidth: 2820, minHeight: 2820, label: 'two-video'},
-  3: {minWidth: 1860, minHeight: 3000, label: 'three-video'},
+  1: {minWidth: 3840, minHeight: 2160, label: 'single-video'},
+  2: {minWidth: 1880, minHeight: 1880, label: 'two-video'},
+  3: {minWidth: 1200, minHeight: 2000, label: 'three-video'},
 }
 
 const DIMENSION_REGEX = /-(\d+)x(\d+)-/
@@ -81,7 +81,7 @@ export const videoModule = defineType({
       title: 'Videos',
       type: 'array',
       description:
-        'Add 1-3 videos. Poster images should be high-resolution (3x display size): 1 video requires 5640×3180px, 2 videos require 2820×2820px each, 3 videos require 1860×3000px each. Videos should be 4K, H.264/H.265, MP4 format.',
+        'Add 1-3 videos. Poster images should be high-resolution (3x display size): 1 video requires 3840 × 2160 px, 2 videos require 1880 × 1880 px each, 3 videos require 1200 × 2000 px each. Videos should be 4K, H.264/H.265, MP4 format.',
       of: [{type: 'videoItem'}],
       validation: (Rule) =>
         Rule.required()
