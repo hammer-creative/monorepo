@@ -15,7 +15,13 @@ import * as THREE from 'three';
 // ==========================================
 const MAX_ROTATION = 20; // Max rotation in degrees
 const LERP_SPEED = 0.05; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
-const PARALLAX_FACTOR = 0.5; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
+
+// PUPIL PARALLAX PARAMETERS
+const ENABLE_PUPIL_LAG = false; // Set to false to disable pupil lag
+const PARALLAX_FACTOR = 0.5; // Pupil lag amount (0.5 = lots of lag, 0.9 = almost none) - only used if ENABLE_PUPIL_LAG is true
+
+// VIDEO PUPIL PARAMETERS
+const VIDEO_PUPIL_SCALE = 1.0; // Scale of the video relative to original pupil (1.0 = same size, 1.5 = 50% larger, etc.)
 
 // EDGE GLOW PARAMETERS
 const EDGE_SCALE = 1.2; // 1.01-1.2, how much bigger the glow layer is
@@ -141,14 +147,26 @@ function Model({ url }: { url: string }) {
 
       // Replace pupil texture with video
       if (child.name === 'Pupil_Mesh' && videoTexture) {
-        child.material.map = videoTexture;
-        child.material.needsUpdate = true;
+        // Clone the original material to preserve ALL its properties
+        const originalMaterial = child.material.clone();
+        originalMaterial.map = videoTexture;
+        originalMaterial.needsUpdate = true;
 
-        // Store reference to pupil mesh for parallax rotation
+        child.material = originalMaterial;
+
+        // Apply scale to the pupil
+        child.scale.set(
+          VIDEO_PUPIL_SCALE,
+          VIDEO_PUPIL_SCALE,
+          VIDEO_PUPIL_SCALE,
+        );
+
         pupilMeshRef.current = child;
-        // Position pupil slightly inside the eye (negative Z moves it back)
-        child.position.z = -0.15; // Adjust this value - more negative = deeper inside
-        child.scale.set(1.5, 1.5, 1.5); // Try 1.1 to 1.3
+        console.log(
+          'Pupil material cloned and texture replaced with scale:',
+          VIDEO_PUPIL_SCALE,
+        );
+        console.log('Pupil lag enabled:', ENABLE_PUPIL_LAG);
       }
     }
   });
@@ -208,21 +226,27 @@ function Model({ url }: { url: string }) {
       gltf.scene.rotation.y = currentRotation.current.y;
     }
 
-    // Pupil parallax - pupil lags behind eyeball rotation
+    // Pupil rotation - either with lag (parallax) or locked to eyeball
     if (pupilMeshRef.current) {
-      // Target pupil rotation is a fraction of the eyeball rotation (creates parallax)
-      const targetPupilX = currentRotation.current.x * PARALLAX_FACTOR;
-      const targetPupilY = currentRotation.current.y * PARALLAX_FACTOR;
+      if (ENABLE_PUPIL_LAG) {
+        // Pupil lags behind eyeball rotation (parallax effect)
+        const targetPupilX = currentRotation.current.x * PARALLAX_FACTOR;
+        const targetPupilY = currentRotation.current.y * PARALLAX_FACTOR;
 
-      // Smoothly interpolate pupil rotation (double smoothing for extra lag)
-      currentPupilRotation.current.x +=
-        (targetPupilX - currentPupilRotation.current.x) * LERP_SPEED;
-      currentPupilRotation.current.y +=
-        (targetPupilY - currentPupilRotation.current.y) * LERP_SPEED;
+        // Smoothly interpolate pupil rotation (double smoothing for extra lag)
+        currentPupilRotation.current.x +=
+          (targetPupilX - currentPupilRotation.current.x) * LERP_SPEED;
+        currentPupilRotation.current.y +=
+          (targetPupilY - currentPupilRotation.current.y) * LERP_SPEED;
 
-      // Apply rotation to pupil mesh
-      pupilMeshRef.current.rotation.x = currentPupilRotation.current.x;
-      pupilMeshRef.current.rotation.y = currentPupilRotation.current.y;
+        // Apply rotation to pupil mesh
+        pupilMeshRef.current.rotation.x = currentPupilRotation.current.x;
+        pupilMeshRef.current.rotation.y = currentPupilRotation.current.y;
+      } else {
+        // Pupil locked to eyeball - no separate rotation
+        pupilMeshRef.current.rotation.x = 0;
+        pupilMeshRef.current.rotation.y = 0;
+      }
     }
   });
 
@@ -238,8 +262,8 @@ const SceneContent = ({
 }) => {
   return (
     <>
-      <ambientLight intensity={2} />
-      <directionalLight position={[5, 10, 5]} intensity={0.8} />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[1, 1, 1]} intensity={0.8} />
       {helpersVisible && (
         <>
           <gridHelper args={[10, 10]} />
@@ -247,7 +271,7 @@ const SceneContent = ({
         </>
       )}
       <Suspense fallback={null}>
-        <Model url="/model/model-v3r4.glb" />
+        <Model url="/model/model-v4.glb" />
       </Suspense>
       {/* OrbitControls only enabled when helpers are visible */}
       <OrbitControls
