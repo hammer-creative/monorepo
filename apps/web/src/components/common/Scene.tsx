@@ -15,20 +15,19 @@ import * as THREE from 'three';
 // ==========================================
 const MAX_ROTATION = 20; // Max rotation in degrees
 const LERP_SPEED = 0.05; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
-
-// PUPIL PARALLAX PARAMETERS
-const ENABLE_PUPIL_LAG = false; // Set to false to disable pupil lag
-const PARALLAX_FACTOR = 0.5; // Pupil lag amount (0.5 = lots of lag, 0.9 = almost none) - only used if ENABLE_PUPIL_LAG is true
+const PARALLAX_FACTOR = 0.5; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
 
 // VIDEO PUPIL PARAMETERS
-const VIDEO_PUPIL_SCALE = 1.0; // Scale of the video relative to original pupil (1.0 = same size, 1.5 = 50% larger, etc.)
+const ENABLE_VIDEO_PUPIL = false; // Set to false to use solid color instead of video
+const PUPIL_COLOR = new THREE.Color(0xff0000); // Pupil color when video is disabled (black by default)
+const PUPIL_Z_POSITION = -0.15; // How far back the pupil sits (more negative = deeper inside)
+const PUPIL_SCALE = 1.5; // Pupil size (1.5 = 50% bigger)
 
-// EDGE GLOW PARAMETERS
-const EDGE_SCALE = 1.2; // 1.01-1.2, how much bigger the glow layer is
-const EDGE_GLOW_COLOR = new THREE.Color(0x88bbff); // Edge glow color
-const EDGE_GLOW_INTENSITY = 2.0; // 0-5, brightness
-const EDGE_GLOW_FALLOFF = 10; // 1-10, how sharp/soft the edge is (higher = softer)
-const EDGE_THICKNESS = 10; // 0-1, how thick the glow band is
+// LIGHTING PARAMETERS
+const AMBIENT_LIGHT_INTENSITY = 1; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
+const DIRECTIONAL_LIGHT_INTENSITY = 0.5; // Directional light strength (0-2, try 0.3, 0.5, 0.8)
+const DIRECTIONAL_LIGHT_POSITION = [5, 10, 5]; // Light position [x, y, z]
+const TONE_MAPPING_EXPOSURE = 1.0; // Exposure control (0.5 = darker, 1.5 = brighter)
 // ==========================================
 
 function Model({ url }: { url: string }) {
@@ -53,63 +52,8 @@ function Model({ url }: { url: string }) {
   // Ref to the pupil mesh for separate rotation control
   const pupilMeshRef = useRef(null);
 
-  // Store edge glow meshes
-  const edgeGlowMeshes = useRef([]);
-
   // Convert max rotation from degrees to radians
   const MAX_ROTATION_RAD = THREE.MathUtils.degToRad(MAX_ROTATION);
-
-  // Create edge glow material with soft falloff
-  const createEdgeGlowMaterial = () => {
-    return new THREE.ShaderMaterial({
-      uniforms: {
-        glowColor: { value: EDGE_GLOW_COLOR },
-        intensity: { value: EDGE_GLOW_INTENSITY },
-        falloff: { value: EDGE_GLOW_FALLOFF },
-        thickness: { value: EDGE_THICKNESS },
-      },
-      vertexShader: `
-        varying vec3 vNormal;
-        varying vec3 vViewPosition;
-
-        void main() {
-          vNormal = normalize(normalMatrix * normal);
-          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          vViewPosition = -mvPosition.xyz;
-          gl_Position = projectionMatrix * mvPosition;
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 glowColor;
-        uniform float intensity;
-        uniform float falloff;
-        uniform float thickness;
-
-        varying vec3 vNormal;
-        varying vec3 vViewPosition;
-
-        void main() {
-          vec3 viewDir = normalize(vViewPosition);
-          float fresnel = abs(dot(viewDir, vNormal));
-
-          // Create soft edge glow with adjustable falloff
-          float edgeFactor = 1.0 - fresnel;
-          float glow = pow(edgeFactor, falloff);
-
-          // Add thickness control - fade in/out
-          glow = smoothstep(0.0, thickness, glow) * smoothstep(1.0, thickness, glow);
-
-          vec3 finalColor = glowColor * intensity;
-
-          gl_FragColor = vec4(finalColor, glow);
-        }
-      `,
-      transparent: true,
-      side: THREE.BackSide,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-  };
 
   // Log everything in the model
   console.log('=== MODEL STRUCTURE ===');
@@ -134,39 +78,28 @@ function Model({ url }: { url: string }) {
       console.log('  Vertex count:', child.geometry.attributes.position.count);
       console.log('---');
 
-      // Create edge glow layer for cornea and sclera
-      if (child.name === 'Cornea_Mesh' || child.name === 'Sclera_Mesh') {
-        const edgeGlowMesh = new THREE.Mesh(
-          child.geometry,
-          createEdgeGlowMaterial(),
-        );
-        edgeGlowMesh.scale.set(EDGE_SCALE, EDGE_SCALE, EDGE_SCALE);
-        child.add(edgeGlowMesh);
-        edgeGlowMeshes.current.push(edgeGlowMesh);
-      }
-
-      // Replace pupil texture with video
+      // Replace pupil texture with video or solid color
       if (child.name === 'Pupil_Mesh' && videoTexture) {
-        // Clone the original material to preserve ALL its properties
-        const originalMaterial = child.material.clone();
-        originalMaterial.map = videoTexture;
-        originalMaterial.needsUpdate = true;
+        if (ENABLE_VIDEO_PUPIL) {
+          child.material.map = videoTexture;
+        } else {
+          child.material.map = null;
+          child.material.color = PUPIL_COLOR;
+        }
+        child.material.needsUpdate = true;
 
-        child.material = originalMaterial;
-
-        // Apply scale to the pupil
-        child.scale.set(
-          VIDEO_PUPIL_SCALE,
-          VIDEO_PUPIL_SCALE,
-          VIDEO_PUPIL_SCALE,
-        );
-
+        // Store reference to pupil mesh for parallax rotation
         pupilMeshRef.current = child;
-        console.log(
-          'Pupil material cloned and texture replaced with scale:',
-          VIDEO_PUPIL_SCALE,
-        );
-        console.log('Pupil lag enabled:', ENABLE_PUPIL_LAG);
+        // Position pupil behind the sclera opening
+        child.position.z = PUPIL_Z_POSITION;
+        child.scale.set(PUPIL_SCALE, PUPIL_SCALE, PUPIL_SCALE);
+
+        console.log('Video pupil enabled:', ENABLE_VIDEO_PUPIL);
+        console.log('Pupil Z position:', PUPIL_Z_POSITION);
+        console.log('Pupil scale:', PUPIL_SCALE);
+        if (!ENABLE_VIDEO_PUPIL) {
+          console.log('Pupil color:', PUPIL_COLOR);
+        }
       }
     }
   });
@@ -226,27 +159,21 @@ function Model({ url }: { url: string }) {
       gltf.scene.rotation.y = currentRotation.current.y;
     }
 
-    // Pupil rotation - either with lag (parallax) or locked to eyeball
+    // Pupil parallax - pupil lags behind eyeball rotation
     if (pupilMeshRef.current) {
-      if (ENABLE_PUPIL_LAG) {
-        // Pupil lags behind eyeball rotation (parallax effect)
-        const targetPupilX = currentRotation.current.x * PARALLAX_FACTOR;
-        const targetPupilY = currentRotation.current.y * PARALLAX_FACTOR;
+      // Target pupil rotation is a fraction of the eyeball rotation (creates parallax)
+      const targetPupilX = currentRotation.current.x * PARALLAX_FACTOR;
+      const targetPupilY = currentRotation.current.y * PARALLAX_FACTOR;
 
-        // Smoothly interpolate pupil rotation (double smoothing for extra lag)
-        currentPupilRotation.current.x +=
-          (targetPupilX - currentPupilRotation.current.x) * LERP_SPEED;
-        currentPupilRotation.current.y +=
-          (targetPupilY - currentPupilRotation.current.y) * LERP_SPEED;
+      // Smoothly interpolate pupil rotation (double smoothing for extra lag)
+      currentPupilRotation.current.x +=
+        (targetPupilX - currentPupilRotation.current.x) * LERP_SPEED;
+      currentPupilRotation.current.y +=
+        (targetPupilY - currentPupilRotation.current.y) * LERP_SPEED;
 
-        // Apply rotation to pupil mesh
-        pupilMeshRef.current.rotation.x = currentPupilRotation.current.x;
-        pupilMeshRef.current.rotation.y = currentPupilRotation.current.y;
-      } else {
-        // Pupil locked to eyeball - no separate rotation
-        pupilMeshRef.current.rotation.x = 0;
-        pupilMeshRef.current.rotation.y = 0;
-      }
+      // Apply rotation to pupil mesh
+      pupilMeshRef.current.rotation.x = currentPupilRotation.current.x;
+      pupilMeshRef.current.rotation.y = currentPupilRotation.current.y;
     }
   });
 
@@ -262,8 +189,11 @@ const SceneContent = ({
 }) => {
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[1, 1, 1]} intensity={0.8} />
+      <ambientLight intensity={AMBIENT_LIGHT_INTENSITY} />
+      <directionalLight
+        position={DIRECTIONAL_LIGHT_POSITION}
+        intensity={DIRECTIONAL_LIGHT_INTENSITY}
+      />
       {helpersVisible && (
         <>
           <gridHelper args={[10, 10]} />
@@ -307,7 +237,13 @@ export default function Scene() {
         Helpers/Orbit: {helpersVisible ? 'ON' : 'OFF'}
       </button>
 
-      <Canvas camera={{ position: [0, 0, 0.4], fov: 50 }}>
+      <Canvas
+        camera={{ position: [0, 0, 0.4], fov: 50 }}
+        gl={{
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: TONE_MAPPING_EXPOSURE,
+        }}
+      >
         <SceneContent
           helpersVisible={helpersVisible}
           orbitEnabled={helpersVisible}
