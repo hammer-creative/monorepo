@@ -17,8 +17,9 @@ export const textModule = defineType({
       type: 'string',
       options: {
         list: [
+          {title: 'Challenge', value: 'challenge'},
           {title: 'Headline Left + Copy Right', value: 'headlineLeft'},
-          {title: 'Headline Middle', value: 'headlineMiddle'},
+          {title: 'Testimonial', value: 'testimonial'},
           {title: 'Homepage', value: 'homePage'},
         ],
         layout: 'radio',
@@ -29,7 +30,7 @@ export const textModule = defineType({
       name: 'client',
       title: 'Client',
       required: false,
-      hidden: ({parent}: any) => !parent?.layout || parent?.layout !== 'headlineMiddle',
+      hidden: ({parent}: any) => !parent?.layout || parent?.layout !== 'testimonial',
     }),
     {
       ...createTextField({
@@ -37,7 +38,7 @@ export const textModule = defineType({
         title: 'Tag',
         maxLength: 50,
       }),
-      hidden: ({parent}) => !parent?.layout || parent?.layout === 'headlineMiddle',
+      hidden: ({parent}) => !parent?.layout || parent?.layout === 'testimonial',
     },
     {
       ...titleField({required: false}),
@@ -49,7 +50,8 @@ export const textModule = defineType({
           }
           return true
         }),
-      hidden: ({parent}) => !parent?.layout || parent?.layout === 'headlineMiddle',
+      hidden: ({parent}) =>
+        !parent?.layout || parent?.layout === 'testimonial' || parent?.layout === 'challenge',
     },
     {
       ...portableTextField({enableColorAnnotations: true}),
@@ -94,17 +96,42 @@ export const textModule = defineType({
       title: 'title',
       tag: 'tag',
       body: 'body',
+      client: 'client.name',
     },
-    prepare({title, layout, body}) {
+    prepare({title, layout, tag, body, client}) {
       const layoutLabels: Record<string, string> = {
+        challenge: 'Challenge',
         headlineLeft: 'Headline Left + Copy Right',
-        headlineMiddle: 'Headline Middle',
+        testimonial: 'Testimonial',
         homePage: 'Homepage',
       }
 
       let subtitle = 'Text Module'
 
-      if (layout === 'headlineLeft' || layout === 'headlineMiddle') {
+      if (layout === 'challenge') {
+        const bodyText = body
+          ?.map((block: any) =>
+            block._type === 'block' && block.children
+              ? block.children.map((child: any) => child.text).join('')
+              : '',
+          )
+          .join(' ')
+
+        const words = bodyText?.split(/\s+/).filter(Boolean).slice(0, 20).join(' ')
+        subtitle = words ? `${words}...` : 'Text Module'
+      } else if (layout === 'testimonial') {
+        const bodyText = body
+          ?.map((block: any) =>
+            block._type === 'block' && block.children
+              ? block.children.map((child: any) => child.text).join('')
+              : '',
+          )
+          .join(' ')
+
+        const words = bodyText?.split(/\s+/).filter(Boolean).slice(0, 20).join(' ')
+        const clientPart = client ? `${client} • ` : ''
+        subtitle = words ? `${clientPart}${words}...` : clientPart || 'Text Module'
+      } else if (layout === 'headlineLeft') {
         subtitle = title || 'Text Module'
       } else if (layout === 'homePage') {
         const bodyText = body

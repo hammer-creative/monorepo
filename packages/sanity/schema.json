@@ -2083,11 +2083,15 @@
             "of": [
               {
                 "type": "string",
+                "value": "challenge"
+              },
+              {
+                "type": "string",
                 "value": "headlineLeft"
               },
               {
                 "type": "string",
-                "value": "headlineMiddle"
+                "value": "testimonial"
               },
               {
                 "type": "string",
