@@ -31,39 +31,35 @@ export function HeroModule({
   // Guard: Early return if no valid data
   if (!isValidHeroModule(data)) return null;
 
-  // Destructure with defaults for optional fields
-  const {
-    title = null,
-    body = null,
-    image = null,
-    services = [],
-    deliverables = [],
-  } = data;
+  // Destructure module data
+  const { title, body, image, services = [], deliverables = [] } = data;
 
-  // Extract client names
-  const clientNames = (clients || [])
+  // Extract valid client names
+  const clientNames = clients
     .map((c) => c?.name)
     .filter((name): name is string => typeof name === 'string');
 
-  // Compute module visibility flags
-  const hasServices = Array.isArray(services) && services.length > 0;
-  const hasDeliverables =
-    Array.isArray(deliverables) && deliverables.length > 0;
+  // Derive helper flags
+  const hasTitle = title != null;
+  const hasBody = body != null;
+  const hasImage = image != null;
+  const hasServices = services.length > 0;
+  const hasDeliverables = deliverables.length > 0;
   const hasClients = clientNames.length > 0;
-  const hasMeta = Boolean(body || hasServices || hasDeliverables || hasClients);
+  const hasMeta = hasBody || hasServices || hasDeliverables || hasClients;
 
   return (
     <div className="wrapper">
       {/* Hero Section: Image + Title */}
       <div className="row marquee">
         <div className="content">
-          {image && (
+          {hasImage && (
             <div className="image">
               <SanityHeroImage image={image} fill priority />
             </div>
           )}
 
-          {title && (
+          {hasTitle && (
             <div className="text">
               <Title title={title} as="h1" />
             </div>
@@ -87,7 +83,7 @@ export function HeroModule({
           </div>
           <div className="content">
             <div className="text">
-              {body && <TextBlock body={body} className="medium" />}
+              {hasBody && <TextBlock body={body} className="medium" />}
 
               {hasClients && (
                 <div className="clients">
@@ -98,10 +94,10 @@ export function HeroModule({
 
             {(hasServices || hasDeliverables) && (
               <div className="services">
-                <ServicesListModule services={hasServices ? services : []} />
-                <DeliverablesListModule
-                  deliverables={hasDeliverables ? deliverables : []}
-                />
+                {hasServices && <ServicesListModule services={services} />}
+                {hasDeliverables && (
+                  <DeliverablesListModule deliverables={deliverables} />
+                )}
               </div>
             )}
           </div>

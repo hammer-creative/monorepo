@@ -8,8 +8,9 @@ type Layout = NonNullable<TextModuleType['layout']>;
 
 // Map layout values to CSS class names
 const LAYOUT_CLASS_MAP: Record<Layout, string> = {
+  challenge: 'challenge',
   headlineLeft: 'headline-left',
-  headlineMiddle: 'headline-middle',
+  testimonial: 'testimonial',
   homePage: 'home-page',
 } as const;
 
@@ -30,58 +31,76 @@ export function TextModule({
   // Guard: Early return if no valid data
   if (!isValidTextModule(data)) return null;
 
-  // Destructure with defaults for optional fields
-  const {
-    title = null,
-    body = null,
-    layout = 'headlineLeft',
-    tag = null,
-  } = data;
+  // Destructure module data
+  const { title, body, layout, tag } = data;
 
-  // Extract client names
-  const clientNames = (clients || [])
+  // Guard: Early return if no layout or no content
+  if (!layout || (!body && !tag && !title)) return null;
+
+  // Extract valid client names
+  const clientNames = clients
     .map((c) => c?.name)
     .filter((name): name is string => typeof name === 'string');
 
-  // Get CSS class for current layout
+  // Derive layout class and helper flags
   const layoutClass = LAYOUT_CLASS_MAP[layout] ?? '';
+  const hasBody = body != null;
+  const hasTag = tag != null;
+  const hasTitle = title != null;
   const hasClients = clientNames.length > 0;
 
   return (
     <div className={`wrapper ${layoutClass}`}>
-      {/* Headline Left Layout: Tag + Title in separate row */}
-      {layout === 'headlineLeft' && (
-        <div className="row headline">
-          {tag && <div className="tag">{tag}</div>}
-          {title && <h2>{title}</h2>}
-        </div>
+      {/* Challenge Layout: Body with tag below */}
+      {layout === 'challenge' && (
+        <>
+          {hasBody && (
+            <div className="row text">
+              <TextBlock body={body} className="medium" />
+            </div>
+          )}
+          {hasTag && <div className="tag">{tag}</div>}
+        </>
       )}
 
-      {/* Home Page Layout: Tag + Title + Body all together */}
+      {/* Headline Left Layout: Tag + Title row, then body row */}
+      {layout === 'headlineLeft' && (
+        <>
+          <div className="row headline">
+            {hasTag && <div className="tag">{tag}</div>}
+            {hasTitle && <h2>{title}</h2>}
+          </div>
+          {hasBody && (
+            <div className="row text">
+              <TextBlock body={body} className="medium" />
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Testimonial Layout: Tag and clients above, body below */}
+      {layout === 'testimonial' && (
+        <>
+          {hasTag && <div className="tag">{tag}</div>}
+          {hasClients && (
+            <div className="clients">
+              <ClientNames clientNames={clientNames} showTag={false} />
+            </div>
+          )}
+          {hasBody && (
+            <div className="row text">
+              <TextBlock body={body} className="medium" />
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Home Page Layout: Tag, title, and body all in one row */}
       {layout === 'homePage' && (
         <div className="row">
-          {tag && <div className="tag">{tag}</div>}
-          {title && <h2>{title}</h2>}
-          {body && <TextBlock body={body} className="medium" />}
-        </div>
-      )}
-
-      {/* Body section for Headline Left and Headline Middle layouts */}
-      {(layout === 'headlineLeft' || layout === 'headlineMiddle') && body && (
-        <div className="row text">
-          <TextBlock body={body} className="medium" />
-
-          {/* Headline Middle puts tag and clients after body */}
-          {layout === 'headlineMiddle' && (
-            <>
-              {tag && <div className="tag">{tag}</div>}
-              {hasClients && (
-                <div className="clients">
-                  <ClientNames clientNames={clientNames} />
-                </div>
-              )}
-            </>
-          )}
+          {hasTag && <div className="tag">{tag}</div>}
+          {hasTitle && <h2>{title}</h2>}
+          {hasBody && <TextBlock body={body} className="medium" />}
         </div>
       )}
     </div>
