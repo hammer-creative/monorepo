@@ -366,7 +366,7 @@ export type TextImageModule = {
 
 export type TextModule = {
   _type: 'textModule';
-  layout?: 'headlineLeft' | 'headlineMiddle' | 'homePage';
+  layout?: 'challenge' | 'headlineLeft' | 'testimonial' | 'homePage';
   client?: {
     _ref: string;
     _type: 'reference';
