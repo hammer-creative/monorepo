@@ -105,7 +105,6 @@ export const moduleProjections = `
     },
     ${projections.image},
     ${projections.teaserImage},
-    ${projections.clients},
     services[]-> {
       _id,
       title

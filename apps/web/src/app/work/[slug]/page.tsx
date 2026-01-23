@@ -26,9 +26,9 @@ const moduleComponents = {
   carouselModule: CarouselModule,
 };
 
-export const dynamicParams = true; // Allow new slugs not in generateStaticParams
+export const dynamicParams = true;
 export const revalidate = 60;
-export const dynamic = 'force-static'; // or 'auto'
+export const dynamic = 'force-static';
 
 export async function generateStaticParams() {
   const slugs = await getCaseStudySlugs();
@@ -66,17 +66,28 @@ export default async function CaseStudyPage({
   const { slug } = await params;
   const caseStudy = await getCaseStudy(slug, client);
 
-  console.log(caseStudy);
-
   if (!caseStudy) notFound();
+
+  // If clients is null, skip this page entirely during build
+  if (!caseStudy.clients) {
+    notFound();
+  }
 
   const { clients = [] } = caseStudy;
 
   const resolvedModules = caseStudy.modules?.map(resolveModuleColors) || [];
-  const filteredModules = resolvedModules.filter(
-    (m: { _type: string }) =>
-      m._type !== 'servicesModule' && m._type !== 'deliverablesModule',
-  );
+  const filteredModules = resolvedModules
+    .filter(
+      (m: { _type: string }) =>
+        m._type !== 'servicesModule' && m._type !== 'deliverablesModule',
+    )
+    .map((mod) => {
+      return JSON.parse(
+        JSON.stringify(mod, (_key, value) =>
+          value === null ? undefined : value,
+        ),
+      );
+    });
 
   return (
     <article className="case-study">
@@ -94,6 +105,9 @@ export default async function CaseStudyPage({
 
           const { _key, _type, backgroundColor, textColor } = mod;
 
+          const moduleClients =
+            _type === 'heroModule' || _type === 'textModule' ? clients : [];
+
           return (
             <section
               key={_key}
@@ -105,14 +119,7 @@ export default async function CaseStudyPage({
                 } as React.CSSProperties
               }
             >
-              <Component
-                data={mod as never}
-                clients={
-                  (_type === 'heroModule' || _type === 'textModule'
-                    ? clients
-                    : undefined) as never
-                }
-              />
+              <Component data={mod as never} clients={moduleClients as never} />
             </section>
           );
         },
