@@ -21,7 +21,8 @@
     },
     {
       "id": "contact",
-      "label": "Contact"
+      "label": "Contact",
+      "href": "mailto:info@hammercreative.com"
     }
   ],
   "addresses": [

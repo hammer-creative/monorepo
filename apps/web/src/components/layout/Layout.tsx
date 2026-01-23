@@ -1,4 +1,5 @@
 // components/layout/Layout.tsx
+import { Footer } from '@/components/navigation/Footer';
 import { useNavigation } from '@/contexts/NavigationContext';
 import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
@@ -176,10 +177,6 @@ function LinkList({
   );
 }
 
-function Footer() {
-  return <footer>{/* whatever */}</footer>;
-}
-
 function MobileMenu() {
   const router = useRouter();
   const { isOpen, closeMenu } = useNavigation();
@@ -294,13 +291,13 @@ interface LayoutProps {
 export function Layout({ children, pathname }: LayoutProps) {
   return (
     <>
-      {/* <Headroom tag="header" disableInlineStyles>
+      <Headroom tag="header">
         <Header navigationData={navigationData as NavigationData} />
-      </Headroom> */}
+      </Headroom>
 
       <div id="wrapper" data-page={pathname}>
         <main>{children}</main>
-        <Footer />
+        <Footer navigationData={navigationData as NavigationData} />
       </div>
 
       <MobileMenu />
