@@ -89,7 +89,7 @@ export default async function HomePage() {
               }
             >
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <Component data={mod as any} />
+              {/* <Component data={mod as any} /> */}
             </section>
           );
         },
