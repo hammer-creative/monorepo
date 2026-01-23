@@ -18,14 +18,21 @@ interface LayoutRequirements {
   label: string
 }
 
-// Layout-specific poster dimension requirements (1.5x for high DPI)
-// Single video: 2820×1590 (hero layout)
-// Two videos: 1410×1410 (side-by-side)
-// Three videos: 900×1500 (vertical stack)
+// Poster image requirements (3x display size for high-res derivatives)
+// Source images at 3x allow Sanity to generate crisp 1x, 1.5x, 2x, 3x variants
+// Single video: 5640×3180 (landscape hero, ~16:9)
+// Two videos: 2820×2820 (square side-by-side, 1:1)
+// Three videos: 1860×3000 (vertical stack, ~3:5)
+//
+// Video specs (same for all layouts):
+// - Resolution: 3840×2160 (4K)
+// - Codec: H.264 or H.265
+// - Bitrate: 25-50 Mbps
+// - Format: MP4
 const LAYOUT_REQUIREMENTS: Record<number, LayoutRequirements> = {
-  1: {minWidth: 2820, minHeight: 1590, label: 'single-video'},
-  2: {minWidth: 1410, minHeight: 1410, label: 'two-video'},
-  3: {minWidth: 900, minHeight: 1500, label: 'three-video'},
+  1: {minWidth: 3840, minHeight: 2160, label: 'single-video'},
+  2: {minWidth: 1880, minHeight: 1880, label: 'two-video'},
+  3: {minWidth: 1200, minHeight: 2000, label: 'three-video'},
 }
 
 const DIMENSION_REGEX = /-(\d+)x(\d+)-/
@@ -43,7 +50,7 @@ function validateVideoPoster(video: VideoItem, requirements: LayoutRequirements)
   const ref = video?.poster?.asset?._ref
 
   if (!ref) {
-    return 'Poster is required'
+    return 'Poster image required'
   }
 
   const dimensions = extractDimensions(ref)
@@ -74,7 +81,7 @@ export const videoModule = defineType({
       title: 'Videos',
       type: 'array',
       description:
-        'Add 1-3 videos. Poster dimension requirements vary by count: 1 video requires 2820×1590px, 2 videos require 1410×1410px each, 3 videos require 900×1500px each.',
+        'Add 1-3 videos. Poster images should be high-resolution (3x display size): 1 video requires 3840 × 2160 px, 2 videos require 1880 × 1880 px each, 3 videos require 1200 × 2000 px each. Videos should be 4K, H.264/H.265, MP4 format.',
       of: [{type: 'videoItem'}],
       validation: (Rule) =>
         Rule.required()

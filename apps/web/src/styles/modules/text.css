@@ -3,48 +3,75 @@
 @import '../mixins.css';
 
 .text-module .wrapper {
-  @mixin gutters-text-large;
-  @mixin head-foot-text;
+  padding-top: var(--space-fluid-20-80);
+  padding-bottom: var(--space-fluid-20-80);
+}
 
-  .row {
-    margin-bottom: var(--space-20);
+.text-module .wrapper {
+  &.headline-left {
+    @mixin flex-responsive column, row;
+    @mixin gutters-text-large;
+    @mixin head-foot-text;
+    .row {
+      flex: 1;
+    }
+    .row.headline {
+      @mixin flex-responsive column;
+      justify-content: space-between;
+    }
+    .row.headline .tag,
+    .row.headline h2 {
+      padding-bottom: var(--space-fluid-20-40);
+    }
+  }
+  @media screen and (min-width: 50rem) {
+    &.headline-left {
+      .row.headline .tag,
+      .row.headline h2 {
+        padding-bottom: initial;
+      }
+      .row.headline {
+        > div,
+        h2 {
+          padding-right: var(--space-20);
+        }
+      }
+    }
+  }
+}
 
-    &:last-child {
-      margin-bottom: 0;
+.text-module .wrapper {
+  &.challenge,
+  &.testimonial {
+    @mixin flex-responsive column;
+    padding-left: 15vw;
+    padding-right: 15vw;
+    align-items: center;
+    .row.text p {
+      text-align: center;
     }
   }
 
-  .row.headline {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-20);
+  &.challenge .tag {
+    padding-bottom: var(--space-fluid-20-40);
+  }
+
+  &.testimonial .row.text {
+    padding-bottom: var(--space-fluid-20-40);
   }
 
   @media screen and (min-width: 50rem) {
-    @mixin flex-responsive column, row;
-
-    .row {
-      flex: 1;
-      margin-bottom: 0;
-    }
-
-    .row.headline {
-      gap: 0;
-      justify-content: space-between;
-    }
-
-    .row.text p.medium {
-      line-height: 1.05;
+    &.challenge,
+    &.testimonial {
+      .row.text p {
+        text-align: center;
+      }
     }
   }
 }
 
 .text-module.headline-left .wrapper {
   /* specific styles for headline-left if needed */
-}
-
-.text-module.headline-middle .wrapper {
-  /* specific styles for headline-middle if needed */
 }
 
 .text-module.home-page .wrapper {

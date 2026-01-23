@@ -26,7 +26,9 @@ const moduleComponents = {
   carouselModule: CarouselModule,
 };
 
+export const dynamicParams = true; // Allow new slugs not in generateStaticParams
 export const revalidate = 60;
+export const dynamic = 'force-static'; // or 'auto'
 
 export async function generateStaticParams() {
   const slugs = await getCaseStudySlugs();
