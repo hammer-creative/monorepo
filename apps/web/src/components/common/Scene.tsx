@@ -19,12 +19,12 @@ const PARALLAX_FACTOR = 0.5; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
 
 // VIDEO PUPIL PARAMETERS
 const ENABLE_VIDEO_PUPIL = true; // Set to false to use solid color instead of video
-const PUPIL_COLOR = new THREE.Color(0x000000); // Pupil color when video is disabled (black by default)
+const PUPIL_COLOR = new THREE.Color(0xffffff); // Pupil color when video is disabled (black by default)
 const PUPIL_Z_POSITION = -0.15; // How far back the pupil sits (more negative = deeper inside)
 const PUPIL_SCALE = 1.5; // Pupil size (1.5 = 50% bigger)
 
 // IRIS PARAMETERS
-const IRIS_ROTATION_SPEED = 0.3; // Iris base spin speed (radians per second)
+const IRIS_ROTATION_SPEED = 0.2; // Iris base spin speed (radians per second)
 const IRIS_ROTATION_SPEED_ON_MOVE = 4.0; // Iris spin speed when mouse is moving (radians per second)
 const IRIS_SPEED_LERP = 0.05; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
 
