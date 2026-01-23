@@ -261,7 +261,7 @@ const SceneContent = ({
         </>
       )}
       <Suspense fallback={null}>
-        <Model url="/model/model-v5a.glb" />
+        <Model url="/model/model-v5.glb" />
       </Suspense>
       {/* OrbitControls only enabled when helpers are visible */}
       <OrbitControls
