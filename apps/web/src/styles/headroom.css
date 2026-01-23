@@ -1,11 +1,10 @@
 /* apps/web/src/styles/headroom.css */
 
-.headroom-wrapper {
-  /* position: absolute; */
+/* .headroom-wrapper {
+  position: absolute;
 }
 
 .headroom {
-  position: fixed;
   top: 10;
   left: 10;
   right: 10;
@@ -27,4 +26,4 @@
 .headroom--pinned {
   transform: translateY(0);
   transition: transform 200ms ease-in-out;
-}
+} */
