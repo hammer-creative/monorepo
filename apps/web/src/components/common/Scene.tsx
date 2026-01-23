@@ -18,15 +18,20 @@ const LERP_SPEED = 0.05; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
 const PARALLAX_FACTOR = 0.5; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
 
 // VIDEO PUPIL PARAMETERS
-const ENABLE_VIDEO_PUPIL = false; // Set to false to use solid color instead of video
-const PUPIL_COLOR = new THREE.Color(0xff0000); // Pupil color when video is disabled (black by default)
+const ENABLE_VIDEO_PUPIL = true; // Set to false to use solid color instead of video
+const PUPIL_COLOR = new THREE.Color(0x000000); // Pupil color when video is disabled (black by default)
 const PUPIL_Z_POSITION = -0.15; // How far back the pupil sits (more negative = deeper inside)
 const PUPIL_SCALE = 1.5; // Pupil size (1.5 = 50% bigger)
 
+// IRIS PARAMETERS
+const IRIS_ROTATION_SPEED = 0.3; // Iris base spin speed (radians per second)
+const IRIS_ROTATION_SPEED_ON_MOVE = 4.0; // Iris spin speed when mouse is moving (radians per second)
+const IRIS_SPEED_LERP = 0.05; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
+
 // LIGHTING PARAMETERS
-const AMBIENT_LIGHT_INTENSITY = 1; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
+const AMBIENT_LIGHT_INTENSITY = 1.0; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
 const DIRECTIONAL_LIGHT_INTENSITY = 0.5; // Directional light strength (0-2, try 0.3, 0.5, 0.8)
-const DIRECTIONAL_LIGHT_POSITION = [5, 10, 5]; // Light position [x, y, z]
+const DIRECTIONAL_LIGHT_POSITION = [0, 2, 5]; // Light position [x, y, z]
 const TONE_MAPPING_EXPOSURE = 1.0; // Exposure control (0.5 = darker, 1.5 = brighter)
 // ==========================================
 
@@ -49,8 +54,14 @@ function Model({ url }: { url: string }) {
   const lastPointer = useRef({ x: 0, y: 0 });
   const idleFrames = useRef(0);
 
-  // Ref to the pupil mesh for separate rotation control
+  // Refs to meshes
   const pupilMeshRef = useRef(null);
+  const irisMeshRef = useRef(null);
+
+  // Ref for iris rotation speed and accumulated rotation
+  const currentIrisSpeed = useRef(IRIS_ROTATION_SPEED);
+  const irisRotationAccumulator = useRef(0);
+  const lastTime = useRef(0);
 
   // Convert max rotation from degrees to radians
   const MAX_ROTATION_RAD = THREE.MathUtils.degToRad(MAX_ROTATION);
@@ -66,6 +77,7 @@ function Model({ url }: { url: string }) {
     if (child.isMesh) {
       console.log('Mesh:', child.name);
       console.log('  Material:', child.material?.name);
+      console.log('  Material type:', child.material?.type);
       console.log('  Has texture?', !!child.material?.map);
       if (child.material?.map) {
         console.log(
@@ -78,8 +90,35 @@ function Model({ url }: { url: string }) {
       console.log('  Vertex count:', child.geometry.attributes.position.count);
       console.log('---');
 
+      // Store reference to iris mesh for spinning
+      if (child.name === 'Iris_Mesh') {
+        irisMeshRef.current = child;
+        console.log('>>> Iris mesh FOUND and stored:', child.name);
+      }
+
+      if (child.name === 'Iris_Mesh') {
+        irisMeshRef.current = child;
+        child.scale.set(1.01, 1.01, 1.0); // Scale iris 5% bigger to close gap
+        console.log('>>> Iris mesh FOUND and stored:', child.name);
+      }
+
+      // Store reference to iris mesh for spinning
+      if (child.name === 'Iris_Mesh') {
+        irisMeshRef.current = child;
+        child.scale.set(1.008, 1.008, 1.0);
+
+        // Modify material properties
+        child.material.roughness = 0.9; // Make it glossier (0 = shiny, 1 = matte)
+        child.material.metalness = 0.0; // Keep non-metallic
+
+        // The only way to actually boost saturation is emissive, but we already know
+        // that won't work with the shared texture
+
+        console.log('>>> Iris mesh FOUND and stored:', child.name);
+      }
+
       // Replace pupil texture with video or solid color
-      if (child.name === 'Pupil_Mesh' && videoTexture) {
+      if (child.name === 'Pupil_Mesh_2' && videoTexture) {
         if (ENABLE_VIDEO_PUPIL) {
           child.material.map = videoTexture;
         } else {
@@ -106,6 +145,11 @@ function Model({ url }: { url: string }) {
 
   // Mouse tracking - update target rotation based on mouse position
   useFrame((state) => {
+    const currentTime = state.clock.elapsedTime;
+    const deltaTime =
+      lastTime.current === 0 ? 0 : currentTime - lastTime.current;
+    lastTime.current = currentTime;
+
     // Detect if mouse has moved since last frame
     const hasMouseMoved =
       Math.abs(state.pointer.x - lastPointer.current.x) > 0.001 ||
@@ -159,13 +203,29 @@ function Model({ url }: { url: string }) {
       gltf.scene.rotation.y = currentRotation.current.y;
     }
 
+    // Iris spin - speed up when mouse moves
+    if (irisMeshRef.current && deltaTime > 0) {
+      // Target speed based on mouse movement
+      const targetSpeed = hasMouseMoved
+        ? IRIS_ROTATION_SPEED_ON_MOVE
+        : IRIS_ROTATION_SPEED;
+
+      // Smoothly interpolate speed (acceleration/deceleration)
+      currentIrisSpeed.current +=
+        (targetSpeed - currentIrisSpeed.current) * IRIS_SPEED_LERP;
+
+      // Accumulate rotation
+      irisRotationAccumulator.current += currentIrisSpeed.current * deltaTime;
+      irisMeshRef.current.rotation.z = irisRotationAccumulator.current;
+    }
+
     // Pupil parallax - pupil lags behind eyeball rotation
     if (pupilMeshRef.current) {
       // Target pupil rotation is a fraction of the eyeball rotation (creates parallax)
       const targetPupilX = currentRotation.current.x * PARALLAX_FACTOR;
       const targetPupilY = currentRotation.current.y * PARALLAX_FACTOR;
 
-      // Smoothly interpolate pupil rotation (double smoothing for extra lag)
+      // Smoothly interpolate pupil rotation
       currentPupilRotation.current.x +=
         (targetPupilX - currentPupilRotation.current.x) * LERP_SPEED;
       currentPupilRotation.current.y +=
@@ -201,7 +261,7 @@ const SceneContent = ({
         </>
       )}
       <Suspense fallback={null}>
-        <Model url="/model/model-v4.glb" />
+        <Model url="/model/model-v5.glb" />
       </Suspense>
       {/* OrbitControls only enabled when helpers are visible */}
       <OrbitControls
