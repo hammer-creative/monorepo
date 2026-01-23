@@ -54,12 +54,12 @@ export function TextModule({
       {/* Challenge Layout: Body with tag below */}
       {layout === 'challenge' && (
         <>
+          {hasTag && <div className="tag">{tag}</div>}
           {hasBody && (
             <div className="row text">
               <TextBlock body={body} className="medium" />
             </div>
           )}
-          {hasTag && <div className="tag">{tag}</div>}
         </>
       )}
 
@@ -81,15 +81,14 @@ export function TextModule({
       {/* Testimonial Layout: Tag and clients above, body below */}
       {layout === 'testimonial' && (
         <>
-          {hasTag && <div className="tag">{tag}</div>}
-          {hasClients && (
-            <div className="clients">
-              <ClientNames clientNames={clientNames} showTag={false} />
-            </div>
-          )}
           {hasBody && (
             <div className="row text">
               <TextBlock body={body} className="medium" />
+            </div>
+          )}
+          {hasClients && (
+            <div className="clients">
+              <ClientNames clientNames={clientNames} showTag={false} />
             </div>
           )}
         </>
