@@ -1,67 +1,74 @@
 #!/bin/bash
+set -euo pipefail
 
-S3_BUCKET="hc-evo-backup"
-S3_PREFIX="HC_Website"
+# usage:
+# ./mux-upload.sh s3://bucket/prefix [profile] [--dry-run]
 
-AWS_ACCESS_KEY_ID="AKIAYG7HEW4VGXCUOCXT"
-AWS_SECRET_ACCESS_KEY="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"
-AWS_DEFAULT_REGION="us-west-2"
+ROOT="${1:?Usage: $0 s3://bucket/prefix [profile] [--dry-run]}"
+PROFILE="${2:-hammer}"
+DRY_RUN=false
+[[ "${3:-}" == "--dry-run" ]] && DRY_RUN=true
 
-MUX_TOKEN_ID="7e94d66f-f2c6-491b-b661-dcdd702693a3"
-MUX_TOKEN_SECRET="Nkvh/z9vJTeMph7od288gnJQyhsdTcqcKlXgco5MSnXAgwoKzraDeSFNoFYgpTUXAFMvbac0FhH"
+: "${MUX_TOKEN_ID:?Missing MUX_TOKEN_ID}"
+: "${MUX_TOKEN_SECRET:?Missing MUX_TOKEN_SECRET}"
 
-export AWS_ACCESS_KEY_ID
-export AWS_SECRET_ACCESS_KEY
-export AWS_DEFAULT_REGION
+STATE_FILE="./uploaded.txt"
+touch "$STATE_FILE"
 
-echo "Processing files from s3://${S3_BUCKET}/${S3_PREFIX}/"
-echo "---"
+BUCKET="$(echo "$ROOT" | sed -E 's#s3://([^/]+)/.*#\1#')"
 
-# List and process video files
-aws s3 ls "s3://${S3_BUCKET}/${S3_PREFIX}/" --recursive | \
-  grep -iE '\.(mp4|mov|avi|mkv)' | \
-  while read -r date time size path; do
-    if [ -z "$path" ] || [[ "$path" == */ ]]; then
-      continue
-    fi
+aws s3 ls "$ROOT" --recursive --profile "$PROFILE" \
+| awk '{print $4}' \
+| grep -E '\.mp4$' \
+| while read -r key; do
 
-    FILENAME=$(basename "$path")
+  S3_PATH="s3://$BUCKET/$key"
+  RAW_FILENAME="$(basename "$key")"
 
-    # Generate presigned URL (valid for 1 hour)
-    S3_URL=$(aws s3 presign "s3://${S3_BUCKET}/${path}" --expires-in 3600)
+  # title: strip .mp4, convert underscores to spaces (nothing else)
+  TITLE="$(basename "$RAW_FILENAME" | sed -E 's/\.mp4$//; s/_+/ /g')"
 
-    echo ""
-    echo "========================================="
-    echo "Processing: $FILENAME"
-    echo "Size: $(numfmt --to=iec-i --suffix=B $size)"
-    echo "========================================="
+  # dedupe key
+  KEY_HASH="$(printf "%s" "$key" | shasum -a 256 | cut -c1-32)"
 
-    # Create Mux asset directly from URL
-    echo "Creating Mux asset from S3 URL..."
-    ASSET_RESPONSE=$(curl -s -X POST https://api.mux.com/video/v1/assets \
-      -u "${MUX_TOKEN_ID}:${MUX_TOKEN_SECRET}" \
-      -H "Content-Type: application/json" \
-      -d "{
-        \"input\": \"${S3_URL}\",
+  # rsync-style skip
+  if grep -Fxq "$KEY_HASH" "$STATE_FILE"; then
+    echo "↺ SKIP: $S3_PATH"
+    continue
+  fi
+
+  if $DRY_RUN; then
+    echo "[DRY RUN] $S3_PATH"
+    echo "  title=$TITLE"
+    echo "  external_id=$KEY_HASH"
+    echo "  creator_id=Hammer Creative"
+    continue
+  fi
+
+  echo "→ Uploading: $S3_PATH"
+
+  UPLOAD_URL=$(curl -s -X POST https://api.mux.com/video/v1/uploads \
+    -u "$MUX_TOKEN_ID:$MUX_TOKEN_SECRET" \
+    -H "Content-Type: application/json" \
+    -d "{
+      \"new_asset_settings\": {
         \"playback_policy\": [\"public\"],
         \"video_quality\": \"plus\",
         \"max_resolution_tier\": \"2160p\",
-        \"mp4_support\": \"standard\"
-      }")
+        \"meta\": {
+          \"title\": \"$TITLE\",
+          \"creator_id\": \"Hammer Creative\",
+          \"external_id\": \"$KEY_HASH\"
+        }
+      }
+    }" | jq -r '.data.url')
 
-    ASSET_ID=$(echo "$ASSET_RESPONSE" | jq -r '.data.id')
+  aws s3 cp "$S3_PATH" - --profile "$PROFILE" \
+  | pv -p -t -e -r -b -N "$RAW_FILENAME" \
+  | curl -s -X PUT "$UPLOAD_URL" \
+      --upload-file - \
+      -H "Content-Type: application/octet-stream"
 
-    if [ "$ASSET_ID" = "null" ] || [ -z "$ASSET_ID" ]; then
-      echo "❌ Error creating asset for $FILENAME"
-      echo "Response: $ASSET_RESPONSE"
-      continue
-    fi
-
-    echo "✅ Asset created: $FILENAME (ID: $ASSET_ID)"
-    echo "   Mux is now ingesting directly from S3..."
-  done
-
-echo ""
-echo "========================================="
-echo "All done! Check Mux dashboard for processing status."
-echo "========================================="
+  echo "$KEY_HASH" >> "$STATE_FILE"
+  echo "✓ Done"
+done
