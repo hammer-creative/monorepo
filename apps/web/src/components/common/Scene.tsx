@@ -13,7 +13,7 @@ import * as THREE from 'three';
 // ==========================================
 // TUNABLE PARAMETERS
 // ==========================================
-const MAX_ROTATION = 20; // Max rotation in degrees
+const MAX_ROTATION = 10; // Max rotation in degrees
 const LERP_SPEED = 0.05; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
 const PARALLAX_FACTOR = 0.5; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
 
@@ -24,8 +24,9 @@ const PUPIL_Z_POSITION = -0.15; // How far back the pupil sits (more negative = 
 const PUPIL_SCALE = 1.5; // Pupil size (1.5 = 50% bigger)
 
 // IRIS PARAMETERS
-const IRIS_ROTATION_SPEED = 0.2; // Iris base spin speed (radians per second)
-const IRIS_ROTATION_SPEED_ON_MOVE = 4.0; // Iris spin speed when mouse is moving (radians per second)
+const ENABLE_IRIS_ROTATION = true; // Set to false to disable iris spinning
+const IRIS_ROTATION_SPEED = 0.05; // Iris base spin speed (radians per second)
+const IRIS_ROTATION_SPEED_ON_MOVE = 0.75; // Iris spin speed when mouse is moving (radians per second)
 const IRIS_SPEED_LERP = 0.05; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
 
 // LIGHTING PARAMETERS
@@ -204,7 +205,7 @@ function Model({ url }: { url: string }) {
     }
 
     // Iris spin - speed up when mouse moves
-    if (irisMeshRef.current && deltaTime > 0) {
+    if (ENABLE_IRIS_ROTATION && irisMeshRef.current && deltaTime > 0) {
       // Target speed based on mouse movement
       const targetSpeed = hasMouseMoved
         ? IRIS_ROTATION_SPEED_ON_MOVE
@@ -254,12 +255,12 @@ const SceneContent = ({
         position={DIRECTIONAL_LIGHT_POSITION}
         intensity={DIRECTIONAL_LIGHT_INTENSITY}
       />
-      {helpersVisible && (
+      {/* {helpersVisible && (
         <>
           <gridHelper args={[10, 10]} />
           <axesHelper args={[5]} />
         </>
-      )}
+      )} */}
       <Suspense fallback={null}>
         <Model url="/model/model-v5.glb" />
       </Suspense>
