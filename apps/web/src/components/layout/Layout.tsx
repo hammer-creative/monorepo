@@ -6,7 +6,11 @@ import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
 import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
-import Headroom from 'react-headroom';
+
+interface LayoutProps {
+  children: ReactNode;
+  pathname: string;
+}
 
 function MenuToggle() {
   const { isOpen, toggleMenu } = useNavigation();
@@ -18,7 +22,12 @@ function MenuToggle() {
       aria-expanded={isOpen}
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
     >
-      toggle
+      <span className="menu-toggle-dot">
+        <svg width="5" height="5" viewBox="0 0 10 10" aria-hidden="true">
+          <circle cx="5" cy="5" r="5" fill="currentColor" />
+        </svg>
+      </span>
+      <span className="menu-toggle-text">{isOpen ? 'Less' : 'More'}</span>
     </button>
   );
 }
@@ -75,14 +84,10 @@ function MobileMenu() {
             ))}
           </ul>
         </nav>
+        <Footer navigationData={navigationData as NavigationData} />
       </div>
     </>
   );
-}
-
-interface LayoutProps {
-  children: ReactNode;
-  pathname: string;
 }
 
 export function Layout({ children, pathname }: LayoutProps) {
@@ -91,7 +96,6 @@ export function Layout({ children, pathname }: LayoutProps) {
       <header>
         <Header navigationData={navigationData as NavigationData} />
       </header>
-
       <div id="wrapper" data-page={pathname}>
         <main>{children}</main>
         <Footer navigationData={navigationData as NavigationData} />
