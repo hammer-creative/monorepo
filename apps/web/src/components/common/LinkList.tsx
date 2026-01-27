@@ -1,4 +1,4 @@
-// apps/web/src/components/ui/LinkList.tsx
+// apps/web/src/components/common/LinkList.tsx
 import { Fragment } from 'react';
 
 import { ExtendedLink } from './ExtendedLink';
