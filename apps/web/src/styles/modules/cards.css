@@ -3,7 +3,7 @@
 /* Home Page Case Study Card Module */
 [data-page='/'] {
   .case-study-cards {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     gap: var(--space-20);
   }
