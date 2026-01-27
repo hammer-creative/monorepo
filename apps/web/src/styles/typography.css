@@ -88,26 +88,3 @@ ul li {
   padding: var(--space-fluid-20-60) 0;
   font-weight: 900;
 }
-
-/* FOOTER */
-footer a.link,
-footer p.text {
-  @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-loose);
-  line-height: 2;
-  display: block;
-}
-
-footer .address {
-  text-align: right;
-}
-
-footer .menu a.link {
-  @mixin typography var(--font-serif), var(--font-size-fluid-menu-reverse);
-  line-height: 1;
-  letter-spacing: var(--letter-spacing-default);
-  @media screen and (min-width: 50rem) {
-    line-height: 1.2;
-  }
-}

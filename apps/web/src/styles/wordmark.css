@@ -1,12 +1,25 @@
-header svg {
-  display: block;
-  color: $color-hyperbeam;
-  width: 147px;
-  height: auto;
+/* apps/web/src/styles/wordmark.css */
+
+header,
+footer {
+  svg {
+    display: block;
+    height: auto;
+  }
 }
 
+/* Hide wordmark on homepage */
+body:has(.menu-overlay) .wordmark {
+  visibility: hidden;
+}
+
+/* Header */
+header svg {
+  color: $color-hyperbeam;
+  width: 147px;
+}
+
+/* Footer */
 footer svg {
-  display: block;
   width: 100vw;
-  height: auto;
 }

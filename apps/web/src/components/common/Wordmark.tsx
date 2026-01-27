@@ -1,5 +1,5 @@
 // apps/web/src/components/Common/Wordmark.tsx
-import Link from 'next/link';
+import { ExtendedLink } from '@/components/ui/ExtendedLink';
 
 interface WordmarkProps {
   text?: string | null;
@@ -15,10 +15,10 @@ export function Wordmark({
   if (!text || !href) return null;
 
   return (
-    <Link href={href} className={className ?? ''}>
+    <ExtendedLink href={href} className={className ?? ''}>
       <WordmarkSVG />
       <span className="sr-only">{text}</span>
-    </Link>
+    </ExtendedLink>
   );
 }
 

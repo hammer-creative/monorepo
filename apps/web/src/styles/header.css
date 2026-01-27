@@ -1,0 +1,18 @@
+/* apps/web/src/styles/header.css */
+
+/* Header */
+[data-page='/'] header .menu-toggle {
+  margin-left: auto;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-fluid-20-40);
+  width: 100%;
+  z-index: 1;
+}

@@ -13,24 +13,32 @@ import * as THREE from 'three';
 // ==========================================
 // TUNABLE PARAMETERS
 // ==========================================
-const MAX_ROTATION = 10; // Max rotation in degrees
+const MAX_ROTATION = 8; // Max rotation in degrees
 const LERP_SPEED = 0.05; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
 const PARALLAX_FACTOR = 0.5; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
 
+// MESH VISIBILITY
+const SHOW_CORNEA = false;
+const SHOW_IRIS = true;
+const SHOW_PUPIL = true;
+const SHOW_SCLERA = false;
+
 // VIDEO PUPIL PARAMETERS
-const ENABLE_VIDEO_PUPIL = true; // Set to false to use solid color instead of video
+const ENABLE_VIDEO_PUPIL = false; // Set to false to use solid color instead of video
 const PUPIL_COLOR = new THREE.Color(0xffffff); // Pupil color when video is disabled (black by default)
-const PUPIL_Z_POSITION = -0.15; // How far back the pupil sits (more negative = deeper inside)
-const PUPIL_SCALE = 1.5; // Pupil size (1.5 = 50% bigger)
+const PUPIL_Z_POSITION = 0; // How far back the pupil sits (more negative = deeper inside)
+const PUPIL_SCALE = 1; // Pupil size (1.5 = 50% bigger)
 
 // IRIS PARAMETERS
 const ENABLE_IRIS_ROTATION = true; // Set to false to disable iris spinning
 const IRIS_ROTATION_SPEED = 0.05; // Iris base spin speed (radians per second)
-const IRIS_ROTATION_SPEED_ON_MOVE = 0.75; // Iris spin speed when mouse is moving (radians per second)
+const IRIS_ROTATION_SPEED_ON_MOVE = 0.7; // Iris spin speed when mouse is moving (radians per second)
 const IRIS_SPEED_LERP = 0.05; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
+const IRIS_SATURATION = 1.8; // Iris color saturation (1.0 = normal, >1.0 = more saturated)
+const IRIS_CONTRAST = 1.4; // Iris contrast (1.0 = normal, >1.0 = more contrast)
 
 // LIGHTING PARAMETERS
-const AMBIENT_LIGHT_INTENSITY = 1.0; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
+const AMBIENT_LIGHT_INTENSITY = 0.5; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
 const DIRECTIONAL_LIGHT_INTENSITY = 0.5; // Directional light strength (0-2, try 0.3, 0.5, 0.8)
 const DIRECTIONAL_LIGHT_POSITION = [0, 2, 5]; // Light position [x, y, z]
 const TONE_MAPPING_EXPOSURE = 1.0; // Exposure control (0.5 = darker, 1.5 = brighter)
@@ -79,52 +87,130 @@ function Model({ url }: { url: string }) {
       console.log('Mesh:', child.name);
       console.log('  Material:', child.material?.name);
       console.log('  Material type:', child.material?.type);
-      console.log('  Has texture?', !!child.material?.map);
+
+      // Enhanced texture logging
+      console.log('  Has map texture?', !!child.material?.map);
       if (child.material?.map) {
+        console.log('  Map texture:');
         console.log(
-          '  Texture size:',
+          '    - Size:',
           child.material.map.image?.width,
           'x',
           child.material.map.image?.height,
         );
+        console.log('    - UUID:', child.material.map.uuid);
+        console.log('    - Name:', child.material.map.name);
+        console.log(
+          '    - Wrap:',
+          child.material.map.wrapS,
+          child.material.map.wrapT,
+        );
+        console.log(
+          '    - Filter:',
+          child.material.map.minFilter,
+          child.material.map.magFilter,
+        );
       }
+
+      console.log('  Has normalMap?', !!child.material?.normalMap);
+      if (child.material?.normalMap) {
+        console.log('  Normal Map:', child.material.normalMap.uuid);
+      }
+
+      console.log('  Has roughnessMap?', !!child.material?.roughnessMap);
+      if (child.material?.roughnessMap) {
+        console.log('  Roughness Map:', child.material.roughnessMap.uuid);
+      }
+
+      console.log('  Has metalnessMap?', !!child.material?.metalnessMap);
+      if (child.material?.metalnessMap) {
+        console.log('  Metalness Map:', child.material.metalnessMap.uuid);
+      }
+
+      console.log('  Has emissiveMap?', !!child.material?.emissiveMap);
+      if (child.material?.emissiveMap) {
+        console.log('  Emissive Map:', child.material.emissiveMap.uuid);
+      }
+
+      console.log('  Has aoMap?', !!child.material?.aoMap);
+      if (child.material?.aoMap) {
+        console.log('  AO Map:', child.material.aoMap.uuid);
+      }
+
       console.log('  Vertex count:', child.geometry.attributes.position.count);
+      console.log('  Material properties:');
+      console.log('    - Color:', child.material?.color?.getHexString());
+      console.log('    - Roughness:', child.material?.roughness);
+      console.log('    - Metalness:', child.material?.metalness);
+      console.log('    - Emissive:', child.material?.emissive?.getHexString());
       console.log('---');
 
-      // Store reference to iris mesh for spinning
-      if (child.name === 'Iris_Mesh') {
-        irisMeshRef.current = child;
-        console.log('>>> Iris mesh FOUND and stored:', child.name);
-      }
-
-      if (child.name === 'Iris_Mesh') {
-        irisMeshRef.current = child;
-        child.scale.set(1.01, 1.01, 1.0); // Scale iris 5% bigger to close gap
-        console.log('>>> Iris mesh FOUND and stored:', child.name);
+      // Toggle cornea visibility
+      if (child.name === 'Cornea_Mesh_2') {
+        child.visible = SHOW_CORNEA;
+        console.log('>>> Cornea visibility:', SHOW_CORNEA);
       }
 
       // Store reference to iris mesh for spinning
       if (child.name === 'Iris_Mesh') {
         irisMeshRef.current = child;
+        child.visible = SHOW_IRIS;
         child.scale.set(1.008, 1.008, 1.0);
 
         // Modify material properties
-        child.material.roughness = 0.9; // Make it glossier (0 = shiny, 1 = matte)
-        child.material.metalness = 0.0; // Keep non-metallic
+        child.material.roughness = 0.9;
+        child.material.metalness = 0.0;
 
-        // The only way to actually boost saturation is emissive, but we already know
-        // that won't work with the shared texture
+        // Custom shader to control saturation and contrast
+        child.material.onBeforeCompile = (shader) => {
+          shader.fragmentShader = shader.fragmentShader.replace(
+            '#include <map_fragment>',
+            `
+            #include <map_fragment>
+
+            #ifdef USE_MAP
+              // Saturation adjustment
+              float saturation = ${IRIS_SATURATION.toFixed(2)}; // 1.0 = normal, >1.0 = more saturated
+              vec3 luminance = vec3(0.299, 0.587, 0.114);
+              float gray = dot(diffuseColor.rgb, luminance);
+              diffuseColor.rgb = mix(vec3(gray), diffuseColor.rgb, saturation);
+
+              // Contrast adjustment
+              float contrast = ${IRIS_CONTRAST.toFixed(2)}; // 1.0 = normal, >1.0 = more contrast
+              diffuseColor.rgb = (diffuseColor.rgb - 0.5) * contrast + 0.5;
+              diffuseColor.rgb = clamp(diffuseColor.rgb, 0.0, 1.0);
+            #endif
+            `,
+          );
+        };
+
+        child.material.needsUpdate = true;
 
         console.log('>>> Iris mesh FOUND and stored:', child.name);
+        console.log('>>> Iris visibility:', SHOW_IRIS);
+        console.log('>>> Iris saturation:', IRIS_SATURATION);
+        console.log('>>> Iris contrast:', IRIS_CONTRAST);
+        console.log('>>> Iris texture details:');
+        if (child.material?.map) {
+          console.log('    Shared texture UUID:', child.material.map.uuid);
+        }
       }
 
       // Replace pupil texture with video or solid color
       if (child.name === 'Pupil_Mesh_2' && videoTexture) {
+        child.visible = SHOW_PUPIL;
+
         if (ENABLE_VIDEO_PUPIL) {
           child.material.map = videoTexture;
+          console.log('>>> Pupil texture replaced with video');
+          console.log('    Video texture UUID:', videoTexture.uuid);
         } else {
           child.material.map = null;
           child.material.color = PUPIL_COLOR;
+          console.log(
+            '>>> Pupil texture replaced with solid color:',
+            PUPIL_COLOR.getHexString(),
+          );
         }
         child.material.needsUpdate = true;
 
@@ -134,12 +220,16 @@ function Model({ url }: { url: string }) {
         child.position.z = PUPIL_Z_POSITION;
         child.scale.set(PUPIL_SCALE, PUPIL_SCALE, PUPIL_SCALE);
 
+        console.log('>>> Pupil visibility:', SHOW_PUPIL);
         console.log('Video pupil enabled:', ENABLE_VIDEO_PUPIL);
         console.log('Pupil Z position:', PUPIL_Z_POSITION);
         console.log('Pupil scale:', PUPIL_SCALE);
-        if (!ENABLE_VIDEO_PUPIL) {
-          console.log('Pupil color:', PUPIL_COLOR);
-        }
+      }
+
+      // Toggle sclera visibility
+      if (child.name === 'Sclera_Mesh_2') {
+        child.visible = SHOW_SCLERA;
+        console.log('>>> Sclera visibility:', SHOW_SCLERA);
       }
     }
   });
@@ -262,7 +352,7 @@ const SceneContent = ({
         </>
       )} */}
       <Suspense fallback={null}>
-        <Model url="/model/model-v5.glb" />
+        <Model url="/model/model-v6.glb" />
       </Suspense>
       {/* OrbitControls only enabled when helpers are visible */}
       <OrbitControls
@@ -279,7 +369,7 @@ export default function Scene() {
 
   return (
     <div className="model">
-      <button
+      {/* <button
         onClick={() => setHelpersVisible(!helpersVisible)}
         style={{
           position: 'absolute',
@@ -296,7 +386,7 @@ export default function Scene() {
         }}
       >
         Helpers/Orbit: {helpersVisible ? 'ON' : 'OFF'}
-      </button>
+      </button> */}
 
       <Canvas
         camera={{ position: [0, 0, 0.4], fov: 50 }}
