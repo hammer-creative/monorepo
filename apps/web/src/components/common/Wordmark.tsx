@@ -1,5 +1,5 @@
 // apps/web/src/components/Common/Wordmark.tsx
-import { ExtendedLink } from '@/components/ui/ExtendedLink';
+import { ExtendedLink } from '@/components/common/ExtendedLink';
 
 interface WordmarkProps {
   text?: string | null;

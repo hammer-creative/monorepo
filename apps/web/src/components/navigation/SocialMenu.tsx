@@ -1,5 +1,5 @@
 // apps/web/src/components/navigation/SocialMenu.tsx
-import { LinkList } from '@/components/ui/LinkList';
+import { LinkList } from '@/components/common/LinkList';
 import type { MenuItem } from '@/types/navigation';
 
 interface SocialMenuProps {

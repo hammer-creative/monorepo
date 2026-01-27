@@ -1,4 +1,4 @@
-// apps/web/src/components/ui/ExtendedLink.tsx
+// apps/web/src/components/common/ExtendedLink.tsx
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 

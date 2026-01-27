@@ -1,7 +1,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-// apps/web/src/components/common/Scene.tsx
+// apps/web/src/components/model/Scene.tsx
 
 'use client';
 

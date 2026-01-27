@@ -1,5 +1,5 @@
 // apps/web/src/components/navigation/Menu.tsx
-import { ExtendedLink } from '@/components/ui/ExtendedLink';
+import { ExtendedLink } from '@/components/common/ExtendedLink';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
 interface MenuItem {

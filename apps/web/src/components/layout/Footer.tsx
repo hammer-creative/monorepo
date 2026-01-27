@@ -1,7 +1,7 @@
 // apps/web/src/components/Navigation/Footer.tsx
+import { LinkList } from '@/components/common/LinkList';
 import { Wordmark } from '@/components/common/Wordmark';
 import { Addresses, Copyright, Utilities } from '@/components/navigation';
-import { LinkList } from '@/components/ui/LinkList';
 import { type NavigationData } from '@/types/navigation';
 
 interface FooterProps {
