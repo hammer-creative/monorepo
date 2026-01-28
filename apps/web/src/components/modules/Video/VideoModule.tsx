@@ -21,6 +21,11 @@ function isValidVideoModule(
   return data !== null && Array.isArray(data.videos) && data.videos.length > 0;
 }
 
+// Extended HTMLVideoElement type with custom listener property
+interface VideoElementWithListener extends HTMLVideoElement {
+  _timeUpdateListener?: () => void;
+}
+
 export function VideoModule({ data }: { data: VideoModuleType | null }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const multiVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -118,7 +123,10 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
 
     const FADE_DURATION = 0.5;
 
-    multiVideoRefs.current.forEach((video, index) => {
+    // Copy the current refs to a local variable for the cleanup function
+    const currentVideoRefs = multiVideoRefs.current;
+
+    currentVideoRefs.forEach((video, index) => {
       if (!video) return;
 
       const handleTimeUpdate = () => {
@@ -148,15 +156,17 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
       };
 
       video.addEventListener('timeupdate', handleTimeUpdate);
-      (video as any)._timeUpdateListener = handleTimeUpdate;
+      (video as VideoElementWithListener)._timeUpdateListener =
+        handleTimeUpdate;
     });
 
     return () => {
-      multiVideoRefs.current.forEach((video) => {
-        if (video && (video as any)._timeUpdateListener) {
-          video.removeEventListener(
+      currentVideoRefs.forEach((video) => {
+        const videoWithListener = video as VideoElementWithListener | null;
+        if (videoWithListener?._timeUpdateListener) {
+          videoWithListener.removeEventListener(
             'timeupdate',
-            (video as any)._timeUpdateListener,
+            videoWithListener._timeUpdateListener,
           );
         }
       });

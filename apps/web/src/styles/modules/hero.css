@@ -3,98 +3,148 @@
 @import '../mixins.css';
 
 .hero-module .wrapper {
-  padding-bottom: var(--space-40);
-
   .row.marquee {
     @mixin flex-responsive column;
     position: relative;
 
-    .content {
-      position: relative;
-    }
-
     .image {
       aspect-ratio: 1 / 1;
-    }
-
-    .text {
-      @mixin gutters-text-large;
-      @mixin head-foot-text;
-    }
-  }
-
-  .row.meta {
-    .bar {
-      display: none;
-    }
-
-    .text {
-      @mixin gutters-text-large;
-      padding-bottom: 0;
-      width: 75%;
-    }
-
-    .text p.medium {
-      line-height: var(--line-height-medium);
-    }
-
-    .services {
-      display: flex;
-      justify-content: flex-start;
-      gap: var(--space-20);
-      @mixin gutters-text-large;
-    }
-
-    .text,
-    .text p.medium {
-      padding-bottom: var(--space-40);
     }
   }
 
   @media screen and (min-width: 50rem) {
+    .row.marquee .image {
+      aspect-ratio: 16 / 9;
+      height: 100vh;
+      width: 100%;
+    }
+  }
+}
+
+article.services-page {
+  .hero-module .wrapper {
     .row.marquee {
-      .image {
-        aspect-ratio: 16 / 9;
+      .meta {
+        @mixin gutters-text-large;
+        @mixin head-foot-text;
+        position: absolute;
+        bottom: 0;
+        left: 0;
         width: 100%;
       }
 
+      h1 {
+        padding-bottom: var(--space-fluid-20-40);
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+      }
+
+      p {
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+      }
+
+      .image::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 1) 0%,
+          rgba(0, 0, 0, 0.6) 15%,
+          rgba(0, 0, 0, 0.25) 50%,
+          rgba(0, 0, 0, 0) 100%
+        );
+      }
+      @media screen and (min-width: 50rem) {
+        .meta {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+article.case-study {
+  .hero-module .wrapper {
+    padding-bottom: var(--space-40);
+
+    .row.marquee {
+      .content {
+        position: relative;
+      }
+
       .text {
+        @mixin gutters-text-large;
+        @mixin head-foot-text;
+      }
+    }
+
+    .row.meta {
+      .bar {
+        display: none;
+      }
+
+      .text {
+        @mixin gutters-text-large;
+        width: 75%;
+        padding-bottom: 0;
+      }
+
+      .text p.medium {
+        line-height: var(--line-height-medium);
+      }
+
+      .services {
+        display: flex;
+        justify-content: flex-start;
+        gap: var(--space-20);
+        @mixin gutters-text-large;
+      }
+
+      .text,
+      .text p.medium {
+        padding-bottom: var(--space-40);
+      }
+    }
+
+    @media screen and (min-width: 50rem) {
+      .row.marquee .text {
         position: absolute;
         bottom: 0;
         left: 0;
         width: 50%;
         background-color: var(--module-bg);
       }
-    }
 
-    .row.meta {
-      .bar {
-        display: block;
-        @mixin gutters-text-large;
-      }
-
-      .content {
-        @mixin flex-responsive column, row;
-
-        .text {
-          padding-bottom: 0;
+      .row.meta {
+        .bar {
+          display: block;
+          @mixin gutters-text-large;
         }
 
-        .text,
-        .services {
-          flex: 1;
-        }
+        .content {
+          @mixin flex-responsive column, row;
 
-        .text p {
-          padding-top: var(--space-40);
-          line-height: var(--line-height-tight);
-        }
+          .text,
+          .services {
+            flex: 1;
+          }
 
-        .services {
-          justify-content: center;
-          padding-top: var(--space-40);
-          .list p {
-            line-height: var(--line-height-list);
+          .text {
+            padding-bottom: 0;
+          }
+
+          .text p {
+            padding-top: var(--space-40);
+            line-height: var(--line-height-tight);
+          }
+
+          .services {
+            justify-content: center;
+            padding-top: var(--space-40);
+
+            .list p {
+              line-height: var(--line-height-list);
+            }
           }
         }
       }

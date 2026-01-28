@@ -55,6 +55,14 @@
   }
 }
 
+@define-mixin footer-menu-items {
+  @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-loose);
+  line-height: 2;
+  display: block;
+}
+
 @define-mixin all-caps-accent {
   @mixin typography var(--font-sans), var(--font-size-fluid-small);
   letter-spacing: var(--letter-spacing-wide);

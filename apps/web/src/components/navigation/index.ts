@@ -1,9 +1,9 @@
 // apps/web/src/components/Navigation/index.ts
 
-export { Header } from './Header';
-export { Footer } from './Footer';
-export { MainMenu } from './MainMenu';
-export { MobileMenu } from './MobileMenu';
-export { FooterMenu } from './FooterMenu';
-export { SocialMenu } from './SocialMenu';
+export { Addresses } from './Addresses';
+export { Copyright } from './Copyright';
 export { MenuToggle } from './MenuToggle';
+export { MobileMenu } from './MobileMenu';
+export { RadixMenu } from './RadixMenu';
+export { SocialMenu } from './SocialMenu';
+export { Utilities } from './Utilities';

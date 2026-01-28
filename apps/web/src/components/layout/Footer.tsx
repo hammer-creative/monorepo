@@ -1,11 +1,8 @@
 // apps/web/src/components/Navigation/Footer.tsx
+import { LinkList } from '@/components/common/LinkList';
 import { Wordmark } from '@/components/common/Wordmark';
+import { Addresses, Copyright, Utilities } from '@/components/navigation';
 import { type NavigationData } from '@/types/navigation';
-
-import { Addresses } from './Addresses';
-import { FooterMenu } from './FooterMenu';
-import { SocialMenu } from './SocialMenu';
-import { Utilities } from './Utitities';
 
 interface FooterProps {
   navigationData: NavigationData;
@@ -14,20 +11,21 @@ interface FooterProps {
 export function Footer({ navigationData }: FooterProps) {
   return (
     <footer>
-      <div className="flex">
-        <div className="flex-item group">
-          <div className="menu">
-            <FooterMenu items={navigationData.main} />
+      <div className="wrapper">
+        <div className="group">
+          <div className="item menu">
+            <LinkList items={navigationData.main} />
           </div>
-          <div className="addresses">
+          <div className="item addresses">
             <Addresses items={navigationData.addresses} />
           </div>
         </div>
-        <div className="flex-item utilities">
+        <div className="item utilities">
           <Utilities />
         </div>
-        <div className="flex-item social">
-          <SocialMenu items={navigationData.social} />
+        <div className="item social">
+          <LinkList items={navigationData.social} />
+          <Copyright />
         </div>
       </div>
       <div className="wordmark">
