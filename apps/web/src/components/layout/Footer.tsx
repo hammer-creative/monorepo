@@ -1,7 +1,8 @@
 // apps/web/src/components/Navigation/Footer.tsx
 import { LinkList } from '@/components/common/LinkList';
 import { Wordmark } from '@/components/common/Wordmark';
-import { Addresses, Copyright, Utilities } from '@/components/navigation';
+import { Addresses, Copyright, UtilitiesMenu } from '@/components/navigation';
+import { RadixMenu } from '@/components/navigation/RadixMenu';
 import { type NavigationData } from '@/types/navigation';
 
 interface FooterProps {
@@ -12,18 +13,18 @@ export function Footer({ navigationData }: FooterProps) {
   return (
     <footer>
       <div className="wrapper">
-        <div className="group">
-          <div className="item menu">
-            <LinkList items={navigationData.main} />
-          </div>
-          <div className="item addresses">
-            <Addresses items={navigationData.addresses} />
-          </div>
+        <RadixMenu
+          items={navigationData.main}
+          className="menu-primary"
+          showArrow={false}
+        />
+        <div className="menu-secondary addresses">
+          <Addresses items={navigationData.addresses} />
         </div>
-        <div className="item utilities">
-          <Utilities />
+        <div className="menu-secondary utilities">
+          <UtilitiesMenu />
         </div>
-        <div className="item social">
+        <div className="menu-secondary social">
           <LinkList items={navigationData.social} />
           <Copyright />
         </div>

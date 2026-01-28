@@ -16,7 +16,7 @@ const utilityLinks = [
   },
 ];
 
-export function Utilities() {
+export function UtilitiesMenu() {
   return (
     <>
       {utilityLinks.map((link) => (

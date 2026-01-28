@@ -9,9 +9,21 @@ footer {
 }
 
 /* Hide wordmark on homepage */
-body:has(.menu-overlay) .wordmark {
+body:has(.menu-overlay) header > .wordmark {
   visibility: hidden;
 }
+
+body:has(.menu-overlay) .mobile-menu .wordmark svg {
+  color: $color-sandstorm;
+  width: 100vw;
+  height: auto;
+}
+
+/* body:has(.menu-overlay) .mobile-menu .wordmark {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+} */
 
 /* Header */
 header svg {
@@ -22,4 +34,8 @@ header svg {
 /* Footer */
 footer svg {
   width: 100vw;
+}
+
+footer .wordmark {
+  transform: translateY(0%);
 }

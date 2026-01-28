@@ -1,12 +1,8 @@
 'use client';
 
+import { LinkList } from '@/components/common/LinkList';
 import { Wordmark } from '@/components/common/Wordmark';
-import {
-  Addresses,
-  Copyright,
-  SocialMenu,
-  Utilities,
-} from '@/components/navigation';
+import { Addresses, Copyright, UtilitiesMenu } from '@/components/navigation';
 import { RadixMenu } from '@/components/navigation/RadixMenu';
 import { useNavigation } from '@/contexts/NavigationContext';
 import type { NavigationData } from '@/types/navigation';
@@ -51,6 +47,11 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const itemRefsRef = useRef<Map<string, HTMLElement>>(new Map());
 
+  // Refs for secondary menu sections
+  const addressesRef = useRef<HTMLDivElement>(null);
+  const utilitiesRef = useRef<HTMLDivElement>(null);
+  const socialRef = useRef<HTMLDivElement>(null);
+
   const [clickedHref, setClickedHref] = useState<string | null>(null);
   const [shouldRender, setShouldRender] = useState(false);
 
@@ -71,10 +72,18 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
   const handleOpen = useCallback(async () => {
     if (!overlayRef.current) return;
 
-    const items = Array.from(itemRefsRef.current.values());
+    // Get RadixMenu items + secondary sections
+    const radixItems = Array.from(itemRefsRef.current.values());
+    const secondarySections = [
+      addressesRef.current,
+      utilitiesRef.current,
+      socialRef.current,
+    ].filter(Boolean) as HTMLElement[];
+
+    const allItems = [...radixItems, ...secondarySections];
 
     // Set initial states
-    items.forEach((item) => {
+    allItems.forEach((item) => {
       item.style.opacity = '0';
       item.style.transform = `translateY(${ANIMATION.items.enter.y.from}px)`;
     });
@@ -91,7 +100,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
     // Items in
     await animate(
-      items,
+      allItems,
       {
         y: [ANIMATION.items.enter.y.from, ANIMATION.items.enter.y.to],
         opacity: [
@@ -112,15 +121,24 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
    */
   const exitItems = useCallback(
     async (clickedHref?: string | null) => {
-      const allItems = Array.from(itemRefsRef.current.values());
+      const radixItems = Array.from(itemRefsRef.current.values());
+      const secondarySections = [
+        addressesRef.current,
+        utilitiesRef.current,
+        socialRef.current,
+      ].filter(Boolean) as HTMLElement[];
 
       if (clickedHref) {
-        const nonClickedItems = allItems.filter(
+        // Separate clicked RadixMenu item from non-clicked
+        const nonClickedRadixItems = radixItems.filter(
           (item) => !item.hasAttribute('data-clicked'),
         );
-        const clickedItem = allItems.find((item) =>
+        const clickedItem = radixItems.find((item) =>
           item.hasAttribute('data-clicked'),
         );
+
+        // Non-clicked RadixMenu items + ALL secondary sections exit together
+        const nonClickedItems = [...nonClickedRadixItems, ...secondarySections];
 
         if (nonClickedItems.length > 0) {
           await animate(
@@ -140,6 +158,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           );
         }
 
+        // Clicked RadixMenu item exits last
         if (clickedItem) {
           await animate(
             clickedItem,
@@ -157,6 +176,9 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           );
         }
       } else {
+        // No clicked item - everything exits together
+        const allItems = [...radixItems, ...secondarySections];
+
         if (allItems.length > 0) {
           await animate(
             allItems,
@@ -219,7 +241,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     }
   }, [isOpen, shouldRender, handleOpen, exitItems, exitOverlay]);
 
-  /*
+  /**
    * Link click - exit items, navigate (overlay stays), wait for route load
    */
   const handleLinkClick = useCallback(
@@ -308,25 +330,28 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
       />
 
       <div ref={scope} className="mobile-menu is-open">
-        <RadixMenu
-          items={navigationData.main}
-          className="mobile-menu-primary"
-          onLinkClick={handleLinkClick}
-          clickedHref={clickedHref}
-          setItemRef={setItemRef}
-        />
-        <div className="mobile-menu-secondary">
-          <div className="item group">
-            <div className="addresses">
+        <div className="wrapper">
+          <div className="row">
+            <RadixMenu
+              items={navigationData.main}
+              className="menu-primary"
+              onLinkClick={handleLinkClick}
+              clickedHref={clickedHref}
+              setItemRef={setItemRef}
+              showArrow={true}
+            />
+          </div>
+          <div className="row">
+            <div ref={addressesRef} className="menu-secondary addresses">
               <Addresses items={navigationData.addresses} />
             </div>
-          </div>
-          <div className="item utilities">
-            <Utilities />
-          </div>
-          <div className="item social">
-            <SocialMenu items={navigationData.social} />
-            <Copyright />
+            <div ref={utilitiesRef} className="menu-secondary utilities">
+              <UtilitiesMenu />
+            </div>
+            <div ref={socialRef} className="menu-secondary social">
+              <LinkList items={navigationData.social} />
+              <Copyright />
+            </div>
           </div>
         </div>
         <div className="wordmark">
