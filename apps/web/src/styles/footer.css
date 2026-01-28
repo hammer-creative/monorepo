@@ -2,47 +2,105 @@
 
 @import './mixins';
 
+/* Footer — typography */
 footer {
+  /* base text */
+  p,
+  a,
+  li,
+  button {
+    display: block;
+    font-size: var(--font-size-fluid-extra-small);
+    line-height: var(--line-height-loose);
+    letter-spacing: var(--letter-spacing-loose);
+    text-transform: uppercase;
+  }
+
+  /* links */
+  a {
+    position: relative;
+  }
+
+  a::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-end: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.33s ease;
+  }
+
+  a:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* buttons */
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  /* contextual text */
+  .address p {
+    text-align: right;
+  }
+
+  /* menu overrides */
+  .menu li a {
+    display: inline-block;
+    line-height: 1.2;
+    letter-spacing: var(--letter-spacing-tight);
+    @mixin typography var(--font-serif-bold),
+      var(--font-size-fluid-menu-reverse);
+  }
+
+  .menu li a::after {
+    content: none;
+  }
+}
+
+/* Footer — layout */
+footer .wrapper {
   @mixin flex column;
+  gap: var(--space-fluid-20-40);
   padding: var(--space-fluid-20-40) var(--space-fluid-20-40)
     var(--space-fluid-40-80);
-  @media screen and (min-width: 50rem) {
-    gap: var(--space-fluid-20-40);
-  }
+}
 
-  .item.group {
-    @mixin flex-responsive column, row;
+footer {
+  .group {
+    @mixin flex-responsive column, row, 50rem;
+    gap: var(--space-fluid-20-40);
     justify-content: space-between;
-    gap: var(--space-fluid-20-40);
   }
 
-  .item.utilities,
+  .address:first-child {
+    padding-bottom: var(--space-fluid-20-40);
+  }
+
   .item.social {
-    @mixin flex-responsive column, row;
+    @mixin flex-responsive column, row, 30rem;
+    align-items: flex-end;
     justify-content: space-between;
+
+    ul {
+      @mixin flex row;
+      gap: var(--space-fluid-20-40);
+    }
   }
 
   .item.utilities {
-    @mixin flex-responsive column, row, 40rem;
+    @mixin flex-responsive column, row, 30rem;
     align-items: flex-end;
     justify-content: space-between;
   }
+}
 
-  .item.social {
-    @mixin flex-responsive column, row, 40rem;
-
-    align-items: flex-end;
-    justify-content: space-between;
-  }
-
-  .item.social ul {
-    @mixin flex row;
-    gap: var(--space-fluid-20-40);
-  }
-
-  .addresses {
-    @mixin flex column;
-    gap: var(--space-fluid-20-40);
-    padding-bottom: var(--space-fluid-20-40);
-  }
+footer .wordmark {
+  transform: translateY(0%);
 }

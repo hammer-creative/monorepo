@@ -1,5 +1,5 @@
 // apps/web/src/components/modules/ServicesHeroModule.tsx
-import { SanityImage, TextBlock, Title } from '@/components/common';
+import { SanityHeroImage, TextBlock, Title } from '@/components/common';
 import type { ServicesPageHeroModule as ServicesPageHeroModuleType } from '@/types/sanity.generated';
 
 // Type guard: Check if module data exists and is valid
@@ -17,26 +17,33 @@ export function ServicesPageHeroModule({
   // Guard: Early return if no valid data
   if (!isValidServicesPageHeroModule(data)) return null;
 
-  // Destructure with defaults for optional fields
-  const { title = null, body = null, image = null } = data;
+  // Destructure module data
+  const { title, body, image } = data;
+
+  // Derive helper flags
+  const hasTitle = title != null;
+  const hasBody = body != null;
+  const hasImage = image != null;
 
   return (
-    <div className="hero">
-      {/* Hero Content: Title + Body */}
-      <div className="hero-marquee">
-        {title && <Title title={title} className="heading" as="h1" />}
-
-        {body && (
-          <div className="description">
-            <TextBlock body={body} className="text small" />
-          </div>
-        )}
+    <div className="wrapper">
+      {/* Hero Section: Title + Body */}
+      <div className="row marquee">
+        <div className="content">
+          {/* Hero Image */}
+          {hasImage && (
+            <div className="image">
+              <SanityHeroImage image={image} fill priority />
+            </div>
+          )}
+          {hasTitle && hasBody && (
+            <div className="meta">
+              <Title title={title} as="h1" />
+              <TextBlock body={body} className="text small" />
+            </div>
+          )}
+        </div>
       </div>
-
-      {/* Hero Image */}
-      {image && (
-        <SanityImage image={image} fill className="hero-image" priority />
-      )}
     </div>
   );
 }

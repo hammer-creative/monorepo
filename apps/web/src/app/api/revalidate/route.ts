@@ -1,12 +1,10 @@
 // apps/web/src/app/api/revalidate/route.ts
-
 import { revalidatePath } from 'next/cache';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
   // Check secret
   const secret = request.nextUrl.searchParams.get('secret');
-
   if (secret !== process.env.REVALIDATE_SECRET) {
     return NextResponse.json({ message: 'Invalid secret' }, { status: 401 });
   }
@@ -24,7 +22,6 @@ export async function POST(request: NextRequest) {
 
     // Revalidate the case study page
     revalidatePath(`/work/${slug}`);
-
     // Optional: also revalidate the work listing page
     revalidatePath('/work');
 
@@ -33,7 +30,8 @@ export async function POST(request: NextRequest) {
       slug,
       now: Date.now(),
     });
-  } catch (err) {
+  } catch {
+    // Omit the unused error parameter
     return NextResponse.json(
       { message: 'Error revalidating' },
       { status: 500 },

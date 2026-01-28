@@ -68,10 +68,10 @@ p.small,
   @mixin typography var(--font-sans), var(--font-size-fluid-small);
 }
 
-ul li {
+/* ul li {
   @mixin typography var(--font-sans), var(--font-size-fluid-xsmall);
   line-height: var(--line-height-loose);
-}
+} */
 
 .tag,
 .impressum .text {
@@ -81,10 +81,12 @@ ul li {
   line-height: 2;
 }
 
-/* BLOCKQUOTE OVERRIDE */
+/* Blockquote override for case study pages */
 .case-study blockquote {
   @mixin typography var(--font-sans), var(--font-size-fluid-small);
   line-height: var(--line-height-fluid-reverse);
   padding: var(--space-fluid-20-60) 0;
   font-weight: 900;
 }
+
+/* Footer typography */
