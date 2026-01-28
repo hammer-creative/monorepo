@@ -53,33 +53,32 @@
 }
 /* Services Page Card Module */
 
-.services .services-heading {
+.services-page .services-heading {
   @mixin typography var(--font-sans), var(--font-size-fluid-subheadline);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
   padding: var(--space-fluid-20-80);
-  padding-bottom: var(--space-60);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  padding-bottom: var(--space-40);
 }
 
-.services .cards {
+.services-page .cards {
   display: flex;
   flex-direction: column;
   gap: var(--space-20);
 }
 
-.services .services-page-card-module:not(:first-child):not(:last-child) {
+.services-page .services-page-card-module:not(:first-child):not(:last-child) {
   padding-left: var(--space-20);
   padding-right: var(--space-20);
 }
 
 /* Card Layout - With Image */
-.services .services-page-card-module:not(:last-child) .card {
+.services-page .services-page-card-module:not(:last-child) .card {
   position: relative;
   overflow: hidden;
 }
 
-.services .services-page-card-module:not(:last-child) .card-marquee {
+.services-page .services-page-card-module:not(:last-child) .card-marquee {
   position: relative;
   width: 100%;
   padding: var(--space-fluid-40-80);
@@ -89,24 +88,24 @@
 }
 
 /* Card Layout - Last Card (No Image) */
-.services .services-page-card-module:last-child .card {
+.services-page .services-page-card-module:last-child .card {
   display: flex;
   flex-direction: column;
   gap: var(--space-40);
 }
 
-.services .services-page-card-module:last-child .card-marquee {
+.services-page .services-page-card-module:last-child .card-marquee {
   padding: var(--space-fluid-20-60);
   order: 2;
 }
 
-.services .services-page-card-module:last-child .card-icons {
+.services-page .services-page-card-module:last-child .card-icons {
   padding-top: var(--space-40);
   order: 1;
 }
 
 /* Card Display - Image */
-.services .card-image {
+.services-page .card-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -117,11 +116,14 @@
 }
 
 /* Card Display - Text */
-.services .card-marquee .heading {
+.services-page .card-marquee .heading {
   padding-bottom: var(--space-30);
 }
 
-.services .services-page-card-module:not(:last-child) .card-marquee .heading,
+.services-page
+  .services-page-card-module:not(:last-child)
+  .card-marquee
+  .heading,
 .services
   .services-page-card-module:not(:last-child)
   .card-marquee
@@ -183,22 +185,22 @@
 
 /* Desktop */
 @media screen and (min-width: 50rem) {
-  .services .services-page-card-module:not(:last-child) .card-marquee {
+  .services-page .services-page-card-module:not(:last-child) .card-marquee {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 0;
     align-items: start;
   }
 
-  .services .services-page-card-module:not(:last-child) .card-metadata {
+  .services-page .services-page-card-module:not(:last-child) .card-metadata {
     grid-column: 1;
   }
 
-  .services .services-page-card-module:not(:last-child) .list {
+  .services-page .services-page-card-module:not(:last-child) .list {
     grid-column: 3;
   }
 
-  .services .services-page-card-module:last-child .card {
+  .services-page .services-page-card-module:last-child .card {
     display: grid;
     grid-template-columns: 1fr 0.5fr 1.5fr;
     gap: var(--space-40);
@@ -206,16 +208,16 @@
     padding: var(--space-fluid-40-80);
   }
 
-  .services .services-page-card-module:last-child .card-marquee {
+  .services-page .services-page-card-module:last-child .card-marquee {
     padding: 0;
     order: unset;
   }
 
-  .services .services-page-card-module:last-child .card-metadata {
+  .services-page .services-page-card-module:last-child .card-metadata {
     grid-column: 1;
   }
 
-  .services .services-page-card-module:last-child .card-icons {
+  .services-page .services-page-card-module:last-child .card-icons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column: 3;
@@ -223,7 +225,7 @@
     order: unset;
   }
 
-  .services .services-page-card-module:last-child .card-icons-row {
+  .services-page .services-page-card-module:last-child .card-icons-row {
     display: contents;
     animation: none;
   }

@@ -28,11 +28,11 @@ export default async function ServicesPage() {
   const [hero, ...cards] = modules;
 
   return (
-    <article className="page services">
+    <article className="services-page">
       {/* Hero Module */}
       {hero && (
         <section
-          className="module services-page-hero-module"
+          className="module hero-module"
           style={
             {
               '--module-bg': hero.backgroundColor?.hex,

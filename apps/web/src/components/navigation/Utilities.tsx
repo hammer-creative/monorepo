@@ -24,7 +24,7 @@ export function Utilities() {
           key={link.id}
           href={link.href}
           email={link.email}
-          className={link.className}
+          className={`${link.className || ''}`}
         >
           {link.label}
         </ExtendedLink>

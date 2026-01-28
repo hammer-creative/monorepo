@@ -2,7 +2,6 @@
 'use client';
 
 import { Footer, Header } from '@/components/layout';
-import { MobileMenu } from '@/components/navigation';
 import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
 import type { ReactNode } from 'react';
@@ -42,8 +41,6 @@ export function Layout({ children, pathname }: LayoutProps) {
       <main>{children}</main>
 
       <Footer navigationData={navigationData as NavigationData} />
-
-      <MobileMenu navigationData={navigationData as NavigationData} />
     </div>
   );
 }
