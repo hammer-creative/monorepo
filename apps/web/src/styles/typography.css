@@ -68,10 +68,10 @@ p.small,
   @mixin typography var(--font-sans), var(--font-size-fluid-small);
 }
 
-ul li {
+/* ul li {
   @mixin typography var(--font-sans), var(--font-size-fluid-xsmall);
   line-height: var(--line-height-loose);
-}
+} */
 
 .tag,
 .impressum .text {
@@ -81,7 +81,7 @@ ul li {
   line-height: 2;
 }
 
-/* BLOCKQUOTE OVERRIDE */
+/* Blockquote override for case study pages */
 .case-study blockquote {
   @mixin typography var(--font-sans), var(--font-size-fluid-small);
   line-height: var(--line-height-fluid-reverse);
@@ -89,25 +89,4 @@ ul li {
   font-weight: 900;
 }
 
-/* FOOTER */
-footer a.link,
-footer p.text {
-  @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-loose);
-  line-height: 2;
-  display: block;
-}
-
-footer .address {
-  text-align: right;
-}
-
-footer .menu a.link {
-  @mixin typography var(--font-serif), var(--font-size-fluid-menu-reverse);
-  line-height: 1;
-  letter-spacing: var(--letter-spacing-default);
-  @media screen and (min-width: 50rem) {
-    line-height: 1.2;
-  }
-}
+/* Footer typography */

@@ -1,5 +1,8 @@
 // apps/web/src/app/layout.tsx
+import { MobileMenu } from '@/components/navigation/MobileMenu';
 import { NavigationProvider } from '@/contexts/NavigationContext';
+import navigationData from '@/data/navigation.json';
+import type { NavigationData } from '@/types/navigation';
 
 import '@/styles/index.css';
 
@@ -45,7 +48,13 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://stream.mux.com" />
       </head>
       <body>
-        <NavigationProvider>{children}</NavigationProvider>
+        <NavigationProvider>
+          {children}
+          <MobileMenu
+            key="mobile-menu-persistent"
+            navigationData={navigationData as NavigationData}
+          />
+        </NavigationProvider>
       </body>
     </html>
   );

@@ -108,6 +108,7 @@ max viewport width.
     calc(3.5rem + ((1vw - 3.2px) * 9.5455)),
     140px
   );
+  --font-size-fluid-menu-mobile: clamp(50px, 12vw, 140px);
   --font-size-fluid-menu-reverse: clamp(40px, calc(56px - 1vw), 56px);
   --font-size-fluid-headline: clamp(
     20px,
@@ -177,4 +178,5 @@ max viewport width.
   --letter-spacing-default: 1;
   --letter-spacing-tight: -0.03em;
   --letter-spacing-loose: 0.1em;
+  --letter-spacing-extra-loose: 0.25em;
 }

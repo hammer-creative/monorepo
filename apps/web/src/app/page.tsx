@@ -2,7 +2,7 @@
 
 import { Impressum } from '@/components/common/Impressum';
 import { Masthead } from '@/components/common/Masthead';
-import Scene from '@/components/common/Scene';
+import Scene from '@/components/model/Scene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
 import {
   client,
@@ -89,7 +89,7 @@ export default async function HomePage() {
               }
             >
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              {/* <Component data={mod as any} /> */}
+              <Component data={mod as any} />
             </section>
           );
         },

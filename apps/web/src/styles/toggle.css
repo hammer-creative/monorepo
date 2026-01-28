@@ -1,0 +1,66 @@
+/* apps/web/src/styles/toggle.css */
+
+.menu-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-serif);
+  text-transform: uppercase;
+
+  span {
+    display: inline-block;
+  }
+
+  svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.menu-toggle-dot {
+  width: 1.5ch;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    transform: translateX(0);
+    color: $color-hyperbeam;
+    transition:
+      transform 0.5s ease,
+      color 0.5s ease;
+  }
+}
+
+.menu-toggle-text {
+  width: 6ch;
+  display: inline-block;
+  text-align: left;
+  letter-spacing: var(--letter-spacing-extra-loose);
+  font-family: var(--font-serif);
+  text-transform: uppercase;
+  color: $color-vinewhip;
+  transition: color 0.5s ease;
+}
+
+.menu-toggle.is-open {
+  .menu-toggle-dot svg {
+    transform: translateX(-2ch);
+    color: $color-hyperbeam;
+  }
+
+  .menu-toggle-text {
+    color: $color-hyperbeam;
+  }
+
+  @media (min-width: 50em) {
+    .menu-toggle-text {
+      color: $color-sandstorm;
+    }
+  }
+}
