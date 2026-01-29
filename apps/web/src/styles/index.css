@@ -15,11 +15,12 @@
 @import './footer.css';
 @import './overlay';
 @import './toggle';
-/* @import './components.css'; */
-@import './modules/hero.css';
-@import './modules/text-image.css';
-@import './modules/video.css';
-@import './modules/text.css';
-@import './modules/impact.css';
+
 @import './modules/cards.css';
 @import './modules/carousel.css';
+@import './modules/hero.css';
+@import './modules/impact.css';
+@import './modules/single-image.css';
+@import './modules/text.css';
+@import './modules/text-image.css';
+@import './modules/video.css';

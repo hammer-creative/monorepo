@@ -19,7 +19,7 @@ export const imageItem = defineType({
         createTextField({
           name: 'alt',
           title: 'Alt Text',
-          required: true,
+          required: false,
           maxLength: 150,
         }),
       ],

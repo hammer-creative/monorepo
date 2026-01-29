@@ -3,6 +3,7 @@ import {
   CarouselModule,
   HeroModule,
   ImpactModule,
+  SingleImageModule,
   TextImageModule,
   TextModule,
   VideoModule,
@@ -20,6 +21,7 @@ import { notFound } from 'next/navigation';
 const moduleComponents = {
   heroModule: HeroModule,
   videoModule: VideoModule,
+  singleImageModule: SingleImageModule,
   textModule: TextModule,
   textImageModule: TextImageModule,
   impactModule: ImpactModule,

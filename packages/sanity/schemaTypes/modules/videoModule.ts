@@ -22,7 +22,8 @@ interface LayoutRequirements {
 // Source images at 3x allow Sanity to generate crisp 1x, 1.5x, 2x, 3x variants
 // Single video: 5640×3180 (landscape hero, ~16:9)
 // Two videos: 2820×2820 (square side-by-side, 1:1)
-// Three videos: 1860×3000 (vertical stack, ~3:5)
+// Three videos (desktop): 1860×3000 (vertical stack, ~3:5)
+// Three videos (mobile): 720×560 (landscape, 9:7)
 //
 // Video specs (same for all layouts):
 // - Resolution: 3840×2160 (4K)
@@ -33,6 +34,12 @@ const LAYOUT_REQUIREMENTS: Record<number, LayoutRequirements> = {
   1: {minWidth: 3840, minHeight: 2160, label: 'single-video'},
   2: {minWidth: 1880, minHeight: 1880, label: 'two-video'},
   3: {minWidth: 1200, minHeight: 2000, label: 'three-video'},
+}
+
+const MOBILE_LANDSCAPE_REQUIREMENTS = {
+  minWidth: 720,
+  minHeight: 560,
+  label: 'mobile-landscape',
 }
 
 const DIMENSION_REGEX = /-(\d+)x(\d+)-/
@@ -100,6 +107,40 @@ export const videoModule = defineType({
 
             return true
           }),
+    },
+    {
+      name: 'mobileVideos',
+      title: 'Mobile Videos',
+      type: 'array',
+      description:
+        'Add 3 landscape-oriented videos for mobile display, 720 × 560 px (9:7 ratio). Poster images should be 720 × 560 px. Videos should be 4K, H.264/H.265, MP4 format.',
+      of: [{type: 'videoItem'}],
+      hidden: ({parent}: any) => {
+        const videoCount = parent?.videos?.length
+        return videoCount !== 3
+      },
+      validation: (Rule) =>
+        Rule.custom((mobileVideos: VideoItem[], context) => {
+          const parent = context.parent as any
+          const desktopVideoCount = parent?.videos?.length
+
+          // Only validate if we have exactly 3 desktop videos AND mobile videos are provided
+          if (desktopVideoCount !== 3) return true
+          if (!mobileVideos || mobileVideos.length === 0) return true
+
+          // If mobile videos are provided, must be exactly 3
+          if (mobileVideos.length !== 3) {
+            return 'If providing mobile videos, must include all 3'
+          }
+
+          // Validate each mobile video poster
+          for (const video of mobileVideos) {
+            const result = validateVideoPoster(video, MOBILE_LANDSCAPE_REQUIREMENTS)
+            if (result !== true) return result
+          }
+
+          return true
+        }),
     },
     createColorField({
       name: 'backgroundColor',

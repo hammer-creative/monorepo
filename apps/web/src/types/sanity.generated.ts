@@ -115,6 +115,11 @@ export type VideoModule = {
       _key: string;
     } & VideoItem
   >;
+  mobileVideos?: Array<
+    {
+      _key: string;
+    } & VideoItem
+  >;
   backgroundColor?: {
     enabled?: boolean;
     name?:
