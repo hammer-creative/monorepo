@@ -1,0 +1,86 @@
+/* apps/web/src/styles/home.css */
+@import './mixins.css';
+
+/* Base Wrapper - Styles */
+[data-page='/'] .layout-container {
+  section {
+    padding: var(--space-fluid-20-40);
+  }
+}
+
+[data-page='/'] .text-module .wrapper {
+  padding: 0; /* overrides text.css */
+}
+
+/* Layout - View Our Services */
+[data-page='/'] .text-module:nth-child(2) .wrapper .row {
+  @mixin flex-responsive column, row, 40em;
+  .tag {
+    order: 2;
+  }
+}
+
+/* Text Module - Styles */
+[data-page='/'] .text-module:first-child .wrapper .row p {
+  font-size: 40px;
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-default);
+}
+
+[data-page='/'] .text-module:nth-child(2) .wrapper .row {
+  p {
+    font-size: 14px;
+    letter-spacing: var(--letter-spacing-tight);
+    line-height: var(--line-height-loose);
+  }
+
+  .tag {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    padding: var(--space-fluid-20-40) 0rem;
+    color: $color-hyperbeam;
+  }
+}
+
+/* Text Styles - Our Work */
+[data-page='/'] .text-module:nth-child(3) .wrapper .row {
+  h2 {
+    font-family: var(--font-sans);
+    font-size: 40px;
+    font-weight: normal;
+    text-transform: initial;
+  }
+  .tag {
+    font-size: 14px;
+    text-transform: initial;
+    letter-spacing: var(--letter-spacing-tight);
+    line-height: var(--line-height-loose);
+  }
+}
+
+/* Links & ornamentation */
+[data-page='/'] .text-module:nth-child(2) .wrapper .row {
+  .tag {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .tag::after {
+    content: '';
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    background-image: url('data:image/svg+xml,<svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.274902" width="5.79529" height="1.83009" fill="%23FFCC98"/><rect x="7.8999" width="7.62538" height="1.83009" transform="rotate(90 7.8999 0)" fill="%23FFCC98"/><rect x="7.43896" y="1.77258" width="8.66543" height="1.85482" transform="rotate(135 7.43896 1.77258)" fill="%23FFCC98"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+  }
+}
+
+/* Content block styles */
+
+/* Image containers */
+.impact-module .image {
+  aspect-ratio: 16 / 9;
+}

@@ -37,7 +37,7 @@
 
   .case-study-card h3,
   .case-study-card .case-study-clients {
-    color: $color-aircutter;
+    color: $color-hyperbeam;
   }
 
   @media (min-width: 690px) {
@@ -235,5 +235,35 @@
     .card-icons-row
     .icon-item:nth-child(n + 8) {
     display: none;
+  }
+}
+
+[data-page='/'] .case-study-card-module {
+  background: $color-aircutter;
+}
+
+/* Homepage Case Studies - Layout */
+[data-page='/'] .case-study-card-module .case-study-cards {
+  @mixin flex-responsive column;
+  gap: var(--space-20);
+}
+
+[data-page='/'] .case-study-card-module .case-study-cards {
+  @mixin flex-responsive column;
+  gap: var(--space-20);
+}
+
+/* Homepage Case Studies - Text Styles */
+[data-page='/'] .case-study-card-module .case-study-cards .case-study-card {
+  .tag {
+    display: none;
+  }
+  span {
+    font-size: 16px;
+    letter-spacing: (--letter-spacing-tight);
+    color: $color-hyperbeam;
+  }
+  h3 {
+    font-size: 30px;
   }
 }

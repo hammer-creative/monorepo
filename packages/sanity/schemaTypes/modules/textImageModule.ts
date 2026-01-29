@@ -32,7 +32,7 @@ export const textImageModule = defineType({
     {
       ...createSingleImageField({
         name: 'image',
-        title: 'Hero Image',
+        title: 'Image',
         required: true,
         minWidth: 1960,
         minHeight: 1400,
@@ -75,8 +75,8 @@ export const textImageModule = defineType({
     },
     prepare({layout, body}) {
       const layoutLabels: Record<string, string> = {
-        textRight: 'Text Right + Image Left',
-        textLeft: 'Text Left + Image Right',
+        textRight: 'Text Right → Image Left',
+        textLeft: 'Text Left → Image Right',
       }
       // Extract text from portable text body
       const bodyText = body

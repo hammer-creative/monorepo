@@ -1,5 +1,6 @@
 // apps/web/src/app/page.tsx
 
+import { ClientIcons } from '@/components/common/ClientIcons';
 import { Impressum } from '@/components/common/Impressum';
 import { Masthead } from '@/components/common/Masthead';
 import Scene from '@/components/model/Scene';
@@ -49,13 +50,13 @@ export default async function HomePage() {
   const resolvedModules = homePage.modules?.map(resolveModuleColors) || [];
 
   return (
-    <div className="container">
+    <div className="layout-container">
       <div className="marquee">
         <Masthead />
         <Scene />
         <Impressum />
       </div>
-      {resolvedModules.map(
+      {resolvedModules.flatMap(
         (
           mod: {
             _key: string;
@@ -70,13 +71,13 @@ export default async function HomePage() {
 
           if (!Component) {
             console.warn(`No component found for module type "${mod._type}"`);
-            return null;
+            return [];
           }
 
           const moduleClass = `module ${toKebab(mod._type)}`;
           const { backgroundColor, textColor } = mod;
 
-          return (
+          const sections = [
             <section
               key={mod._key}
               className={moduleClass}
@@ -90,8 +91,21 @@ export default async function HomePage() {
             >
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               <Component data={mod as any} />
-            </section>
-          );
+            </section>,
+          ];
+
+          if (index === resolvedModules.length - 2) {
+            sections.push(
+              <section
+                key="client-icons"
+                className="module client-icons-module"
+              >
+                <ClientIcons chyron />
+              </section>,
+            );
+          }
+
+          return sections;
         },
       )}
     </div>
