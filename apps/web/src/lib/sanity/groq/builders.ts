@@ -114,6 +114,9 @@ export const moduleProjections = `
       title
     }
   },
+  _type == "singleImageModule" => {
+    ${projections.image}
+  },
   _type == "servicesPageHeroModule" => {
     title,
     body,
@@ -165,6 +168,9 @@ export const moduleProjections = `
   },
   _type == "videoModule" => {
     videos[] {
+      ${projections.videoItem}
+    },
+    mobileVideos[] {
       ${projections.videoItem}
     }
   },

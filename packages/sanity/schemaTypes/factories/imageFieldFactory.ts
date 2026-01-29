@@ -72,7 +72,7 @@ function createBaseImageField(config: BaseImageConfig = {}) {
       createTextField({
         name: 'alt',
         title: 'Alt Text',
-        required: true,
+        required: false,
         maxLength: altMaxLength,
         description: 'Describe the image for accessibility (screen readers, SEO)',
       }),

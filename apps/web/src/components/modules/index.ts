@@ -4,6 +4,7 @@ export * from './Carousel';
 export * from './CaseStudyCard';
 export * from './Hero';
 export * from './Impact';
+export * from './SingleImage';
 export * from './Text';
 export * from './TextImage';
 export * from './ServicesList';

@@ -58,9 +58,18 @@ export const impactModule = defineType({
       ...createSingleImageField({
         name: 'image',
         title: 'Image',
-        required: true,
+        required: false, // Changed from true
       }),
       hidden: ({parent}: any) => parent?.layout === 'threeText',
+      // Add conditional validation here instead
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as any
+          if (parent?.layout !== 'threeText' && !value) {
+            return 'Image is required for this layout'
+          }
+          return true
+        }),
     },
     createColorField({
       name: 'backgroundColor',

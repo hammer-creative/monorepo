@@ -91,3 +91,7 @@ export type { SanityImageType };
 export const SanityCarouselImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => <SanityImage fill quality={85} objectFit="cover" {...props} />;
+
+export const SanityImpactImage = (
+  props: Partial<SanityImageProps> & { image: SanityImageType | null },
+) => <SanityImage fill quality={85} objectFit="cover" {...props} />;

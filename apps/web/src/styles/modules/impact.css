@@ -56,3 +56,9 @@
     }
   }
 }
+
+.impact-module {
+  .image {
+    aspect-ratio: 5 / 3;
+  }
+}
