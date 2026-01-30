@@ -5,6 +5,7 @@ import { Impressum } from '@/components/common/Impressum';
 import { Masthead } from '@/components/common/Masthead';
 import Scene from '@/components/model/Scene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
+import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
 import {
   client,
   draftClient,
@@ -15,6 +16,8 @@ import type { HomePage as HomePageType } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
+
+import { homePageAnimations } from './page.animations';
 
 interface HomePageData {
   homePage: HomePageType | null;
@@ -52,20 +55,10 @@ export default async function HomePage() {
   return (
     <div className="layout-container">
       <div className="marquee">
-        <Masthead />
         <Scene />
-        <Impressum />
       </div>
-      {resolvedModules.flatMap(
-        (
-          mod: {
-            _key: string;
-            _type: string;
-            backgroundColor?: { hex?: string };
-            textColor?: { hex?: string };
-          },
-          index,
-        ) => {
+      <div className="layout-wrapper">
+        {resolvedModules.flatMap((mod, index) => {
           const Component =
             moduleComponents[mod._type as keyof typeof moduleComponents];
 
@@ -76,6 +69,14 @@ export default async function HomePage() {
 
           const moduleClass = `module ${toKebab(mod._type)}`;
           const { backgroundColor, textColor } = mod;
+
+          // Determine animation config based on type and position
+          let animateConfig;
+          if (mod._type === 'textModule' && index === 0) {
+            animateConfig = homePageAnimations.textModuleFirst;
+          } else if (mod._type === 'textModule' && index === 1) {
+            animateConfig = homePageAnimations.textModuleSecond;
+          }
 
           const sections = [
             <section
@@ -89,8 +90,13 @@ export default async function HomePage() {
                 } as React.CSSProperties
               }
             >
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <Component data={mod as any} />
+              {animateConfig ? (
+                <AnimateOnScroll config={animateConfig}>
+                  <Component data={mod as any} />
+                </AnimateOnScroll>
+              ) : (
+                <Component data={mod as any} />
+              )}
             </section>,
           ];
 
@@ -106,8 +112,8 @@ export default async function HomePage() {
           }
 
           return sections;
-        },
-      )}
+        })}
+      </div>
     </div>
   );
 }

@@ -2,6 +2,11 @@
 
 @import 'tokens.css';
 
+[data-animate-from='true'] > * {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force GPU layer */
+}
+
 html {
   max-width: 100vw;
 }
