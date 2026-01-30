@@ -1,58 +1,74 @@
 /* apps/web/src/styles/modules/cards.css */
 
-/* Home Page Case Study Card Module */
-[data-page='/'] {
-  .case-study-cards {
-    /* display: flex; */
-    flex-direction: column;
-    gap: var(--space-20);
+/* Home Page - Case Study Card Module */
+[data-page='/'] .case-study-card-module {
+  background: $color-aircutter;
+}
+
+[data-page='/'] .case-study-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+}
+
+[data-page='/'] .case-study-card {
+  position: relative;
+  width: 100%;
+  max-width: 945px;
+}
+
+[data-page='/'] .case-study-card .image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 945 / 656;
+}
+
+[data-page='/'] .case-study-card .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+[data-page='/'] .case-study-card .meta {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-20);
+}
+
+[data-page='/'] .case-study-card h3,
+[data-page='/'] .case-study-card .case-study-clients {
+  color: $color-hyperbeam;
+}
+
+[data-page='/'] .case-study-card .tag {
+  display: none;
+}
+
+[data-page='/'] .case-study-card span {
+  font-size: 16px;
+  letter-spacing: var(--letter-spacing-tight);
+  color: $color-hyperbeam;
+}
+
+[data-page='/'] .case-study-card h3 {
+  font-size: 30px;
+}
+
+@media (min-width: 690px) {
+  [data-page='/'] .case-study-cards {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
-  .case-study-card {
-    position: relative;
-    width: 100%;
-    max-width: 945px;
-  }
-
-  .case-study-card .image {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 945 / 656;
-  }
-
-  .case-study-card .image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .case-study-card .meta {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: var(--space-20);
-  }
-
-  .case-study-card h3,
-  .case-study-card .case-study-clients {
-    color: $color-hyperbeam;
-  }
-
-  @media (min-width: 690px) {
-    .case-study-cards {
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-
-    .case-study-card {
-      flex: 1 1 calc(50% - var(--space-10));
-    }
+  [data-page='/'] .case-study-card {
+    flex: 1 1 calc(50% - var(--space-10));
   }
 }
-/* Services Page Card Module */
 
+/* Services Page - Card Module */
 .services-page .services-heading {
   @mixin typography var(--font-sans), var(--font-size-fluid-subheadline);
   line-height: var(--line-height-tight);
@@ -72,7 +88,6 @@
   padding-right: var(--space-20);
 }
 
-/* Card Layout - With Image */
 .services-page .services-page-card-module:not(:last-child) .card {
   position: relative;
   overflow: hidden;
@@ -87,7 +102,6 @@
   gap: var(--space-40);
 }
 
-/* Card Layout - Last Card (No Image) */
 .services-page .services-page-card-module:last-child .card {
   display: flex;
   flex-direction: column;
@@ -104,7 +118,6 @@
   order: 1;
 }
 
-/* Card Display - Image */
 .services-page .card-image {
   position: absolute;
   top: 0;
@@ -115,7 +128,6 @@
   filter: brightness(0.75);
 }
 
-/* Card Display - Text */
 .services-page .card-marquee .heading {
   padding-bottom: var(--space-30);
 }
@@ -124,14 +136,14 @@
   .services-page-card-module:not(:last-child)
   .card-marquee
   .heading,
-.services
+.services-page
   .services-page-card-module:not(:last-child)
   .card-marquee
   .description {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-/* Client Icons - Default Marquee */
+/* Client Icons - Marquee */
 .card-icons {
   display: flex;
   flex-direction: column;
@@ -230,40 +242,10 @@
     animation: none;
   }
 
-  .services
+  .services-page
     .services-page-card-module:last-child
     .card-icons-row
     .icon-item:nth-child(n + 8) {
     display: none;
-  }
-}
-
-[data-page='/'] .case-study-card-module {
-  background: $color-aircutter;
-}
-
-/* Homepage Case Studies - Layout */
-[data-page='/'] .case-study-card-module .case-study-cards {
-  @mixin flex-responsive column;
-  gap: var(--space-20);
-}
-
-[data-page='/'] .case-study-card-module .case-study-cards {
-  @mixin flex-responsive column;
-  gap: var(--space-20);
-}
-
-/* Homepage Case Studies - Text Styles */
-[data-page='/'] .case-study-card-module .case-study-cards .case-study-card {
-  .tag {
-    display: none;
-  }
-  span {
-    font-size: 16px;
-    letter-spacing: (--letter-spacing-tight);
-    color: $color-hyperbeam;
-  }
-  h3 {
-    font-size: 30px;
   }
 }

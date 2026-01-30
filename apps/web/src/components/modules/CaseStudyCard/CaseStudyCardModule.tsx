@@ -5,8 +5,11 @@ import {
   Title,
 } from '@/components/common';
 import type { SanityImageType } from '@/components/common/SanityImage';
+import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
 import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
 import Link from 'next/link';
+
+import { caseStudyAnimations } from './caseStudy.animations';
 
 // The generated types show caseStudies as references, but GROQ expands them
 // This type represents what we actually get at runtime after GROQ expansion
@@ -52,28 +55,30 @@ function CaseStudyCardItem({ item }: { item: unknown }) {
   const hasClients = clientNames.length > 0;
 
   return (
-    <div className="case-study-card">
-      <Link href={`/work/${slug}`}>
-        {/* Teaser Image */}
-        {teaserImage && (
-          <div className="image">
-            <SanityHomePageCardImage image={teaserImage} />
-          </div>
-        )}
-
-        {/* Title + Clients */}
-        <div className="meta">
-          {hasClients && (
-            <div className="clients">
-              <ClientNames clientNames={clientNames} />
+    <AnimateOnScroll config={caseStudyAnimations.card}>
+      <div className="case-study-card">
+        <Link href={`/work/${slug}`}>
+          {/* Teaser Image */}
+          {teaserImage && (
+            <div className="image">
+              <SanityHomePageCardImage image={teaserImage} />
             </div>
           )}
-          {title && (
-            <Title title={title} className="case-study-title" as="h3" />
-          )}
-        </div>
-      </Link>
-    </div>
+
+          {/* Title + Clients */}
+          <div className="meta">
+            {hasClients && (
+              <div className="clients">
+                <ClientNames clientNames={clientNames} />
+              </div>
+            )}
+            {title && (
+              <Title title={title} className="case-study-title" as="h3" />
+            )}
+          </div>
+        </Link>
+      </div>
+    </AnimateOnScroll>
   );
 }
 

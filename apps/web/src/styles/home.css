@@ -2,7 +2,7 @@
 @import './mixins.css';
 
 /* Base Wrapper - Styles */
-[data-page='/'] .layout-container {
+[data-page='/'] .layout-wrapper {
   section {
     padding: var(--space-fluid-20-40);
   }
@@ -19,6 +19,9 @@
     order: 2;
   }
 }
+
+/* Layout - Case Study Cards */
+[data-page='/']
 
 /* Text Module - Styles */
 [data-page='/'] .text-module:first-child .wrapper .row p {
@@ -76,11 +79,4 @@
     background-repeat: no-repeat;
     flex-shrink: 0;
   }
-}
-
-/* Content block styles */
-
-/* Image containers */
-.impact-module .image {
-  aspect-ratio: 16 / 9;
 }
