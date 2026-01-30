@@ -24,16 +24,16 @@ const SHOW_PUPIL = true;
 const SHOW_SCLERA = true;
 
 // VIDEO PUPIL PARAMETERS
-const ENABLE_VIDEO_PUPIL = false; // Set to false to use solid color instead of video
+const ENABLE_VIDEO_PUPIL = true; // Set to false to use solid color instead of video
 const PUPIL_COLOR = new THREE.Color(0xffffff); // Pupil color when video is disabled (black by default)
-const PUPIL_Z_POSITION = 0.139; // How far back the pupil sits (more negative = deeper inside)
+const PUPIL_Z_POSITION = 0; // How far back the pupil sits (more negative = deeper inside)
 const PUPIL_SCALE = 1; // Pupil size (1.5 = 50% bigger)
 
 // IRIS PARAMETERS
-const ENABLE_IRIS_ROTATION = false; // Set to false to disable iris spinning
-const IRIS_ROTATION_SPEED = 0.05; // Iris base spin speed (radians per second)
-const IRIS_ROTATION_SPEED_ON_MOVE = 0.7; // Iris spin speed when mouse is moving (radians per second)
-const IRIS_SPEED_LERP = 0.05; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
+const ENABLE_IRIS_ROTATION = true; // Set to false to disable iris spinning
+const IRIS_ROTATION_SPEED = 0.03; // Iris base spin speed (radians per second)
+const IRIS_ROTATION_SPEED_ON_MOVE = 0.5; // Iris spin speed when mouse is moving (radians per second)
+const IRIS_SPEED_LERP = 0.1; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
 const IRIS_SATURATION = 1.3; // Iris color saturation (1.0 = normal, >1.0 = more saturated)
 const IRIS_CONTRAST = 1.2; // Iris contrast (1.0 = normal, >1.0 = more contrast)
 
@@ -267,7 +267,7 @@ const SceneContent = ({
         intensity={DIRECTIONAL_LIGHT_INTENSITY}
       />
       <Suspense fallback={null}>
-        <Model url="/model/model-v6.glb" isPaused={isPaused} />
+        <Model url="/model/model-v7.glb" isPaused={isPaused} />
       </Suspense>
       <OrbitControls
         enabled={orbitEnabled}

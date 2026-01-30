@@ -1,4 +1,6 @@
 // apps/web/src/components/modules/CaseStudyCard/CaseStudyCardModule.tsx
+'use client';
+
 import {
   ClientNames,
   SanityHomePageCardImage,
@@ -8,8 +10,12 @@ import type { SanityImageType } from '@/components/common/SanityImage';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
 import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-import { caseStudyAnimations } from './caseStudy.animations';
+import {
+  caseStudyAnimations,
+  generateCaseStudyAnimations,
+} from './caseStudy.animations';
 
 // The generated types show caseStudies as references, but GROQ expands them
 // This type represents what we actually get at runtime after GROQ expansion
@@ -55,30 +61,28 @@ function CaseStudyCardItem({ item }: { item: unknown }) {
   const hasClients = clientNames.length > 0;
 
   return (
-    <AnimateOnScroll config={caseStudyAnimations.card}>
-      <div className="case-study-card">
-        <Link href={`/work/${slug}`}>
-          {/* Teaser Image */}
-          {teaserImage && (
-            <div className="image">
-              <SanityHomePageCardImage image={teaserImage} />
+    <div className="case-study-card">
+      <Link href={`/work/${slug}`}>
+        {/* Teaser Image */}
+        {teaserImage && (
+          <div className="image">
+            <SanityHomePageCardImage image={teaserImage} />
+          </div>
+        )}
+
+        {/* Title + Clients */}
+        <div className="meta">
+          {hasClients && (
+            <div className="clients">
+              <ClientNames clientNames={clientNames} />
             </div>
           )}
-
-          {/* Title + Clients */}
-          <div className="meta">
-            {hasClients && (
-              <div className="clients">
-                <ClientNames clientNames={clientNames} />
-              </div>
-            )}
-            {title && (
-              <Title title={title} className="case-study-title" as="h3" />
-            )}
-          </div>
-        </Link>
-      </div>
-    </AnimateOnScroll>
+          {title && (
+            <Title title={title} className="case-study-title" as="h3" />
+          )}
+        </div>
+      </Link>
+    </div>
   );
 }
 
@@ -98,18 +102,46 @@ export function CaseStudyCardModule({
 }: {
   data: CaseStudyCardModuleType | null;
 }) {
-  // Guard: Early return if no valid data or empty case studies
+  // Hooks MUST come first, before any returns
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 640);
+  }, []);
+
+  // Guards come after hooks
   if (!isValidCaseStudyCardModule(data)) return null;
 
   const { caseStudies } = data;
+  // apps/web/src/components/modules/CaseStudyCard/CaseStudyCardModule.tsx
 
+  const validCaseStudies = caseStudies.filter(
+    (cs) => !('_ref' in cs) && isValidCaseStudy(cs),
+  ) as ExpandedCaseStudy[];
+
+  // Desktop: wrap all cards in single AnimateOnScroll, chain them sequentially
+  if (isDesktop) {
+    const animationConfiguration = generateCaseStudyAnimations(
+      validCaseStudies.length,
+    );
+    return (
+      <AnimateOnScroll config={animationConfiguration}>
+        <div className="case-study-cards">
+          {validCaseStudies.map((caseStudy) => (
+            <CaseStudyCardItem key={caseStudy._id} item={caseStudy} />
+          ))}
+        </div>
+      </AnimateOnScroll>
+    );
+  }
+
+  // Mobile: each card animates independently on scroll-into-view
   return (
     <div className="case-study-cards">
-      {caseStudies.map((caseStudy: unknown) => (
-        <CaseStudyCardItem
-          key={isValidCaseStudy(caseStudy) ? caseStudy._id : Math.random()}
-          item={caseStudy}
-        />
+      {validCaseStudies.map((caseStudy) => (
+        <AnimateOnScroll key={caseStudy._id} config={caseStudyAnimations.card}>
+          <CaseStudyCardItem item={caseStudy} />
+        </AnimateOnScroll>
       ))}
     </div>
   );

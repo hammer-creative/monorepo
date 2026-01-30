@@ -1,4 +1,4 @@
-// apps/web/src/components/motion/AnimateOnScroll/index.tsx
+// apps/web/src/components/motion/AnimateOnScroll/AnimateOnScroll.tsx
 'use client';
 
 import { useAnimate, useInView } from 'motion/react';
@@ -6,18 +6,19 @@ import { useEffect, useRef, type ReactNode } from 'react';
 
 import type { AnimateConfig } from './types';
 
+const DISABLE_ANIMATIONS =
+  process.env.NEXT_PUBLIC_DISABLE_ANIMATIONS === 'true';
+
 interface AnimateOnScrollProps {
   children: ReactNode;
   className?: string;
   config?: AnimateConfig;
-  disabled?: boolean;
 }
 
 export function AnimateOnScroll({
   children,
   className,
   config = {},
-  disabled = false,
 }: AnimateOnScrollProps) {
   const [scope, animate] = useAnimate();
   const hasAnimated = useRef(false);
@@ -37,25 +38,25 @@ export function AnimateOnScroll({
 
   // Set initial state
   useEffect(() => {
-    if (disabled || !scope.current) return;
+    if (DISABLE_ANIMATIONS || !scope.current) return;
 
     if (stagger) {
       stagger.forEach((item) => {
         const itemFrom = item.from || from;
         try {
           animate(item.selector, itemFrom, { duration: 0 });
-        } catch (e) {
+        } catch {
           // Element doesn't exist yet, ignore
         }
       });
     } else {
       animate(scope.current, from, { duration: 0 });
     }
-  }, [disabled, scope, animate, stagger, from]);
+  }, [scope, animate, stagger, from]);
 
   // Animate when in view
   useEffect(() => {
-    if (disabled || !isInView || hasAnimated.current) return;
+    if (DISABLE_ANIMATIONS || !isInView || hasAnimated.current) return;
     hasAnimated.current = true;
 
     async function sequence() {
@@ -80,10 +81,10 @@ export function AnimateOnScroll({
     }
 
     sequence();
-  }, [isInView, disabled, animate, stagger, to, duration, delay, ease, scope]);
+  }, [isInView, animate, stagger, to, duration, delay, ease, scope]);
 
   // If disabled, just return children without wrapper
-  if (disabled) {
+  if (DISABLE_ANIMATIONS) {
     return <>{children}</>;
   }
 

@@ -1,29 +1,32 @@
 // apps/web/src/components/motion/AnimateOnScroll/types.ts
 
-export type AnimationConfig = {
+import type { Easing } from 'motion/react';
+
+export type AnimationProperties = {
   y?: number;
   x?: number;
   opacity?: number;
   scale?: number;
   rotate?: number;
+  transform?: string;
 };
 
-export type StaggerConfig = {
+export type StaggerItem = {
   selector: string;
   delay: number;
-  from?: AnimationConfig;
-  to?: AnimationConfig;
+  from?: AnimationProperties;
+  to?: AnimationProperties;
   duration?: number;
-  ease?: number[];
+  ease?: Easing;
 };
 
 export type AnimateConfig = {
   delay?: number;
   duration?: number;
-  ease?: number[];
-  from?: AnimationConfig;
-  to?: AnimationConfig;
-  stagger?: StaggerConfig[];
+  ease?: Easing;
+  from?: AnimationProperties;
+  to?: AnimationProperties;
+  stagger?: StaggerItem[];
   threshold?: number;
   once?: boolean;
 };

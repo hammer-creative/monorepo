@@ -6,7 +6,6 @@
 
 [data-page='/'] {
   /* Layout */
-  background: $color-aircutter;
 
   .container {
     position: relative;
@@ -22,6 +21,7 @@
   /* Marquee */
   .marquee {
     position: relative;
+    background: $color-aircutter;
   }
 
   .marquee .masthead {
