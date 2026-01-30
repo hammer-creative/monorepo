@@ -21,7 +21,9 @@
 }
 
 /* Layout - Case Study Cards */
-[data-page='/']
+[data-page='/'] .case-study-card-module {
+  background: $color-nightshade;
+}
 
 /* Text Module - Styles */
 [data-page='/'] .text-module:first-child .wrapper .row p {

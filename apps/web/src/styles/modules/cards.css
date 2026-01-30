@@ -1,25 +1,30 @@
 /* apps/web/src/styles/modules/cards.css */
 
 /* Home Page - Case Study Card Module */
-[data-page='/'] .case-study-card-module {
-  background: $color-aircutter;
+
+.case-study-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--space-40);
 }
 
-[data-page='/'] .case-study-cards {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-20);
+@media screen and (min-width: 40em) {
+  .case-study-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.case-study-card-wrapper {
+  min-width: 0;
 }
 
 [data-page='/'] .case-study-card {
   position: relative;
   width: 100%;
-  max-width: 945px;
 }
 
 [data-page='/'] .case-study-card .image {
   position: relative;
-  width: 100%;
   aspect-ratio: 945 / 656;
 }
 
@@ -55,17 +60,6 @@
 
 [data-page='/'] .case-study-card h3 {
   font-size: 30px;
-}
-
-@media (min-width: 690px) {
-  [data-page='/'] .case-study-cards {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  [data-page='/'] .case-study-card {
-    flex: 1 1 calc(50% - var(--space-10));
-  }
 }
 
 /* Services Page - Card Module */
@@ -247,5 +241,70 @@
     .card-icons-row
     .icon-item:nth-child(n + 8) {
     display: none;
+  }
+}
+
+.case-study-card {
+  position: relative;
+  border: 1px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.case-study-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    90deg,
+    #ffe0b8,
+    #ffd4a8,
+    #ffcc98,
+    #ffc088,
+    #ffb070,
+    #ffa058,
+    #ffb070,
+    #ffc088,
+    #ffcc98,
+    #ffd4a8,
+    #ffe0b8
+  );
+  background-size: 200% 100%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.case-study-card:hover::before {
+  opacity: 1;
+  animation: rainbow-border-shift 2s linear infinite;
+}
+
+[data-page='/'] .case-study-card .image {
+  overflow: hidden;
+}
+
+[data-page='/'] .case-study-card .image > * {
+  transition: transform 1s ease;
+  transform-origin: center;
+}
+
+[data-page='/'] .case-study-card:hover .image > * {
+  transform: scale(1.05) !important;
+}
+
+@keyframes rainbow-border-shift {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
   }
 }

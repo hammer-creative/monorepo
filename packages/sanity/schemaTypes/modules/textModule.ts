@@ -41,7 +41,7 @@ export const textModule = defineType({
       hidden: ({parent}) => !parent?.layout || parent?.layout === 'testimonial',
     },
     {
-      ...titleField({required: false}),
+      ...titleField({required: false, rows: 3}),
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const parent = context.parent as any

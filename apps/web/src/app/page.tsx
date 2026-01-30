@@ -1,8 +1,6 @@
 // apps/web/src/app/page.tsx
 
 import { ClientIcons } from '@/components/common/ClientIcons';
-import { Impressum } from '@/components/common/Impressum';
-import { Masthead } from '@/components/common/Masthead';
 import Scene from '@/components/model/Scene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
@@ -12,7 +10,11 @@ import {
   getHomePage,
   resolveModuleColors,
 } from '@/lib/sanity';
-import type { HomePage as HomePageType } from '@/types/sanity.generated';
+import type {
+  CaseStudyCardModule as CaseStudyCardModuleType,
+  HomePage as HomePageType,
+  TextModule as TextModuleType,
+} from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
@@ -27,6 +29,8 @@ const moduleComponents = {
   caseStudyCardModule: CaseStudyCardModule,
   textModule: TextModule,
 } as const;
+
+type ModuleData = CaseStudyCardModuleType | TextModuleType;
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -92,10 +96,10 @@ export default async function HomePage() {
             >
               {animateConfig ? (
                 <AnimateOnScroll config={animateConfig}>
-                  <Component data={mod as any} />
+                  <Component data={mod as ModuleData} />
                 </AnimateOnScroll>
               ) : (
-                <Component data={mod as any} />
+                <Component data={mod as ModuleData} />
               )}
             </section>,
           ];
