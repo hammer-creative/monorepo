@@ -3,7 +3,7 @@
 import {TextIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {titleField, portableTextField} from '../fields/textField'
-import {createTextField, createColorField, createClientField} from '../factories'
+import {createTextField, createColorField} from '../factories'
 import {applyRequired, requireWhen} from '../utils/validation'
 
 export const textModule = defineType({
@@ -28,12 +28,25 @@ export const textModule = defineType({
       initialValue: 'headlineLeft',
       validation: (Rule) => applyRequired(Rule, true, 'Layout is required'),
     },
-    createClientField({
-      name: 'client',
-      title: 'Client',
-      required: false,
+    {
+      name: 'clients',
+      title: 'Clients',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'client'}],
+          options: {
+            filter: () => ({
+              filter: '_type == "client"',
+              params: {},
+            }),
+            sort: [{field: 'name', direction: 'asc'}],
+          },
+        },
+      ],
       hidden: ({parent}: any) => !parent?.layout || parent?.layout !== 'testimonial',
-    }),
+    },
     {
       ...createTextField({
         name: 'attribution',
@@ -83,8 +96,8 @@ export const textModule = defineType({
 
       if (layout === 'testimonial') {
         return requireWhen(
-          !fields?.client && !fields?.attribution,
-          'Testimonial requires either a Client reference or Attribution text',
+          (!fields?.clients || fields.clients.length === 0) && !fields?.attribution,
+          'Testimonial requires either Client references or Attribution text',
         )
       }
 
@@ -97,7 +110,7 @@ export const textModule = defineType({
       title: 'title',
       tag: 'tag',
       body: 'body',
-      client: 'client.name',
+      client: 'clients[0].name',
       attribution: 'attribution',
     },
     prepare({title, layout, tag, body, client, attribution}) {

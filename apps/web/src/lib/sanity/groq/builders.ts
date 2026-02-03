@@ -151,8 +151,10 @@ export const moduleProjections = `
   _type == "textModule" => {
     layout,
     title,
+    attribution,
     tag,
     body,
+    ${projections.clients},
     textColor {
       ${projections.color}
     }
