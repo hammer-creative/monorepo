@@ -16,9 +16,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   crossOrigin: 'anonymous',
   images: {
+    loader: 'custom',
+    loaderFile: './src/lib/sanity/imageLoader.ts',
     formats: ['image/avif', 'image/webp'],
-    qualities: [75, 80, 85, 90, 100],
-    deviceSizes: [576, 768, 992, 1200],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2560, 3840], // Add larger sizes
     imageSizes: [16, 32, 48, 64, 96],
     remotePatterns: [
       {
