@@ -21,18 +21,13 @@ function isValidTextModule(
   return data !== null;
 }
 
-export function TextModule({
-  data,
-}: {
-  data: TextModuleType | null;
-  // clients?: Array<{ _id: string; name?: string }> | null;
-}) {
+export function TextModule({ data }: { data: TextModuleType | null }) {
   // Guard: Early return if no valid data
   if (!isValidTextModule(data)) return null;
 
   // Destructure module data
 
-  const { title, body, layout, attribution, tag, clients = [] } = data;
+  const { title, body, layout, attribution, tag } = data;
 
   // Guard: Early return if no layout or no content
   if (!layout || (!body && !attribution && !title)) return null;
