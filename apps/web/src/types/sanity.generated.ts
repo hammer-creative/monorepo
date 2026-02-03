@@ -372,12 +372,13 @@ export type TextImageModule = {
 export type TextModule = {
   _type: 'textModule';
   layout?: 'challenge' | 'headlineLeft' | 'testimonial' | 'homePage';
-  client?: {
+  clients?: Array<{
     _ref: string;
     _type: 'reference';
     _weak?: boolean;
+    _key: string;
     [internalGroqTypeReferenceTo]?: 'client';
-  };
+  }>;
   attribution?: string;
   tag?: string;
   title?: string;
