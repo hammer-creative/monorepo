@@ -1,0 +1,25 @@
+/* apps/web/src/styles/modules/hero.css */
+
+@import '../mixins.css';
+
+.single-image-module {
+  @mixin single-image-border;
+}
+
+.single-image-module .wrapper {
+  .row.single-image {
+    position: relative;
+
+    .image {
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  @media screen and (min-width: 50rem) {
+    .row.single-image .image {
+      aspect-ratio: 16 / 9;
+      height: 100vh;
+      width: 100%;
+    }
+  }
+}

@@ -29,6 +29,7 @@ export function HeroModule({
   clients?: Client[];
 }) {
   // Guard: Early return if no valid data
+
   if (!isValidHeroModule(data)) return null;
 
   // Destructure module data

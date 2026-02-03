@@ -115,6 +115,11 @@ export type VideoModule = {
       _key: string;
     } & VideoItem
   >;
+  mobileVideos?: Array<
+    {
+      _key: string;
+    } & VideoItem
+  >;
   backgroundColor?: {
     enabled?: boolean;
     name?:
@@ -373,6 +378,7 @@ export type TextModule = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: 'client';
   };
+  attribution?: string;
   tag?: string;
   title?: string;
   body?: Array<{
@@ -811,6 +817,15 @@ export type Client = {
   website?: string;
 };
 
+export type MediaTag = {
+  _id: string;
+  _type: 'media.tag';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
+};
+
 export type MuxVideoAsset = {
   _id: string;
   _type: 'mux.videoAsset';
@@ -1020,6 +1035,7 @@ export type AllSanitySchemaTypes =
   | CaseStudy
   | MuxVideo
   | Client
+  | MediaTag
   | MuxVideoAsset
   | MuxAssetData
   | MuxStaticRenditions

@@ -4,6 +4,7 @@ import {VersionsIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {titleField, portableTextField} from '../fields/textField'
 import {createSingleImageField, createColorField} from '../factories'
+import {applyRequired, requireWhen} from '../utils/validation'
 
 /**
  * Impact Module
@@ -32,33 +33,42 @@ export const impactModule = defineType({
         layout: 'radio',
       },
       initialValue: 'threeText',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => applyRequired(Rule, true, 'Layout is required'),
     },
     {
       name: 'textBlock1',
       title: 'Text Block 1',
       type: 'object',
-      fields: [titleField({required: false}), portableTextField({enableColorAnnotations: true})],
+      fields: [
+        titleField({required: false, maxLength: 100}),
+        portableTextField({enableColorAnnotations: true, maxLength: 600}),
+      ],
     },
     {
       name: 'textBlock2',
       title: 'Text Block 2',
       type: 'object',
-      fields: [titleField({required: false}), portableTextField({enableColorAnnotations: true})],
+      fields: [
+        titleField({required: false, maxLength: 100}),
+        portableTextField({enableColorAnnotations: true, maxLength: 600}),
+      ],
       hidden: ({parent}: any) => parent?.layout === 'oneTextOneImage',
     },
     {
       name: 'textBlock3',
       title: 'Text Block 3',
       type: 'object',
-      fields: [titleField({required: false}), portableTextField({enableColorAnnotations: true})],
+      fields: [
+        titleField({required: false, maxLength: 100}),
+        portableTextField({enableColorAnnotations: true, maxLength: 600}),
+      ],
       hidden: ({parent}: any) => parent?.layout !== 'threeText',
     },
     {
       ...createSingleImageField({
         name: 'image',
         title: 'Image',
-        required: true,
+        required: false,
       }),
       hidden: ({parent}: any) => parent?.layout === 'threeText',
     },
@@ -82,21 +92,24 @@ export const impactModule = defineType({
       const layout = fields?.layout
 
       if (layout === 'threeText') {
-        if (!fields?.textBlock1 || !fields?.textBlock2 || !fields?.textBlock3) {
-          return 'All 3 text blocks are required for this layout'
-        }
+        return requireWhen(
+          !fields?.textBlock1 || !fields?.textBlock2 || !fields?.textBlock3,
+          'All 3 text blocks are required for this layout',
+        )
       }
 
       if (layout === 'twoTextOneImage') {
-        if (!fields?.textBlock1 || !fields?.textBlock2 || !fields?.image) {
-          return '2 text blocks and 1 image are required for this layout'
-        }
+        return requireWhen(
+          !fields?.textBlock1 || !fields?.textBlock2 || !fields?.image,
+          '2 text blocks and 1 image are required for this layout',
+        )
       }
 
       if (layout === 'oneTextOneImage') {
-        if (!fields?.textBlock1 || !fields?.image) {
-          return '1 text block and 1 image are required for this layout'
-        }
+        return requireWhen(
+          !fields?.textBlock1 || !fields?.image,
+          '1 text block and 1 image are required for this layout',
+        )
       }
 
       return true

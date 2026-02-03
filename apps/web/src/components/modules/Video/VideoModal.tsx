@@ -10,68 +10,6 @@ import { MuxVideo } from './MuxVideo';
 import { CloseButton, MuteButton, PauseButton } from './VideoControls';
 import { VideoProgressBar } from './VideoProgressBar';
 
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
-// apps/web/src/components/Video/VideoModal.tsx
-
 interface VideoModalProps {
   videoItem: VideoItem;
   open: boolean;

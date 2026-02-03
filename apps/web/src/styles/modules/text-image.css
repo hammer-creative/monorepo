@@ -2,18 +2,39 @@
 
 @import '../mixins.css';
 
+/* Text & Image – Layout */
 .text-image-module .wrapper {
-  @mixin flex-responsive column, row, 30em;
+  @mixin flex-responsive column, row, 40em;
 
   .row {
     flex: 1;
   }
 
+  /* Horizontal alignment */
+  &.text-right {
+    .row.image {
+      order: 1;
+    }
+    .row.text {
+      order: 2;
+    }
+  }
+
+  &.text-left {
+    .row.image {
+      order: 2;
+    }
+    .row.text {
+      order: 1;
+    }
+  }
+
+  /* Vertical alignment */
   .row.image {
     aspect-ratio: 1 / 1;
     order: 1;
 
-    @media screen and (min-width: 30rem) {
+    @media screen and (min-width: 40rem) {
       aspect-ratio: 7 / 5;
       order: 2;
     }
@@ -22,7 +43,7 @@
   .row.text {
     order: 2;
 
-    @media screen and (min-width: 30rem) {
+    @media screen and (min-width: 40rem) {
       order: 1;
     }
   }

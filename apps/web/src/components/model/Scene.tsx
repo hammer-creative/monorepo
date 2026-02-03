@@ -7,35 +7,35 @@
 
 import { OrbitControls, useGLTF, useVideoTexture } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Suspense, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 // ==========================================
 // TUNABLE PARAMETERS
 // ==========================================
 const MAX_ROTATION = 8; // Max rotation in degrees
-const LERP_SPEED = 0.05; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
-const PARALLAX_FACTOR = 0.5; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
+const LERP_SPEED = 0.1; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
+const PARALLAX_FACTOR = 0; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
 
 // MESH VISIBILITY
-const SHOW_CORNEA = false;
+const SHOW_CORNEA = true;
 const SHOW_IRIS = true;
 const SHOW_PUPIL = true;
-const SHOW_SCLERA = false;
+const SHOW_SCLERA = true;
 
 // VIDEO PUPIL PARAMETERS
-const ENABLE_VIDEO_PUPIL = false; // Set to false to use solid color instead of video
+const ENABLE_VIDEO_PUPIL = true; // Set to false to use solid color instead of video
 const PUPIL_COLOR = new THREE.Color(0xffffff); // Pupil color when video is disabled (black by default)
 const PUPIL_Z_POSITION = 0; // How far back the pupil sits (more negative = deeper inside)
 const PUPIL_SCALE = 1; // Pupil size (1.5 = 50% bigger)
 
 // IRIS PARAMETERS
 const ENABLE_IRIS_ROTATION = true; // Set to false to disable iris spinning
-const IRIS_ROTATION_SPEED = 0.05; // Iris base spin speed (radians per second)
-const IRIS_ROTATION_SPEED_ON_MOVE = 0.7; // Iris spin speed when mouse is moving (radians per second)
-const IRIS_SPEED_LERP = 0.05; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
-const IRIS_SATURATION = 1.8; // Iris color saturation (1.0 = normal, >1.0 = more saturated)
-const IRIS_CONTRAST = 1.4; // Iris contrast (1.0 = normal, >1.0 = more contrast)
+const IRIS_ROTATION_SPEED = 0.03; // Iris base spin speed (radians per second)
+const IRIS_ROTATION_SPEED_ON_MOVE = 0.5; // Iris spin speed when mouse is moving (radians per second)
+const IRIS_SPEED_LERP = 0.1; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
+const IRIS_SATURATION = 1.3; // Iris color saturation (1.0 = normal, >1.0 = more saturated)
+const IRIS_CONTRAST = 1.2; // Iris contrast (1.0 = normal, >1.0 = more contrast)
 
 // LIGHTING PARAMETERS
 const AMBIENT_LIGHT_INTENSITY = 0.5; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
@@ -44,7 +44,7 @@ const DIRECTIONAL_LIGHT_POSITION = [0, 2, 5]; // Light position [x, y, z]
 const TONE_MAPPING_EXPOSURE = 1.0; // Exposure control (0.5 = darker, 1.5 = brighter)
 // ==========================================
 
-function Model({ url }: { url: string }) {
+function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
   const gltf = useGLTF(url);
   const { camera } = useThree();
 
@@ -76,7 +76,6 @@ function Model({ url }: { url: string }) {
   const MAX_ROTATION_RAD = THREE.MathUtils.degToRad(MAX_ROTATION);
 
   // Log everything in the model
-  console.log('=== MODEL STRUCTURE ===');
   gltf.scene.traverse((child) => {
     if (child.name === 'Shadow_Catch') {
       child.visible = false;
@@ -84,71 +83,9 @@ function Model({ url }: { url: string }) {
 
     // @ts-ignore
     if (child.isMesh) {
-      console.log('Mesh:', child.name);
-      console.log('  Material:', child.material?.name);
-      console.log('  Material type:', child.material?.type);
-
-      // Enhanced texture logging
-      console.log('  Has map texture?', !!child.material?.map);
-      if (child.material?.map) {
-        console.log('  Map texture:');
-        console.log(
-          '    - Size:',
-          child.material.map.image?.width,
-          'x',
-          child.material.map.image?.height,
-        );
-        console.log('    - UUID:', child.material.map.uuid);
-        console.log('    - Name:', child.material.map.name);
-        console.log(
-          '    - Wrap:',
-          child.material.map.wrapS,
-          child.material.map.wrapT,
-        );
-        console.log(
-          '    - Filter:',
-          child.material.map.minFilter,
-          child.material.map.magFilter,
-        );
-      }
-
-      console.log('  Has normalMap?', !!child.material?.normalMap);
-      if (child.material?.normalMap) {
-        console.log('  Normal Map:', child.material.normalMap.uuid);
-      }
-
-      console.log('  Has roughnessMap?', !!child.material?.roughnessMap);
-      if (child.material?.roughnessMap) {
-        console.log('  Roughness Map:', child.material.roughnessMap.uuid);
-      }
-
-      console.log('  Has metalnessMap?', !!child.material?.metalnessMap);
-      if (child.material?.metalnessMap) {
-        console.log('  Metalness Map:', child.material.metalnessMap.uuid);
-      }
-
-      console.log('  Has emissiveMap?', !!child.material?.emissiveMap);
-      if (child.material?.emissiveMap) {
-        console.log('  Emissive Map:', child.material.emissiveMap.uuid);
-      }
-
-      console.log('  Has aoMap?', !!child.material?.aoMap);
-      if (child.material?.aoMap) {
-        console.log('  AO Map:', child.material.aoMap.uuid);
-      }
-
-      console.log('  Vertex count:', child.geometry.attributes.position.count);
-      console.log('  Material properties:');
-      console.log('    - Color:', child.material?.color?.getHexString());
-      console.log('    - Roughness:', child.material?.roughness);
-      console.log('    - Metalness:', child.material?.metalness);
-      console.log('    - Emissive:', child.material?.emissive?.getHexString());
-      console.log('---');
-
       // Toggle cornea visibility
       if (child.name === 'Cornea_Mesh_2') {
         child.visible = SHOW_CORNEA;
-        console.log('>>> Cornea visibility:', SHOW_CORNEA);
       }
 
       // Store reference to iris mesh for spinning
@@ -185,15 +122,6 @@ function Model({ url }: { url: string }) {
         };
 
         child.material.needsUpdate = true;
-
-        console.log('>>> Iris mesh FOUND and stored:', child.name);
-        console.log('>>> Iris visibility:', SHOW_IRIS);
-        console.log('>>> Iris saturation:', IRIS_SATURATION);
-        console.log('>>> Iris contrast:', IRIS_CONTRAST);
-        console.log('>>> Iris texture details:');
-        if (child.material?.map) {
-          console.log('    Shared texture UUID:', child.material.map.uuid);
-        }
       }
 
       // Replace pupil texture with video or solid color
@@ -202,15 +130,9 @@ function Model({ url }: { url: string }) {
 
         if (ENABLE_VIDEO_PUPIL) {
           child.material.map = videoTexture;
-          console.log('>>> Pupil texture replaced with video');
-          console.log('    Video texture UUID:', videoTexture.uuid);
         } else {
           child.material.map = null;
           child.material.color = PUPIL_COLOR;
-          console.log(
-            '>>> Pupil texture replaced with solid color:',
-            PUPIL_COLOR.getHexString(),
-          );
         }
         child.material.needsUpdate = true;
 
@@ -219,23 +141,20 @@ function Model({ url }: { url: string }) {
         // Position pupil behind the sclera opening
         child.position.z = PUPIL_Z_POSITION;
         child.scale.set(PUPIL_SCALE, PUPIL_SCALE, PUPIL_SCALE);
-
-        console.log('>>> Pupil visibility:', SHOW_PUPIL);
-        console.log('Video pupil enabled:', ENABLE_VIDEO_PUPIL);
-        console.log('Pupil Z position:', PUPIL_Z_POSITION);
-        console.log('Pupil scale:', PUPIL_SCALE);
       }
 
       // Toggle sclera visibility
       if (child.name === 'Sclera_Mesh_2') {
         child.visible = SHOW_SCLERA;
-        console.log('>>> Sclera visibility:', SHOW_SCLERA);
       }
     }
   });
 
   // Mouse tracking - update target rotation based on mouse position
   useFrame((state) => {
+    // Skip all rendering when paused
+    if (isPaused) return;
+
     const currentTime = state.clock.elapsedTime;
     const deltaTime =
       lastTime.current === 0 ? 0 : currentTime - lastTime.current;
@@ -334,9 +253,11 @@ function Model({ url }: { url: string }) {
 const SceneContent = ({
   helpersVisible,
   orbitEnabled,
+  isPaused,
 }: {
   helpersVisible: boolean;
   orbitEnabled: boolean;
+  isPaused: boolean;
 }) => {
   return (
     <>
@@ -345,16 +266,9 @@ const SceneContent = ({
         position={DIRECTIONAL_LIGHT_POSITION}
         intensity={DIRECTIONAL_LIGHT_INTENSITY}
       />
-      {/* {helpersVisible && (
-        <>
-          <gridHelper args={[10, 10]} />
-          <axesHelper args={[5]} />
-        </>
-      )} */}
       <Suspense fallback={null}>
-        <Model url="/model/model-v6.glb" />
+        <Model url="/model/model-v7.glb" isPaused={isPaused} />
       </Suspense>
-      {/* OrbitControls only enabled when helpers are visible */}
       <OrbitControls
         enabled={orbitEnabled}
         enableDamping
@@ -366,10 +280,28 @@ const SceneContent = ({
 
 export default function Scene() {
   const [helpersVisible, setHelpersVisible] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Pause Three.js rendering during scroll
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScroll = () => {
+      setIsPaused(true);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => setIsPaused(false), 500);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
 
   return (
     <div className="model">
-      {/* <button
+      <button
         onClick={() => setHelpersVisible(!helpersVisible)}
         style={{
           position: 'absolute',
@@ -386,7 +318,7 @@ export default function Scene() {
         }}
       >
         Helpers/Orbit: {helpersVisible ? 'ON' : 'OFF'}
-      </button> */}
+      </button>
 
       <Canvas
         camera={{ position: [0, 0, 0.4], fov: 50 }}
@@ -398,6 +330,7 @@ export default function Scene() {
         <SceneContent
           helpersVisible={helpersVisible}
           orbitEnabled={helpersVisible}
+          isPaused={isPaused}
         />
       </Canvas>
     </div>

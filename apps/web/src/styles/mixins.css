@@ -85,7 +85,7 @@
 }
 
 @define-mixin gutters-carousel {
-  padding: var(--space-fluid-20-40);
+  padding: var(--space-fluid-10-20);
 }
 
 @define-mixin head-foot-text {
@@ -94,10 +94,14 @@
 }
 
 @define-mixin single-video-border {
-  padding: var(--space-fluid-20-40);
+  padding: var(--space-fluid-10-20);
   padding-bottom: 0;
 }
 
+@define-mixin single-image-border {
+  padding: var(--space-fluid-10-20);
+}
+
 @define-mixin multi-video-border {
-  padding: var(--space-fluid-20-40);
+  padding: var(--space-fluid-10-20);
 }

@@ -2,57 +2,82 @@
 
 @import '../mixins.css';
 
+/* Base wrapper styles */
 .impact-module .wrapper {
   @mixin flex-responsive column, row;
+}
 
-  .row {
-    flex: 1;
-    @mixin gutters-text-impact;
-    @mixin head-foot-text;
-    min-height: 200px;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height=".5"><line x1="0" y1="0" x2="100" y2="0" stroke="%23C7D3D3" strokeWidth="1"/></svg>')
-      repeat-x;
+/* Base row styles */
+.impact-module .row {
+  flex: 1;
+  @mixin gutters-text-impact;
+  @mixin head-foot-text;
+  min-height: 200px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height=".5"><line x1="0" y1="0" x2="100" y2="0" stroke="%23C7D3D3" strokeWidth="1"/></svg>')
+    repeat-x;
+}
+
+/* Content block styles */
+.impact-module .content {
+  display: flex;
+  flex-direction: column;
+}
+
+.impact-module .content h3 {
+  width: 40%;
+  max-width: 40%;
+  padding-bottom: var(--space-20);
+  min-height: 2em;
+  margin: 0;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+.impact-module .content p.small {
+  line-height: var(--line-height-loose);
+}
+
+/* Image containers */
+.impact-module .image {
+  aspect-ratio: 16 / 9;
+}
+
+/* Three text layout - desktop only */
+@media screen and (min-width: 50rem) {
+  .impact-module .impact-three-text .row:nth-child(2) {
+    border-right: 1px solid $color-aircutter;
+    border-left: 1px solid $color-aircutter;
+    background: none;
   }
 
-  .content {
-    display: flex;
-    flex-direction: column;
-
-    h3 {
-      width: 40%;
-      max-width: 40%;
-      padding-bottom: var(--space-20);
-      min-height: 2em;
-      margin: 0;
-      word-break: keep-all;
-      overflow-wrap: normal;
-    }
-
-    p.small {
-      line-height: var(--line-height-loose);
-    }
+  .impact-module .content h3 {
+    max-width: 70%;
+    width: 70%;
+    min-height: 3em;
+    text-wrap: balance;
   }
 
-  @media screen and (min-width: 50rem) {
-    .row:nth-child(2) {
-      border-right: 1px solid $color-aircutter;
-      border-left: 1px solid $color-aircutter;
-      background: none;
-    }
-
-    .content {
-      h3 {
-        max-width: 70%;
-        width: 70%;
-        min-height: 3em;
-        text-wrap: balance;
-        word-break: keep-all;
-        overflow-wrap: normal;
-      }
-
-      p.small {
-        line-height: var(--line-height-medium);
-      }
-    }
+  .impact-module .content p.small {
+    line-height: var(--line-height-medium);
   }
+}
+
+/* One text + one image layout */
+.impact-module .impact-one-text-one-image .row {
+  border: none;
+  background: none;
+}
+
+.impact-module .impact-one-text-one-image .row:first-child {
+  flex: 1;
+}
+
+.impact-module .impact-one-text-one-image .row:last-child {
+  flex: 2;
+  padding: 0;
+}
+
+/* Two text + one image layout */
+.impact-module .impact-two-text-one-image .row:last-child {
+  padding: 0;
 }
