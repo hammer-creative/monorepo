@@ -1,5 +1,4 @@
-// apps/web/src/components/common/SanityImage.tsx
-import { urlFor } from '@/lib/sanity/image';
+// components/common/SanityImage.tsx
 import type { ImageItem } from '@/types/sanity.generated';
 import Image from 'next/image';
 
@@ -30,7 +29,7 @@ export function SanityImage({
   priority = false,
   className = '',
   objectFit = 'cover',
-  quality = 90,
+  quality = 90, // fallback if quality param is empty
   placeholder = 'empty',
   blurDataURL,
   onLoad,
@@ -38,43 +37,37 @@ export function SanityImage({
 }: SanityImageProps) {
   if (!image?.asset) return null;
 
-  const baseUrl = urlFor(image).url();
+  // Extract asset reference for loader
+  const assetRef =
+    typeof image.asset === 'object' && '_ref' in image.asset
+      ? image.asset._ref
+      : image.asset;
 
-  // Check if image is PNG
-  const isPng =
-    typeof image.asset === 'object' &&
-    '_ref' in image.asset &&
-    typeof image.asset._ref === 'string' &&
-    image.asset._ref.includes('-png');
-
-  // If width and height provided, use them (overrides fill)
   const useFill = fill && !width && !height;
 
   const imageProps = {
-    src: baseUrl,
+    src: assetRef, // Pass reference to custom loader
     alt: image.alt ?? '',
     sizes,
     priority,
-    quality,
+    quality, // This gets passed to loader for each srcset variant
     placeholder,
     blurDataURL,
     className,
     onLoad,
     onError,
-    unoptimized: isPng, // Skip Next.js optimization for PNGs
     ...(useFill ? { fill, style: { objectFit } } : { width, height }),
   };
 
-  // Only error if no dimensions AND not using fill
   if (!useFill && (!width || !height)) return null;
 
   return <Image {...imageProps} />;
 }
 
-// Specific implementations just set defaults
+// Each component sets its own quality level
 export const SanityHeroImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
-) => <SanityImage fill sizes="100vw" priority quality={90} {...props} />;
+) => <SanityImage fill sizes="100vw" priority quality={85} {...props} />;
 
 export const SanityHomePageCardImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
@@ -86,8 +79,6 @@ export const SanityVideoPosterImage = (
   <SanityImage fill sizes="100vw" quality={90} objectFit="cover" {...props} />
 );
 
-export type { SanityImageType };
-
 export const SanityCarouselImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => <SanityImage fill quality={85} objectFit="cover" {...props} />;
@@ -95,3 +86,5 @@ export const SanityCarouselImage = (
 export const SanityImpactImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => <SanityImage fill quality={85} objectFit="cover" {...props} />;
+
+export type { SanityImageType };
