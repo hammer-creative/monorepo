@@ -96,10 +96,14 @@ export default async function HomePage() {
             >
               {animateConfig ? (
                 <AnimateOnScroll config={animateConfig}>
+                  {/* @ts-expect-error - Dynamic module rendering */}
                   <Component data={mod as ModuleData} />
                 </AnimateOnScroll>
               ) : (
-                <Component data={mod as ModuleData} />
+                <>
+                  {/* @ts-expect-error - Dynamic module rendering */}
+                  <Component data={mod as ModuleData} />
+                </>
               )}
             </section>,
           ];

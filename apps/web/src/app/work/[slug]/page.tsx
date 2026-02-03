@@ -14,10 +14,30 @@ import {
   getCaseStudySlugs,
   resolveModuleColors,
 } from '@/lib/sanity';
+import type {
+  CarouselModule as CarouselModuleType,
+  HeroModule as HeroModuleType,
+  ImpactModule as ImpactModuleType,
+  SingleImageModule as SingleImageModuleType,
+  TextImageModule as TextImageModuleType,
+  TextModule as TextModuleType,
+  VideoModule as VideoModuleType,
+} from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+// Union type for all possible module data types
+type ModuleData =
+  | HeroModuleType
+  | VideoModuleType
+  | SingleImageModuleType
+  | TextModuleType
+  | TextImageModuleType
+  | ImpactModuleType
+  | CarouselModuleType;
+
+// Map module type names to their React components
 const moduleComponents = {
   heroModule: HeroModule,
   videoModule: VideoModule,
@@ -28,10 +48,14 @@ const moduleComponents = {
   carouselModule: CarouselModule,
 };
 
+// Next.js config: allow dynamic params for slugs not in generateStaticParams
 export const dynamicParams = true;
+// Revalidate every 60 seconds for ISR
 export const revalidate = 60;
+// Force static generation at build time
 export const dynamic = 'force-static';
 
+// Generate static paths for all case study slugs at build time
 export async function generateStaticParams() {
   const slugs = await getCaseStudySlugs();
   return slugs.map((item: { slug?: string }) => ({
@@ -39,6 +63,7 @@ export async function generateStaticParams() {
   }));
 }
 
+// Generate metadata for SEO and Open Graph
 export async function generateMetadata({
   params,
 }: {
@@ -68,16 +93,21 @@ export default async function CaseStudyPage({
   const { slug } = await params;
   const caseStudy = await getCaseStudy(slug, client);
 
+  // Return 404 if case study not found
   if (!caseStudy) notFound();
 
-  // If clients is null, skip this page entirely during build
+  // Return 404 if case study has no clients (incomplete data)
   if (!caseStudy.clients) {
     notFound();
   }
 
   const { clients = [] } = caseStudy;
 
+  // Resolve color references to actual hex values
   const resolvedModules = caseStudy.modules?.map(resolveModuleColors) || [];
+
+  // Filter out service/deliverable modules and convert null values to undefined
+  // (React doesn't render undefined but throws warnings on null)
   const filteredModules = resolvedModules
     .filter(
       (m: { _type: string }) =>
@@ -100,13 +130,16 @@ export default async function CaseStudyPage({
           backgroundColor?: { hex?: string };
           textColor?: { hex?: string };
         }) => {
+          // Get the React component for this module type
           const Component =
             moduleComponents[mod._type as keyof typeof moduleComponents];
 
+          // Skip if no component registered for this module type
           if (!Component) return null;
 
           const { _key, _type, backgroundColor, textColor } = mod;
 
+          // Only hero and text modules receive client data
           const moduleClients =
             _type === 'heroModule' || _type === 'textModule' ? clients : [];
 
@@ -116,12 +149,14 @@ export default async function CaseStudyPage({
               className={`module ${toKebab(_type)}`}
               style={
                 {
+                  // CSS custom properties for module colors
                   '--module-bg': backgroundColor?.hex,
                   '--module-text': textColor?.hex,
                 } as React.CSSProperties
               }
             >
-              <Component data={mod as never} clients={moduleClients as never} />
+              {/* @ts-expect-error - Dynamic module rendering with union types */}
+              <Component data={mod as ModuleData} clients={moduleClients} />
             </section>
           );
         },
