@@ -3,6 +3,7 @@
 import {defineField, type ArrayRule} from 'sanity'
 import {PortableTextWithCounter} from '../components/PortableTextWithCounter'
 import {addRequiredLabel} from '../utils/fieldHelpers'
+import {applyRequired} from '../utils/validation'
 import React from 'react'
 import {DEFAULT_COLORS} from '@hammercreative/ui'
 
@@ -116,7 +117,7 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     description: addRequiredLabel(description, required),
     components: {input: PortableTextWithCounter},
     validation: (rule: ArrayRule<any>) => {
-      const baseRule = required ? rule.required().error(`${title} is required`) : rule
+      const baseRule = applyRequired(rule, required, `${title} is required`)
 
       return baseRule.max(maxLength).custom((value: any[] = []) => {
         const charCount = value

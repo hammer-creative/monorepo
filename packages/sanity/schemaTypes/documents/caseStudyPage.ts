@@ -3,6 +3,7 @@
 import {defineType} from 'sanity'
 import {titleField, slugField} from '../fields/textField'
 import {ModulesArrayInput} from '../components/ModulesArrayInput'
+import {applyRequired} from '../utils/validation'
 
 export const caseStudyPage = defineType({
   name: 'caseStudy',
@@ -15,8 +16,20 @@ export const caseStudyPage = defineType({
       name: 'clients',
       title: 'Clients',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'client'}]}],
-      validation: (Rule) => Rule.required().min(1),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'client'}],
+          options: {
+            filter: () => ({
+              filter: '_type == "client"',
+              params: {},
+            }),
+            sort: [{field: 'name', direction: 'asc'}],
+          },
+        },
+      ],
+      validation: (Rule) => applyRequired(Rule, true, 'Clients is required').min(1),
     },
     {
       name: 'modules',
@@ -33,7 +46,7 @@ export const caseStudyPage = defineType({
         {type: 'impactModule'},
       ],
       validation: (Rule) =>
-        Rule.required()
+        applyRequired(Rule, true, 'Content Modules is required')
           .min(1)
           .custom((modules: any[] | undefined) => {
             if (!modules || modules.length === 0) {

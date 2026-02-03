@@ -5,6 +5,7 @@ import type {ObjectRule} from 'sanity'
 import React from 'react'
 import {DEFAULT_COLORS} from '@hammercreative/ui'
 import {addRequiredLabel} from '../utils/fieldHelpers'
+import {applyRequired} from '../utils/validation'
 
 interface ColorFieldConfig {
   name?: string
@@ -86,8 +87,6 @@ export const createColorField = (config: ColorFieldConfig = {}) => {
         hidden: ({parent}: any) => !parent?.enabled,
       },
     ],
-    validation: required
-      ? (rule: ObjectRule) => rule.required().error(`${title} is required`)
-      : undefined,
+    validation: (rule: ObjectRule) => applyRequired(rule, required, `${title} is required`),
   })
 }

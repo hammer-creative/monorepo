@@ -71,7 +71,7 @@ export function AnimateOnScroll({
               delay: item.delay || delay,
               ease: itemEase,
             });
-          } catch (e) {
+          } catch {
             // Element doesn't exist, ignore
           }
         }

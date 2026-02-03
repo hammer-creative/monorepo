@@ -1,8 +1,9 @@
 // packages/sanity/schemaTypes/modules/carouselModule.ts
 
-import {ImageIcon} from '@sanity/icons'
+import {VersionsIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {createMultiImageField, createColorField} from '../factories'
+import {createImageDimensionValidation, applyRequired} from '../utils/validation'
 
 /**
  * Carousel Module
@@ -13,24 +14,42 @@ export const carouselModule = defineType({
   name: 'carouselModule',
   title: 'Image Carousel',
   type: 'object',
-  icon: ImageIcon,
+  icon: VersionsIcon,
   fields: [
-    createMultiImageField({
-      name: 'images',
-      title: 'Images',
-      description:
-        'Minimum 3 images. Each image should be square (1:1 aspect ratio), displayed at 680×680px.',
-      required: true,
-      minImages: 3,
-      minWidth: 680,
-      minHeight: 680,
-      maxFileSize: 5,
-      imageOptions: {
-        hotspot: {
-          previews: [{title: '1:1 Square', aspectRatio: 1}],
-        },
-      },
-    }),
+    (() => {
+      const {validation: _, ...field} = createMultiImageField({
+        name: 'images',
+        title: 'Images',
+        description:
+          'Minimum 3 images. Each image should be square (1:1 aspect ratio), displayed at 680×680px.',
+        required: true,
+        minImages: 3,
+        maxImages: 20,
+      })
+      return {
+        ...field,
+        validation: (Rule) =>
+          applyRequired(Rule, true, 'Images is required')
+            .min(3)
+            .max(20)
+            .custom(async (items: any[]) => {
+              if (!items?.length) return true
+
+              const dimensionValidator = createImageDimensionValidation({
+                minWidth: 680,
+                minHeight: 680,
+                maxFileSize: 5,
+              })
+
+              for (const item of items) {
+                const result = await dimensionValidator(item.image)
+                if (result !== true) return result
+              }
+
+              return true
+            }),
+      }
+    })(),
     createColorField({
       name: 'backgroundColor',
       title: 'Background Color',

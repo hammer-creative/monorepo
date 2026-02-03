@@ -4,6 +4,7 @@ import {ImageIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {portableTextField} from '../fields/textField'
 import {createSingleImageField, createColorField} from '../factories'
+import {createImageDimensionValidation, applyRequired} from '../utils/validation'
 
 export const textImageModule = defineType({
   name: 'textImageModule',
@@ -22,63 +23,61 @@ export const textImageModule = defineType({
         ],
         layout: 'radio',
       },
-      validation: (Rule) => Rule.required(),
+      initialValue: 'textRight',
+      validation: (Rule) => applyRequired(Rule, true, 'Layout is required'),
     },
-    {
-      ...portableTextField({enableColorAnnotations: true}),
-      validation: (Rule) => Rule.required(),
-      hidden: ({parent}) => !parent?.layout,
-    },
-    {
-      ...createSingleImageField({
+    portableTextField({enableColorAnnotations: true, maxLength: 1000}),
+    (() => {
+      const {validation: _, ...imageField} = createSingleImageField({
         name: 'image',
         title: 'Image',
         required: true,
-        minWidth: 1960,
-        minHeight: 1400,
-        maxFileSize: 3,
-        description: 'Minimum dimensions 1960 px × 1400 px, maximum filze size 3 MB.',
+        description: 'Minimum dimensions 1960 px × 1400 px, maximum file size 3 MB.',
         imageOptions: {
           hotspot: {
             previews: [{title: '14:10 Rectangle', aspectRatio: 14 / 10}],
           },
         },
-      }),
-      hidden: ({parent}) => !parent?.layout,
-    },
-    {
-      ...createColorField({
-        name: 'backgroundColor',
-        title: 'Background Color',
-        required: true,
-      }),
-      hidden: ({parent}) => !parent?.layout,
-    },
-    {
-      ...createColorField({
-        name: 'textColor',
-        title: 'Text Color',
-        required: true,
-        initialValue: {
-          enabled: true,
-          name: 'nightshade',
-        },
-      }),
-      hidden: ({parent}) => !parent?.layout,
-    },
+      })
+      return {
+        ...imageField,
+        validation: (Rule) =>
+          applyRequired(Rule, true, 'Image is required').custom(
+            createImageDimensionValidation({
+              minWidth: 1960,
+              minHeight: 1400,
+              maxFileSize: 3,
+            }),
+          ),
+      }
+    })(),
+    createColorField({
+      name: 'backgroundColor',
+      title: 'Background Color',
+      required: true,
+    }),
+    createColorField({
+      name: 'textColor',
+      title: 'Text Color',
+      required: true,
+      initialValue: {
+        enabled: true,
+        name: 'nightshade',
+      },
+    }),
   ],
   preview: {
     select: {
       body: 'body',
-      title: 'title',
       layout: 'layout',
+      media: 'image',
     },
-    prepare({layout, body}) {
+    prepare({layout, body, media}) {
       const layoutLabels: Record<string, string> = {
         textRight: 'Text Right → Image Left',
         textLeft: 'Text Left → Image Right',
       }
-      // Extract text from portable text body
+
       const bodyText = body
         ?.map((block: any) =>
           block._type === 'block' && block.children
@@ -90,8 +89,9 @@ export const textImageModule = defineType({
       const words = bodyText?.split(/\s+/).filter(Boolean).slice(0, 10).join(' ')
 
       return {
-        title: ['Text + Image', layoutLabels[layout]].filter(Boolean).join(' • ') || 'Text + Image',
-        subtitle: words ? `${words}...` : layoutLabels[layout] || 'Text + Image Module',
+        title: 'Text + Image Module',
+        subtitle: words ? `${words}...` : layoutLabels[layout] || undefined,
+        media,
       }
     },
   },
