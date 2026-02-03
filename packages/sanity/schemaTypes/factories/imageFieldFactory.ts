@@ -2,8 +2,8 @@
 
 import {defineField} from 'sanity'
 import {addRequiredLabel} from '../utils/fieldHelpers'
+import {applyRequired} from '../utils/validation'
 import {createTextField} from './textFieldFactory'
-import {client} from '../../src/lib/client'
 
 interface HotspotPreview {
   title: string
@@ -22,24 +22,18 @@ interface ImageOptions {
   accept?: string
 }
 
-interface BaseImageConfig {
+interface SingleImageConfig {
   name?: string
   title?: string
-  altMaxLength?: number
-  imageOptions?: ImageOptions
-  minWidth?: number
-  minHeight?: number
-  maxFileSize?: number // in MB
-}
-
-interface SingleImageConfig extends BaseImageConfig {
   required?: boolean
   withCaption?: boolean
   captionMaxLength?: number
   description?: string
+  altMaxLength?: number
+  imageOptions?: ImageOptions
 }
 
-interface MultiImageConfig extends BaseImageConfig {
+interface MultiImageConfig {
   name?: string
   title?: string
   required?: boolean
@@ -49,25 +43,27 @@ interface MultiImageConfig extends BaseImageConfig {
 }
 
 /**
- * Base image field configuration shared by both single and multi-image fields
- * Handles validation for dimensions and file size
+ * Creates a single image field with alt text and optional caption
+ * Uses Sanity's native image type with hotspot cropping support
  */
-function createBaseImageField(config: BaseImageConfig = {}) {
+export const createSingleImageField = (config: SingleImageConfig = {}) => {
   const {
     name = 'image',
     title = 'Image',
+    required = false,
+    withCaption = false,
+    captionMaxLength = 200,
+    description = '',
     altMaxLength = 150,
     imageOptions = {hotspot: true},
-    minWidth,
-    minHeight,
-    maxFileSize,
   } = config
 
-  return {
+  return defineField({
     name,
     title,
     type: 'image' as const,
     options: imageOptions,
+    description: addRequiredLabel(description, required),
     fields: [
       createTextField({
         name: 'alt',
@@ -76,37 +72,6 @@ function createBaseImageField(config: BaseImageConfig = {}) {
         maxLength: altMaxLength,
         description: 'Describe the image for accessibility (screen readers, SEO)',
       }),
-    ],
-    minWidth,
-    minHeight,
-    maxFileSize,
-  }
-}
-
-/**
- * Creates a single image field with alt text and optional caption
- * Uses Sanity's native image type with hotspot cropping support
- */
-export const createSingleImageField = (config: SingleImageConfig = {}) => {
-  const {
-    required = false,
-    withCaption = false,
-    captionMaxLength = 200,
-    description = '',
-    ...baseConfig
-  } = config
-
-  const baseField = createBaseImageField(baseConfig)
-  const {minWidth, minHeight, maxFileSize} = baseField
-
-  return defineField({
-    name: baseField.name,
-    title: baseField.title,
-    type: baseField.type,
-    options: baseField.options,
-    description: addRequiredLabel(description, required),
-    fields: [
-      ...baseField.fields,
       ...(withCaption
         ? [
             createTextField({
@@ -120,56 +85,7 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
           ]
         : []),
     ],
-    validation: (Rule) =>
-      Rule.custom((image: any) => {
-        if (required && !image?.asset) {
-          return `${baseField.title} is required`
-        }
-
-        if (!image?.asset || (!minWidth && !minHeight && !maxFileSize)) {
-          return true
-        }
-
-        return new Promise((resolve) => {
-          const query = `*[_id == "${image.asset._ref}"][0]{
-            "dimensions": metadata.dimensions,
-            "size": size
-          }`
-
-          client
-            .fetch(query)
-            .then((asset: any) => {
-              if (!asset) return resolve(true)
-
-              const {dimensions, size} = asset
-
-              if (minWidth && dimensions?.width < minWidth) {
-                return resolve(
-                  `Image must be at least ${minWidth}px wide (currently ${dimensions.width}px)`,
-                )
-              }
-
-              if (minHeight && dimensions?.height < minHeight) {
-                return resolve(
-                  `Image must be at least ${minHeight}px tall (currently ${dimensions.height}px)`,
-                )
-              }
-
-              if (maxFileSize) {
-                const maxBytes = maxFileSize * 1024 * 1024
-                if (size > maxBytes) {
-                  const sizeMB = (size / (1024 * 1024)).toFixed(2)
-                  return resolve(
-                    `Image must be smaller than ${maxFileSize}MB (currently ${sizeMB}MB)`,
-                  )
-                }
-              }
-
-              resolve(true)
-            })
-            .catch(() => resolve(true))
-        })
-      }),
+    validation: (Rule) => applyRequired(Rule, required, `${title} is required`),
   })
 }
 
@@ -193,24 +109,12 @@ export const createMultiImageField = (config: MultiImageConfig = {}) => {
     type: 'array',
     of: [{type: 'imageItem'}],
     description: addRequiredLabel(description, required),
-    validation: required
-      ? (Rule) =>
-          Rule.required()
-            .min(minImages)
-            .max(maxImages)
-            .error(
-              `${title} must include ${minImages}-${maxImages} image${maxImages !== 1 ? 's' : ''}`,
-            )
-      : (Rule) =>
-          Rule.min(minImages)
-            .max(maxImages)
-            .error(
-              `${title} must include ${minImages}-${maxImages} image${maxImages !== 1 ? 's' : ''}`,
-            ),
+    validation: (Rule) => {
+      const baseRule = applyRequired(Rule, required, `${title} is required`)
+      return baseRule
+        .min(minImages)
+        .max(maxImages)
+        .error(`${title} must include ${minImages}-${maxImages} image${maxImages !== 1 ? 's' : ''}`)
+    },
   })
 }
-
-/**
- * Export base for use in imageItem object
- */
-export {createBaseImageField}

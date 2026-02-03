@@ -3,6 +3,7 @@
 import {defineType} from 'sanity'
 import {PlayIcon} from '@sanity/icons'
 import {createColorField} from '../factories'
+import {applyRequired, requireWhen} from '../utils/validation'
 
 interface VideoItem {
   poster?: {
@@ -57,7 +58,7 @@ function validateVideoPoster(video: VideoItem, requirements: LayoutRequirements)
   const ref = video?.poster?.asset?._ref
 
   if (!ref) {
-    return 'Poster image required'
+    return requireWhen(true, 'Poster image required')
   }
 
   const dimensions = extractDimensions(ref)
@@ -91,7 +92,7 @@ export const videoModule = defineType({
         'Add 1-3 videos. Poster images should be high-resolution (3x display size): 1 video requires 3840 × 2160 px, 2 videos require 1880 × 1880 px each, 3 videos require 1200 × 2000 px each. Videos should be 4K, H.264/H.265, MP4 format.',
       of: [{type: 'videoItem'}],
       validation: (Rule) =>
-        Rule.required()
+        applyRequired(Rule, true, 'Videos is required')
           .min(1)
           .max(3)
           .custom((videos: VideoItem[]) => {
@@ -130,7 +131,7 @@ export const videoModule = defineType({
 
           // If mobile videos are provided, must be exactly 3
           if (mobileVideos.length !== 3) {
-            return 'If providing mobile videos, must include all 3'
+            return requireWhen(true, 'If providing mobile videos, must include all 3')
           }
 
           // Validate each mobile video poster

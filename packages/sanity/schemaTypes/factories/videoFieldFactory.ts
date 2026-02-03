@@ -2,6 +2,7 @@
 
 import {defineField} from 'sanity'
 import {addRequiredLabel} from '../utils/fieldHelpers'
+import {applyRequired} from '../utils/validation'
 
 interface VideoFieldConfig {
   name?: string
@@ -29,8 +30,8 @@ export const createVideoField = (config: VideoFieldConfig = {}) => {
     of: [{type: 'videoItem'}],
     description: addRequiredLabel(description, required),
     validation: (Rule) => {
-      let validation = Rule.min(minVideos).max(maxVideos)
-      return required ? validation.required() : validation
+      const baseRule = applyRequired(Rule, required, `${title} is required`)
+      return baseRule.min(minVideos).max(maxVideos)
     },
   })
 }

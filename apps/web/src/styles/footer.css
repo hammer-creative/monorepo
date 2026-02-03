@@ -3,6 +3,10 @@
 @import './mixins';
 
 /* Layout - Footer & Mobile Menu Wrapper */
+footer {
+  background: $color-sandstorm;
+}
+
 footer .wrapper,
 .mobile-menu .wrapper {
   padding: var(--space-fluid-20-40) var(--space-fluid-20-40)

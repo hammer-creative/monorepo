@@ -1,8 +1,9 @@
-// packages/sanity/schemaTypes/factories/videoItemFactory.tsnex
+// packages/sanity/schemaTypes/factories/videoItemFactory.ts
 
 import {PlayIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {createTextField, createSingleImageField} from '../factories'
+import {applyRequired} from '../utils/validation'
 
 interface VideoItemConfig {
   name: string
@@ -23,32 +24,41 @@ export function createVideoItem(config: VideoItemConfig) {
     type: 'object',
     icon: PlayIcon,
     fields: [
-      createTextField({
-        name: 'title',
-        title: 'Title',
-        required: true,
-        maxLength: 100,
-      }),
+      (() => {
+        const {validation: _, ...field} = createTextField({
+          name: 'title',
+          title: 'Title',
+          required: false,
+          maxLength: 100,
+        })
+        return {
+          ...field,
+          validation: (Rule) => applyRequired(Rule, true, 'Title is required').max(100),
+        }
+      })(),
       {
         name: 'video',
         title: 'Video',
         type: 'mux.video',
-        validation: (Rule) => Rule.required(),
+        validation: (Rule) => applyRequired(Rule, true, 'Video is required'),
       },
-      createSingleImageField({
-        name: 'poster',
-        title: 'Poster Image',
-        description: `${posterLabel} poster — minimum ${minWidth}×${minHeight}px`,
-        required: true,
-        minWidth,
-        minHeight,
-        maxFileSize: 5,
-        imageOptions: {
-          hotspot: {
-            previews: [{title: aspectRatioLabel, aspectRatio}],
+      (() => {
+        const {validation: _, ...field} = createSingleImageField({
+          name: 'poster',
+          title: 'Poster Image',
+          description: `${posterLabel} poster — minimum ${minWidth}×${minHeight}px`,
+          required: false,
+          imageOptions: {
+            hotspot: {
+              previews: [{title: aspectRatioLabel, aspectRatio}],
+            },
           },
-        },
-      }),
+        })
+        return {
+          ...field,
+          validation: (Rule) => applyRequired(Rule, true, 'Poster Image is required'),
+        }
+      })(),
     ],
     preview: {
       select: {
