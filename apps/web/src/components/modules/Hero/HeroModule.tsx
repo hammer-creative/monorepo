@@ -26,17 +26,16 @@ export function HeroModule({
   clients = [],
 }: {
   data: HeroModuleType | null;
-  clients?: Client[];
+  clients?: Client[] | null;
 }) {
   // Guard: Early return if no valid data
-
   if (!isValidHeroModule(data)) return null;
 
   // Destructure module data
   const { title, body, image, services = [], deliverables = [] } = data;
 
-  // Extract valid client names
-  const clientNames = clients
+  // Extract valid client names (handle null clients)
+  const clientNames = (clients ?? [])
     .map((c) => c?.name)
     .filter((name): name is string => typeof name === 'string');
 

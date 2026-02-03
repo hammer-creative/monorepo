@@ -51,7 +51,7 @@ const moduleComponents = {
 // Next.js config: allow dynamic params for slugs not in generateStaticParams
 export const dynamicParams = true;
 // Revalidate every 60 seconds for ISR
-export const revalidate = 60;
+export const revalidate = 30;
 // Force static generation at build time
 export const dynamic = 'force-static';
 
@@ -70,6 +70,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+
   const caseStudy = await getCaseStudy(slug, client);
 
   if (!caseStudy) return {};
@@ -96,11 +97,7 @@ export default async function CaseStudyPage({
   // Return 404 if case study not found
   if (!caseStudy) notFound();
 
-  // Return 404 if case study has no clients (incomplete data)
-  if (!caseStudy.clients) {
-    notFound();
-  }
-
+  // Use empty array if no clients (allows incomplete drafts)
   const { clients = [] } = caseStudy;
 
   // Resolve color references to actual hex values

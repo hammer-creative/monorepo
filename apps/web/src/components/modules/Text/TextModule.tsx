@@ -23,29 +23,32 @@ function isValidTextModule(
 
 export function TextModule({
   data,
-  clients = [],
 }: {
   data: TextModuleType | null;
-  clients?: Array<{ _id: string; name?: string }>;
+  // clients?: Array<{ _id: string; name?: string }> | null;
 }) {
   // Guard: Early return if no valid data
   if (!isValidTextModule(data)) return null;
 
   // Destructure module data
-  const { title, body, layout, tag } = data;
+
+  const { title, body, layout, attribution, tag, clients = [] } = data;
 
   // Guard: Early return if no layout or no content
-  if (!layout || (!body && !tag && !title)) return null;
+  if (!layout || (!body && !attribution && !title)) return null;
 
-  // Extract valid client names
-  const clientNames = clients
+  // Extract valid client names (handle null clients)
+  const clientNames = (
+    (data.clients ?? []) as unknown as Array<{ _id: string; name?: string }>
+  )
     .map((c) => c?.name)
     .filter((name): name is string => typeof name === 'string');
 
   // Derive layout class and helper flags
   const layoutClass = LAYOUT_CLASS_MAP[layout] ?? '';
+  const hasAttribution = attribution != null;
   const hasBody = body != null;
-  const hasTag = tag != null;
+  const hasTag = title != null;
   const hasTitle = title != null;
   const hasClients = clientNames.length > 0;
 
@@ -86,18 +89,20 @@ export function TextModule({
               <TextBlock body={body} className="medium" />
             </div>
           )}
-          {hasClients && (
+          {data.attribution ? (
+            <div className="attribution">{data.attribution}</div>
+          ) : hasClients ? (
             <div className="clients">
               <ClientNames clientNames={clientNames} showTag={false} />
             </div>
-          )}
+          ) : null}
         </>
       )}
 
       {/* Home Page Layout: Tag, title, and body all in one row */}
       {layout === 'homePage' && (
         <div className="row">
-          {hasTag && <div className="tag">{tag}</div>}
+          {hasAttribution && <div className="tag">{tag}</div>}
           {hasTitle && <h2>{title}</h2>}
           {hasBody && <TextBlock body={body} className="medium" />}
         </div>

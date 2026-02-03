@@ -17,7 +17,7 @@ export async function fetchSanity<T>(
 ): Promise<T> {
   const {
     params = {},
-    cache = 'force-cache',
+    cache = 'no-store',
     tags = [],
     revalidate,
     client = defaultClient,
