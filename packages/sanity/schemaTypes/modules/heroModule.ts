@@ -4,6 +4,7 @@ import {AsteriskIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {titleField, portableTextField} from '../fields/textField'
 import {createSingleImageField, createColorField} from '../factories'
+import {createImageDimensionValidation, applyRequired} from '../utils/validation'
 
 export const heroModule = defineType({
   name: 'heroModule',
@@ -13,34 +14,54 @@ export const heroModule = defineType({
   fields: [
     titleField(),
     portableTextField(),
-    createSingleImageField({
-      name: 'image',
-      title: 'Hero Image',
-      required: true,
-      minWidth: 3840,
-      minHeight: 2160,
-      maxFileSize: 10,
-      description: 'Minimum dimensions 3840 px × 2160 px, maximum file size 10 MB.',
-      imageOptions: {
-        hotspot: {
-          previews: [{title: '16:9 Landscape', aspectRatio: 16 / 9}],
+    (() => {
+      const {validation: _, ...imageField} = createSingleImageField({
+        name: 'image',
+        title: 'Hero Image',
+        required: true,
+        description: 'Minimum dimensions 3840 px × 2160 px, maximum file size 10 MB.',
+        imageOptions: {
+          hotspot: {
+            previews: [{title: '16:9 Landscape', aspectRatio: 16 / 9}],
+          },
         },
-      },
-    }),
-    createSingleImageField({
-      name: 'teaserImage',
-      title: 'Teaser Image',
-      required: true,
-      minWidth: 1380,
-      minHeight: 800,
-      maxFileSize: 2,
-      description: 'Minimum dimensions 1380 px × 800 px, maximum file size 2 MB.',
-      imageOptions: {
-        hotspot: {
-          previews: [{title: '5:3 Landscape', aspectRatio: 5 / 3}],
+      })
+      return {
+        ...imageField,
+        validation: (Rule) =>
+          applyRequired(Rule, true, 'Hero Image is required').custom(
+            createImageDimensionValidation({
+              minWidth: 3840,
+              minHeight: 2160,
+              maxFileSize: 10,
+            }),
+          ),
+      }
+    })(),
+    (() => {
+      const {validation: _, ...imageField} = createSingleImageField({
+        name: 'teaserImage',
+        title: 'Teaser Image',
+        required: true,
+        description: 'Minimum dimensions 1380 px × 800 px, maximum file size 2 MB.',
+        imageOptions: {
+          hotspot: {
+            previews: [{title: '5:3 Landscape', aspectRatio: 5 / 3}],
+          },
         },
-      },
-    }),
+      })
+      return {
+        ...imageField,
+        validation: (Rule) =>
+          applyRequired(Rule, true, 'Teaser Image is required').custom(
+            createImageDimensionValidation({
+              minWidth: 1380,
+              minHeight: 800,
+              maxFileSize: 2,
+            }),
+          ),
+      }
+    })(),
     {
       name: 'services',
       title: 'Services',
@@ -73,11 +94,13 @@ export const heroModule = defineType({
   preview: {
     select: {
       title: 'title',
+      media: 'image',
     },
-    prepare({title}) {
+    prepare({title, media}) {
       return {
         title: 'Hero Module',
-        subtitle: title || 'Missing Case Study Title',
+        subtitle: title || undefined,
+        media,
       }
     },
   },
