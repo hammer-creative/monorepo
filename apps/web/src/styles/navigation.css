@@ -12,7 +12,7 @@ footer .menu-primary li a {
   line-height: var(--line-height-default);
   letter-spacing: var(--letter-spacing-tight);
   text-transform: uppercase;
-  color: $color-vinewhip;
+  color: $color-nightshade;
   transition: color 0.3s ease;
 }
 
@@ -94,7 +94,7 @@ footer .menu-primary li a {
 footer .menu-secondary {
   p,
   .link {
-    color: $color-vinewhip;
+    color: $color-nightshade;
   }
 }
 

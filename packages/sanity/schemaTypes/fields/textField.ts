@@ -9,12 +9,14 @@ import {addRequiredLabel} from '../utils/fieldHelpers'
 /**
  * Standard title text field with character counter
  */
-export const titleField = (options?: {maxLength?: number; required?: boolean}) =>
+export const titleField = (options?: {maxLength?: number; required?: boolean; rows?: number}) =>
   createTextField({
     name: 'title',
     title: 'Title',
     required: options?.required ?? true,
     maxLength: options?.maxLength ?? 100,
+    multiline: !!options?.rows, // This gets used in: type: multiline ? 'text' : 'string'
+    rows: options?.rows,
     withCounter: true,
   })
 

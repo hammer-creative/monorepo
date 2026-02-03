@@ -68,7 +68,7 @@ export function TextModule({
         <>
           <div className="row headline">
             {hasTag && <div className="tag">{tag}</div>}
-            {hasTitle && <h2>{title}</h2>}
+            {hasTitle && <h2 style={{ whiteSpace: 'pre-line' }}>{title}</h2>}
           </div>
           {hasBody && (
             <div className="row text">

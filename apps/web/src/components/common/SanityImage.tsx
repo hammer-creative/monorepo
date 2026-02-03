@@ -78,7 +78,7 @@ export const SanityHeroImage = (
 
 export const SanityHomePageCardImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
-) => <SanityImage fill sizes="100vw" quality={80} {...props} />;
+) => <SanityImage fill quality={80} {...props} />;
 
 export const SanityVideoPosterImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
@@ -89,5 +89,9 @@ export const SanityVideoPosterImage = (
 export type { SanityImageType };
 
 export const SanityCarouselImage = (
+  props: Partial<SanityImageProps> & { image: SanityImageType | null },
+) => <SanityImage fill quality={85} objectFit="cover" {...props} />;
+
+export const SanityImpactImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => <SanityImage fill quality={85} objectFit="cover" {...props} />;

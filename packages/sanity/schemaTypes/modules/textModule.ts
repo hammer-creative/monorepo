@@ -4,6 +4,7 @@ import {TextIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
 import {titleField, portableTextField} from '../fields/textField'
 import {createTextField, createColorField, createClientField} from '../factories'
+import {applyRequired, requireWhen} from '../utils/validation'
 
 export const textModule = defineType({
   name: 'textModule',
@@ -24,7 +25,8 @@ export const textModule = defineType({
         ],
         layout: 'radio',
       },
-      validation: (Rule) => Rule.required(),
+      initialValue: 'headlineLeft',
+      validation: (Rule) => applyRequired(Rule, true, 'Layout is required'),
     },
     createClientField({
       name: 'client',
@@ -34,61 +36,60 @@ export const textModule = defineType({
     }),
     {
       ...createTextField({
+        name: 'attribution',
+        title: 'Attribution',
+        maxLength: 100,
+        description: 'Alternative to Client reference (e.g., "John Doe, CEO")',
+      }),
+      hidden: ({parent}: any) => !parent?.layout || parent?.layout !== 'testimonial',
+    },
+    {
+      ...createTextField({
         name: 'tag',
         title: 'Tag',
         maxLength: 50,
       }),
       hidden: ({parent}) => !parent?.layout || parent?.layout === 'testimonial',
     },
-    {
-      ...titleField({required: false}),
-      validation: (Rule) =>
-        Rule.custom((value, context) => {
-          const parent = context.parent as any
-          if (parent?.layout === 'headlineLeft' && !value) {
-            return 'Title is required for Headline Left layout'
-          }
-          return true
-        }),
-      hidden: ({parent}) =>
-        !parent?.layout || parent?.layout === 'testimonial' || parent?.layout === 'challenge',
-    },
-    {
-      ...portableTextField({enableColorAnnotations: true}),
-      validation: (Rule) =>
-        Rule.custom((value, context) => {
-          const parent = context.parent as any
-          if (parent?.layout === 'homePage') {
-            return true // body is optional for homepage layout
-          }
-          if (!value) {
-            return 'Body is required'
-          }
-          return true
-        }),
-      hidden: ({parent}) => !parent?.layout,
-    },
-    {
-      ...createColorField({
-        name: 'backgroundColor',
-        title: 'Background Color',
-        required: true,
-      }),
-      hidden: ({parent}) => !parent?.layout,
-    },
-    {
-      ...createColorField({
-        name: 'textColor',
-        title: 'Text Color',
-        required: true,
-        initialValue: {
-          enabled: true,
-          name: 'nightshade',
-        },
-      }),
-      hidden: ({parent}) => !parent?.layout,
-    },
+    (() => {
+      const {validation: _, ...field} = titleField({required: false, rows: 3, maxLength: 150})
+      return {
+        ...field,
+        hidden: ({parent}) => !parent?.layout || parent?.layout === 'testimonial',
+      }
+    })(),
+    portableTextField({
+      enableColorAnnotations: true,
+      maxLength: 800,
+    }),
+    createColorField({
+      name: 'backgroundColor',
+      title: 'Background Color',
+      required: true,
+    }),
+    createColorField({
+      name: 'textColor',
+      title: 'Text Color',
+      required: true,
+      initialValue: {
+        enabled: true,
+        name: 'nightshade',
+      },
+    }),
   ],
+  validation: (Rule) =>
+    Rule.custom((fields: any) => {
+      const layout = fields?.layout
+
+      if (layout === 'testimonial') {
+        return requireWhen(
+          !fields?.client && !fields?.attribution,
+          'Testimonial requires either a Client reference or Attribution text',
+        )
+      }
+
+      return true
+    }),
   preview: {
     select: {
       backgroundColor: 'backgroundColor',
@@ -97,8 +98,9 @@ export const textModule = defineType({
       tag: 'tag',
       body: 'body',
       client: 'client.name',
+      attribution: 'attribution',
     },
-    prepare({title, layout, tag, body, client}) {
+    prepare({title, layout, tag, body, client, attribution}) {
       const layoutLabels: Record<string, string> = {
         challenge: 'Challenge',
         headlineLeft: 'Headline Left + Copy Right',
@@ -129,8 +131,9 @@ export const textModule = defineType({
           .join(' ')
 
         const words = bodyText?.split(/\s+/).filter(Boolean).slice(0, 20).join(' ')
-        const clientPart = client ? `${client} • ` : ''
-        subtitle = words ? `${clientPart}${words}...` : clientPart || 'Text Module'
+        const attributionPart = client || attribution
+        const prefix = attributionPart ? `${attributionPart} • ` : ''
+        subtitle = words ? `${prefix}${words}...` : prefix || 'Text Module'
       } else if (layout === 'headlineLeft') {
         subtitle = title || 'Text Module'
       } else if (layout === 'homePage') {

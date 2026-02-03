@@ -4,6 +4,7 @@ import {defineField} from 'sanity'
 import {TextInputWithCounter} from '../components/TextInputWithCounter'
 import {TextAreaWithCounter} from '../components/TextAreaWithCounter'
 import {addRequiredLabel} from '../utils/fieldHelpers'
+import {applyRequired} from '../utils/validation'
 import type {StringRule, TextRule} from 'sanity'
 
 interface TextFieldConfig {
@@ -17,6 +18,10 @@ interface TextFieldConfig {
   description?: string
 }
 
+/**
+ * Creates a text field with optional character counter and validation
+ * Supports both single-line (string) and multi-line (text) input
+ */
 export const createTextField = (config: TextFieldConfig = {}) => {
   const {
     name = 'text',
@@ -40,9 +45,7 @@ export const createTextField = (config: TextFieldConfig = {}) => {
         }
       : undefined,
     rows: multiline ? rows : undefined,
-    validation: required
-      ? (Rule: StringRule | TextRule) =>
-          Rule.required().max(maxLength).error(`${title} is required`)
-      : (Rule: StringRule | TextRule) => Rule.max(maxLength),
+    validation: (Rule: StringRule | TextRule) =>
+      applyRequired(Rule, required, `${title} is required`).max(maxLength),
   })
 }
