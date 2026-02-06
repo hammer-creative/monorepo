@@ -1,8 +1,16 @@
 // apps/web/src/components/modules/Impact/ImpactModule.tsx
-import { PortableTextRenderer } from '@/components/common/PortableTextRenderer';
+import { Title } from '@/components/common';
 import { SanityImpactImage } from '@/components/common/SanityImage';
+import { TextBlock } from '@/components/common/TextBlock';
 import type { ImpactModule as ImpactModuleType } from '@/types/sanity.generated';
-import type { PortableTextBlock } from '@portabletext/types';
+
+type Layout = NonNullable<ImpactModuleType['layout']>;
+
+const LAYOUT_CLASS_MAP: Record<Layout, string> = {
+  threeText: 'three-texts',
+  twoTextOneImage: 'two-texts',
+  oneTextOneImage: 'one-text',
+} as const;
 
 function isValidImpactModule(
   data: ImpactModuleType | null,
@@ -19,98 +27,42 @@ function isValidTextBlock(
 export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
   if (!isValidImpactModule(data)) return null;
 
-  const { layout } = data;
+  const { layout, textBlock1, textBlock2, textBlock3, image } = data;
 
-  // Three text blocks
-  if (layout === 'threeText') {
-    const blocks = [data.textBlock1, data.textBlock2, data.textBlock3].filter(
-      isValidTextBlock,
-    );
+  if (!layout) return null;
 
-    if (blocks.length === 0) return null;
+  const layoutClass = LAYOUT_CLASS_MAP[layout] ?? '';
+  const hasTextBlock1 = isValidTextBlock(textBlock1);
+  const hasTextBlock2 = isValidTextBlock(textBlock2);
+  const hasTextBlock3 = isValidTextBlock(textBlock3);
+  const hasImage = image != null;
 
-    return (
-      <div className="wrapper impact-three-text">
-        {blocks.map((item, i) => (
-          <div key={i} className="row">
-            <div className="content">
-              {item.title && <h3>{item.title}</h3>}
-              {item.body && (
-                <div className="text">
-                  <PortableTextRenderer
-                    value={item.body as PortableTextBlock[]}
-                    className="small"
-                  />
-                </div>
+  return (
+    <div className={`${layoutClass} flex flex-col md:flex-row`}>
+      {[
+        { block: textBlock1, has: hasTextBlock1 },
+        { block: textBlock2, has: hasTextBlock2 },
+        { block: textBlock3, has: hasTextBlock3 },
+      ]
+        .filter(({ has, block }) => has && block !== undefined)
+        .map(({ block }, i) => (
+          <div key={i} className="flex-item flex-1">
+            <div className="wrapper px-fluid-20-40 py-fluid-20-40">
+              {block!.title && (
+                <Title as="h3" variant="tertiary">
+                  {block!.title}
+                </Title>
               )}
+              {block!.body && <TextBlock body={block!.body} />}
             </div>
           </div>
         ))}
-      </div>
-    );
-  }
-
-  // Two text blocks + one image
-  if (layout === 'twoTextOneImage') {
-    const blocks = [data.textBlock1, data.textBlock2].filter(isValidTextBlock);
-
-    return (
-      <div className="wrapper impact-two-text-one-image">
-        {blocks.map((item, i) => (
-          <div key={i} className="row">
-            <div className="content">
-              {item.title && <h3>{item.title}</h3>}
-              {item.body && (
-                <div className="text">
-                  <PortableTextRenderer
-                    value={item.body as PortableTextBlock[]}
-                    className="small"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-        {data.image && (
-          <div className="row">
-            <div className="image">
-              <SanityImpactImage image={data.image} />
-            </div>
+      {(layout === 'twoTextOneImage' || layout === 'oneTextOneImage') &&
+        hasImage && (
+          <div className="image">
+            <SanityImpactImage image={image} />
           </div>
         )}
-      </div>
-    );
-  }
-
-  // One text block + one image
-  if (layout === 'oneTextOneImage') {
-    return (
-      <div className="wrapper impact-one-text-one-image">
-        {isValidTextBlock(data.textBlock1) && (
-          <div className="row">
-            <div className="content">
-              {data.textBlock1.title && <h3>{data.textBlock1.title}</h3>}
-              {data.textBlock1.body && (
-                <div className="text">
-                  <PortableTextRenderer
-                    value={data.textBlock1.body as PortableTextBlock[]}
-                    className="small"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-        {data.image && (
-          <div className="row">
-            <div className="image">
-              <SanityImpactImage image={data.image} />
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  return null;
+    </div>
+  );
 }

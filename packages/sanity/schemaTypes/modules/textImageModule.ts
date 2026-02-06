@@ -46,7 +46,7 @@ export const textImageModule = defineType({
             createImageDimensionValidation({
               minWidth: 1960,
               minHeight: 1400,
-              maxFileSize: 3,
+              maxFileSize: 5,
             }),
           ),
       }

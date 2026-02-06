@@ -19,7 +19,7 @@ export const heroModule = defineType({
         name: 'image',
         title: 'Hero Image',
         required: true,
-        description: 'Minimum dimensions 3840 px × 2160 px, maximum file size 10 MB.',
+        description: 'Minimum dimensions 3840 px × 2160 px, maximum file size 20 MB.',
         imageOptions: {
           hotspot: {
             previews: [{title: '16:9 Landscape', aspectRatio: 16 / 9}],
@@ -33,7 +33,7 @@ export const heroModule = defineType({
             createImageDimensionValidation({
               minWidth: 3840,
               minHeight: 2160,
-              maxFileSize: 10,
+              maxFileSize: 20,
             }),
           ),
       }

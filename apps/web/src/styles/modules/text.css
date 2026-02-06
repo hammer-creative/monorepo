@@ -2,78 +2,36 @@
 
 @import '../mixins.css';
 
-.text-module .wrapper {
-  padding-top: var(--space-fluid-20-80);
-  padding-bottom: var(--space-fluid-20-80);
+.challenge-text {
+  text-wrap: balance;
+  width: 80%;
+  margin-inline: auto;
 }
 
-.text-module .wrapper {
-  &.headline-left {
-    @mixin flex-responsive column, row;
-    @mixin gutters-text-large;
-    @mixin head-foot-text;
-    .row {
-      flex: 1;
-    }
-    .row.headline {
-      @mixin flex-responsive column;
-      justify-content: space-between;
-    }
-    .row.headline .tag,
-    .row.headline h2 {
-      padding-bottom: var(--space-fluid-20-40);
-    }
+@media (min-width: 50em) {
+  .challenge-text {
+    width: 75%;
+    text-wrap: wrap;
   }
-  @media screen and (min-width: 50rem) {
-    &.headline-left {
-      .row.headline .tag,
-      .row.headline h2 {
-        padding-bottom: initial;
-      }
-      .row.headline {
-        > div,
-        h2 {
-          padding-right: var(--space-20);
-        }
-      }
+}
+
+@media (min-width: 50em) {
+  .headline-left {
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .grid > *:nth-child(3) {
+      grid-column: 2;
+      grid-row: 1 / span 2;
     }
   }
 }
 
-.text-module .wrapper {
-  &.challenge,
-  &.testimonial {
-    @mixin flex-responsive column;
-    padding-left: 15vw;
-    padding-right: 15vw;
-    align-items: center;
-    .row.text p {
-      text-align: center;
-    }
+@media (min-width: 50em) {
+  .md\:mb-0 {
+    margin-block-end: 0;
   }
-
-  &.challenge .tag {
-    padding-bottom: var(--space-fluid-20-40);
-  }
-
-  &.testimonial .row.text {
-    padding-bottom: var(--space-fluid-20-40);
-  }
-
-  @media screen and (min-width: 50rem) {
-    &.challenge,
-    &.testimonial {
-      .row.text p {
-        text-align: center;
-      }
-    }
-  }
-}
-
-.text-module.headline-left .wrapper {
-  /* specific styles for headline-left if needed */
-}
-
-.text-module.home-page .wrapper {
-  /* specific styles for home-page if needed */
 }
