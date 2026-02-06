@@ -151,3 +151,12 @@ article.case-study {
     }
   }
 }
+
+h1.title {
+  font-size: clamp(17px, calc(1.0625rem + ((1vw - 3.2px) * 3.5417)), 68px);
+}
+
+.hero-module .content .text p {
+  display: block;
+  margin-bottom: var(--space-fluid-20-40);
+}

@@ -61,7 +61,9 @@ export function HeroModule({
 
           {hasTitle && (
             <div className="text">
-              <Title title={title} as="h1" />
+              <Title as="h1" variant="primary">
+                {title}
+              </Title>
             </div>
           )}
         </div>
@@ -83,7 +85,7 @@ export function HeroModule({
           </div>
           <div className="content">
             <div className="text">
-              {hasBody && <TextBlock body={body} className="medium" />}
+              {hasBody && <TextBlock body={body} variant="hero" />}
 
               {hasClients && (
                 <div className="clients">
