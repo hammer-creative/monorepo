@@ -38,7 +38,7 @@ export function ServicesPageHeroModule({
           )}
           {hasTitle && hasBody && (
             <div className="meta">
-              <Title title={title} as="h1" />
+              <Title as="h1">{title}</Title>
               <TextBlock body={body} className="text small" />
             </div>
           )}
