@@ -6,12 +6,17 @@
 }
 
 /* Body */
+.text-image-module .text-left .body,
 .text-image-module .text-right .body {
   padding-block: var(--space-fluid-40-80);
 }
 
-.text-image-module .text-right .body p {
+.text-image-module .body p {
   line-height: 2;
+}
+
+.text-image-module .text-right .body p,
+.text-image-module .text-left .body p {
   padding-inline: var(--space-fluid-40-80);
 }
 
