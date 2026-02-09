@@ -1,12 +1,12 @@
 /* apps/web/src/styles/modules/text.css */
 
 /* Content */
-.text-module .content {
-  padding-inline: var(--space-fluid-20-60);
+.content {
+  /* padding-inline: var(--space-fluid-20-60); */
 }
 
 /* Challenge */
-.text-module.challenge .content {
+.content.challenge {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,14 +17,15 @@
 }
 
 /* Headline Left - Content */
-.text-module.has-headline .content {
+.content.has-headline {
   display: flex;
   flex-direction: column;
   padding-block: var(--space-fluid-20-60);
+  padding-inline: var(--space-fluid-20-60);
 }
 
 /* Headline Left - Header */
-.text-module.has-headline .header {
+.content.has-headline .header {
   display: flex;
   flex-direction: column;
   gap: var(--space-20);
@@ -32,7 +33,7 @@
 }
 
 /* Testimonial */
-.text-module.testimonial .content {
+.content.testimonial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,15 +42,19 @@
   text-align: center;
 }
 
+.text-module .body p:not(:last-child) {
+  margin-bottom: var(--space-20);
+}
+
 /* Responsive */
 @media (min-width: 50em) {
   /* Headline Left - Content */
-  .text-module.has-headline .content {
+  .content.has-headline {
     flex-direction: row;
   }
 
   /* Headline Left - Header */
-  .text-module.has-headline .header {
+  .content.has-headline .header {
     flex: 1;
     margin-bottom: 0;
     display: flex;
@@ -58,7 +63,7 @@
   }
 
   /* Headline Left - Body */
-  .text-module.has-headline .content > :not(.header) {
+  .content.has-headline .body {
     flex: 1;
   }
 }
