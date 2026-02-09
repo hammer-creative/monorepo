@@ -38,16 +38,16 @@ export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
   const hasImage = image != null;
 
   return (
-    <div className={`${layoutClass} flex flex-col md:flex-row`}>
-      {[
-        { block: textBlock1, has: hasTextBlock1 },
-        { block: textBlock2, has: hasTextBlock2 },
-        { block: textBlock3, has: hasTextBlock3 },
-      ]
-        .filter(({ has, block }) => has && block !== undefined)
-        .map(({ block }, i) => (
-          <div key={i} className="flex-item flex-1">
-            <div className="wrapper px-fluid-20-40 py-fluid-20-40">
+    <section className={`module impact-module ${layoutClass}`}>
+      <div className="content">
+        {[
+          { block: textBlock1, has: hasTextBlock1 },
+          { block: textBlock2, has: hasTextBlock2 },
+          { block: textBlock3, has: hasTextBlock3 },
+        ]
+          .filter(({ has, block }) => has && block !== undefined)
+          .map(({ block }, i) => (
+            <div key={i} className="text-item">
               {block!.title && (
                 <Title as="h3" variant="tertiary">
                   {block!.title}
@@ -55,14 +55,14 @@ export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
               )}
               {block!.body && <TextBlock body={block!.body} />}
             </div>
-          </div>
-        ))}
-      {(layout === 'twoTextOneImage' || layout === 'oneTextOneImage') &&
-        hasImage && (
-          <div className="image">
-            <SanityImpactImage image={image} />
-          </div>
-        )}
-    </div>
+          ))}
+        {(layout === 'twoTextOneImage' || layout === 'oneTextOneImage') &&
+          hasImage && (
+            <div className="image-item">
+              <SanityImpactImage image={image} />
+            </div>
+          )}
+      </div>
+    </section>
   );
 }

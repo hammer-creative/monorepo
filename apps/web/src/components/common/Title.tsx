@@ -17,20 +17,10 @@ export function Title({
 }: TitleProps) {
   if (!children) return null;
 
-  const baseClasses = 'title line-height-tight';
-
-  const variantClasses = {
-    primary: 'font-serif text-xl-fluid',
-    secondary:
-      'font-serif font-weight-900 letter-spacing-tight mb-3 mr-5p pt-4 text-lg-fluid ws-pre-line',
-    tertiary: 'font-sans text-lg-fluid',
-    default: 'font-sans text-default',
-  };
+  const baseClasses = 'title';
 
   return (
-    <Component
-      className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-    >
+    <Component className={`${baseClasses} ${variant} ${className}`}>
       {children}
     </Component>
   );

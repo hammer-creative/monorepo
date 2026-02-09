@@ -1,37 +1,64 @@
 /* apps/web/src/styles/modules/text.css */
 
-@import '../mixins.css';
-
-.challenge-text {
-  text-wrap: balance;
-  width: 80%;
-  margin-inline: auto;
+/* Content */
+.text-module .content {
+  padding-inline: var(--space-fluid-20-60);
 }
 
+/* Challenge */
+.text-module.challenge .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-20);
+  padding-block: var(--space-fluid-40-120);
+  text-align: center;
+}
+
+/* Headline Left - Content */
+.text-module.has-headline .content {
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--space-fluid-20-60);
+}
+
+/* Headline Left - Header */
+.text-module.has-headline .header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  margin-bottom: var(--space-20);
+}
+
+/* Testimonial */
+.text-module.testimonial .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-30);
+  padding-block: var(--space-fluid-40-120);
+  text-align: center;
+}
+
+/* Responsive */
 @media (min-width: 50em) {
-  .challenge-text {
-    width: 75%;
-    text-wrap: wrap;
+  /* Headline Left - Content */
+  .text-module.has-headline .content {
+    flex-direction: row;
   }
-}
 
-@media (min-width: 50em) {
-  .headline-left {
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
-    }
-
-    .grid > *:nth-child(3) {
-      grid-column: 2;
-      grid-row: 1 / span 2;
-    }
+  /* Headline Left - Header */
+  .text-module.has-headline .header {
+    flex: 1;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
-}
 
-@media (min-width: 50em) {
-  .md\:mb-0 {
-    margin-block-end: 0;
+  /* Headline Left - Body */
+  .text-module.has-headline .content > :not(.header) {
+    flex: 1;
   }
 }

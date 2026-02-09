@@ -7,7 +7,7 @@ type Layout = NonNullable<TextModuleType['layout']>;
 
 const LAYOUT_CLASS_MAP: Record<Layout, string> = {
   challenge: 'challenge',
-  headlineLeft: 'headline-left',
+  headlineLeft: 'has-headline',
   testimonial: 'testimonial',
   homePage: 'home-page',
 } as const;
@@ -39,50 +39,53 @@ export function TextModule({ data }: { data: TextModuleType | null }) {
   const hasClients = clientNames.length > 0;
 
   return (
-    <div className={`px-fluid-20-60 ${layoutClass}`}>
-      {layout === 'challenge' && (
-        <div className="align-center flex flex-col gap-20 justify-center py-fluid-40-120">
-          {hasTag && <Label as="div">{tag}</Label>}
-          {hasBody && <TextBlock body={body} variant="dropquote" />}
-        </div>
-      )}
-
-      {layout === 'headlineLeft' && (
-        <div className="grid py-fluid-20-60">
-          <div className="grid-item mb-20 md:mb-0">
+    <section className={`module text-module ${layoutClass}`}>
+      <div className="content">
+        {layout === 'challenge' && (
+          <>
             {hasTag && <Label as="div">{tag}</Label>}
-          </div>
-          <div className="grid-item mb-20 md:mb-0 self-end">
-            {hasTitle && (
-              <Title as="h2" variant="secondary">
-                {title}
-              </Title>
+            {hasBody && <TextBlock body={body} variant="dropquote" />}
+          </>
+        )}
+
+        {layout === 'headlineLeft' && (
+          <>
+            <div className="header">
+              {hasTag && <Label as="div">{tag}</Label>}
+              {hasTitle && (
+                <Title as="h2" variant="secondary">
+                  {title}
+                </Title>
+              )}
+            </div>
+            {hasBody && <TextBlock body={body} variant="has-headline" />}
+          </>
+        )}
+
+        {layout === 'testimonial' && (
+          <>
+            {hasBody && <TextBlock body={body} variant="dropquote" />}
+            {hasAttribution && (
+              <Label as="div" variant="centered">
+                {attribution}
+              </Label>
             )}
-          </div>
-          <div className="grid-item">
-            {hasBody && <TextBlock body={body} variant="left-right" />}
-          </div>
-        </div>
-      )}
+            {hasClients && (
+              <Label as="div" variant="centered">
+                {clientNames}
+              </Label>
+            )}
+          </>
+        )}
 
-      {layout === 'testimonial' && (
-        <div className="align-center challenge-text flex flex-col gap-30 items-center py-fluid-40-120">
-          {hasBody && <TextBlock body={body} variant="dropquote" />}
-          {hasAttribution ? (
-            <Label variant="centered">{attribution}</Label>
-          ) : hasClients ? (
-            <Label variant="centered" clients={clientNames} />
-          ) : null}
-        </div>
-      )}
-
-      {layout === 'homePage' && (
-        <>
-          {hasAttribution && <div className="tag">{tag}</div>}
-          {hasTitle && <Title>{title}</Title>}
-          {hasBody && <TextBlock body={body} />}
-        </>
-      )}
-    </div>
+        {layout === 'homePage' && (
+          <>
+            {hasTag && <Label as="div">{tag}</Label>}
+            {hasTitle && <Title>{title}</Title>}
+            {hasBody && <TextBlock body={body} />}
+          </>
+        )}
+      </div>
+    </section>
   );
 }

@@ -1,0 +1,33 @@
+/* apps/web/src/stylesl/label.css */
+
+.label {
+  font-size: var(--font-size-all-caps);
+  font-weight: 900;
+  letter-spacing: var(--letter-spacing-loose);
+  line-height: var(--line-height-default);
+  text-transform: uppercase;
+  display: block;
+}
+
+.label.client-name {
+  font-weight: initial;
+  text-transform: initial;
+  letter-spacing: var(--letter-spacing-default);
+  font-size: var(--font-size-xs-fluid);
+  line-height: var(--line-height-loose);
+}
+
+.label.client-label {
+  font-size: var(--font-size-all-caps);
+  line-height: var(--line-height-loose);
+}
+
+.label.centered {
+  font-size: var(--font-size-all-caps);
+  text-align: center;
+}
+
+.label.list {
+  font-size: var(--font-size-all-caps);
+  line-height: var(--line-height-loose);
+}

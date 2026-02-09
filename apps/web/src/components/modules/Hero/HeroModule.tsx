@@ -1,10 +1,5 @@
 // apps/web/src/components/modules/Hero/HeroModule.tsx
-import {
-  ClientNames,
-  SanityHeroImage,
-  TextBlock,
-  Title,
-} from '@/components/common';
+import { Label, SanityHeroImage, TextBlock, Title } from '@/components/common';
 import {
   DeliverablesListModule,
   ServicesListModule,
@@ -14,7 +9,6 @@ import type {
   HeroModule as HeroModuleType,
 } from '@/types/sanity.generated';
 
-// Type guard: Check if module data exists and is valid
 function isValidHeroModule(
   data: HeroModuleType | null,
 ): data is HeroModuleType {
@@ -28,83 +22,68 @@ export function HeroModule({
   data: HeroModuleType | null;
   clients?: Client[] | null;
 }) {
-  // Guard: Early return if no valid data
   if (!isValidHeroModule(data)) return null;
 
-  // Destructure module data
   const { title, body, image, services = [], deliverables = [] } = data;
 
-  // Extract valid client names (handle null clients)
   const clientNames = (clients ?? [])
     .map((c) => c?.name)
     .filter((name): name is string => typeof name === 'string');
 
-  // Derive helper flags
-  const hasTitle = title != null;
-  const hasBody = body != null;
-  const hasImage = image != null;
-  const hasServices = services.length > 0;
-  const hasDeliverables = deliverables.length > 0;
-  const hasClients = clientNames.length > 0;
-  const hasMeta = hasBody || hasServices || hasDeliverables || hasClients;
+  const hasHeader = !!title;
+  const hasMeta = !!body || clientNames.length > 0;
+  const hasLists = services.length > 0 || deliverables.length > 0;
 
   return (
-    <div className="wrapper">
-      {/* Hero Section: Image + Title */}
-      <div className="row marquee">
-        <div className="content">
-          {hasImage && (
-            <div className="image">
-              <SanityHeroImage image={image} fill priority />
-            </div>
-          )}
-
-          {hasTitle && (
-            <div className="text">
-              <Title as="h1" variant="primary">
-                {title}
-              </Title>
-            </div>
-          )}
+    <section className="module hero-module">
+      {image && (
+        <div className="image">
+          <SanityHeroImage image={image} fill priority />
         </div>
-      </div>
+      )}
 
-      {/* Metadata Section: Body + Clients + Services/Deliverables */}
-      {hasMeta && (
-        <div className="row meta">
-          <div className="bar">
-            <svg
-              width="80"
-              height="10"
-              viewBox="0 0 80 10"
-              aria-hidden
-              style={{ display: 'block' }}
-            >
-              <rect width="80" height="10" fill="#FFCC98" />
-            </svg>
+      <div className="content">
+        {hasHeader && (
+          <div className="header">
+            <Title as="h1" variant="primary">
+              {title}
+            </Title>
           </div>
-          <div className="content">
-            <div className="text">
-              {hasBody && <TextBlock body={body} variant="hero" />}
+        )}
 
-              {hasClients && (
-                <div className="clients">
-                  <ClientNames clientNames={clientNames} />
-                </div>
-              )}
-            </div>
+        <div className="bar" aria-hidden>
+          <svg width="80" height="10" viewBox="0 0 80 10">
+            <rect width="80" height="10" fill="#FFCC98" />
+          </svg>
+        </div>
 
-            {(hasServices || hasDeliverables) && (
-              <div className="services">
-                {hasServices && <ServicesListModule services={services} />}
-                {hasDeliverables && (
+        {(hasMeta || hasLists) && (
+          <div className="meta">
+            {hasMeta && (
+              <div className="body">
+                {body && <TextBlock body={body} variant="hero" />}
+                {clientNames.length > 0 && (
+                  <div className="clients">
+                    <Label variant="client-label">Client</Label>
+                    <Label clients={clientNames} variant="client-name" />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {hasLists && (
+              <div className="lists">
+                {services.length > 0 && (
+                  <ServicesListModule services={services} />
+                )}
+                {deliverables.length > 0 && (
                   <DeliverablesListModule deliverables={deliverables} />
                 )}
               </div>
             )}
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </section>
   );
 }
