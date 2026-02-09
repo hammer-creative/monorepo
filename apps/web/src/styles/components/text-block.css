@@ -1,0 +1,44 @@
+/* apps/web/src/style/components/title.css */
+
+/* components/text-block.css */
+
+.text-block {
+  line-height: var(--line-height-loose);
+}
+
+/* Module-specific overrides */
+.text-module .text-block.dropquote {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md-fluid);
+}
+
+.text-block.hero {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-lg-fluid);
+  line-height: var(--line-height-tight);
+}
+
+.text-block.impact {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md-fluid);
+}
+
+.text-block.has-headline {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md-fluid);
+}
+
+@media (min-width: 50em) {
+  .text-block {
+    line-height: var(--line-height-medium);
+  }
+
+  .text-block.dropquote {
+    max-width: 50ch;
+    width: 100%;
+  }
+
+  .text-block.default {
+    font-size: var(--font-size-sm-fluid);
+  }
+}

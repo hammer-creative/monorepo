@@ -1,0 +1,108 @@
+/* apps/web/src/styles/components/navigation.css */
+
+/* Footer Theme */
+footer {
+  background: $color-sandstorm;
+}
+
+footer .menu-primary li a {
+  font-family: var(--font-serif-bold);
+  font-size: var(--font-size-fluid-menu-reverse);
+  line-height: var(--line-height-default);
+  letter-spacing: var(--letter-spacing-tight);
+  text-transform: uppercase;
+  color: $color-nightshade;
+  transition: color 0.3s ease;
+}
+
+footer .menu-secondary p,
+footer .menu-secondary .link {
+  color: $color-nightshade;
+}
+
+footer .menu-secondary .address div,
+footer .menu-secondary.social ul li a {
+  text-align: right;
+}
+
+/* Mobile Menu Theme */
+.mobile-menu .menu-primary li a {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-fluid-menu-mobile);
+  text-transform: uppercase;
+  color: $color-hyperbeam;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu .menu-primary li a:hover {
+  color: $color-sandstorm;
+}
+
+@media screen and (min-width: 50em) {
+  .mobile-menu .menu-primary li a {
+    color: $color-sandstorm;
+  }
+
+  .mobile-menu .menu-primary li a:hover {
+    color: $color-hyperbeam;
+  }
+}
+
+.mobile-menu .menu-secondary p,
+.mobile-menu .menu-secondary .link {
+  color: $color-sandstorm;
+}
+
+/* Primary Menu Icons */
+.menu-primary li a svg {
+  flex-shrink: 0;
+  width: 0.75em;
+  height: 0.75em;
+  opacity: 0;
+  color: inherit;
+  transition:
+    opacity 0.3s ease,
+    color 0.3s ease;
+}
+
+.mobile-menu .menu-primary li a:hover svg {
+  display: none;
+}
+
+@media screen and (min-width: 50em) {
+  .mobile-menu .menu-primary li a:hover svg {
+    display: initial;
+    opacity: 1;
+  }
+}
+
+/* Secondary Menu Typography & Effects */
+.menu-secondary p,
+.menu-secondary .link {
+  display: block;
+  font-size: var(--font-size-fluid-extra-small);
+  line-height: var(--line-height-loose);
+  letter-spacing: var(--letter-spacing-loose);
+  text-transform: uppercase;
+}
+
+.menu-secondary a {
+  position: relative;
+}
+
+.menu-secondary a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.33s ease;
+}
+
+.menu-secondary a:hover::after {
+  transform: scaleX(1);
+}

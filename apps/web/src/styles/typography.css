@@ -5,10 +5,42 @@ Contains typographic rhythm, scaling, and sizing. Does not contain spacing, colo
 /* @import './tokens.css'; */
 @import './mixins';
 
+.title {
+  line-height: var(--line-height-tight);
+}
+
+.title.primary {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-xl-fluid);
+  text-transform: uppercase;
+}
+
+.title.secondary {
+  margin-block-end: var(--space-10);
+
+  /* mb-3 mr-5p pt-4 text-lg-fluid ws-pre-line */
+}
+
+.title.tertiary {
+}
+
+@media (min-width: 50em) {
+  .title.primary {
+  }
+
+  .title.secondary {
+  }
+}
+
 body {
   font-family: var(--font-sans);
 }
 
+.title.primary {
+}
+
+.title.secondary {
+}
 /* HEADINGS */
 /* h1,
 h2 {
@@ -16,18 +48,18 @@ h2 {
 } */
 
 h3 {
-  font-weight: 100;
+  /* font-weight: 100; */
 }
 
 h1,
 h2 {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 h1 {
-  @mixin typography var(--font-serif), var(--font-size-fluid-headline);
+  /* @mixin typography var(--font-serif), var(--font-size-fluid-headline);
   line-height: var(--line-height-tight);
-  letter-spacing: -0.06em;
+  letter-spacing: -0.06em; */
 }
 
 h2 {
@@ -38,12 +70,12 @@ h2 {
 }
 
 h3 {
-  @mixin typography var(--font-sans), var(--font-size-fluid-impact-headline);
-  line-height: var(--line-height-default);
+  /* @mixin typography var(--font-sans), var(--font-size-fluid-impact-headline);
+  line-height: var(--line-height-default); */
 }
 
 h3 {
-  font-family: var(--font-sans);
+  /* font-family: var(--font-sans); */
 }
 
 /* PARAGRAPHS & BLOCKS */

@@ -5,33 +5,27 @@ import type { ReactNode } from 'react';
 interface LabelProps {
   children?: ReactNode;
   clients?: string[];
-  variant?: 'default' | 'large' | 'centered';
+  variant?: 'centered' | 'client-label' | 'client-name' | 'list';
   as?: 'span' | 'div' | 'p';
+  className?: string;
 }
 
 export function Label({
   children,
   clients,
-  variant = 'default',
+  variant,
+  className = '',
   as: Component = 'span',
 }: LabelProps) {
-  const baseClasses =
-    'font-weight-900 letter-spacing-wide line-height-default uppercase';
+  const variantClass = variant || '';
 
-  const variantClasses = {
-    default: 'text-xs-fluid',
-    large: 'text-sm-fluid',
-    centered: 'text-xs-fluid text-center',
-  };
-
-  // If clients provided, render as client list
   if (clients?.length) {
     return (
       <>
         {clients.map((name, index) => (
           <Component
-            className={`${baseClasses} ${variantClasses[variant]}`}
-            key={`${name}-${index}`}
+            className={`label ${variantClass} ${className}`.trim()}
+            key={name}
           >
             {name}
             {index < clients.length - 1 && ' + '}
@@ -41,11 +35,10 @@ export function Label({
     );
   }
 
-  // Otherwise render children
   if (!children) return null;
 
   return (
-    <Component className={`${baseClasses} ${variantClasses[variant]}`}>
+    <Component className={`label ${variantClass} ${className}`.trim()}>
       {children}
     </Component>
   );
