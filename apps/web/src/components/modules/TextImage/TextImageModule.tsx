@@ -35,7 +35,7 @@ export function TextImageModule({
   const hasImage = image != null;
 
   return (
-    <section className={`module text-image-module ${layoutClass}`}>
+    <div className={`content ${layoutClass}`}>
       {/* Image */}
       {hasImage && (
         <div className="image">
@@ -49,6 +49,6 @@ export function TextImageModule({
           <TextBlock body={body} />
         </div>
       )}
-    </section>
+    </div>
   );
 }

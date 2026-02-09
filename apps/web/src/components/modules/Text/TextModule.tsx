@@ -39,53 +39,53 @@ export function TextModule({ data }: { data: TextModuleType | null }) {
   const hasClients = clientNames.length > 0;
 
   return (
-    <section className={`module text-module ${layoutClass}`}>
-      <div className="content">
-        {layout === 'challenge' && (
-          <>
-            {hasTag && <Label as="div">{tag}</Label>}
-            {hasBody && <TextBlock body={body} variant="dropquote" />}
-          </>
-        )}
+    <div className={`content ${layoutClass}`}>
+      {layout === 'challenge' && (
+        <>
+          {hasTag && <Label as="div">{tag}</Label>}
+          {hasBody && <TextBlock body={body} variant="dropquote" />}
+        </>
+      )}
 
-        {layout === 'headlineLeft' && (
-          <>
-            <div className="header">
-              {hasTag && <Label as="div">{tag}</Label>}
-              {hasTitle && (
-                <Title as="h2" variant="secondary">
-                  {title}
-                </Title>
-              )}
-            </div>
+      {layout === 'headlineLeft' && (
+        <>
+          <div className="header">
+            {hasTag && <Label as="div">{tag}</Label>}
+            {hasTitle && (
+              <Title as="h2" variant="secondary">
+                {title}
+              </Title>
+            )}
+          </div>
+          <div className="body">
             {hasBody && <TextBlock body={body} variant="has-headline" />}
-          </>
-        )}
+          </div>
+        </>
+      )}
 
-        {layout === 'testimonial' && (
-          <>
-            {hasBody && <TextBlock body={body} variant="dropquote" />}
-            {hasAttribution && (
-              <Label as="div" variant="centered">
-                {attribution}
-              </Label>
-            )}
-            {hasClients && (
-              <Label as="div" variant="centered">
-                {clientNames}
-              </Label>
-            )}
-          </>
-        )}
+      {layout === 'testimonial' && (
+        <>
+          {hasBody && <TextBlock body={body} variant="dropquote" />}
+          {hasAttribution && (
+            <Label as="div" variant="centered">
+              {attribution}
+            </Label>
+          )}
+          {hasClients && (
+            <Label as="div" variant="centered">
+              {clientNames}
+            </Label>
+          )}
+        </>
+      )}
 
-        {layout === 'homePage' && (
-          <>
-            {hasTag && <Label as="div">{tag}</Label>}
-            {hasTitle && <Title>{title}</Title>}
-            {hasBody && <TextBlock body={body} />}
-          </>
-        )}
-      </div>
-    </section>
+      {layout === 'homePage' && (
+        <>
+          {hasTag && <Label as="div">{tag}</Label>}
+          {hasTitle && <Title>{title}</Title>}
+          {hasBody && <TextBlock body={body} />}
+        </>
+      )}
+    </div>
   );
 }

@@ -31,11 +31,6 @@
 
 /* Body */
 .hero-module .body p.text-block {
-  display: flex;
-  flex-direction: column;
-}
-
-.hero-module .body p.text-block {
   max-width: 35ch;
   width: 100%;
   padding-inline-end: 5vw;

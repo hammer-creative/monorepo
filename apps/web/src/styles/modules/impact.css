@@ -13,6 +13,7 @@
   padding-inline: var(--space-fluid-20-40);
   padding-block: var(--space-fluid-20-40);
   min-height: 200px;
+  box-sizing: border-box;
 }
 
 .impact-module .text-item:nth-child(2) {
@@ -29,9 +30,11 @@
   margin-block-end: var(--space-20);
 }
 
-/* Image Item */
-.impact-module .image-item {
+/* Image */
+.impact-module .image {
   aspect-ratio: 16 / 9;
+  height: 100vh;
+  width: 100%;
 }
 
 /* Responsive */
@@ -41,9 +44,10 @@
     flex-direction: row;
   }
 
-  /* Text Item */
-  .impact-module .text-item {
+  /* Equal distribution for any number of items */
+  .impact-module .content > * {
     flex: 1;
+    box-sizing: border-box;
   }
 
   .impact-module .text-item:nth-child(2) {
@@ -57,7 +61,7 @@
   .impact-module .title.tertiary {
     max-width: 70%;
     width: 70%;
-    min-height: 2.5em;
+    min-height: 2em;
     text-wrap: balance;
   }
 }

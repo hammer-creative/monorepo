@@ -38,31 +38,29 @@ export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
   const hasImage = image != null;
 
   return (
-    <section className={`module impact-module ${layoutClass}`}>
-      <div className="content">
-        {[
-          { block: textBlock1, has: hasTextBlock1 },
-          { block: textBlock2, has: hasTextBlock2 },
-          { block: textBlock3, has: hasTextBlock3 },
-        ]
-          .filter(({ has, block }) => has && block !== undefined)
-          .map(({ block }, i) => (
-            <div key={i} className="text-item">
-              {block!.title && (
-                <Title as="h3" variant="tertiary">
-                  {block!.title}
-                </Title>
-              )}
-              {block!.body && <TextBlock body={block!.body} />}
-            </div>
-          ))}
-        {(layout === 'twoTextOneImage' || layout === 'oneTextOneImage') &&
-          hasImage && (
-            <div className="image-item">
-              <SanityImpactImage image={image} />
-            </div>
-          )}
-      </div>
-    </section>
+    <div className={`content ${layoutClass}`}>
+      {[
+        { block: textBlock1, has: hasTextBlock1 },
+        { block: textBlock2, has: hasTextBlock2 },
+        { block: textBlock3, has: hasTextBlock3 },
+      ]
+        .filter(({ has, block }) => has && block !== undefined)
+        .map(({ block }, i) => (
+          <div key={i} className="text-item">
+            {block!.title && (
+              <Title as="h3" variant="tertiary">
+                {block!.title}
+              </Title>
+            )}
+            {block!.body && <TextBlock body={block!.body} />}
+          </div>
+        ))}
+      {(layout === 'twoTextOneImage' || layout === 'oneTextOneImage') &&
+        hasImage && (
+          <div className="image">
+            <SanityImpactImage image={image} />
+          </div>
+        )}
+    </div>
   );
 }

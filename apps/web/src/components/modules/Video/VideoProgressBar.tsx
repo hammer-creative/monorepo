@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 // apps/web/src/components/Video/VideoProgressBar.tsx
 import { useEffect, useRef, useState } from 'react';
 
@@ -16,30 +14,18 @@ export function VideoProgressBar({
   const [buffered, setBuffered] = useState(0);
   const progressBarRef = useRef<HTMLDivElement>(null);
 
-  console.log('VideoProgressBar render - videoElement:', videoElement);
-  console.log(
-    'VideoProgressBar render - currentTime:',
-    videoElement?.currentTime,
-  );
-  console.log('VideoProgressBar render - duration:', videoElement?.duration);
-
   useEffect(() => {
-    console.log('VideoProgressBar useEffect - videoElement:', videoElement);
+    if (!videoElement) {
+      console.log('VideoProgressBar: waiting for video element');
+      return;
+    }
 
-    if (!videoElement) return;
+    console.log('VideoProgressBar: video element ready');
 
     const updateProgress = () => {
-      const { currentTime } = videoElement;
-      const { duration } = videoElement;
-      console.log(
-        'updateProgress - currentTime:',
-        currentTime,
-        'duration:',
-        duration,
-      );
+      const { currentTime, duration } = videoElement;
       if (duration > 0) {
         const newProgress = (currentTime / duration) * 100;
-        console.log('Setting progress to:', newProgress);
         setProgress(newProgress);
       }
     };
@@ -50,15 +36,8 @@ export function VideoProgressBar({
           videoElement.buffered.length - 1,
         );
         const { duration } = videoElement;
-        console.log(
-          'updateBuffered - bufferedEnd:',
-          bufferedEnd,
-          'duration:',
-          duration,
-        );
         if (duration > 0) {
           const newBuffered = (bufferedEnd / duration) * 100;
-          console.log('Setting buffered to:', newBuffered);
           setBuffered(newBuffered);
         }
       }
@@ -87,7 +66,6 @@ export function VideoProgressBar({
     const percentage = clickX / rect.width;
     const newTime = percentage * videoElement.duration;
 
-    console.log('Seeking to:', newTime);
     videoElement.currentTime = newTime;
   };
 
@@ -101,8 +79,6 @@ export function VideoProgressBar({
       }
     }
   };
-
-  console.log('Rendering with progress:', progress, 'buffered:', buffered);
 
   return (
     <div
