@@ -21,11 +21,6 @@
   border-bottom: 1px solid $color-aircutter;
 }
 
-/* Title */
-.impact-module .title.tertiary {
-  margin-block-end: var(--space-20);
-}
-
 /* Image */
 .impact-module .image {
   aspect-ratio: 16 / 9;
@@ -51,12 +46,5 @@
     border-bottom: none;
     border-right: 1px solid $color-aircutter;
     border-left: 1px solid $color-aircutter;
-  }
-
-  /* Title */
-  .impact-module .title.tertiary {
-    max-width: 100%;
-    width: 100%;
-    min-height: 2em;
   }
 }

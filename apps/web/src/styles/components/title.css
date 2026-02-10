@@ -45,5 +45,8 @@
 /* Module-specific overrides, Impact Module */
 .impact-module .title.tertiary {
   white-space: pre-line;
-  color: red;
+  max-width: 100%;
+  width: 100%;
+  min-height: 2em;
+  margin-block-end: var(--space-20);
 }
