@@ -1,0 +1,17 @@
+/* apps/web/src/stylesl/list.css */
+
+.hero-module .services-list p {
+  margin-block-end: var(--space-5);
+  color: $color-hyperbeam;
+}
+
+.hero-module .services-list li {
+  font-size: var(--font-size-xs-fluid);
+  line-height: var(--line-height-loose);
+}
+
+@media screen and (min-width: 50em) {
+  .hero-module .services-list li {
+    /* line-height: var(--line-height-default); */
+  }
+}

@@ -25,15 +25,7 @@ export function ExtendedLink({
     return url.startsWith('http') || url.startsWith('mailto:');
   };
 
-  // Handle email link clicks - obfuscates email from crawlers
-  const handleEmailClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const mailtoHref = `mailto:${email}`;
-    window.location.href = mailtoHref;
-    onClick?.(mailtoHref, e);
-  };
-
-  // Handle all other link clicks
+  // Handle all link clicks
   // If preventNavigation is true, stops default navigation so custom onClick can handle it
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Prevent default browser/Next.js navigation if preventNavigation is true
@@ -49,16 +41,17 @@ export function ExtendedLink({
   // Combine base "link" class with any additional classes
   const combinedClassName = ['link', className].filter(Boolean).join(' ');
 
-  // EMAIL: Render as button to prevent crawler detection
+  // EMAIL: Render as mailto link
   if (email) {
+    const mailtoHref = `mailto:${email}`;
     return (
-      <button
-        type="button"
+      <a
+        href={mailtoHref}
         className={combinedClassName}
-        onClick={handleEmailClick}
+        onClick={(e) => onClick?.(mailtoHref, e)}
       >
         {children}
-      </button>
+      </a>
     );
   }
 

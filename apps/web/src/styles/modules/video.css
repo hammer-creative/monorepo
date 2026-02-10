@@ -20,6 +20,29 @@
   z-index: 10;
 }
 
+/* When hovering video container, buttons turn aircutter */
+.container.single-video div[role='button']:hover .video-modal-pause,
+.container.single-video div[role='button']:hover .video-modal-play {
+  color: $color-aircutter;
+}
+
+/* Mute button: blue when muted, orange when unmuted */
+.single-video .video-modal-mute[data-muted='true'] {
+  color: $color-aircutter;
+}
+
+.single-video .video-modal-mute[data-muted='false'] {
+  color: $color-hyperbeam;
+}
+
+/* On hover, swap the colors */
+.single-video .video-modal-mute[data-muted='true']:hover {
+  color: $color-hyperbeam;
+}
+
+.single-video .video-modal-mute[data-muted='false']:hover {
+  color: $color-aircutter;
+}
 /* MUX PLAYER CONFIGURATION */
 mux-player {
   --play-button: none;
@@ -38,7 +61,7 @@ mux-player {
   --rendition-selectmenu: none;
   --playback-rate-button: none;
   --media-range-track-height: var(--space-10);
-  --media-accent-color: #ffcc98;
+  --media-accent-color: $color-hyperbeam;
   --media-control-height: 0;
   --media-control-padding: 0;
 }
@@ -70,6 +93,7 @@ mux-player {
     flex: 1 1 0;
   }
 }
+
 /* VIDEO POSTER */
 .video-poster {
   position: relative;
@@ -97,32 +121,36 @@ mux-player {
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  color: $color-hyperbeam;
+  transition: color 300ms ease-in-out;
 }
 
-.poster-play-button svg {
-  display: none;
+.video-poster:hover .poster-play-button,
+.video-poster:active .poster-play-button {
+  color: $color-aircutter;
 }
 
-.poster-play-button::before {
-  content: '';
-  display: block;
+.poster-play-svg {
   width: 1.45em;
   height: 1em;
-  font-size: var(--font-size-fluid-large);
-  background-image: url('data:image/svg+xml,<svg width="113" height="78" viewBox="0 0 113 78" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M112.5 38.9712L-3.6705e-06 77.9423L-2.6353e-07 4.46735e-05L112.5 38.9712Z" fill="%23FFCC98"/></svg>');
-  background-size: contain;
-  background-repeat: no-repeat;
+  font-size: var(--font-size-lg-fluid);
   margin-right: var(--space-20);
 }
 
-.single-video .poster-play-button::after {
-  content: 'Play';
-  color: #ffcc98;
-  font-size: var(--font-size-fluid-large);
+.poster-play-text {
+  font-size: var(--font-size-lg-fluid);
   font-weight: 500;
   font-family: var(--font-serif);
   text-transform: uppercase;
   line-height: 0;
+}
+
+.single-video .poster-play-text {
+  display: inline;
+}
+
+.multi-video .poster-play-text {
+  display: none;
 }
 
 /* VIDEO MODAL */
@@ -155,7 +183,41 @@ mux-player {
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #ffcc98;
+  color: $color-hyperbeam;
+  transition: color 300ms ease-in-out;
+}
+
+/* Only video-modal-content buttons get direct hover states */
+.video-modal-content .video-modal-close:hover,
+.video-modal-content .video-modal-close:active,
+.video-modal-content .video-modal-pause:hover,
+.video-modal-content .video-modal-pause:active,
+.video-modal-content .video-modal-play:hover,
+.video-modal-content .video-modal-play:active,
+.video-modal-content .video-modal-volume:hover,
+.video-modal-content .video-modal-volume:active {
+  color: $color-aircutter;
+}
+
+/* VIDEO CONTROLS - SIZING */
+.video-modal-content .video-modal-pause,
+.video-modal-content .video-modal-play,
+.video-modal-content .video-modal-volume,
+.single-video .video-modal-pause,
+.single-video .video-modal-play,
+.single-video .video-modal-mute {
+  font-size: var(--font-size-lg-fluid);
+}
+
+/* Scale the SVG icons inside the buttons */
+.video-modal-content .video-modal-pause svg,
+.video-modal-content .video-modal-play svg,
+.video-modal-content .video-modal-volume svg,
+.single-video .video-modal-pause svg,
+.single-video .video-modal-play svg,
+.single-video .video-modal-mute svg {
+  width: 1em;
+  height: 1em;
 }
 
 /* VIDEO CONTROLS - POSITIONING */
@@ -166,24 +228,24 @@ mux-player {
 
 .video-modal-content .video-modal-pause,
 .video-modal-content .video-modal-play {
-  bottom: var(--space-20);
+  bottom: var(--space-40);
   left: var(--space-40);
 }
 
 .single-video .video-modal-pause,
 .single-video .video-modal-play {
-  bottom: var(--space-20);
-  left: var(--space-50);
+  bottom: var(--space-fluid-20-40);
+  left: var(--space-fluid-20-40);
 }
 
 .video-modal-content .video-modal-volume {
-  bottom: var(--space-20);
-  right: var(--space-40);
+  bottom: var(--space-fluid-20-40);
+  right: var(--space-fluid-20-40);
 }
 
 .single-video .video-modal-mute {
-  bottom: var(--space-20);
-  right: var(--space-40);
+  bottom: var(--space-fluid-20-40);
+  right: var(--space-fluid-20-40);
 }
 
 /* VIDEO PROGRESS BAR */
@@ -192,4 +254,27 @@ mux-player {
   bottom: 0;
   left: 0;
   right: 0;
+  height: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.video-progress-buffered {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(199, 211, 211, 1);
+  transition: width 0.1s ease;
+}
+
+.video-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: $color-hyperbeam;
+  transition: width 0.1s ease;
+  pointer-events: none;
 }

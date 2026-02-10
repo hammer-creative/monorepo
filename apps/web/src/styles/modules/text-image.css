@@ -1,71 +1,64 @@
 /* apps/web/src/styles/modules/text-image.css */
 
-@import '../mixins.css';
+/* Image */
+.text-image-module .image {
+  aspect-ratio: 1 / 1;
+}
 
-/* Text & Image – Layout */
-.text-image-module .wrapper {
-  @mixin flex-responsive column, row, 40em;
+/* Body */
+.text-image-module .body {
+  padding-block: var(--space-fluid-20-40);
+}
 
-  .row {
+.text-image-module .body p {
+  line-height: 2;
+  padding-inline: var(--space-fluid-20-40);
+}
+
+.text-image-module .body p:not(:last-child) {
+  margin-bottom: var(--space-20);
+}
+
+/* Responsive */
+@media (min-width: 40em) {
+  /* Image */
+  .text-image-module .image {
+    aspect-ratio: 7 / 5;
+  }
+
+  /* Body */
+  .text-image-module .body {
+    width: 85%;
+  }
+
+  .text-image-module .body p {
+    line-height: 1.5;
+  }
+
+  /* Content */
+  .text-image-module .content {
+    display: flex;
+  }
+
+  .text-image-module .content > * {
     flex: 1;
   }
 
-  /* Horizontal alignment */
-  &.text-right {
-    .row.image {
-      order: 1;
-    }
-    .row.text {
-      order: 2;
-    }
-  }
-
-  &.text-left {
-    .row.image {
-      order: 2;
-    }
-    .row.text {
-      order: 1;
-    }
-  }
-
-  /* Vertical alignment */
-  .row.image {
-    aspect-ratio: 1 / 1;
-    order: 1;
-
-    @media screen and (min-width: 40rem) {
-      aspect-ratio: 7 / 5;
-      order: 2;
-    }
-  }
-
-  .row.text {
+  /* Text Left */
+  .text-image-module .content.text-left .image {
     order: 2;
-
-    @media screen and (min-width: 40rem) {
-      order: 1;
-    }
   }
 
-  .row.text .content {
-    @mixin gutters-text-small;
-    @mixin head-foot-text;
-
-    @media screen and (min-width: 30rem) {
-      width: 85%;
-    }
+  .text-image-module .content.text-left .body {
+    order: 1;
   }
 
-  .row.text .content p {
-    line-height: 2;
+  /* Text Right */
+  .text-image-module .content.text-right .image {
+    order: 1;
+  }
 
-    &:not(:last-child) {
-      margin-bottom: var(--space-40);
-    }
-
-    @media screen and (min-width: 30rem) {
-      line-height: 1.5;
-    }
+  .text-image-module .content.text-right .body {
+    order: 2;
   }
 }

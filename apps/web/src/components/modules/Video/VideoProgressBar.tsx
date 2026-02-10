@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 // apps/web/src/components/Video/VideoProgressBar.tsx
 import { useEffect, useRef, useState } from 'react';
 
@@ -16,30 +14,15 @@ export function VideoProgressBar({
   const [buffered, setBuffered] = useState(0);
   const progressBarRef = useRef<HTMLDivElement>(null);
 
-  console.log('VideoProgressBar render - videoElement:', videoElement);
-  console.log(
-    'VideoProgressBar render - currentTime:',
-    videoElement?.currentTime,
-  );
-  console.log('VideoProgressBar render - duration:', videoElement?.duration);
-
   useEffect(() => {
-    console.log('VideoProgressBar useEffect - videoElement:', videoElement);
-
-    if (!videoElement) return;
+    if (!videoElement) {
+      return;
+    }
 
     const updateProgress = () => {
-      const { currentTime } = videoElement;
-      const { duration } = videoElement;
-      console.log(
-        'updateProgress - currentTime:',
-        currentTime,
-        'duration:',
-        duration,
-      );
+      const { currentTime, duration } = videoElement;
       if (duration > 0) {
         const newProgress = (currentTime / duration) * 100;
-        console.log('Setting progress to:', newProgress);
         setProgress(newProgress);
       }
     };
@@ -50,15 +33,8 @@ export function VideoProgressBar({
           videoElement.buffered.length - 1,
         );
         const { duration } = videoElement;
-        console.log(
-          'updateBuffered - bufferedEnd:',
-          bufferedEnd,
-          'duration:',
-          duration,
-        );
         if (duration > 0) {
           const newBuffered = (bufferedEnd / duration) * 100;
-          console.log('Setting buffered to:', newBuffered);
           setBuffered(newBuffered);
         }
       }
@@ -79,16 +55,29 @@ export function VideoProgressBar({
     };
   }, [videoElement]);
 
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleSeek = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation(); // Prevent parent onClick from firing
+
     if (!videoElement || !progressBarRef.current) return;
+
+    const wasPaused = videoElement.paused;
 
     const rect = progressBarRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const percentage = clickX / rect.width;
     const newTime = percentage * videoElement.duration;
 
-    console.log('Seeking to:', newTime);
     videoElement.currentTime = newTime;
+
+    // Resume playback if it was playing before the seek
+    if (!wasPaused) {
+      try {
+        await videoElement.play();
+      } catch (error) {
+        // Play was interrupted, ignore the error
+        console.error('Play interrupted:', error);
+      }
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -101,8 +90,6 @@ export function VideoProgressBar({
       }
     }
   };
-
-  console.log('Rendering with progress:', progress, 'buffered:', buffered);
 
   return (
     <div

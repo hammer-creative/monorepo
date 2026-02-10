@@ -4,6 +4,7 @@ export * from './SanityImage';
 export { ClientIcons } from './ClientIcons';
 export { ClientNames } from './ClientNames';
 export { ExtendedLink } from './ExtendedLink';
+export { Label } from './Label';
 export { LinkList } from './LinkList';
 export { PortableTextRenderer } from './PortableTextRenderer';
 export { Title } from './Title';

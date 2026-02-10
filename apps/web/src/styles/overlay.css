@@ -24,3 +24,7 @@ body:has(.menu-overlay) {
   visibility: hidden;
   pointer-events: none;
 }
+
+.mobile-menu li a {
+  pointer-events: auto;
+}

@@ -29,15 +29,20 @@ export function VideoPoster({
       {/* Play Button Overlay */}
       <div className="poster-play-button">
         <svg
-          width="64"
-          height="64"
-          viewBox="0 0 64 64"
+          width="113"
+          height="78"
+          viewBox="0 0 113 78"
           fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="poster-play-svg"
           aria-hidden="true"
         >
-          <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.5" />
-          <path d="M26 20L44 32L26 44V20Z" fill="white" />
+          <path
+            d="M112.5 38.9712L-3.6705e-06 77.9423L-2.6353e-07 4.46735e-05L112.5 38.9712Z"
+            fill="currentColor"
+          />
         </svg>
+        <span className="poster-play-text">Play</span>
       </div>
     </button>
   );

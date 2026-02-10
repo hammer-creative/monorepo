@@ -2,18 +2,18 @@
 import { PortableTextRenderer } from '@/components/common/PortableTextRenderer';
 import type { PortableTextBlock } from '@portabletext/types';
 
-interface Props {
+interface TextBlockProps {
   body?: unknown;
-  className?: string;
+  variant?: 'dropquote' | 'has-headline' | 'hero' | 'impact' | 'default';
 }
 
-export function TextBlock({ body, className }: Props) {
+export function TextBlock({ body, variant = 'default' }: TextBlockProps) {
   if (!body) return null;
 
   return (
     <PortableTextRenderer
       value={body as PortableTextBlock[]}
-      className={className}
+      className={`text-block ${variant}`}
     />
   );
 }

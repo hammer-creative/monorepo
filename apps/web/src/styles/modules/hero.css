@@ -2,152 +2,113 @@
 
 @import '../mixins.css';
 
-.hero-module .wrapper {
-  .row.marquee {
-    @mixin flex-responsive column;
-    position: relative;
-
-    .image {
-      aspect-ratio: 1 / 1;
-    }
-  }
-
-  @media screen and (min-width: 50rem) {
-    .row.marquee .image {
-      aspect-ratio: 16 / 9;
-      height: 100vh;
-      width: 100%;
-    }
-  }
+/* Image */
+.hero-module .image {
+  aspect-ratio: 1 / 1;
+  height: 100vh;
+  width: 100%;
 }
 
-article.services-page {
-  .hero-module .wrapper {
-    .row.marquee {
-      .meta {
-        @mixin gutters-text-large;
-        @mixin head-foot-text;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-      }
-
-      h1 {
-        padding-bottom: var(--space-fluid-20-40);
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 1);
-      }
-
-      p {
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 1);
-      }
-
-      .image::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 1) 0%,
-          rgba(0, 0, 0, 0.6) 15%,
-          rgba(0, 0, 0, 0.25) 50%,
-          rgba(0, 0, 0, 0) 100%
-        );
-      }
-      @media screen and (min-width: 50rem) {
-        .meta {
-          width: 50%;
-        }
-      }
-    }
-  }
+/* Bar */
+.hero-module .bar {
+  display: none;
 }
 
-article.case-study {
-  .hero-module .wrapper {
-    padding-bottom: var(--space-40);
+/* Content */
+.hero-module .content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-fluid-20-40);
+  padding-inline: var(--space-fluid-20-40);
+  padding-block: var(--space-fluid-20-40);
+}
 
-    .row.marquee {
-      .content {
-        position: relative;
-      }
+/* Header */
+.hero-module .header {
+  display: flex;
+  flex-direction: column;
+}
 
-      .text {
-        @mixin gutters-text-large;
-        @mixin head-foot-text;
-      }
-    }
+/* Body */
+.hero-module .body p.text-block {
+  max-width: 35ch;
+  width: 100%;
+  padding-inline-end: 5vw;
+  margin-block-end: var(--space-fluid-20-80);
+}
 
-    .row.meta {
-      .bar {
-        display: none;
-      }
+/* Meta */
+.hero-module .meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-fluid-20-40);
+}
 
-      .text {
-        @mixin gutters-text-large;
-        width: 75%;
-        padding-bottom: 0;
-      }
+/* Lists */
+.hero-module .lists {
+  display: flex;
+  gap: var(--space-fluid-10-20);
+}
 
-      .text p.medium {
-        line-height: var(--line-height-medium);
-      }
+.hero-module .lists li {
+  text-indent: -1ch;
+  margin-left: 1ch;
+}
 
-      .services {
-        display: flex;
-        justify-content: flex-start;
-        gap: var(--space-20);
-        @mixin gutters-text-large;
-      }
+.hero-module .services p:first-of-type {
+  color: $color-hyperbeam !important;
+}
 
-      .text,
-      .text p.medium {
-        padding-bottom: var(--space-40);
-      }
-    }
+.hero-module .clients .client-label {
+  color: $color-hyperbeam !important;
+}
 
-    @media screen and (min-width: 50rem) {
-      .row.marquee .text {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 50%;
-        background-color: var(--module-bg);
-      }
+/* Responsive */
+@media (min-width: 50em) {
+  /* Image */
+  .hero-module .image {
+    aspect-ratio: 16 / 9;
+  }
 
-      .row.meta {
-        .bar {
-          display: block;
-          @mixin gutters-text-large;
-        }
+  /* Bar */
+  .hero-module .bar {
+    display: block;
+  }
 
-        .content {
-          @mixin flex-responsive column, row;
+  /* Header */
+  .hero-module .header {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: var(--module-bg);
+    width: 50%;
+    padding-inline: var(--space-fluid-20-40);
+    padding-block: var(--space-fluid-20-40);
+  }
 
-          .text,
-          .services {
-            flex: 1;
-          }
+  /* Content */
+  .hero-module .content {
+    padding-block-start: 0;
+  }
 
-          .text {
-            padding-bottom: 0;
-          }
+  /* Meta */
+  .hero-module .meta {
+    flex-direction: row;
+    gap: 0;
+  }
 
-          .text p {
-            padding-top: var(--space-40);
-            line-height: var(--line-height-tight);
-          }
+  /* Body */
+  .hero-module .body {
+    flex: 1;
+  }
 
-          .services {
-            justify-content: center;
-            padding-top: var(--space-40);
+  .hero-module .text-block {
+    margin-block-end: var(--space-fluid-10-20);
+  }
 
-            .list p {
-              line-height: var(--line-height-list);
-            }
-          }
-        }
-      }
-    }
+  /* Lists */
+  .hero-module .lists {
+    flex: 1;
+    justify-content: space-evenly;
   }
 }
