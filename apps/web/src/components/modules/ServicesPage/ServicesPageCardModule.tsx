@@ -31,14 +31,10 @@ export function ServicesPageCardModule({
       {/* Card Content: Title + Body + Services */}
       <div className="card-marquee">
         <div className="card-metadata">
-          {title && (
-            <Title className="heading" as="h2">
-              {title}
-            </Title>
-          )}
+          {title && <Title as="h2">{title}</Title>}
           {body && (
             <div className="description">
-              <TextBlock body={body} className="text small" />
+              <TextBlock body={body} />
             </div>
           )}
         </div>

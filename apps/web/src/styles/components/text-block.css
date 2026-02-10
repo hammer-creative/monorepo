@@ -12,33 +12,47 @@
   font-size: var(--font-size-md-fluid);
 }
 
-.text-block.hero {
+.text-module .text-block.dropquote {
+  padding-inline: var(--space-fluid-20-60);
+}
+
+.text-module .text-block.dropquote {
+  max-width: 55ch;
+  width: 100%;
+  text-wrap: balance;
+}
+
+/* Module-specific override: Hero module */
+.text-module .text-block.hero {
   font-family: var(--font-sans);
   font-size: var(--font-size-lg-fluid);
   line-height: var(--line-height-tight);
 }
 
-.text-block.impact {
+/* Module-specific override: Impact module */
+.text-module .text-block.impact {
   font-family: var(--font-sans);
   font-size: var(--font-size-md-fluid);
 }
 
-.text-block.has-headline {
+/* Module-specific override: Text module, headline */
+.text-module .text-block.has-headline {
   font-family: var(--font-sans);
   font-size: var(--font-size-md-fluid);
 }
 
 @media (min-width: 50em) {
-  .text-block {
+  .text-module .text-block.default {
+    font-size: var(--font-size-sm-fluid);
+  }
+
+  .text-module .text-block {
     line-height: var(--line-height-medium);
   }
 
-  .text-block.dropquote {
-    max-width: 50ch;
-    width: 100%;
-  }
-
-  .text-block.default {
-    font-size: var(--font-size-sm-fluid);
+  /* Module-specific override: Text module, dropquote */
+  .text-module .text-block.dropquote {
+    /* max-width: 50ch;
+    width: 100%; */
   }
 }

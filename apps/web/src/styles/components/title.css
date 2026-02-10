@@ -32,10 +32,9 @@
 }
 
 /* Module-specific overrides */
-.text-module.has-headline .title.secondary {
-  margin-bottom: var(--space-3);
+.text-module .has-headline .title.secondary {
+  margin-bottom: 4px;
   margin-right: 5%;
-  padding-top: var(--space-4);
   white-space: pre-line;
 }
 

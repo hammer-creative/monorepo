@@ -1,5 +1,6 @@
 // components/navigation/RadixMenu.tsx
 import { ExtendedLink } from '@/components/common/ExtendedLink';
+import { MenuArrow } from '@/components/common/MenuArrow';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
 interface MenuItem {
@@ -16,24 +17,9 @@ interface MenuProps {
   onLinkClick?: (href: string, e: React.MouseEvent) => void;
   clickedHref?: string | null;
   setItemRef?: (id: string, element: HTMLElement | null) => void;
-  showArrow?: boolean; // Controls whether to show the arrow SVG
+  showArrow?: boolean;
 }
 
-/**
- * RadixMenu Component
- *
- * Navigation menu using Radix UI primitives.
- * Renders menu items with arrow SVG indicators.
- *
- * @param items - Menu items to render
- * @param className - Optional class for nav element
- * @param itemClassName - Optional class for menu items
- * @param linkClassName - Optional class for links
- * @param onLinkClick - Click handler for links
- * @param clickedHref - Currently clicked href to apply data-clicked attribute
- * @param setItemRef - Ref callback to collect item element refs
- * @param showArrow - Whether to show arrow SVG (default: true)
- */
 export function RadixMenu({
   items,
   className,
@@ -65,37 +51,7 @@ export function RadixMenu({
                   preventNavigation={!!onLinkClick}
                 >
                   {item.label}
-                  {showArrow && (
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 63 64"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        x="2.00171"
-                        width="46"
-                        height="15"
-                        fill="currentColor"
-                      />
-                      <rect
-                        x="63.001"
-                        width="61"
-                        height="15"
-                        transform="rotate(90 63.001 0)"
-                        fill="currentColor"
-                      />
-                      <rect
-                        x="60.1846"
-                        y="14.3341"
-                        width="70.1072"
-                        height="15.0063"
-                        transform="rotate(135 60.1846 14.3341)"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  )}
+                  {showArrow && <MenuArrow />}
                 </ExtendedLink>
               </NavigationMenu.Item>
             );

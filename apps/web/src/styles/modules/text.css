@@ -2,7 +2,6 @@
 
 /* Content */
 .content {
-  /* padding-inline: var(--space-fluid-20-60); */
 }
 
 /* Challenge */
@@ -11,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-20);
+  gap: var(--space-fluid-10-20);
   padding-block: var(--space-fluid-40-120);
   text-align: center;
 }
@@ -37,7 +36,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-30);
+  gap: var(--space-fluid-20-40);
   padding-block: var(--space-fluid-40-120);
   text-align: center;
 }

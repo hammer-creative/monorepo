@@ -10,7 +10,7 @@ export function PlayIcon() {
     >
       <path
         d="M25.5 8.66016L-8.15666e-07 17.3204L-5.85622e-08 -9.83894e-05L25.5 8.66016Z"
-        fill="#FFCC98"
+        fill="currentColor"
       />
     </svg>
   );

@@ -4,7 +4,7 @@ import type { PortableTextBlock } from '@portabletext/types';
 
 interface TextBlockProps {
   body?: unknown;
-  variant?: 'dropquote' | 'hero' | 'impact' | 'default';
+  variant?: 'dropquote' | 'has-headline' | 'hero' | 'impact' | 'default';
 }
 
 export function TextBlock({ body, variant = 'default' }: TextBlockProps) {

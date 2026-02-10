@@ -35,7 +35,7 @@ export function HeroModule({
   const hasLists = services.length > 0 || deliverables.length > 0;
 
   return (
-    <section className="module hero-module">
+    <>
       {image && (
         <div className="image">
           <SanityHeroImage image={image} fill priority />
@@ -84,6 +84,6 @@ export function HeroModule({
           </div>
         )}
       </div>
-    </section>
+    </>
   );
 }
