@@ -59,6 +59,10 @@
   color: $color-hyperbeam !important;
 }
 
+.hero-module .clients .client-label {
+  color: $color-hyperbeam !important;
+}
+
 /* Responsive */
 @media (min-width: 50em) {
   /* Image */

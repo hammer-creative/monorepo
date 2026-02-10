@@ -23,11 +23,12 @@
 
 /* Title */
 .impact-module .title.tertiary {
-  max-width: 40%;
-  width: 40%;
+  max-width: 60%;
+  width: 60%;
   word-break: keep-all;
   overflow-wrap: normal;
   margin-block-end: var(--space-20);
+  white-space: nowrap;
 }
 
 /* Image */
@@ -59,8 +60,8 @@
 
   /* Title */
   .impact-module .title.tertiary {
-    max-width: 70%;
-    width: 70%;
+    max-width: 100%;
+    width: 100%;
     min-height: 2em;
     text-wrap: balance;
   }

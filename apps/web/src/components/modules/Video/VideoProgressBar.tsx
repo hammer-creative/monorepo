@@ -16,11 +16,8 @@ export function VideoProgressBar({
 
   useEffect(() => {
     if (!videoElement) {
-      console.log('VideoProgressBar: waiting for video element');
       return;
     }
-
-    console.log('VideoProgressBar: video element ready');
 
     const updateProgress = () => {
       const { currentTime, duration } = videoElement;
@@ -58,8 +55,12 @@ export function VideoProgressBar({
     };
   }, [videoElement]);
 
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleSeek = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation(); // Prevent parent onClick from firing
+
     if (!videoElement || !progressBarRef.current) return;
+
+    const wasPaused = videoElement.paused;
 
     const rect = progressBarRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
@@ -67,6 +68,16 @@ export function VideoProgressBar({
     const newTime = percentage * videoElement.duration;
 
     videoElement.currentTime = newTime;
+
+    // Resume playback if it was playing before the seek
+    if (!wasPaused) {
+      try {
+        await videoElement.play();
+      } catch (error) {
+        // Play was interrupted, ignore the error
+        console.error('Play interrupted:', error);
+      }
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {

@@ -80,6 +80,10 @@
   --font-serif: var(--font-mohol-regular);
   --font-serif-bold: var(--font-mohol-bold);
 
+  --font-size-footer-menu-fluid: 12px;
+  --font-size-menu-mobile-fluid: clamp(50px, 12vw, 140px);
+  --font-size-fluid-menu-reverse: clamp(40px, calc(56px - 1vw), 56px);
+
   --font-size-xs-fluid: clamp(
     14px,
     calc(0.875rem + ((1vw - 3.2px) * 0.4167)),
