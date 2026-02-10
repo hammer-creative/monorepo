@@ -42,7 +42,7 @@ export type TextBlock = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
+    style?: 'normal' | 'blockquote' | 'emphasis';
     listItem?: never;
     markDefs?: Array<{
       href?: string;
@@ -164,7 +164,7 @@ export type ServicesPageHeroModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
+    style?: 'normal' | 'blockquote' | 'emphasis';
     listItem?: never;
     markDefs?: Array<{
       href?: string;
@@ -220,7 +220,7 @@ export type ServicesPageCardModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
+    style?: 'normal' | 'blockquote' | 'emphasis';
     listItem?: never;
     markDefs?: Array<{
       href?: string;
@@ -310,7 +310,7 @@ export type TextImageModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
+    style?: 'normal' | 'blockquote' | 'emphasis';
     listItem?: never;
     markDefs?: Array<
       | {
@@ -389,7 +389,7 @@ export type TextModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
+    style?: 'normal' | 'blockquote' | 'emphasis';
     listItem?: never;
     markDefs?: Array<
       | {
@@ -477,7 +477,7 @@ export type ImpactModule = {
         _type: 'span';
         _key: string;
       }>;
-      style?: 'normal' | 'blockquote';
+      style?: 'normal' | 'blockquote' | 'emphasis';
       listItem?: never;
       markDefs?: Array<
         | {
@@ -511,7 +511,7 @@ export type ImpactModule = {
         _type: 'span';
         _key: string;
       }>;
-      style?: 'normal' | 'blockquote';
+      style?: 'normal' | 'blockquote' | 'emphasis';
       listItem?: never;
       markDefs?: Array<
         | {
@@ -545,7 +545,7 @@ export type ImpactModule = {
         _type: 'span';
         _key: string;
       }>;
-      style?: 'normal' | 'blockquote';
+      style?: 'normal' | 'blockquote' | 'emphasis';
       listItem?: never;
       markDefs?: Array<
         | {
@@ -615,7 +615,7 @@ export type HeroModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
+    style?: 'normal' | 'blockquote' | 'emphasis';
     listItem?: never;
     markDefs?: Array<{
       href?: string;

@@ -65,6 +65,9 @@ export function PortableTextRenderer({
       blockquote: ({ children }: { children?: ReactNode }) => (
         <blockquote>{children}</blockquote>
       ),
+      emphasis: ({ children }: { children?: ReactNode }) => (
+        <span className="emphasis">{children}</span>
+      ),
     },
     marks: {
       strong: ({ children }) => <strong>{children}</strong>,

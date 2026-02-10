@@ -97,12 +97,14 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
       styles: [
         {title: 'Normal', value: 'normal'},
         {title: 'Blockquote', value: 'blockquote'},
+        {title: 'Emphasis', value: 'emphasis'},
       ],
       lists: [],
       marks: {
         decorators: [
           {title: 'Bold', value: 'strong'},
           {title: 'Italic', value: 'em'},
+          {title: 'Underline', value: 'underline'},
         ],
         annotations,
       },

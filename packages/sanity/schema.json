@@ -192,6 +192,10 @@
                       {
                         "type": "string",
                         "value": "blockquote"
+                      },
+                      {
+                        "type": "string",
+                        "value": "emphasis"
                       }
                     ]
                   },
@@ -886,6 +890,10 @@
                       {
                         "type": "string",
                         "value": "blockquote"
+                      },
+                      {
+                        "type": "string",
+                        "value": "emphasis"
                       }
                     ]
                   },
@@ -1229,6 +1237,10 @@
                       {
                         "type": "string",
                         "value": "blockquote"
+                      },
+                      {
+                        "type": "string",
+                        "value": "emphasis"
                       }
                     ]
                   },
@@ -1767,6 +1779,10 @@
                       {
                         "type": "string",
                         "value": "blockquote"
+                      },
+                      {
+                        "type": "string",
+                        "value": "emphasis"
                       }
                     ]
                   },
@@ -2254,6 +2270,10 @@
                       {
                         "type": "string",
                         "value": "blockquote"
+                      },
+                      {
+                        "type": "string",
+                        "value": "emphasis"
                       }
                     ]
                   },
@@ -2755,6 +2775,10 @@
                             {
                               "type": "string",
                               "value": "blockquote"
+                            },
+                            {
+                              "type": "string",
+                              "value": "emphasis"
                             }
                           ]
                         },
@@ -2978,6 +3002,10 @@
                             {
                               "type": "string",
                               "value": "blockquote"
+                            },
+                            {
+                              "type": "string",
+                              "value": "emphasis"
                             }
                           ]
                         },
@@ -3201,6 +3229,10 @@
                             {
                               "type": "string",
                               "value": "blockquote"
+                            },
+                            {
+                              "type": "string",
+                              "value": "emphasis"
                             }
                           ]
                         },
@@ -3609,6 +3641,10 @@
                       {
                         "type": "string",
                         "value": "blockquote"
+                      },
+                      {
+                        "type": "string",
+                        "value": "emphasis"
                       }
                     ]
                   },
