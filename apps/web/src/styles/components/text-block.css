@@ -1,0 +1,58 @@
+/* apps/web/src/style/components/title.css */
+
+/* components/text-block.css */
+
+.text-block {
+  line-height: var(--line-height-loose);
+}
+
+/* Module-specific overrides */
+.text-module .text-block.dropquote {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md-fluid);
+}
+
+.text-module .text-block.dropquote {
+  padding-inline: var(--space-fluid-20-60);
+}
+
+.text-module .text-block.dropquote {
+  max-width: 55ch;
+  width: 100%;
+  text-wrap: balance;
+}
+
+/* Module-specific override: Hero module */
+.text-module .text-block.hero {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-lg-fluid);
+  line-height: var(--line-height-tight);
+}
+
+/* Module-specific override: Impact module */
+.text-module .text-block.impact {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md-fluid);
+}
+
+/* Module-specific override: Text module, headline */
+.text-module .text-block.has-headline {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md-fluid);
+}
+
+@media (min-width: 50em) {
+  .text-module .text-block.default {
+    font-size: var(--font-size-sm-fluid);
+  }
+
+  .text-module .text-block {
+    line-height: var(--line-height-medium);
+  }
+
+  /* Module-specific override: Text module, dropquote */
+  .text-module .text-block.dropquote {
+    /* max-width: 50ch;
+    width: 100%; */
+  }
+}

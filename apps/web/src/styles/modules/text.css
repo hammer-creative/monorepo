@@ -1,79 +1,68 @@
 /* apps/web/src/styles/modules/text.css */
 
-@import '../mixins.css';
-
-.text-module .wrapper {
-  padding-top: var(--space-fluid-20-80);
-  padding-bottom: var(--space-fluid-20-80);
+/* Content */
+.content {
 }
 
-.text-module .wrapper {
-  &.headline-left {
-    @mixin flex-responsive column, row;
-    @mixin gutters-text-large;
-    @mixin head-foot-text;
-    .row {
-      flex: 1;
-    }
-    .row.headline {
-      @mixin flex-responsive column;
-      justify-content: space-between;
-    }
-    .row.headline .tag,
-    .row.headline h2 {
-      padding-bottom: var(--space-fluid-20-40);
-    }
-  }
-  @media screen and (min-width: 50rem) {
-    &.headline-left {
-      .row.headline .tag,
-      .row.headline h2 {
-        padding-bottom: initial;
-      }
-      .row.headline {
-        > div,
-        h2 {
-          padding-right: var(--space-20);
-        }
-      }
-    }
-  }
+/* Challenge */
+.content.challenge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-fluid-10-20);
+  padding-block: var(--space-fluid-40-120);
+  text-align: center;
 }
 
-.text-module .wrapper {
-  &.challenge,
-  &.testimonial {
-    @mixin flex-responsive column;
-    padding-left: 15vw;
-    padding-right: 15vw;
-    align-items: center;
-    .row.text p {
-      text-align: center;
-    }
-  }
-
-  &.challenge .tag {
-    padding-bottom: var(--space-fluid-20-40);
-  }
-
-  &.testimonial .row.text {
-    padding-bottom: var(--space-fluid-20-40);
-  }
-
-  @media screen and (min-width: 50rem) {
-    &.challenge,
-    &.testimonial {
-      .row.text p {
-        text-align: center;
-      }
-    }
-  }
+/* Headline Left - Content */
+.content.has-headline {
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--space-fluid-20-60);
+  padding-inline: var(--space-fluid-20-60);
 }
 
-.text-module.headline-left .wrapper {
-  /* specific styles for headline-left if needed */
+/* Headline Left - Header */
+.content.has-headline .header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  margin-bottom: var(--space-20);
 }
 
-.text-module.home-page .wrapper {
-  /* specific styles for home-page if needed */
+/* Testimonial */
+.content.testimonial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-fluid-20-40);
+  padding-block: var(--space-fluid-40-120);
+  text-align: center;
+}
+
+.text-module .body p:not(:last-child) {
+  margin-bottom: var(--space-20);
+}
+
+/* Responsive */
+@media (min-width: 50em) {
+  /* Headline Left - Content */
+  .content.has-headline {
+    flex-direction: row;
+  }
+
+  /* Headline Left - Header */
+  .content.has-headline .header {
+    flex: 1;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Headline Left - Body */
+  .content.has-headline .body {
+    flex: 1;
+  }
 }

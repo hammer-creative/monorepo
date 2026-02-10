@@ -1,0 +1,101 @@
+/* apps/web/src/styles/components/navigation.css */
+
+/* Primary Menu */
+.menu-primary li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.menu-primary li a svg {
+  flex-shrink: 0;
+  width: 0.75em;
+  height: 0.75em;
+  opacity: 0;
+  color: inherit;
+  transition:
+    opacity 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Secondary Menu */
+.menu-secondary p,
+.menu-secondary .link,
+.menu-secondary .text {
+  display: block;
+  font-size: var(--font-size-footer-menu-fluid);
+  line-height: var(--line-height-loose);
+  letter-spacing: var(--letter-spacing-loose);
+  text-transform: uppercase;
+}
+
+.menu-secondary a {
+  position: relative;
+}
+
+/* Footer Theme */
+footer {
+  background: $color-sandstorm;
+}
+
+footer .menu-primary li a {
+  font-family: var(--font-serif-bold);
+  font-size: var(--font-size-fluid-menu-reverse);
+  line-height: var(--line-height-very-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  text-transform: uppercase;
+  color: $color-nightshade;
+  transition: color 0.3s ease;
+}
+
+footer {
+  font-weight: 900;
+}
+
+footer .menu-secondary p,
+footer .menu-secondary .link {
+  color: $color-nightshade;
+}
+
+footer .menu-secondary .address div,
+footer .menu-secondary.social ul li a {
+  text-align: right;
+}
+
+/* Mobile Menu Theme */
+.mobile-menu .menu-primary a.link {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-fluid-menu-mobile);
+  text-transform: uppercase;
+  color: $color-hyperbeam;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu .menu-primary li a:hover {
+  color: $color-sandstorm;
+}
+
+.mobile-menu .menu-primary li a:hover svg {
+  display: none;
+}
+
+.mobile-menu .menu-secondary p,
+.mobile-menu .menu-secondary .link {
+  color: $color-sandstorm;
+}
+
+/* Responsive */
+@media screen and (min-width: 70em) {
+  .mobile-menu .menu-primary li a {
+    color: $color-sandstorm;
+  }
+
+  .mobile-menu .menu-primary li a:hover {
+    color: $color-hyperbeam;
+  }
+
+  .mobile-menu .menu-primary li a:hover svg {
+    display: initial;
+    opacity: 1;
+  }
+}

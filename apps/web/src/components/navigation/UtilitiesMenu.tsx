@@ -1,4 +1,4 @@
-// apps/web/src/components/navigation/Utilities.tsx
+// apps/web/src/components/navigation/UtilitiesMenu.tsx
 import { ExtendedLink } from '@/components/common/ExtendedLink';
 
 const utilityLinks = [
@@ -24,7 +24,7 @@ export function UtilitiesMenu() {
           key={link.id}
           href={link.href}
           email={link.email}
-          className={`${link.className || ''}`}
+          className={link.className}
         >
           {link.label}
         </ExtendedLink>

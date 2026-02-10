@@ -1,0 +1,43 @@
+/* apps/web/src/styles/components/title.css */
+
+/* Base */
+.title {
+  line-height: var(--line-height-tight);
+}
+
+/* Primary */
+.title.primary {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-xl-fluid);
+  text-transform: uppercase;
+  line-height: var(--line-height-very-tight);
+}
+
+/* Secondary */
+.title.secondary {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-lg-fluid);
+  text-transform: uppercase;
+}
+
+/* Tertiary */
+.title.tertiary {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-lg-fluid);
+}
+
+/* Default */
+.title.default {
+  font-family: var(--font-sans);
+}
+
+/* Module-specific overrides */
+.text-module .has-headline .title.secondary {
+  margin-bottom: 4px;
+  margin-right: 5%;
+  white-space: pre-line;
+}
+
+.hero-module h1 {
+  line-height: var(--line-height-tight);
+}

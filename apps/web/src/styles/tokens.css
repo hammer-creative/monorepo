@@ -1,46 +1,29 @@
-/* NOTE: post-css-fluid function takes 4 parameters:
-
-min value
-max value
-min viewport width
-max viewport width.
-
-.some-class {
-  some-property: fluid(1rem, 2rem, 40rem, 120rem);
-}
-
-*/
-
-/* styles/tokens.css */
-
 :root {
-  /* VIEWPORTS */
-  --viewport-layout: 120rem; /* 1920px */
-  --viewport-jumbo: 80rem; /* 1280px */
-  --viewport-wide: 60rem; /* 960px */
-  --viewport-default: 45rem; /* 720px */
-  --viewport-medium: 40rem; /* 640px */
-  --viewport-narrow: 20rem; /* 320px */
+  --viewport-layout: 120rem;
+  --viewport-jumbo: 80rem;
+  --viewport-wide: 60rem;
+  --viewport-default: 45rem;
+  --viewport-medium: 40rem;
+  --viewport-narrow: 20rem;
 
-  /* BREAKPOINTS */
   --breakpoint-wide: var(--viewport-wide);
 
-  /* FIXED SPACING TOKENS – 20px increments */
-  --space-10: 0.625rem; /* 10px */
-  --space-20: 1.25rem; /* 20px */
-  --space-30: 1.875rem; /* 30px */
-  --space-40: 2.5rem; /* 40px */
-  --space-50: 3.125rem; /* 50px */
-  --space-60: 3.75rem; /* 60px */
-  --space-80: 5rem; /* 80px */
-  --space-100: 6.25rem; /* 100px */
-  --space-120: 7.5rem; /* 120px */
-  --space-140: 8.75rem; /* 140px */
-  --space-160: 10rem; /* 160px */
-  --space-180: 11.25rem; /* 180px */
-  --space-200: 12.5rem; /* 200px */
+  --space-5: 0.3125rem; /* 5px */
+  --space-10: 0.625rem;
+  --space-10: 0.625rem;
+  --space-20: 1.25rem;
+  --space-30: 1.875rem;
+  --space-40: 2.5rem;
+  --space-50: 3.125rem;
+  --space-60: 3.75rem;
+  --space-80: 5rem;
+  --space-100: 6.25rem;
+  --space-120: 7.5rem;
+  --space-140: 8.75rem;
+  --space-160: 10rem;
+  --space-180: 11.25rem;
+  --space-200: 12.5rem;
 
-  /* FLUID SPACING – 20px increments with viewport scaling */
   --space-fluid-10-20: clamp(
     0.625rem,
     calc(0.625rem + ((1vw - 3.2px) * 1.0417)),
@@ -92,96 +75,316 @@ max viewport width.
     2.5rem
   );
 
-  /* TYPEFACES */
   --font-sans: var(--font-diatype-medium);
   --font-sans-italic: var(--font-diatype-medium-italic);
   --font-serif: var(--font-mohol-regular);
   --font-serif-bold: var(--font-mohol-bold);
 
-  /* FONT SIZES */
-  --font-size-default: 16px;
-  --font-size-display: 5rem; /* 80px */
-  --font-size-extra-large: 3.75rem; /* 60px */
-  --font-size-large: 2.5rem; /* 40px */
-  --font-size-medium: 1.25rem; /* 20px */
-  --font-size-small: 0.875rem; /* 14px */
-  --font-size-extra-small: 0.625rem; /* 10px */
-
-  /* FLUID FONT SIZES */
-  --font-size-fluid-menu: clamp(
-    56px,
-    calc(3.5rem + ((1vw - 3.2px) * 9.5455)),
-    140px
-  );
-  --font-size-fluid-menu-mobile: clamp(50px, 12vw, 140px);
+  --font-size-footer-menu-fluid: 12px;
+  --font-size-menu-mobile-fluid: clamp(50px, 12vw, 140px);
   --font-size-fluid-menu-reverse: clamp(40px, calc(56px - 1vw), 56px);
-  --font-size-fluid-headline: clamp(
-    20px,
-    calc(1.25rem + ((1vw - 3.2px) * 4.1667)),
-    80px
+
+  --font-size-xs-fluid: clamp(
+    14px,
+    calc(0.875rem + ((1vw - 3.2px) * 0.4167)),
+    18px
   );
-  --font-size-fluid-subheadline: clamp(
-    20px,
-    calc(1.25rem + ((1vw - 3.2px) * 4.1667)),
-    60px
-  );
-  --font-size-fluid-impact-headline: clamp(
-    20px,
-    calc(1.25rem + ((1vw - 3.2px) * 1.5)),
-    60px
-  );
-  --font-size-fluid-large: clamp(
+  --font-size-all-caps: clamp(
     10px,
-    calc(0.625rem + ((1vw - 3.2px) * 5.2083)),
-    60px
-  );
-  --font-size-fluid-medium: clamp(
-    10px,
-    calc(0.625rem + ((1vw - 3.2px) * 3.125)),
-    40px
-  );
-  --font-size-fluid-small: clamp(
-    10px,
-    calc(0.625rem + ((1vw - 3.2px) * 1.0417)),
-    20px
-  );
-  --font-size-fluid-extra-small: clamp(
-    10px,
-    calc(0.625rem + ((1vw - 3.2px) * 0.4545)),
+    calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
     14px
   );
-  /* FONT WEIGHTS */
+  --font-size-sm-fluid: clamp(
+    16px,
+    calc(1rem + ((1vw - 3.2px) * 0.4167)),
+    20px
+  );
+  --font-size-md-fluid: clamp(
+    14px,
+    calc(0.875rem + ((1vw - 3.2px) * 1.0417)),
+    24px
+  );
+  --font-size-lg-fluid: clamp(
+    18.67px,
+    calc(1.167rem + ((1vw - 3.2px) * 1.3889)),
+    32px
+  );
+  --font-size-xl-fluid: clamp(32px, calc(2rem + ((1vw - 3.2px) * 2.5)), 56px);
+
   --font-weight-default: 500;
   --font-weight-light: 100;
 
-  /* LINE HEIGHTS */
-  --line-height-default: 1;
-  --line-height-fluid-reverse: clamp(
-    1,
-    calc(2 - ((100vw - 20rem) / 60rem)),
-    2
-  ); /* 2 at narrow → 1 at wide */
-  --line-height-tight: 0.9;
-  --line-height-loose: 2;
-  --line-height-medium: 1.5;
-  --line-height-list: var(--line-height-medium);
+  --line-height-very-tight: 0.9;
+  --line-height-tight: 1.1;
+  --line-height-default: 1.2;
+  --line-height-medium: 1.4;
+  --line-height-loose: 1.6;
 
-  /* STACK SCALE – fluid rhythm derived from base spacing */
-  --stack-tight: clamp(var(--space-1), 0.5vw + var(--space-1), var(--space-2));
-  --stack-regular: clamp(
-    var(--space-2),
-    1.5vw + var(--space-2),
-    var(--space-3)
-  );
-  --stack-loose: clamp(var(--space-3), 3vw + var(--space-3), var(--space-4));
-  --stack-looser: clamp(var(--space-4), 5vw + var(--space-4), var(--space-5));
-
-  /* default stack gap */
-  --stack-gap: var(--stack-regular);
-
-  /* LETTER SPACING */
-  --letter-spacing-default: 1;
+  --line-height-hero: --letter-spacing-default: 1;
   --letter-spacing-tight: -0.03em;
-  --letter-spacing-loose: 0.1em;
+  --letter-spacing-loose: 0.15em;
   --letter-spacing-extra-loose: 0.25em;
+}
+
+/* Typography */
+.font-sans {
+  font-family: var(--font-sans);
+}
+.font-serif {
+  font-family: var(--font-serif);
+}
+.font-weight-100 {
+  font-weight: 100;
+}
+.font-weight-900 {
+  font-weight: 900;
+}
+
+.text-xs-fluid {
+  font-size: var(--font-size-xs-fluid);
+}
+.text-sm-fluid {
+  font-size: var(--font-size-sm-fluid);
+}
+.text-md-fluid {
+  font-size: var(--font-size-md-fluid);
+}
+.text-lg-fluid {
+  font-size: var(--font-size-lg-fluid);
+}
+.text-xl-fluid {
+  font-size: var(--font-size-xl-fluid);
+}
+
+.letter-spacing-tight {
+  letter-spacing: -0.01em;
+}
+.letter-spacing-wide {
+  letter-spacing: 0.5em;
+}
+
+.line-height-default {
+  line-height: 1.2;
+}
+.line-height-tight {
+  line-height: 0.9;
+}
+.line-height-loose {
+  line-height: 1;
+}
+.line-height-loose-2x {
+  line-height: 2;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+.ws-pre-line {
+  white-space: pre-line;
+}
+.align-center {
+  text-align: center;
+}
+
+/* Layout */
+.block {
+  display: block;
+}
+.flex {
+  display: flex;
+}
+.flex-row {
+  flex-direction: row;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-1 {
+  flex: 1;
+}
+.grid {
+  display: grid;
+}
+
+.justify-center {
+  justify-content: center;
+}
+.self-end {
+  align-self: end;
+}
+
+.grid-cols-1 {
+  grid-template-columns: 1fr;
+}
+.grid-cols-2 {
+  grid-template-columns: 1fr 1fr;
+}
+.grid-rows-auto {
+  grid-template-rows: auto auto;
+}
+
+.col-span-2 {
+  grid-column: span 2;
+}
+.row-span-2 {
+  grid-row: span 2;
+}
+
+.display-none {
+  display: none;
+}
+
+.absolute {
+  position: absolute;
+}
+.bottom-0 {
+  bottom: 0;
+}
+.left-0 {
+  left: 0;
+}
+
+/* Spacing */
+.gap-10 {
+  gap: var(--space-10);
+}
+.gap-20 {
+  gap: var(--space-20);
+}
+.gap-30 {
+  gap: var(--space-30);
+}
+.gap-40 {
+  gap: var(--space-40);
+}
+
+.px-fluid-10-20 {
+  padding-inline: var(--space-fluid-10-20);
+}
+.px-fluid-20-40 {
+  padding-inline: var(--space-fluid-20-40);
+}
+.px-fluid-20-60 {
+  padding-inline: var(--space-fluid-20-60);
+}
+.px-fluid-20-80 {
+  padding-inline: var(--space-fluid-20-80);
+}
+
+.py-fluid-10-20 {
+  padding-block: var(--space-fluid-10-20);
+}
+.py-fluid-20-40 {
+  padding-block: var(--space-fluid-20-40);
+}
+.py-fluid-20-60 {
+  padding-block: var(--space-fluid-20-60);
+}
+.py-fluid-20-80 {
+  padding-block: var(--space-fluid-20-80);
+}
+.py-fluid-40-120 {
+  padding-block: var(--space-fluid-40-120);
+}
+
+.mb-3 {
+  margin-block-end: 3px;
+}
+.mb-10 {
+  margin-block-end: var(--space-10);
+}
+.mb-20 {
+  margin-block-end: var(--space-20);
+}
+.mr-5p {
+  margin-inline-end: 5%;
+}
+
+/* Sizing */
+.w-full {
+  width: 100%;
+}
+.w-half {
+  width: 50%;
+}
+.w-50 {
+  width: 50%;
+}
+.w-40 {
+  width: 40%;
+}
+.w-thirds {
+  width: 33.333%;
+}
+.w-two-thirds {
+  width: 66.666%;
+}
+
+.max-w-40 {
+  max-width: 40%;
+}
+.min-h-2em {
+  min-height: 2em;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.aspect-16-9 {
+  aspect-ratio: 16 / 9;
+}
+.aspect-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+/* Text */
+.word-break-keep {
+  word-break: keep-all;
+}
+.overflow-wrap-normal {
+  overflow-wrap: normal;
+}
+
+.max-w-prose-40 {
+  max-width: 40ch;
+}
+
+.max-w-prose-50 {
+  max-width: 50ch;
+}
+
+.max-w-prose-60 {
+  max-width: 60ch;
+}
+.max-w-prose-80 {
+  max-width: 80ch;
+}
+
+/* Responsive */
+@media (min-width: 50em) {
+  .md\:grid-cols-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .md\:col-span-1 {
+    grid-column: span 1;
+  }
+  .md\:col-start-2 {
+    grid-column-start: 2;
+  }
+  .md\:row-span-2 {
+    grid-row: span 2;
+  }
+  .md\:row-start-1 {
+    grid-row-start: 1;
+  }
+  .md\:self-end {
+    align-self: end;
+  }
+  .md\:mb-0 {
+    margin-bottom: 0;
+  }
+  .md\:flex-row {
+    flex-direction: row;
+  }
 }

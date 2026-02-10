@@ -1,0 +1,128 @@
+/* apps/web/src/styles/layout/menu.css */
+
+/* Primary Menu Layout */
+.menu-primary ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.menu-primary li {
+  line-height: 0.9;
+}
+
+.menu-primary li a {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.25em;
+  width: fit-content;
+}
+
+/* Secondary Menu Layout */
+.menu-secondary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.menu-secondary.utilities,
+.menu-secondary.social {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+@media screen and (min-width: 40em) {
+  .menu-secondary.utilities,
+  .menu-secondary.social {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.menu-secondary.social ul {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--space-20);
+}
+
+@media screen and (min-width: 30em) {
+  .menu-secondary.social ul {
+    flex-direction: row;
+    gap: var(--space-20);
+    padding-bottom: 0;
+  }
+}
+
+.menu-secondary.addresses .address:first-child {
+  padding-bottom: var(--space-20);
+}
+
+/* Footer Layout */
+footer .footer-content {
+  display: grid;
+  gap: 1rem;
+  padding: var(--space-fluid-20-40);
+}
+
+@media screen and (min-width: 40em) {
+  footer .footer-content {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+footer .menu-primary {
+  margin-block-end: var(--space-fluid-20-40);
+}
+
+/* Mobile Menu Layout */
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mobile-menu .wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--space-fluid-20-40);
+}
+
+.mobile-menu .wrapper .row:first-child {
+  flex: 1;
+}
+
+.mobile-menu .wordmark {
+  margin-top: auto;
+}
+
+.mobile-menu .menu-secondary.addresses .address {
+  padding-bottom: var(--space-20);
+}
+
+@media screen and (min-width: 50em) {
+  footer .menu-primary,
+  footer .menu-secondary .addresses {
+    margin-block-end: var(--space-fluid-20-60);
+  }
+
+  .mobile-menu .wordmark {
+    display: none;
+  }
+}
+
+.menu-primary li a svg {
+  flex-shrink: 0;
+  width: 0.75em;
+  height: 0.75em;
+  opacity: 0;
+  color: inherit;
+  transition: opacity 0.3s ease;
+}
+
+.menu-primary li a:hover svg {
+  opacity: 1;
+}

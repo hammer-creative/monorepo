@@ -1,7 +1,5 @@
 /* apps/web/src/styles/layout.css */
 
-@import './mixins.css';
-
 .layout-container {
   display: flex;
   flex-direction: column;

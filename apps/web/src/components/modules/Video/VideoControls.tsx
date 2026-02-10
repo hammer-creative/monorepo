@@ -87,6 +87,7 @@ export function MuteButton({ muted, onToggle, className }: MuteButtonProps) {
       onClick={onToggle}
       className={className}
       aria-label={muted ? 'Unmute' : 'Mute'}
+      data-muted={muted}
     >
       {muted ? <VolumeOffIcon /> : <VolumeOnIcon />}
     </button>

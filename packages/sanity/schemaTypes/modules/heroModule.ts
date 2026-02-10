@@ -19,7 +19,7 @@ export const heroModule = defineType({
         name: 'image',
         title: 'Hero Image',
         required: true,
-        description: 'Minimum dimensions 3840 px × 2160 px, maximum file size 10 MB.',
+        description: 'Minimum dimensions 3840 px × 2160 px, maximum file size 20 MB.',
         imageOptions: {
           hotspot: {
             previews: [{title: '16:9 Landscape', aspectRatio: 16 / 9}],
@@ -33,7 +33,7 @@ export const heroModule = defineType({
             createImageDimensionValidation({
               minWidth: 3840,
               minHeight: 2160,
-              maxFileSize: 10,
+              maxFileSize: 20,
             }),
           ),
       }
@@ -43,7 +43,7 @@ export const heroModule = defineType({
         name: 'teaserImage',
         title: 'Teaser Image',
         required: true,
-        description: 'Minimum dimensions 1380 px × 800 px, maximum file size 2 MB.',
+        description: 'Minimum dimensions 1380 px × 800 px, maximum file size 3 MB.',
         imageOptions: {
           hotspot: {
             previews: [{title: '5:3 Landscape', aspectRatio: 5 / 3}],
@@ -57,7 +57,7 @@ export const heroModule = defineType({
             createImageDimensionValidation({
               minWidth: 1380,
               minHeight: 800,
-              maxFileSize: 2,
+              maxFileSize: 3,
             }),
           ),
       }
