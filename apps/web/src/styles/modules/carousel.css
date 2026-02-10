@@ -5,3 +5,8 @@
 .swiper-slide {
   aspect-ratio: 1 / 1;
 }
+
+.swiper .swiper-wrapper {
+  transition-timing-function: linear;
+  margin: 0 auto;
+}

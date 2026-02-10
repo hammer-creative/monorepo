@@ -31,25 +31,7 @@ export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
           if (entry.isIntersecting) {
             if (!hasEnteredViewport && swiperRef.current) {
               setHasEnteredViewport(true);
-              const swiper = swiperRef.current;
-
-              swiper.params.autoplay = {
-                delay: 500,
-                disableOnInteraction: false,
-              };
-              swiper.autoplay.start();
-
-              const delays = [500, 700, 1000, 1500, 2000, 2500];
-              delays.forEach((delay, index) => {
-                setTimeout(() => {
-                  if (
-                    swiper.params.autoplay &&
-                    typeof swiper.params.autoplay !== 'boolean'
-                  ) {
-                    swiper.params.autoplay.delay = delay;
-                  }
-                }, index * delay);
-              });
+              swiperRef.current.autoplay.start();
             } else if (swiperRef.current) {
               swiperRef.current.autoplay.start();
             }
@@ -80,10 +62,12 @@ export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
     >
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        spaceBetween={20} // Add this
+        spaceBetween={20}
+        speed={5000}
         loop={true}
+        freeMode={true}
         autoplay={{
-          disableOnInteraction: false,
+          delay: 0,
         }}
         breakpoints={{
           480: {
