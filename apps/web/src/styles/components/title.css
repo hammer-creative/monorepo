@@ -43,6 +43,12 @@
 }
 
 /* Module-specific overrides, Impact Module */
+.hero-module .title.primary {
+  white-space: pre-line;
+  max-width: 100%;
+  width: 100%;
+}
+
 .impact-module .title.tertiary {
   white-space: pre-line;
   max-width: 100%;

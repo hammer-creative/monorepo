@@ -44,7 +44,7 @@
   .impact-module .text-item:nth-child(2) {
     border-top: none;
     border-bottom: none;
-    border-right: 1px solid $color-aircutter;
-    border-left: 1px solid $color-aircutter;
+    border-right: 1px solid var(--color-medium-gray);
+    border-left: 1px solid var(--color-medium-gray);
   }
 }

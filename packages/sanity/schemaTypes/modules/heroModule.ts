@@ -12,7 +12,10 @@ export const heroModule = defineType({
   type: 'object',
   icon: AsteriskIcon,
   fields: [
-    titleField(),
+    (() => {
+      const {validation: _, ...field} = titleField({required: true, rows: 3, maxLength: 150})
+      return field
+    })(),
     portableTextField(),
     (() => {
       const {validation: _, ...imageField} = createSingleImageField({
