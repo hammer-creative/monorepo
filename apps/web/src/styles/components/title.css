@@ -31,7 +31,7 @@
   font-family: var(--font-sans);
 }
 
-/* Module-specific overrides */
+/* Module-specific overrides, Text Module */
 .text-module .has-headline .title.secondary {
   margin-bottom: 4px;
   margin-right: 5%;
@@ -40,4 +40,19 @@
 
 .hero-module h1 {
   line-height: var(--line-height-tight);
+}
+
+/* Module-specific overrides, Impact Module */
+.hero-module .title.primary {
+  white-space: pre-line;
+  max-width: 100%;
+  width: 100%;
+}
+
+.impact-module .title.tertiary {
+  white-space: pre-line;
+  max-width: 100%;
+  width: 100%;
+  min-height: 2em;
+  margin-block-end: var(--space-20);
 }

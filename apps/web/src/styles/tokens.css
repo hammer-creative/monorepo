@@ -1,4 +1,5 @@
 :root {
+  --color-medium-gray: #778888;
   --viewport-layout: 120rem;
   --viewport-jumbo: 80rem;
   --viewport-wide: 60rem;
@@ -89,7 +90,7 @@
     calc(0.875rem + ((1vw - 3.2px) * 0.4167)),
     18px
   );
-  --font-size-all-caps: clamp(
+  --font-size-all-caps-fluid: clamp(
     10px,
     calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
     14px

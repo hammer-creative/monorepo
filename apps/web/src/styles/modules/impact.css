@@ -21,16 +21,6 @@
   border-bottom: 1px solid $color-aircutter;
 }
 
-/* Title */
-.impact-module .title.tertiary {
-  max-width: 60%;
-  width: 60%;
-  word-break: keep-all;
-  overflow-wrap: normal;
-  margin-block-end: var(--space-20);
-  white-space: nowrap;
-}
-
 /* Image */
 .impact-module .image {
   aspect-ratio: 16 / 9;
@@ -54,15 +44,7 @@
   .impact-module .text-item:nth-child(2) {
     border-top: none;
     border-bottom: none;
-    border-right: 1px solid $color-aircutter;
-    border-left: 1px solid $color-aircutter;
-  }
-
-  /* Title */
-  .impact-module .title.tertiary {
-    max-width: 100%;
-    width: 100%;
-    min-height: 2em;
-    text-wrap: balance;
+    border-right: 1px solid var(--color-medium-gray);
+    border-left: 1px solid var(--color-medium-gray);
   }
 }

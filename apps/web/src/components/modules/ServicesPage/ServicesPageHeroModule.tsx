@@ -26,9 +26,9 @@ export function ServicesPageHeroModule({
   const hasImage = image != null;
 
   return (
-    <div className="wrapper">
+    <div className="content">
       {/* Hero Section: Title + Body */}
-      <div className="row marquee">
+      <div className="marquee">
         <div className="content">
           {/* Hero Image */}
           {hasImage && (

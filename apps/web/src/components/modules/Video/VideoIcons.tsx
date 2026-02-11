@@ -37,10 +37,24 @@ export function CloseIcon() {
 
 export function VolumeOnIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24">
+    <svg
+      width="31"
+      height="26"
+      viewBox="0 0 31 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
+        d="M0 8.60776V17.3922H7.09219L15.1702 26V0L7.09219 8.60776H0Z"
         fill="currentColor"
-        d="M3 10v4h4l5 5V5L7 10H3zm11.5 2a4.5 4.5 0 00-2.12-3.84l-.88.88A3.3 3.3 0 0114.2 12c0 1.13-.56 2.13-1.4 2.96l.88.88A4.5 4.5 0 0014.5 12z"
+      />
+      <path
+        d="M17.8085 0V3.19535C23.3002 3.19535 27.754 7.58605 27.754 13C27.754 18.414 23.3002 22.8046 17.8085 22.8046V26C25.0931 26 31 20.1767 31 12.9953C31 5.81395 25.0931 0 17.8085 0Z"
+        fill="currentColor"
+      />
+      <path
+        d="M24.4043 13.0023C24.4043 9.41323 21.4539 6.5 17.8085 6.5V19.5C21.4492 19.5 24.4043 16.5914 24.4043 12.9977V13.0023Z"
+        fill="currentColor"
       />
     </svg>
   );
@@ -48,11 +62,16 @@ export function VolumeOnIcon() {
 
 export function VolumeOffIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24">
-      <path fill="currentColor" d="M3 10v4h4l5 5V5L7 10H3z" />
+    <svg
+      width="16"
+      height="26"
+      viewBox="0 0 31 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
+        d="M0 8.60776V17.3922H7.09219L15.1702 26V0L7.09219 8.60776H0Z"
         fill="currentColor"
-        d="M16.24 7.76L14.83 9.17 16.66 11l-1.83 1.83 1.41 1.41L18.07 12l1.83 1.83 1.41-1.41L19.49 11l1.82-1.83-1.41-1.41L18.07 9.59z"
       />
     </svg>
   );

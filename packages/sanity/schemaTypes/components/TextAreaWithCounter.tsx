@@ -1,7 +1,5 @@
 // packages/sanity/schemaTypes/components/TextAreaWithCounter.tsx
 
-// packages/sanity/schemaTypes/components/TextAreaWithCounter.tsx
-
 import {Stack, Text} from '@sanity/ui'
 import type {StringInputProps} from 'sanity'
 

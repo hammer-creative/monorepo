@@ -19,14 +19,14 @@ BUCKET="$(echo "$ROOT" | sed -E 's#s3://([^/]+)/.*#\1#')"
 
 aws s3 ls "$ROOT" --recursive --profile "$PROFILE" \
 | awk '{print $4}' \
-| grep -E '\.mp4$' \
+| grep -Ei '\.(mp4|webm|vob|gifv|avi|mov)$' \
 | while read -r key; do
 
   S3_PATH="s3://$BUCKET/$key"
   RAW_FILENAME="$(basename "$key")"
 
-  # title: strip .mp4, convert underscores to spaces (nothing else)
-  TITLE="$(basename "$RAW_FILENAME" | sed -E 's/\.mp4$//; s/_+/ /g')"
+  # title: strip extension, convert underscores to spaces
+  TITLE="$(basename "$RAW_FILENAME" | sed -E 's/\.[^.]+$//; s/_+/ /g')"
 
   # dedupe key
   KEY_HASH="$(printf "%s" "$key" | shasum -a 256 | cut -c1-32)"

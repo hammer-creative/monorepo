@@ -7,6 +7,25 @@ import {createSingleImageField, createColorField} from '../factories'
 import {applyRequired, requireWhen} from '../utils/validation'
 
 /**
+ * Creates a text block field for impact module
+ */
+const createTextBlock = (blockNumber: number, hideCondition?: (parent: any) => boolean) => {
+  return {
+    name: `textBlock${blockNumber}`,
+    title: `Text Block ${blockNumber}`,
+    type: 'object',
+    fields: [
+      (() => {
+        const {validation: _, ...field} = titleField({required: false, rows: 3, maxLength: 150})
+        return field
+      })(),
+      portableTextField({enableColorAnnotations: true, maxLength: 600}),
+    ],
+    ...(hideCondition && {hidden: ({parent}: any) => hideCondition(parent)}),
+  }
+}
+
+/**
  * Impact Module
  *
  * Flexible layout supporting:
@@ -35,35 +54,9 @@ export const impactModule = defineType({
       initialValue: 'threeText',
       validation: (Rule) => applyRequired(Rule, true, 'Layout is required'),
     },
-    {
-      name: 'textBlock1',
-      title: 'Text Block 1',
-      type: 'object',
-      fields: [
-        titleField({required: false, maxLength: 100}),
-        portableTextField({enableColorAnnotations: true, maxLength: 600}),
-      ],
-    },
-    {
-      name: 'textBlock2',
-      title: 'Text Block 2',
-      type: 'object',
-      fields: [
-        titleField({required: false, maxLength: 100}),
-        portableTextField({enableColorAnnotations: true, maxLength: 600}),
-      ],
-      hidden: ({parent}: any) => parent?.layout === 'oneTextOneImage',
-    },
-    {
-      name: 'textBlock3',
-      title: 'Text Block 3',
-      type: 'object',
-      fields: [
-        titleField({required: false, maxLength: 100}),
-        portableTextField({enableColorAnnotations: true, maxLength: 600}),
-      ],
-      hidden: ({parent}: any) => parent?.layout !== 'threeText',
-    },
+    createTextBlock(1),
+    createTextBlock(2, (parent) => parent?.layout === 'oneTextOneImage'),
+    createTextBlock(3, (parent) => parent?.layout !== 'threeText'),
     {
       ...createSingleImageField({
         name: 'image',
