@@ -1,5 +1,5 @@
 // apps/web/src/config/metadata.ts
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 const isStaging = process.env.CONTEXT !== 'production';
 
@@ -43,16 +43,7 @@ export const metadata: Metadata = {
         alt: 'Hammer Creative - The Gaming Agency',
         type: 'image/png',
       },
-      {
-        url: '/og-image-square.png',
-        width: 1200,
-        height: 1200,
-        alt: 'Hammer Creative - The Gaming Agency',
-        type: 'image/png',
-      },
     ],
-    emails: ['contact@hammercreative.com'],
-    phoneNumbers: ['+1-XXX-XXX-XXXX'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -60,34 +51,15 @@ export const metadata: Metadata = {
     description: 'The Gaming Agency',
     creator: '@hammercreative',
     site: '@hammercreative',
-    images: [
-      {
-        url: '/og-image.png',
-        alt: 'Hammer Creative - The Gaming Agency',
-      },
-    ],
+    images: ['/og-image.png'],
   },
   metadataBase: new URL('https://hammercreative.com'),
   alternates: {
     canonical: '/',
-    languages: {
-      'en-US': '/',
-    },
   },
   authors: [{ name: 'Hammer Creative', url: 'https://hammercreative.com' }],
   creator: 'Hammer Creative',
   publisher: 'Hammer Creative',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
-  ],
-  colorScheme: 'light dark',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   manifest: '/favicons/site.webmanifest',
   icons: {
     icon: [
@@ -116,18 +88,6 @@ export const metadata: Metadata = {
         url: '/favicons/safari-pinned-tab.svg',
         color: '#5bbad5',
       },
-      {
-        rel: 'icon',
-        url: '/favicons/android-chrome-192x192.png',
-        sizes: '192x192',
-        type: 'image/png',
-      },
-      {
-        rel: 'icon',
-        url: '/favicons/android-chrome-512x512.png',
-        sizes: '512x512',
-        type: 'image/png',
-      },
     ],
   },
   appleWebApp: {
@@ -140,23 +100,15 @@ export const metadata: Metadata = {
       '/favicons/apple-touch-startup-image-1125x2436.png',
     ],
   },
-  verification: {
-    google: 'your-google-site-verification-code',
-    yandex: 'your-yandex-verification-code',
-    yahoo: 'your-yahoo-verification-code',
-    other: {
-      'facebook-domain-verification': 'your-facebook-verification-code',
-    },
-  },
-  archives: [],
-  assets: [],
-  bookmarks: [],
   other: {
     'msapplication-TileColor': '#2d89ef',
-    'msapplication-TileImage': '/favicons/mstile-144x144.png',
     'msapplication-config': '/favicons/browserconfig.xml',
-    'apple-mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-status-bar-style': 'black-translucent',
-    'format-detection': 'telephone=no',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#2d89ef',
 };
