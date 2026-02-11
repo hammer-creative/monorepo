@@ -4,6 +4,7 @@ import { organizationJsonLd, websiteJsonLd } from '@/config';
 import { NavigationProvider } from '@/contexts/NavigationContext';
 import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import '@/styles/index.css';
 
@@ -47,13 +48,16 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://stream.mux.com" />
       </head>
       <body>
-        <NavigationProvider>
-          {children}
-          <MobileMenu
-            key="mobile-menu-persistent"
-            navigationData={navigationData as NavigationData}
-          />
-        </NavigationProvider>
+        <>
+          <NavigationProvider>
+            {children}
+            <MobileMenu
+              key="mobile-menu-persistent"
+              navigationData={navigationData as NavigationData}
+            />
+          </NavigationProvider>
+          <GoogleAnalytics gaId="G-TYV27501GB" />
+        </>
       </body>
     </html>
   );
