@@ -60,26 +60,26 @@ export const metadata: Metadata = {
   authors: [{ name: 'Hammer Creative', url: 'https://hammercreative.com' }],
   creator: 'Hammer Creative',
   publisher: 'Hammer Creative',
-  manifest: '/favicons/site.webmanifest',
+  // manifest: '/favicons/site.webmanifest',
   icons: {
     icon: [
       { url: '/favicons/favicon.ico', sizes: 'any' },
-      { url: '/favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicons/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/favicons/icon-512.png', sizes: '512x512', type: 'image/png' },
+      { url: '/favicons/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+      { url: '/favicons/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicons/icon-192.png', type: 'image/png', sizes: '192x192' },
+      { url: '/favicons/icon-512.png', type: 'image/png', sizes: '512x512' },
     ],
     shortcut: ['/favicons/favicon.ico'],
     apple: [
       {
         url: '/favicons/apple-touch-icon.png',
-        sizes: '180x180',
         type: 'image/png',
+        sizes: '180x180',
       },
       {
         url: '/favicons/apple-touch-icon-precomposed.png',
-        sizes: '180x180',
         type: 'image/png',
+        sizes: '180x180',
       },
     ],
     other: [
