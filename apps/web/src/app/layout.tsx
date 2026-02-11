@@ -1,5 +1,6 @@
 // apps/web/src/app/layout.tsx
 import { MobileMenu } from '@/components/navigation/MobileMenu';
+import { organizationJsonLd, websiteJsonLd } from '@/config';
 import { NavigationProvider } from '@/contexts/NavigationContext';
 import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
@@ -12,20 +13,8 @@ import {
   MOHOL_BOLD,
   MOHOL_REGULAR,
 } from '@/utils/fontConfig';
-import type { Metadata } from 'next';
 
-const isStaging = process.env.CONTEXT !== 'production';
-
-export const metadata: Metadata = {
-  title: 'Hammer Creative',
-  description: 'Gaming agency',
-  robots: isStaging ? 'noindex, nofollow' : undefined,
-  formatDetection: {
-    telephone: false,
-    email: false,
-    address: false,
-  },
-};
+export { metadata } from '@/config';
 
 export default function RootLayout({
   children,
@@ -43,6 +32,16 @@ export default function RootLayout({
       `}
     >
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="preconnect" href="https://image.mux.com" />
         <link rel="dns-prefetch" href="https://stream.mux.com" />

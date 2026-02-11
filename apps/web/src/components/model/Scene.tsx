@@ -301,7 +301,7 @@ export default function Scene() {
 
   return (
     <div className="model">
-      <button
+      {/* <button
         onClick={() => setHelpersVisible(!helpersVisible)}
         style={{
           position: 'absolute',
@@ -318,7 +318,7 @@ export default function Scene() {
         }}
       >
         Helpers/Orbit: {helpersVisible ? 'ON' : 'OFF'}
-      </button>
+      </button> */}
 
       <Canvas
         camera={{ position: [0, 0, 0.4], fov: 50 }}

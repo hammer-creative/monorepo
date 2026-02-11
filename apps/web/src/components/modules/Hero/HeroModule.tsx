@@ -34,6 +34,8 @@ export function HeroModule({
   const hasMeta = !!body || clientNames.length > 0;
   const hasLists = services.length > 0 || deliverables.length > 0;
 
+  console.log(title);
+
   return (
     <>
       {image && (
