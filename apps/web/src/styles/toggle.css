@@ -17,8 +17,8 @@
   }
 
   svg {
-    width: 10px;
-    height: 10px;
+    width: 0.6em;
+    height: auto;
   }
 }
 
@@ -37,14 +37,19 @@
   }
 }
 
+[data-page='/'] .menu-toggle-dot svg {
+  /* color: red; */
+}
+
 .menu-toggle-text {
+  font-size: var(--font-size-all-caps-fluid);
   width: 6ch;
   display: inline-block;
   text-align: left;
   letter-spacing: var(--letter-spacing-extra-loose);
   font-family: var(--font-serif);
   text-transform: uppercase;
-  color: $color-hyperbeam;
+  color: $color-vinewhip;
   transition: color 0.5s ease;
 }
 
@@ -60,7 +65,7 @@
 
   @media (min-width: 50em) {
     .menu-toggle-dot svg {
-      transform: translateX(-2ch);
+      transform: translateX(-1ch);
     }
 
     .menu-toggle-text {

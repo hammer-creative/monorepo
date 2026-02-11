@@ -17,3 +17,5 @@ mux-uploads
 
 apps/web/public/model/assets
 apps/web/public/video
+
+scripts/favicon-source-*
