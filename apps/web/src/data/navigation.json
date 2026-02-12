@@ -17,7 +17,7 @@
     {
       "id": "jobs",
       "label": "Jobs",
-      "href": "https://hammercreative.com/careers"
+      "href": "https://ats.rippling.com/hammer-creative/jobs"
     },
     {
       "id": "contact",
@@ -42,24 +42,24 @@
     {
       "id": "privacy",
       "label": "Privacy Policy",
-      "href": "https://hammercreative.com/"
+      "href": "https://termly.io"
     }
   ],
   "social": [
     {
       "id": "instagram",
       "label": "Instagram",
-      "href": "https://instagram.com/"
+      "href": "https://www.instagram.com/hammercreative/"
     },
     {
       "id": "youtube",
       "label": "Youtube",
-      "href": "https://youtube.com"
+      "href": "https://www.youtube.com/c/hammercreative"
     },
     {
       "id": "linkedin",
       "label": "LinkedIn",
-      "href": "https://linkedin.com"
+      "href": "https://www.linkedin.com/company/hammer-creative/"
     }
   ]
 }
