@@ -10,7 +10,7 @@ const utilityLinks = [
   },
   {
     id: 'privacy',
-    href: '/privacy',
+    href: 'https://termly.io',
     label: 'Privacy Policy',
     className: 'privacy',
   },
