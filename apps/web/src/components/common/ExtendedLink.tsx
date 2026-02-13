@@ -1,4 +1,6 @@
 // apps/web/src/components/common/ExtendedLink.tsx
+'use client';
+
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
@@ -7,7 +9,8 @@ interface ExtendedLinkProps {
   email?: string;
   className?: string;
   onClick?: (href: string, e: React.MouseEvent) => void;
-  preventNavigation?: boolean; // When true, prevents Next.js Link from navigating
+  preventNavigation?: boolean;
+  arrowComponent?: ReactNode; // Pass in any arrow component
   children: ReactNode;
 }
 
@@ -17,6 +20,7 @@ export function ExtendedLink({
   className,
   onClick,
   preventNavigation = false,
+  arrowComponent,
   children,
 }: ExtendedLinkProps) {
   // Check if URL is external (http/https) or mailto
@@ -26,13 +30,10 @@ export function ExtendedLink({
   };
 
   // Handle all link clicks
-  // If preventNavigation is true, stops default navigation so custom onClick can handle it
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Prevent default browser/Next.js navigation if preventNavigation is true
     if (preventNavigation) {
       e.preventDefault();
     }
-    // Call custom onClick handler if provided
     if (onClick && href) {
       onClick(href, e);
     }
@@ -40,6 +41,16 @@ export function ExtendedLink({
 
   // Combine base "link" class with any additional classes
   const combinedClassName = ['link', className].filter(Boolean).join(' ');
+
+  // Wrap children with arrow component if provided
+  const content = arrowComponent ? (
+    <>
+      {children}
+      {arrowComponent}
+    </>
+  ) : (
+    children
+  );
 
   // EMAIL: Render as mailto link
   if (email) {
@@ -50,7 +61,7 @@ export function ExtendedLink({
         className={combinedClassName}
         onClick={(e) => onClick?.(mailtoHref, e)}
       >
-        {children}
+        {content}
       </a>
     );
   }
@@ -63,7 +74,7 @@ export function ExtendedLink({
         className={combinedClassName}
         onClick={(e) => onClick?.('', e)}
       >
-        {children}
+        {content}
       </button>
     );
   }
@@ -78,17 +89,16 @@ export function ExtendedLink({
         target="_blank"
         rel="noopener noreferrer"
       >
-        {children}
+        {content}
       </a>
     );
   }
 
   // INTERNAL + preventNavigation: Regular <a> tag (no Next.js Link)
-  // This allows e.preventDefault() to work and onClick to handle navigation
   if (preventNavigation) {
     return (
       <a href={href} className={combinedClassName} onClick={handleClick}>
-        {children}
+        {content}
       </a>
     );
   }
@@ -96,7 +106,32 @@ export function ExtendedLink({
   // INTERNAL (default): Use Next.js Link for client-side navigation
   return (
     <Link href={href} className={combinedClassName} onClick={handleClick}>
-      {children}
+      {content}
     </Link>
+  );
+}
+
+// ServerLink at the end
+interface ServerLinkProps {
+  href: string;
+  className?: string;
+  arrowComponent?: ReactNode;
+  children: ReactNode;
+}
+
+export function ServerLink({
+  href,
+  className,
+  arrowComponent,
+  children,
+}: ServerLinkProps) {
+  return (
+    <ExtendedLink
+      href={href}
+      className={className}
+      arrowComponent={arrowComponent}
+    >
+      {children}
+    </ExtendedLink>
   );
 }

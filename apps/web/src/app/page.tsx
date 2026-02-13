@@ -1,6 +1,5 @@
 // apps/web/src/app/page.tsx
-
-import { ClientIcons } from '@/components/common/ClientIcons';
+import { ArrowUpRight, ClientIcons, ExtendedLink } from '@/components/common';
 import Scene from '@/components/model/Scene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
@@ -18,6 +17,7 @@ import type {
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
+import type { ReactNode } from 'react';
 
 import { homePageAnimations } from './page.animations';
 
@@ -31,6 +31,29 @@ const moduleComponents = {
 } as const;
 
 type ModuleData = CaseStudyCardModuleType | TextModuleType;
+
+interface InjectedLink {
+  moduleIndex: number;
+  href: string;
+  label: string;
+  className?: string;
+  arrowComponent?: ReactNode;
+}
+
+const injectedLinks: InjectedLink[] = [
+  {
+    moduleIndex: 1,
+    href: '/services',
+    label: 'View Our Services',
+    className: 'label',
+  },
+  {
+    moduleIndex: 3,
+    href: '/work',
+    label: 'View All Work',
+    className: 'label',
+  },
+];
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -74,13 +97,16 @@ export default async function HomePage() {
           const moduleClass = `module ${toKebab(mod._type)}`;
           const { backgroundColor, textColor } = mod;
 
-          // Determine animation config based on type and position
           let animateConfig;
           if (mod._type === 'textModule' && index === 0) {
             animateConfig = homePageAnimations.textModuleFirst;
           } else if (mod._type === 'textModule' && index === 1) {
             animateConfig = homePageAnimations.textModuleSecond;
           }
+
+          const linksForThisModule = injectedLinks.filter(
+            (link) => link.moduleIndex === index,
+          );
 
           const sections = [
             <section
@@ -98,11 +124,31 @@ export default async function HomePage() {
                 <AnimateOnScroll config={animateConfig}>
                   {/* @ts-expect-error - Dynamic module rendering */}
                   <Component data={mod as ModuleData} />
+                  {linksForThisModule.map((link, linkIndex) => (
+                    <ExtendedLink
+                      key={`link-${index}-${linkIndex}`}
+                      href={link.href}
+                      className={link.className}
+                      arrowComponent={<ArrowUpRight />}
+                    >
+                      {link.label}
+                    </ExtendedLink>
+                  ))}
                 </AnimateOnScroll>
               ) : (
                 <>
                   {/* @ts-expect-error - Dynamic module rendering */}
                   <Component data={mod as ModuleData} />
+                  {linksForThisModule.map((link, linkIndex) => (
+                    <ExtendedLink
+                      key={`link-${index}-${linkIndex}`}
+                      href={link.href}
+                      className={link.className}
+                      arrowComponent={<ArrowUpRight />}
+                    >
+                      {link.label}
+                    </ExtendedLink>
+                  ))}
                 </>
               )}
             </section>,

@@ -9,8 +9,20 @@
 .title.primary {
   font-family: var(--font-serif);
   font-size: var(--font-size-xl-fluid);
+
   text-transform: uppercase;
   line-height: var(--line-height-very-tight);
+}
+
+/* Primary
+.title.primary:where([data-length='long']) {
+  font-size: clamp(24px, 5cqi, 38px);
+}
+
+@media screen and (min-width: 50em) {
+  .title.primary:where([data-length='long']) {
+    font-size: clamp(24px, 10cqi, 42px);
+  }
 }
 
 /* Secondary */
@@ -36,6 +48,7 @@
   margin-bottom: 4px;
   margin-right: 5%;
   white-space: pre-line;
+  line-height: var(--line-height-very-tight);
 }
 
 .hero-module h1 {
@@ -55,4 +68,12 @@
   width: 100%;
   min-height: 2em;
   margin-block-end: var(--space-20);
+}
+
+/* Module-specific overrides, Text Module, promo */
+[data-page='/'] .layout-wrapper h2 {
+  font-size: var(--font-size-promo-fluid);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.04em;
+  font-weight: 100;
 }

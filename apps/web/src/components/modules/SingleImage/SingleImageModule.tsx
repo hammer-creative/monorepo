@@ -1,5 +1,5 @@
 // apps/web/src/components/modules/Hero/HeroModule.tsx
-import { SanityHeroImage } from '@/components/common';
+import { SanityImageFullWidth } from '@/components/common';
 import type { SingleImageModule as SingleImageModuleType } from '@/types/sanity.generated';
 
 // Type guard: Check if module data exists and is valid
@@ -30,7 +30,7 @@ export function SingleImageModule({
         <div className="content">
           {hasImage && (
             <div className="image">
-              <SanityHeroImage image={image} fill priority />
+              <SanityImageFullWidth image={image} />
             </div>
           )}
         </div>

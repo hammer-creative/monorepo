@@ -1,7 +1,7 @@
 // apps/web/src/components/modules/Carousel/CarouselModule.tsx
 'use client';
 
-import { SanityCarouselImage } from '@/components/common/SanityImage';
+import { SanityImageCarousel } from '@/components/common/SanityImage';
 import type { CarouselModule as CarouselModuleType } from '@/types/sanity.generated';
 import { useEffect, useRef, useState } from 'react';
 
@@ -85,7 +85,7 @@ export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
       >
         {images.map((item: CarouselImageItem) => (
           <SwiperSlide key={item._key}>
-            <SanityCarouselImage image={item.image ?? null} />
+            <SanityImageCarousel image={item.image ?? null} />
           </SwiperSlide>
         ))}
       </Swiper>
