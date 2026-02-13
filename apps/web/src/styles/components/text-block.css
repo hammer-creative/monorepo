@@ -23,14 +23,14 @@
 }
 
 /* Module-specific override: Hero module */
-.text-module .text-block.hero {
+.hero-module .text-block {
   font-family: var(--font-sans);
   font-size: var(--font-size-lg-fluid);
   line-height: var(--line-height-tight);
 }
 
 /* Module-specific override: Impact module */
-.text-module .text-block.impact {
+.impact-module .text-block {
   font-family: var(--font-sans);
   font-size: var(--font-size-md-fluid);
 }
@@ -39,6 +39,27 @@
 .text-module .text-block.has-headline {
   font-family: var(--font-sans);
   font-size: var(--font-size-md-fluid);
+}
+
+/* Module-specific override: Text + image module, headline */
+.text-image-module .text-block {
+  font-size: var(--font-size-md-fluid);
+}
+
+/* Module-specific override: Text module, promo */
+[data-page='/'] .layout-wrapper {
+  section:first-child .promo .text-block,
+  section:nth-child(6) .promo .text-block {
+    font-size: var(--font-size-promo-fluid);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.04em;
+    color: $color-sandstorm;
+  }
+}
+
+[data-page='/'] .layout-wrapper section:nth-child(2) .promo .text-block {
+  font-size: var(--font-size-sm-fluid);
+  line-height: var(--line-height-very-loose);
 }
 
 @media (min-width: 50em) {
@@ -52,6 +73,7 @@
 
   /* Module-specific override: Text module, dropquote */
   .text-module .text-block.dropquote {
+    font-size: var(--font-size-lg-fluid);
     /* max-width: 50ch;
     width: 100%; */
   }

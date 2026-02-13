@@ -3,7 +3,7 @@
 'use client';
 
 import type { VideoModule as VideoModuleType } from '@/types/sanity.generated';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useViewportSize } from './hooks/useViewportSize';
 import { VideoMulti } from './VideoMulti';
@@ -17,6 +17,8 @@ function isValidVideoModule(
 
 export function VideoModule({ data }: { data: VideoModuleType | null }) {
   const { isMobile } = useViewportSize();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(true);
 
   const videos = useMemo(() => data?.videos || [], [data?.videos]);
   const mobileVideos = useMemo(
@@ -32,14 +34,45 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
     return videos;
   }, [videos, mobileVideos, isMobile]);
 
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0, // Trigger as soon as any part leaves viewport
+        rootMargin: '0px',
+      },
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   if (!isValidVideoModule(data)) return null;
 
   if (videos.length === 1) {
-    return <VideoSingle video={videos[0]} />;
+    return (
+      <div ref={containerRef}>
+        <VideoSingle video={videos[0]} isInView={isInView} />
+      </div>
+    );
   }
 
   // Key forces remount when switching between desktop/mobile
   return (
-    <VideoMulti key={isMobile ? 'mobile' : 'desktop'} videos={activeVideos} />
+    <div ref={containerRef}>
+      <VideoMulti
+        key={isMobile ? 'mobile' : 'desktop'}
+        videos={activeVideos}
+        isInView={isInView}
+      />
+    </div>
   );
 }

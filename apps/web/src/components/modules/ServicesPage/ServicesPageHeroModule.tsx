@@ -1,5 +1,5 @@
 // apps/web/src/components/modules/ServicesHeroModule.tsx
-import { SanityHeroImage, TextBlock, Title } from '@/components/common';
+import { SanityImageHero, TextBlock, Title } from '@/components/common';
 import type { ServicesPageHeroModule as ServicesPageHeroModuleType } from '@/types/sanity.generated';
 
 // Type guard: Check if module data exists and is valid
@@ -33,7 +33,7 @@ export function ServicesPageHeroModule({
           {/* Hero Image */}
           {hasImage && (
             <div className="image">
-              <SanityHeroImage image={image} fill priority />
+              <SanityImageHero image={image} fill priority />
             </div>
           )}
           {hasTitle && hasBody && (
