@@ -1,13 +1,16 @@
 /* apps/web/src/stylesl/list.css */
 
+.services-card .services-list p,
 .hero-module .services-list p {
-  margin-block-end: var(--space-5);
   color: $color-hyperbeam;
+  margin-block-end: var(--space-5);
 }
 
+.services-card .services-list li,
 .hero-module .services-list li {
   font-size: var(--font-size-xs-fluid);
   line-height: var(--line-height-loose);
+  text-shadow: var(--text-shadow);
 }
 
 @media screen and (min-width: 50em) {

@@ -78,7 +78,7 @@ function CaseStudyCardItem({ item }: { item: unknown }) {
             </div>
           )}
           {title && (
-            <Title className="case-study-title" as="h3">
+            <Title className="case-study-title" as="h3" variant="tertiary">
               {title}
             </Title>
           )}

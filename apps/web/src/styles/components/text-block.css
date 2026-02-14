@@ -22,6 +22,11 @@
   text-wrap: balance;
 }
 
+/* Module-specific override: Services page */
+[data-page='/services'] .text-block.small {
+  font-size: var(--font-size-xs-fluid);
+}
+
 /* Module-specific override: Hero module */
 .hero-module .text-block {
   font-family: var(--font-sans);
@@ -60,6 +65,12 @@
 [data-page='/'] .layout-wrapper section:nth-child(2) .promo .text-block {
   font-size: var(--font-size-sm-fluid);
   line-height: var(--line-height-very-loose);
+}
+
+[data-page='/services'] .hero-module p.text-block,
+[data-page='/services'] .services-card-module p.text-block {
+  line-height: var(--line-height-loose);
+  text-shadow: var(--text-shadow);
 }
 
 @media (min-width: 50em) {

@@ -1,10 +1,11 @@
-// apps/web/src/components/modules/ServicesPageCardModule.tsx
+'use client';
+
 import { SanityImage, TextBlock, Title } from '@/components/common';
 import { ClientIcons } from '@/components/common/ClientIcons';
 import { ServicesListModule } from '@/components/modules/ServicesList/';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import type { ServicesPageCardModule as ServicesPageCardModuleType } from '@/types/sanity.generated';
 
-// Type guard: Check if module data exists and is valid
 function isValidServicesPageCardModule(
   data: ServicesPageCardModuleType | null,
 ): data is ServicesPageCardModuleType {
@@ -20,35 +21,55 @@ export function ServicesPageCardModule({
   data,
   showClientIcons = false,
 }: ServicesPageCardModuleProps) {
-  // Guard: Early return if no valid data
+  const isWide = useMediaQuery('(min-width: 50em)');
+
   if (!isValidServicesPageCardModule(data)) return null;
 
-  // Destructure with defaults for optional fields
-  const { title = null, body = null, image = null, services = null } = data;
+  const { title, body, image, services } = data;
 
-  return (
-    <div className="card">
-      {/* Card Content: Title + Body + Services */}
-      <div className="card-marquee">
-        <div className="card-metadata">
-          {title && <Title as="h2">{title}</Title>}
-          {body && (
-            <div className="description">
-              <TextBlock body={body} />
-            </div>
+  const hasTitle = title != null;
+  const hasBody = body != null;
+  const hasImage = image != null;
+  const hasServices = services != null;
+
+  const content = (
+    <>
+      <div className="content">
+        {hasImage && (
+          <div className="image">
+            <SanityImage image={image} fill className="card-image" priority />
+          </div>
+        )}
+
+        <div className="header">
+          {hasTitle && (
+            <Title as="h2" variant="primary">
+              {title}
+            </Title>
           )}
+          {hasBody && <TextBlock body={body} variant="small" />}
         </div>
 
-        {services && <ServicesListModule services={services as unknown[]} />}
+        {isWide && hasServices && !showClientIcons && (
+          <div className="services">
+            <ServicesListModule services={services as unknown[]} />
+          </div>
+        )}
       </div>
 
-      {/* Card Image */}
-      {image && (
-        <SanityImage image={image} fill className="card-image" priority />
+      {!isWide && hasServices && !showClientIcons && (
+        <div className="services">
+          <ServicesListModule services={services as unknown[]} />
+        </div>
       )}
 
-      {/* Client Icons (conditionally shown) */}
-      {showClientIcons && <ClientIcons className="card-icons" chyron />}
-    </div>
+      {showClientIcons && <ClientIcons chyron />}
+    </>
+  );
+
+  return showClientIcons ? (
+    content
+  ) : (
+    <div className="services-card">{content}</div>
   );
 }

@@ -1,11 +1,12 @@
 /* apps/web/src/styles/home.css */
 @import './mixins.css';
 
+/* Layout Wrapper */
 .layout-wrapper {
   position: relative;
 }
 
-/* Layout – Promos */
+/* Home Page Layout */
 [data-page='/'] .layout-wrapper {
   display: flex;
   flex-direction: column;
@@ -14,37 +15,41 @@
   padding-inline: var(--space-fluid-20-40);
 }
 
-/* Layout – Promos */
-[data-page='/'] [data-module-index='1'] {
-  .content,
-  .label {
-    margin-block-end: var(--space-fluid-20-40);
-  }
-}
-/* Layout – Promos, long copy */
-[data-page='/'] [data-module-index='3'] .case-study-cards {
-  margin-block-end: var(--space-fluid-20-80);
+/* Module 1 */
+[data-page='/'] [data-module-index='1'] .content,
+[data-page='/'] [data-module-index='1'] .label {
+  margin-block-end: var(--space-fluid-20-40);
 }
 
+/* Module 3 */
 [data-page='/'] [data-module-index='3'] {
   margin-block-end: var(--space-fluid-20-80);
 }
 
-[data-page='/'] .client-icons-module {
+[data-page='/'] [data-module-index='3'] .case-study-cards {
   margin-block-end: var(--space-fluid-20-80);
 }
 
+/* Module 4 */
 [data-page='/'] [data-module-index='4'] .content.promo {
   padding-inline-end: var(--space-fluid-40-80);
 }
 
-/* Layout – Responsive */
-@media screen and (min-width: 50em) {
+/* Client Icons Module */
+[data-page='/'] .client-icons-module {
+  margin-block-end: var(--space-fluid-20-80);
+}
+
+/* Responsive */
+@media (min-width: 50em) {
+  /* Module 0 */
   [data-page='/'] [data-module-index='0'] {
     max-width: 70em;
     padding-inline-start: var(--space-fluid-40-80);
     padding-block-end: var(--space-fluid-20-40);
   }
+
+  /* Module 1 */
   [data-page='/'] [data-module-index='1'] {
     position: relative;
     max-width: 40em;
@@ -57,29 +62,21 @@
     margin-block-end: var(--space-fluid-20-40);
   }
 
+  /* Module 3 */
   [data-page='/'] [data-module-index='3'] .case-study-cards {
     margin-block-end: var(--space-fluid-10-20);
   }
-  [data-page='/'] .client-icons-module {
-    margin-block-end: var(--space-fluid-10-20);
-  }
+
+  /* Module 4 */
   [data-page='/'] [data-module-index='4'] .content.promo {
     max-width: 70em;
     padding-inline-start: var(--space-fluid-40-80);
     padding-inline-end: var(--space-fluid-80-160);
     padding-block-end: var(--space-fluid-60-120);
   }
+
+  /* Client Icons Module */
+  [data-page='/'] .client-icons-module {
+    margin-block-end: var(--space-fluid-10-20);
+  }
 }
-
-/* Layout - View Our Services */
-
-/* [data-page='/'] .tag::after {
-  content: '';
-  display: inline-block;
-  width: 0.75em;
-  height: 0.75em;
-  background-image: url('data:image/svg+xml,<svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.274902" width="5.79529" height="1.83009" fill="%23FFCC98"/><rect x="7.8999" width="7.62538" height="1.83009" transform="rotate(90 7.8999 0)" fill="%23FFCC98"/><rect x="7.43896" y="1.77258" width="8.66543" height="1.85482" transform="rotate(135 7.43896 1.77258)" fill="%23FFCC98"/></svg>');
-  background-size: contain;
-  background-repeat: no-repeat;
-  flex-shrink: 0;
-} */

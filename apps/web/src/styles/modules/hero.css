@@ -1,32 +1,12 @@
 /* apps/web/src/styles/modules/hero.css */
 
-/* Header */
+/* Base header structure */
 .hero-module .header {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100vh;
   container-type: inline-size;
-}
-
-.hero-module .title-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: var(--space-fluid-20-40);
-}
-
-.hero-module .title-container .title {
-  flex: 1;
-  min-width: 0; /* Allow title to shrink */
-}
-
-/* Title */
-.hero-module .header .title {
-}
-
-.lists {
-  padding: 0;
 }
 
 /* Image */
@@ -36,12 +16,68 @@
   aspect-ratio: 1 / 1;
 }
 
+@media screen and (min-width: 50em) {
+  .hero-module .header .image {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* Dark gradient overlay on image for text readability */
+[data-page='/services'] .header .image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 65%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  pointer-events: none;
+}
+
+/* Services page content wrapper */
+[data-page='/services'] .header .content-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: var(--space-fluid-20-40);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-fluid-20-40);
+}
+
+[data-page='/services'] .header .title-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Case study specific */
+.case-study .hero-module .title-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: var(--space-fluid-20-40);
+}
+
+.case-study .hero-module .title-container .title {
+  flex: 1;
+  min-width: 0;
+}
+
 /* Bar */
-.hero-module .bar {
+.case-study .hero-module .bar {
   display: none;
   line-height: 0;
   padding-inline-start: var(--space-fluid-20-40);
   padding-block-end: var(--space-fluid-20-40);
+}
+
+@media screen and (min-width: 50em) {
+  .case-study .hero-module .bar {
+    display: block;
+  }
 }
 
 /* Content */
@@ -51,49 +87,46 @@
 }
 
 /* Meta */
-.hero-module .content .meta {
+.case-study .hero-module .content .meta {
   display: flex;
   flex-direction: column;
   padding-inline: var(--space-fluid-20-40);
   padding-block-end: var(--space-fluid-20-40);
 }
 
-.hero-module .content .meta .text-block {
+.case-study .hero-module .content .meta .text-block {
   margin-block-end: var(--space-fluid-20-40);
 }
 
-/* Lists */
-.hero-module .content .meta .lists {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  /* padding-inline: var(--space-fluid-20-40); */
-}
-
-.hero-module .content .meta .clients {
+.case-study .hero-module .content .meta .clients {
   margin-block-end: var(--space-fluid-20-40);
 }
 
-.hero-module .content .meta li {
+.case-study .hero-module .content .meta li {
   text-indent: -1ch;
   margin-left: 1ch;
 }
 
+/* Lists */
+.lists {
+  padding: 0;
+}
+
+.case-study .hero-module .content .meta .lists {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 /* Labels */
-.hero-module .services p:first-of-type,
-.hero-module .clients .client-label {
+.case-study .hero-module .services p:first-of-type,
+.case-study .hero-module .clients .client-label {
   color: $color-hyperbeam !important;
 }
 
-/* Responsive */
+/* Wide viewport */
 @media screen and (min-width: 50em) {
-  /* Bar */
-  .hero-module .bar {
-    display: block;
-  }
-
-  /* Title */
-  .hero-module .header .title {
+  .case-study .hero-module .header .title {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -101,24 +134,19 @@
     width: 50%;
   }
 
-  /* Image */
-  .hero-module .header .image {
-    aspect-ratio: 16 / 9;
-  }
-
-  /* Meta */
-  .hero-module .content .meta {
+  .case-study .hero-module .content .meta {
     flex-direction: row;
   }
 
-  .hero-module .content .meta > * {
+  .case-study .hero-module .content .meta > * {
     flex: 1;
   }
 
-  .hero-module .content .meta .text-block {
+  .case-study .hero-module .content .meta .text-block {
     padding-inline-end: 5vw;
   }
-  .hero-module .content .meta .lists {
+
+  .case-study .hero-module .content .meta .lists {
     justify-content: space-evenly;
   }
 }
