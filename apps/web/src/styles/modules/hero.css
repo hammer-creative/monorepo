@@ -102,16 +102,6 @@
   margin-block-end: var(--space-fluid-20-40);
 }
 
-.case-study .hero-module .content .meta li {
-  text-indent: -1ch;
-  margin-left: 1ch;
-}
-
-/* Lists */
-.lists {
-  padding: 0;
-}
-
 .case-study .hero-module .content .meta .lists {
   display: flex;
   flex-direction: row;
