@@ -140,28 +140,92 @@
   display: none;
 }
 
-/* Services Page - Services Card */
+/* Services Page - 100vh flex stacking */
+[data-page='/services'] .services-card-module .services-card {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-page='/services'] .services-card-module .services-card .content {
+  display: flex;
+  flex-direction: column;
+}
 
 [data-page='/services'] .services-card-module .services-card .content {
   position: relative;
 }
 
 [data-page='/services'] .services-card-module .services-card .image {
-  position: relative;
   aspect-ratio: 1 / 1;
+  height: 50vh;
 }
 
-/* do not include Partners at Play & Client Icon Chyron card */
-[data-page='/services']
-  .services-card-module:not(:last-of-type)
-  .services-card
-  .header {
+.services-card-module .services-card .content .header {
   position: absolute;
   bottom: 0;
   left: 0;
 }
 
-[data-page='/services'] .services-card-module .services-card .services-list {
-  background: $color-nightshade;
-  padding: var(--space-fluid-10-20);
+.services-card-module .services-card .narrow {
+  flex: 1;
+}
+
+[data-page='/services'] .services-card-module .services-card .content .wide {
+  display: none;
+}
+
+@media screen and (min-width: 50em) {
+  [data-page='/services'] .services-card-module .services-card .image {
+    aspect-ratio: 16 / 9;
+    height: 50vh;
+  }
+
+  [data-page='/services'] .services-card-module .services-card .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    inset: 0;
+    align-items: center;
+  }
+
+  [data-page='/services'] .services-card-module .services-card .wide {
+    display: block;
+  }
+
+  [data-page='/services'] .services-card-module .services-card .narrow {
+    display: none;
+  }
+
+  [data-page='/services']
+    .services-card-module
+    .services-card
+    .content
+    .header {
+    flex-basis: 60%;
+  }
+  [data-page='/services'] .services-card-module .services-card .content .wide {
+    flex: 1;
+  }
+
+  [data-page='/services'] .services-card-module .services-card .content .wide {
+    display: block;
+    align-self: flex-start;
+  }
+
+  [data-page='/services']
+    .services-card-module
+    .services-card
+    .content
+    .header {
+    position: relative;
+    align-self: flex-end; /* bottom */
+  }
+
+  [data-page='/services'] .services-card-module .services-card .content .wide {
+    /* position: relative; */
+  }
 }

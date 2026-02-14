@@ -3,6 +3,12 @@
 /* Base */
 .title {
   line-height: var(--line-height-tight);
+  white-space: pre-line;
+}
+
+/* Default */
+.title.default {
+  font-family: var(--font-sans);
 }
 
 /* Primary */
@@ -13,7 +19,7 @@
   line-height: var(--line-height-very-tight);
 }
 
-/* Primary
+/* Primary – with container queries */
 .title.primary:where([data-length='long']) {
   font-size: clamp(24px, 5cqi, 38px);
 }
@@ -37,9 +43,40 @@
   font-size: var(--font-size-lg-fluid);
 }
 
-/* Default */
-.title.default {
-  font-family: var(--font-sans);
+.text-module .has-headline .title.secondary {
+  margin-bottom: 4px;
+  margin-right: 5%;
+  line-height: var(--line-height-very-tight);
+}
+
+/* Module-specific overrides - Hero Module */
+.hero-module .title.primary {
+  line-height: var(--line-height-tight);
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Module-specific overrides - Impact Module */
+.impact-module .title.tertiary {
+  white-space: pre-line;
+  max-width: 100%;
+  width: 100%;
+  min-height: 2em;
+  margin-block-end: var(--space-20);
+}
+
+/* Page-specific overrides – Homepage – Text Module, promo */
+[data-page='/'] .layout-wrapper h2 {
+  /* TODO: change to title.secondary? */
+  font-size: var(--font-size-promo-fluid);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.04em;
+  font-weight: 100;
+}
+
+/* Page specific overrides */
+[data-page='/services'] .services-card-module .title.primary {
+  /* width: 50%; */
 }
 
 /* Text shadow for readability on light backgrounds */
@@ -49,36 +86,8 @@
   text-shadow: var(--text-shadow);
 }
 
-.text-module .has-headline .title.secondary {
-  margin-bottom: 4px;
-  margin-right: 5%;
-  white-space: pre-line;
-  line-height: var(--line-height-very-tight);
-}
-
-.hero-module h1 {
-  line-height: var(--line-height-tight);
-}
-
-/* Module-specific overrides, Impact Module */
-.hero-module .title.primary {
-  white-space: pre-line;
-  max-width: 100%;
-  width: 100%;
-}
-
-.impact-module .title.tertiary {
-  white-space: pre-line;
-  max-width: 100%;
-  width: 100%;
-  min-height: 2em;
-  margin-block-end: var(--space-20);
-}
-
-/* Module-specific overrides, Text Module, promo */
-[data-page='/'] .layout-wrapper h2 {
-  font-size: var(--font-size-promo-fluid);
-  line-height: var(--line-height-tight);
-  letter-spacing: -0.04em;
-  font-weight: 100;
+@media screen and (min-width: 50em) {
+  [data-page='/services'] .services-card-module .title.primary {
+    width: 100%;
+  }
 }

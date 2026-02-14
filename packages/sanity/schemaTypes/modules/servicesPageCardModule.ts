@@ -12,7 +12,10 @@ export const servicesPageCardModule = defineType({
   type: 'object',
   icon: DocumentIcon,
   fields: [
-    titleField(),
+    (() => {
+      const {validation: _, ...field} = titleField({required: false, rows: 2, maxLength: 150})
+      return field
+    })(),
     portableTextField({maxLength: 200}),
     (() => {
       const {validation: _, ...imageField} = createSingleImageField({

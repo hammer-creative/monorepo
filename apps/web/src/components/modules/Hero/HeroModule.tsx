@@ -1,3 +1,16 @@
+// TODO: remove mq and replace with pure css
+
+// .scroll-trigger {
+//   /* mobile: hidden */
+//   display: none;
+// }
+
+// @media (min-width: 60em) {
+//   .scroll-trigger {
+//     display: block;
+//   }
+// }
+
 // apps/web/src/components/modules/Hero/HeroModule.tsx
 'use client';
 
