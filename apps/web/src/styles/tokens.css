@@ -131,6 +131,8 @@
   --letter-spacing-tight: -0.03em;
   --letter-spacing-loose: 0.15em;
   --letter-spacing-extra-loose: 0.25em;
+
+  --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
 /* Typography */

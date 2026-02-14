@@ -1,0 +1,15 @@
+/* apps/web/src/styles/pages/services.css */
+
+[data-page='/services'] .layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-fluid-20-100);
+  background: $color-sandstorm;
+}
+
+[data-page='/services'] .services-cards {
+  display: flex;
+  flex-direction: column;
+  padding-inline: var(--space-fluid-10-20);
+  gap: var(--space-fluid-10-20);
+}

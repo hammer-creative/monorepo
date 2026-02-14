@@ -688,6 +688,30 @@ export type HeroModule = {
   };
 };
 
+export type WorkPage = {
+  _id: string;
+  _type: 'workPage';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  modules?: Array<
+    | ({
+        _key: string;
+      } & CaseStudyCardModule)
+    | ({
+        _key: string;
+      } & TextModule)
+  >;
+};
+
+export type Slug = {
+  _type: 'slug';
+  current?: string;
+  source?: string;
+};
+
 export type ServicesPage = {
   _id: string;
   _type: 'servicesPage';
@@ -704,12 +728,6 @@ export type ServicesPage = {
         _key: string;
       } & ServicesPageCardModule)
   >;
-};
-
-export type Slug = {
-  _type: 'slug';
-  current?: string;
-  source?: string;
 };
 
 export type Service = {
@@ -816,6 +834,20 @@ export type Client = {
     _type: 'image';
   };
   website?: string;
+};
+
+export type Table = {
+  _type: 'table';
+  rows?: Array<
+    {
+      _key: string;
+    } & TableRow
+  >;
+};
+
+export type TableRow = {
+  _type: 'tableRow';
+  cells?: Array<string>;
 };
 
 export type MediaTag = {
@@ -1028,14 +1060,17 @@ export type AllSanitySchemaTypes =
   | CarouselModule
   | ImpactModule
   | HeroModule
-  | ServicesPage
+  | WorkPage
   | Slug
+  | ServicesPage
   | Service
   | HomePage
   | Deliverable
   | CaseStudy
   | MuxVideo
   | Client
+  | Table
+  | TableRow
   | MediaTag
   | MuxVideoAsset
   | MuxAssetData
