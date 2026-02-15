@@ -1,0 +1,14 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  table-layout: fixed;
+}
+
+th,
+td {
+  padding: var(--space-fluid-10-20);
+  text-align: left;
+  border: 1px solid $color-aircutter;
+  vertical-align: top;
+}

@@ -89,3 +89,32 @@
     width: 100%; */
   }
 }
+
+[data-page='/privacy'] article > * {
+  color: $color-aircutter;
+}
+
+[data-page='/privacy'] article p {
+  font-size: var(--font-size-sm-fluid);
+}
+
+[data-page='/privacy'] article h1 {
+  font-size: var(--font-size-xl-fluid);
+  margin-bottom: var(--space-40);
+  text-align: center;
+}
+
+[data-page='/privacy'] article h2 {
+  font-size: var(--font-size-lg-fluid);
+  text-transform: normal;
+  margin-block: var(--space-40);
+  text-align: center;
+}
+
+[data-page='/privacy'] article p {
+  margin-block-end: var(--space-fluid-10-20);
+}
+
+[data-page='/privacy'] article a {
+  color: $color-hyperbeam;
+}
