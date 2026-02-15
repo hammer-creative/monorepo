@@ -5,6 +5,7 @@ import { Wordmark } from '@/components/common/Wordmark';
 import { MenuToggle } from '@/components/navigation/MenuToggle';
 import type { NavigationData } from '@/types/navigation';
 import { usePathname } from 'next/navigation';
+import Headroom from 'react-headroom';
 
 /**
  * Header Component
@@ -30,15 +31,23 @@ export function Header({ navigationData }: HeaderProps) {
   const pathname = usePathname();
   const isHome = pathname === '/';
 
+  if (isHome) {
+    return (
+      <header>
+        <MenuToggle />
+      </header>
+    );
+  }
+
   return (
     <>
-      {!isHome && (
+      <Headroom tag="header" disableInlineStyles>
         <Wordmark
           text={navigationData.wordmark.text}
           href={navigationData.wordmark.href}
           className="wordmark"
         />
-      )}
+      </Headroom>
       <MenuToggle />
     </>
   );

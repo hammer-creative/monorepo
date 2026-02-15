@@ -29,8 +29,6 @@ export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
 
   const { layout, textBlock1, textBlock2, textBlock3, image } = data;
 
-  console.log(textBlock1);
-
   if (!layout) return null;
 
   const layoutClass = LAYOUT_CLASS_MAP[layout] ?? '';

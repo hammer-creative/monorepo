@@ -45,7 +45,8 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
   const [scope, animate] = useAnimate();
   const overlayRef = useRef<HTMLDivElement>(null);
-  const itemRefsRef = useRef<Map<string, HTMLElement>>(new Map());
+  const primaryMenuMap = useRef<Map<string, HTMLElement>>(new Map());
+  const wordmarkRef = useRef<HTMLDivElement>(null);
 
   // Refs for secondary menu sections
   const addressesRef = useRef<HTMLDivElement>(null);
@@ -60,9 +61,9 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
   const setItemRef = useCallback((id: string, element: HTMLElement | null) => {
     if (element) {
-      itemRefsRef.current.set(id, element);
+      primaryMenuMap.current.set(id, element);
     } else {
-      itemRefsRef.current.delete(id);
+      primaryMenuMap.current.delete(id);
     }
   }, []);
 
@@ -73,14 +74,18 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     if (!overlayRef.current) return;
 
     // Get RadixMenu items + secondary sections
-    const radixItems = Array.from(itemRefsRef.current.values());
+    const radixItems = Array.from(primaryMenuMap.current.values());
     const secondarySections = [
       addressesRef.current,
       utilitiesRef.current,
       socialRef.current,
     ].filter(Boolean) as HTMLElement[];
 
-    const allItems = [...radixItems, ...secondarySections];
+    const allItems = [
+      ...radixItems,
+      ...secondarySections,
+      wordmarkRef.current,
+    ].filter(Boolean) as HTMLElement[];
 
     // Set initial states
     allItems.forEach((item) => {
@@ -121,7 +126,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
    */
   const exitItems = useCallback(
     async (clickedHref?: string | null) => {
-      const radixItems = Array.from(itemRefsRef.current.values());
+      const radixItems = Array.from(primaryMenuMap.current.values());
       const secondarySections = [
         addressesRef.current,
         utilitiesRef.current,
@@ -138,7 +143,11 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
         );
 
         // Non-clicked RadixMenu items + ALL secondary sections exit together
-        const nonClickedItems = [...nonClickedRadixItems, ...secondarySections];
+        const nonClickedItems = [
+          ...nonClickedRadixItems,
+          ...secondarySections,
+          wordmarkRef.current,
+        ].filter(Boolean) as HTMLElement[];
 
         if (nonClickedItems.length > 0) {
           await animate(
@@ -177,7 +186,11 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
         }
       } else {
         // No clicked item - everything exits together
-        const allItems = [...radixItems, ...secondarySections];
+        const allItems = [
+          ...radixItems,
+          ...secondarySections,
+          wordmarkRef.current,
+        ].filter(Boolean) as HTMLElement[];
 
         if (allItems.length > 0) {
           await animate(
@@ -330,31 +343,29 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
       />
 
       <div ref={scope} className="mobile-menu is-open">
-        <div className="wrapper">
-          <div className="row">
-            <RadixMenu
-              items={navigationData.main}
-              className="menu-primary"
-              onLinkClick={handleLinkClick}
-              clickedHref={clickedHref}
-              setItemRef={setItemRef}
-              showArrow={true}
-            />
+        <div className="footer-content">
+          <RadixMenu
+            items={navigationData.main}
+            className="menu-primary"
+            onLinkClick={handleLinkClick}
+            clickedHref={clickedHref}
+            setItemRef={setItemRef}
+            showArrow
+          />
+
+          <div ref={addressesRef} className="menu-secondary addresses">
+            <Addresses items={navigationData.addresses} />
           </div>
-          <div className="row">
-            <div ref={addressesRef} className="menu-secondary addresses">
-              <Addresses items={navigationData.addresses} />
-            </div>
-            <div ref={utilitiesRef} className="menu-secondary utilities">
-              <UtilitiesMenu />
-            </div>
-            <div ref={socialRef} className="menu-secondary social">
-              <LinkList items={navigationData.social} />
-              <Copyright />
-            </div>
+          <div ref={utilitiesRef} className="menu-secondary utilities">
+            <UtilitiesMenu />
+          </div>
+          <div ref={socialRef} className="menu-secondary social">
+            <LinkList items={navigationData.social} />
+            <Copyright />
           </div>
         </div>
-        <div className="wordmark">
+
+        <div ref={wordmarkRef} className="wordmark">
           <Wordmark
             text={navigationData.wordmark.text}
             href={navigationData.wordmark.href}

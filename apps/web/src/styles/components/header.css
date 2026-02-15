@@ -1,4 +1,4 @@
-/* apps/web/src/styles/header.css */
+/* apps/web/src/styles/components/header.css */
 
 /* Headroom wrapper - contains the header */
 .headroom-wrapper {
@@ -25,7 +25,6 @@
 /* Transition applied during scroll */
 .headroom--scrolled {
   transition: transform 300ms ease-in-out;
-  mix-blend-mode: difference;
 }
 
 /* Hidden state - scrolling down */
