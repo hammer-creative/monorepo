@@ -1,18 +1,41 @@
 /* apps/web/src/styles/header.css */
 
-/* Header */
-[data-page='/'] header .menu-toggle {
-  margin-left: auto;
+/* Headroom wrapper - contains the header */
+.headroom-wrapper {
+  position: absolute;
+  inset: 0;
 }
 
-header {
-  position: fixed;
+/* Base headroom styles */
+.headroom {
   top: 0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: space-between;
-  padding: var(--space-fluid-20-40);
   width: 100%;
-  z-index: 1;
+  padding: var(--space-fluid-10-20);
+  z-index: 100;
+}
+
+/* Unfixed state - header in normal flow */
+.headroom--unfixed {
+  position: relative;
+  transform: translateY(0);
+}
+
+/* Transition applied during scroll */
+.headroom--scrolled {
+  transition: transform 300ms ease-in-out;
+  mix-blend-mode: difference;
+}
+
+/* Hidden state - scrolling down */
+.headroom--unpinned {
+  position: fixed;
+  transform: translateY(-100%);
+}
+
+/* Visible state - scrolling up */
+.headroom--pinned {
+  position: fixed;
+  transform: translateY(0%);
 }

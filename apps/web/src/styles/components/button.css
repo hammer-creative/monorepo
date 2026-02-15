@@ -1,0 +1,34 @@
+/* apps/web/src/styles/components/button.css */
+
+.hero-module button.scroll-trigger {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hero-module button.scroll-trigger svg {
+  color: $color-hyperbeam;
+  transition: color 0.3s ease;
+}
+
+.hero-module button.scroll-trigger:hover svg {
+  color: $color-aircutter;
+}
+
+.hero-module button svg {
+  width: var(--font-size-xl-fluid);
+  height: auto;
+  line-height: 1;
+}
+
+@media screen and (min-width: 50em) {
+  .hero-module button.scroll-trigger {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+}

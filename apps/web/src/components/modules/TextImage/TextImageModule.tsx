@@ -1,5 +1,5 @@
 // apps/web/src/components/modules/TextImage/TextImageModule.tsx
-import { SanityImage, TextBlock } from '@/components/common';
+import { SanityImageHalfWidth, TextBlock } from '@/components/common';
 import type { TextImageModule as TextImageModuleType } from '@/types/sanity.generated';
 
 type Layout = NonNullable<TextImageModuleType['layout']>;
@@ -39,7 +39,7 @@ export function TextImageModule({
       {/* Image */}
       {hasImage && (
         <div className="image">
-          <SanityImage image={image} fill />
+          <SanityImageHalfWidth image={image} fill />
         </div>
       )}
 

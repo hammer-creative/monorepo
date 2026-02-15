@@ -12,7 +12,10 @@ export const servicesPageHeroModule = defineType({
   type: 'object',
   icon: AsteriskIcon,
   fields: [
-    titleField(),
+    (() => {
+      const {validation: _, ...field} = titleField({required: false, rows: 3, maxLength: 150})
+      return field
+    })(),
     portableTextField({maxLength: 300}),
     (() => {
       const {validation: _, ...imageField} = createSingleImageField({

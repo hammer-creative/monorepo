@@ -31,3 +31,10 @@
   font-size: var(--font-size-all-caps-fluid);
   line-height: var(--line-height-loose);
 }
+
+[data-page='/'] .layout-wrapper .text-module .promo .label {
+  text-transform: initial;
+  font-size: var(--font-size-sm-fluid);
+  letter-spacing: var(--letter-spacing-default);
+  font-weight: 100;
+}

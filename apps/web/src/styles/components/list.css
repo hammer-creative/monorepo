@@ -1,17 +1,36 @@
 /* apps/web/src/stylesl/list.css */
 
+.services-card .services-list p,
 .hero-module .services-list p {
-  margin-block-end: var(--space-5);
   color: $color-hyperbeam;
+  margin-block-end: var(--space-5);
 }
 
+.services-card .services-list li,
 .hero-module .services-list li {
   font-size: var(--font-size-xs-fluid);
-  line-height: var(--line-height-loose);
+  line-height: var(--line-height-very-loose);
+}
+.services-card .services-list li {
+  text-shadow: var(--text-shadow);
+}
+
+.case-study .hero-module .content .meta li {
+  text-indent: -1ch;
+  margin-left: 1ch;
+}
+
+/* Lists */
+.lists {
+  padding: 0;
 }
 
 @media screen and (min-width: 50em) {
   .hero-module .services-list li {
     /* line-height: var(--line-height-default); */
   }
+}
+
+.services-card .services-list ul {
+  columns: 2;
 }

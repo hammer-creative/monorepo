@@ -1,22 +1,21 @@
 /* apps/web/src/styles/modules/text.css */
 
-/* Content */
-.content {
+.text-module .text-block {
 }
 
 /* Challenge */
-.content.challenge {
+.text-module .content.challenge {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-fluid-10-20);
-  padding-block: var(--space-fluid-40-120);
+  padding-block: var(--space-fluid-40-80);
   text-align: center;
 }
 
 /* Headline Left - Content */
-.content.has-headline {
+.text-module .content.has-headline {
   display: flex;
   flex-direction: column;
   padding-block: var(--space-fluid-20-60);
@@ -24,7 +23,7 @@
 }
 
 /* Headline Left - Header */
-.content.has-headline .header {
+.text-module .content.has-headline .header {
   display: flex;
   flex-direction: column;
   gap: var(--space-20);
@@ -32,7 +31,7 @@
 }
 
 /* Testimonial */
-.content.testimonial {
+.text-module .content.testimonial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,12 +47,16 @@
 /* Responsive */
 @media (min-width: 50em) {
   /* Headline Left - Content */
-  .content.has-headline {
+  .text-module .content.has-headline {
     flex-direction: row;
   }
 
+  .text-module .body .text-block {
+    padding-inline-start: var(--space-fluid-20-40);
+  }
+
   /* Headline Left - Header */
-  .content.has-headline .header {
+  .text-module .content.has-headline .header {
     flex: 1;
     margin-bottom: 0;
     display: flex;
@@ -62,7 +65,7 @@
   }
 
   /* Headline Left - Body */
-  .content.has-headline .body {
+  .text-module .content.has-headline .body {
     flex: 1;
   }
 }

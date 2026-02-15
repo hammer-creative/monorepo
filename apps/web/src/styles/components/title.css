@@ -3,6 +3,12 @@
 /* Base */
 .title {
   line-height: var(--line-height-tight);
+  white-space: pre-line;
+}
+
+/* Default */
+.title.default {
+  font-family: var(--font-sans);
 }
 
 /* Primary */
@@ -11,6 +17,17 @@
   font-size: var(--font-size-xl-fluid);
   text-transform: uppercase;
   line-height: var(--line-height-very-tight);
+}
+
+/* Primary – with container queries */
+.title.primary:where([data-length='long']) {
+  font-size: clamp(24px, 5cqi, 38px);
+}
+
+@media screen and (min-width: 50em) {
+  .title.primary:where([data-length='long']) {
+    font-size: clamp(24px, 10cqi, 42px);
+  }
 }
 
 /* Secondary */
@@ -24,35 +41,55 @@
 .title.tertiary {
   font-family: var(--font-sans);
   font-size: var(--font-size-lg-fluid);
-}
-
-/* Default */
-.title.default {
-  font-family: var(--font-sans);
-}
-
-/* Module-specific overrides, Text Module */
-.text-module .has-headline .title.secondary {
-  margin-bottom: 4px;
-  margin-right: 5%;
-  white-space: pre-line;
-}
-
-.hero-module h1 {
+  font-weight: 100;
   line-height: var(--line-height-tight);
 }
 
-/* Module-specific overrides, Impact Module */
+.text-module .has-headline .title.secondary {
+  margin-bottom: 4px;
+  margin-right: 5%;
+  line-height: var(--line-height-very-tight);
+}
+
+/* Module-specific overrides - Hero Module */
 .hero-module .title.primary {
-  white-space: pre-line;
+  line-height: var(--line-height-tight);
   max-width: 100%;
   width: 100%;
 }
 
+/* Module-specific overrides - Impact Module */
 .impact-module .title.tertiary {
   white-space: pre-line;
   max-width: 100%;
   width: 100%;
   min-height: 2em;
   margin-block-end: var(--space-20);
+}
+
+/* Page-specific overrides – Homepage – Text Module, promo */
+[data-page='/'] .layout-wrapper h2 {
+  /* TODO: change to title.secondary? */
+  font-size: var(--font-size-promo-fluid);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.04em;
+}
+
+/* Page specific overrides */
+[data-page='/services'] .services-card-module .title.primary {
+  /* width: 50%; */
+}
+
+/* Text shadow for readability on light backgrounds */
+[data-page='/'] .case-study-card .title,
+[data-page='/'] .case-study-card .client-name,
+[data-page='/services'] .services-card-module .title,
+[data-page='/services'] .hero-module .title {
+  text-shadow: var(--text-shadow);
+}
+
+@media screen and (min-width: 50em) {
+  [data-page='/services'] .services-card-module .title.primary {
+    width: 100%;
+  }
 }

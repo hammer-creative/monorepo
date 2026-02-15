@@ -1,6 +1,6 @@
 // apps/web/src/components/Video/VideoPoster.tsx
 import {
-  SanityVideoPosterImage,
+  SanityImageVideoPoster,
   type SanityImageType,
 } from '@/components/common/SanityImage';
 
@@ -24,7 +24,7 @@ export function VideoPoster({
       aria-label={title || 'Play video'}
     >
       {/* Poster Image */}
-      <SanityVideoPosterImage image={poster} />
+      <SanityImageVideoPoster image={poster} />
 
       {/* Play Button Overlay */}
       <div className="poster-play-button">

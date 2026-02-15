@@ -1,249 +1,23 @@
 /* apps/web/src/styles/modules/cards.css */
 
-/* Home Page - Case Study Card Module */
-
+/* Case Study Cards - Grid Layout */
 .case-study-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: var(--space-40);
-}
-
-@media screen and (min-width: 40em) {
-  .case-study-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  gap: var(--space-fluid-10-20);
 }
 
 .case-study-card-wrapper {
   min-width: 0;
 }
 
-[data-page='/'] .case-study-card {
-  position: relative;
-  width: 100%;
-}
-
-[data-page='/'] .case-study-card .image {
-  position: relative;
-  aspect-ratio: 945 / 656;
-}
-
-[data-page='/'] .case-study-card .image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-[data-page='/'] .case-study-card .meta {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: var(--space-20);
-}
-
-[data-page='/'] .case-study-card h3,
-[data-page='/'] .case-study-card .case-study-clients {
-  color: $color-hyperbeam;
-}
-
-[data-page='/'] .case-study-card .tag {
-  display: none;
-}
-
-[data-page='/'] .case-study-card span {
-  font-size: 16px;
-  letter-spacing: var(--letter-spacing-tight);
-  color: $color-hyperbeam;
-}
-
-[data-page='/'] .case-study-card h3 {
-  font-size: 30px;
-}
-
-/* Services Page - Card Module */
-.services-page .services-heading {
-  @mixin typography var(--font-sans), var(--font-size-fluid-subheadline);
-  line-height: var(--line-height-tight);
-  letter-spacing: var(--letter-spacing-tight);
-  padding: var(--space-fluid-20-80);
-  padding-bottom: var(--space-40);
-}
-
-.services-page .cards {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-20);
-}
-
-.services-page .services-page-card-module:not(:first-child):not(:last-child) {
-  padding-left: var(--space-20);
-  padding-right: var(--space-20);
-}
-
-.services-page .services-page-card-module:not(:last-child) .card {
-  position: relative;
-  overflow: hidden;
-}
-
-.services-page .services-page-card-module:not(:last-child) .card-marquee {
-  position: relative;
-  width: 100%;
-  padding: var(--space-fluid-40-80);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-40);
-}
-
-.services-page .services-page-card-module:last-child .card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-40);
-}
-
-.services-page .services-page-card-module:last-child .card-marquee {
-  padding: var(--space-fluid-20-60);
-  order: 2;
-}
-
-.services-page .services-page-card-module:last-child .card-icons {
-  padding-top: var(--space-40);
-  order: 1;
-}
-
-.services-page .card-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.75);
-}
-
-.services-page .card-marquee .heading {
-  padding-bottom: var(--space-30);
-}
-
-.services-page
-  .services-page-card-module:not(:last-child)
-  .card-marquee
-  .heading,
-.services-page
-  .services-page-card-module:not(:last-child)
-  .card-marquee
-  .description {
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-/* Client Icons - Marquee */
-.card-icons {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  padding-top: 0rem;
-  gap: var(--space-40);
-}
-
-.card-icons-row {
-  display: flex;
-  gap: var(--space-20);
-  animation: scroll-left 15s linear infinite;
-  will-change: transform;
-  width: max-content;
-}
-
-.card-icons-row:nth-child(2) {
-  animation: scroll-right 15s linear infinite;
-}
-
-.card-icons .icon-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.card-icons svg {
-  width: 120px;
-  height: auto;
-  max-height: 70px;
-}
-
-@keyframes scroll-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(calc(-50% - var(--space-40) / 2));
+@media (min-width: 60em) {
+  .case-study-cards {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@keyframes scroll-right {
-  from {
-    transform: translateX(calc(-50% - var(--space-40) / 2));
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-/* Desktop */
-@media screen and (min-width: 50rem) {
-  .services-page .services-page-card-module:not(:last-child) .card-marquee {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-    align-items: start;
-  }
-
-  .services-page .services-page-card-module:not(:last-child) .card-metadata {
-    grid-column: 1;
-  }
-
-  .services-page .services-page-card-module:not(:last-child) .list {
-    grid-column: 3;
-  }
-
-  .services-page .services-page-card-module:last-child .card {
-    display: grid;
-    grid-template-columns: 1fr 0.5fr 1.5fr;
-    gap: var(--space-40);
-    align-items: end;
-    padding: var(--space-fluid-40-80);
-  }
-
-  .services-page .services-page-card-module:last-child .card-marquee {
-    padding: 0;
-    order: unset;
-  }
-
-  .services-page .services-page-card-module:last-child .card-metadata {
-    grid-column: 1;
-  }
-
-  .services-page .services-page-card-module:last-child .card-icons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-column: 3;
-    overflow: visible;
-    order: unset;
-  }
-
-  .services-page .services-page-card-module:last-child .card-icons-row {
-    display: contents;
-    animation: none;
-  }
-
-  .services-page
-    .services-page-card-module:last-child
-    .card-icons-row
-    .icon-item:nth-child(n + 8) {
-    display: none;
-  }
-}
-
+/* Case Study Card - Base */
 .case-study-card {
   position: relative;
   border: 1px solid transparent;
@@ -251,6 +25,21 @@
   background-clip: padding-box, border-box;
 }
 
+/* Dark gradient overlay on image for text readability */
+.case-study-card .image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 65%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  pointer-events: none;
+}
+
+/* Rainbow border on hover */
 .case-study-card::before {
   content: '';
   position: absolute;
@@ -287,8 +76,31 @@
   animation: rainbow-border-shift 2s linear infinite;
 }
 
+@keyframes rainbow-border-shift {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+/* Home Page - Case Study Card */
+[data-page='/'] .case-study-card {
+  position: relative;
+  width: 100%;
+}
+
 [data-page='/'] .case-study-card .image {
+  position: relative;
+  aspect-ratio: 945 / 656;
   overflow: hidden;
+}
+
+[data-page='/'] .case-study-card .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 [data-page='/'] .case-study-card .image > * {
@@ -300,11 +112,120 @@
   transform: scale(1.05) !important;
 }
 
-@keyframes rainbow-border-shift {
-  0% {
-    background-position: 0% 0%;
+[data-page='/'] .case-study-card .meta {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-20);
+}
+
+[data-page='/'] .case-study-card h3,
+[data-page='/'] .case-study-card .case-study-clients {
+  color: $color-hyperbeam;
+}
+
+[data-page='/'] .case-study-card h3 {
+  font-size: 30px;
+}
+
+[data-page='/'] .case-study-card span {
+  font-size: 16px;
+  letter-spacing: var(--letter-spacing-tight);
+  color: $color-hyperbeam;
+}
+
+[data-page='/'] .case-study-card .tag {
+  display: none;
+}
+
+/* Services Page - 100vh flex stacking */
+[data-page='/services'] .services-card-module .services-card {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-page='/services'] .services-card-module .services-card .content {
+  display: flex;
+  flex-direction: column;
+}
+
+[data-page='/services'] .services-card-module .services-card .content {
+  position: relative;
+}
+
+[data-page='/services'] .services-card-module .services-card .image {
+  aspect-ratio: 1 / 1;
+  height: 50vh;
+}
+
+.services-card-module .services-card .content .header {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.services-card-module .services-card .narrow {
+  flex: 1;
+}
+
+[data-page='/services'] .services-card-module .services-card .content .wide {
+  display: none;
+}
+
+@media screen and (min-width: 50em) {
+  [data-page='/services'] .services-card-module .services-card .image {
+    aspect-ratio: 16 / 9;
+    height: 50vh;
   }
-  100% {
-    background-position: 200% 0%;
+
+  [data-page='/services'] .services-card-module .services-card .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    inset: 0;
+    align-items: center;
+  }
+
+  [data-page='/services'] .services-card-module .services-card .wide {
+    display: block;
+  }
+
+  [data-page='/services'] .services-card-module .services-card .narrow {
+    display: none;
+  }
+
+  [data-page='/services']
+    .services-card-module
+    .services-card
+    .content
+    .header {
+    flex-basis: 60%;
+  }
+  [data-page='/services'] .services-card-module .services-card .content .wide {
+    flex: 1;
+  }
+
+  [data-page='/services'] .services-card-module .services-card .content .wide {
+    display: block;
+    align-self: flex-start;
+  }
+
+  [data-page='/services']
+    .services-card-module
+    .services-card
+    .content
+    .header {
+    position: relative;
+    align-self: flex-end; /* bottom */
+  }
+
+  [data-page='/services'] .services-card-module .services-card .content .wide {
+    /* position: relative; */
   }
 }

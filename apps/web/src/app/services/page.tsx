@@ -26,60 +26,76 @@ export default async function ServicesPage() {
   // Resolve color values for all modules
   const modules = servicesPage.modules?.map(resolveModuleColors) || [];
   const [hero, ...cards] = modules;
+  const regularCards = cards.slice(0, -1);
+  const chyronCard = cards[cards.length - 1];
 
   return (
-    <article className="services-page">
+    <div className="layout-container">
       {/* Hero Module */}
-      {hero && (
-        <section
-          className="module hero-module"
-          style={
-            {
-              '--module-bg': hero.backgroundColor?.hex,
-              '--module-text': hero.textColor?.hex,
-            } as React.CSSProperties
-          }
-        >
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          <ServicesPageHeroModule data={hero as any} />
-        </section>
-      )}
+      <div className="layout-wrapper">
+        {hero && (
+          <section
+            className="module hero-module"
+            style={
+              {
+                '--module-text': hero.textColor?.hex,
+              } as React.CSSProperties
+            }
+          >
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            <ServicesPageHeroModule data={hero as any} />
+          </section>
+        )}
 
-      {/* Services Cards */}
-      <div className="cards">
+        {/* Services Cards */}
         <div className="services-heading">Services</div>
-        {cards.map(
-          (
-            card: {
+        <div className="services-cards">
+          {regularCards.map(
+            (card: {
               _key: string;
               backgroundColor?: { hex?: string };
               textColor?: { hex?: string };
-            },
-            index: number,
-          ) => {
-            const { _key, backgroundColor, textColor } = card;
-            const isLastCard = index === cards.length - 1;
+            }) => {
+              const { _key, backgroundColor, textColor } = card;
 
-            return (
-              <section
-                key={_key}
-                className="module services-page-card-module"
-                style={
-                  {
-                    '--module-bg': backgroundColor?.hex,
-                    '--module-text': textColor?.hex,
-                  } as React.CSSProperties
-                }
-              >
-                <ServicesPageCardModule
-                  data={card as any} // eslint-disable-line @typescript-eslint/no-explicit-any
-                  showClientIcons={isLastCard}
-                />
-              </section>
-            );
-          },
+              return (
+                <section
+                  key={_key}
+                  className="module services-card-module"
+                  style={
+                    {
+                      '--module-bg': backgroundColor?.hex,
+                      '--module-text': textColor?.hex,
+                    } as React.CSSProperties
+                  }
+                >
+                  <ServicesPageCardModule
+                    data={card as any} // eslint-disable-line @typescript-eslint/no-explicit-any
+                  />
+                </section>
+              );
+            },
+          )}
+        </div>
+
+        {/* Chyron Card */}
+        {chyronCard && (
+          <section
+            className="module chyron-card"
+            style={
+              {
+                '--module-bg': chyronCard.backgroundColor?.hex,
+                '--module-text': chyronCard.textColor?.hex,
+              } as React.CSSProperties
+            }
+          >
+            <ServicesPageCardModule
+              data={chyronCard as any} // eslint-disable-line @typescript-eslint/no-explicit-any
+              showClientIcons
+            />
+          </section>
         )}
       </div>
-    </article>
+    </div>
   );
 }

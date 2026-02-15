@@ -2,7 +2,7 @@
 
 import { useVideoControls } from '@/hooks/useVideoControls';
 import type { VideoItem } from '@/types/sanity.generated';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MuxVideo } from './MuxVideo';
 import { MuteButton, PauseButton } from './VideoControls';
@@ -11,9 +11,10 @@ import { VideoProgressBar } from './VideoProgressBar';
 
 interface VideoSingleProps {
   video: VideoItem;
+  isInView: boolean;
 }
 
-export function VideoSingle({ video }: VideoSingleProps) {
+export function VideoSingle({ video, isInView }: VideoSingleProps) {
   const [videoMounted, setVideoMounted] = useState(false);
   const [showPoster, setShowPoster] = useState(true);
   const {
@@ -25,6 +26,15 @@ export function VideoSingle({ video }: VideoSingleProps) {
     handleTogglePlay,
     handleToggleMute,
   } = useVideoControls({ stopOthersOnPlay: true });
+
+  // Pause video when scrolled out of view
+  useEffect(() => {
+    if (!videoRef.current || !videoMounted) return;
+
+    if (!isInView) {
+      videoRef.current.pause();
+    }
+  }, [videoRef, isInView, videoMounted]);
 
   const handleVideoClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
