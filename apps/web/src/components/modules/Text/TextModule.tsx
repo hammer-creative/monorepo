@@ -9,7 +9,7 @@ const LAYOUT_CLASS_MAP: Record<Layout, string> = {
   challenge: 'challenge',
   headlineLeft: 'has-headline',
   testimonial: 'testimonial',
-  homePage: 'home-page',
+  homePage: 'promo',
 } as const;
 
 function isValidTextModule(

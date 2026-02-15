@@ -1,0 +1,46 @@
+/* apps/web/src/styles/components/button.css */
+
+.client-icons-module {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: var(--space-40);
+}
+
+.client-icons-loading {
+  min-height: 150px;
+}
+
+.fade-in-marquee .icon-item {
+  opacity: 0;
+  animation: fadeInIcon 0.4s ease-out forwards;
+}
+
+.icon-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin: 0 calc(var(--space-fluid-20-40) / 2);
+}
+
+.icon-item svg {
+  width: 120px;
+  height: auto;
+  max-height: 70px;
+}
+
+[data-page='/'] .icon-item svg {
+  color: $color-hyperbeam;
+}
+
+@keyframes fadeInIcon {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

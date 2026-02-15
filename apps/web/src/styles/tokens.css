@@ -25,6 +25,10 @@
   --space-180: 11.25rem;
   --space-200: 12.5rem;
 
+  --ease-slow: 0.6s ease-in-out;
+  --ease-fast: 0.3s ease-in-out;
+  --ease-menu-item: var(--ease-fast);
+
   --space-fluid-10-20: clamp(
     0.625rem,
     calc(0.625rem + ((1vw - 3.2px) * 1.0417)),
@@ -83,17 +87,12 @@
 
   --font-size-footer-menu-fluid: 12px;
   --font-size-menu-mobile-fluid: clamp(50px, 12vw, 140px);
-  --font-size-fluid-menu-reverse: clamp(40px, calc(56px - 1vw), 56px);
+  --font-size-menu-reverse-fluid: clamp(40px, calc(56px - 1vw), 56px);
 
   --font-size-xs-fluid: clamp(
     14px,
     calc(0.875rem + ((1vw - 3.2px) * 0.4167)),
     18px
-  );
-  --font-size-all-caps-fluid: clamp(
-    10px,
-    calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
-    14px
   );
   --font-size-sm-fluid: clamp(
     16px,
@@ -111,6 +110,16 @@
     32px
   );
   --font-size-xl-fluid: clamp(32px, calc(2rem + ((1vw - 3.2px) * 2.5)), 56px);
+  --font-size-all-caps-fluid: clamp(
+    10px,
+    calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
+    14px
+  );
+  --font-size-promo-fluid: clamp(
+    40px,
+    calc(2.5rem + ((1vw - 3.2px) * 1.25)),
+    54px
+  );
 
   --font-weight-default: 500;
   --font-weight-light: 100;
@@ -120,11 +129,14 @@
   --line-height-default: 1.2;
   --line-height-medium: 1.4;
   --line-height-loose: 1.6;
+  --line-height-very-loose: 2;
 
   --line-height-hero: --letter-spacing-default: 1;
   --letter-spacing-tight: -0.03em;
   --letter-spacing-loose: 0.15em;
   --letter-spacing-extra-loose: 0.25em;
+
+  --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
 /* Typography */

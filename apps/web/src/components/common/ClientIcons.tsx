@@ -1,4 +1,10 @@
 // apps/web/src/components/common/ClientIcons.tsx
+'use client';
+
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useEffect, useState } from 'react';
+import Marquee from 'react-fast-marquee';
+
 import {
   BandaiIcon,
   BethesedaIcon,
@@ -44,38 +50,67 @@ export function ClientIcons({
   fill = 'currentColor',
   chyron = false,
 }: ClientIconsProps) {
+  const isWide = useMediaQuery('(min-width: 50em)');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="client-icons-loading" />;
+  }
+
   if (chyron) {
-    const midpoint = Math.ceil(ICONS.length / 2);
-    const topRow = ICONS.slice(0, midpoint);
-    const bottomRow = ICONS.slice(midpoint);
+    if (isWide) {
+      return (
+        <Marquee speed={50} gradient={false} className="fade-in-marquee">
+          {ICONS.map((Icon, index) => (
+            <div
+              key={index}
+              className="icon-item"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
+              <Icon fill={fill} />
+            </div>
+          ))}
+        </Marquee>
+      );
+    }
+
+    const evenIcons = ICONS.filter((_, i) => i % 2 === 0);
+    const oddIcons = ICONS.filter((_, i) => i % 2 !== 0);
 
     return (
-      <div className={className}>
-        <div className="card-icons-row">
-          {topRow.map((Icon, index) => (
-            <div key={index} className="icon-item">
+      <>
+        <Marquee speed={50} gradient={false} className="fade-in-marquee">
+          {evenIcons.map((Icon, index) => (
+            <div
+              key={index}
+              className="icon-item"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
               <Icon fill={fill} />
             </div>
           ))}
-          {topRow.map((Icon, index) => (
-            <div key={`dup-${index}`} className="icon-item">
+        </Marquee>
+        <Marquee
+          speed={50}
+          gradient={false}
+          direction="right"
+          className="fade-in-marquee"
+        >
+          {oddIcons.map((Icon, index) => (
+            <div
+              key={index}
+              className="icon-item"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
               <Icon fill={fill} />
             </div>
           ))}
-        </div>
-        <div className="card-icons-row">
-          {bottomRow.map((Icon, index) => (
-            <div key={index} className="icon-item">
-              <Icon fill={fill} />
-            </div>
-          ))}
-          {bottomRow.map((Icon, index) => (
-            <div key={`dup-${index}`} className="icon-item">
-              <Icon fill={fill} />
-            </div>
-          ))}
-        </div>
-      </div>
+        </Marquee>
+      </>
     );
   }
 

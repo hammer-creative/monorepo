@@ -210,3 +210,10 @@ export const caseStudyProjection = `
     ${moduleProjections}
   }
 `;
+
+export const basicPageProjection = `
+  _id,
+  title,
+  ${projections.slug},
+  body
+`;

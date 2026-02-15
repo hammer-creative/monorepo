@@ -24,6 +24,7 @@ export default function sanityLoader({
     .image(src)
     .width(width)
     .quality(quality || 90) // Match component default
+    .dpr(2)
     .fit('max')
     .auto('format') // Sanity picks best format (WebP/AVIF)
     .url();

@@ -65,23 +65,47 @@ export function SanityImage({
 }
 
 // Each component sets its own quality level
-export const SanityHeroImage = (
+export const SanityImageHero = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
-) => <SanityImage fill sizes="100vw" priority quality={85} {...props} />;
+) => <SanityImage fill sizes="100vw" priority quality={100} {...props} />;
 
-export const SanityHomePageCardImage = (
+export const SanityImageFullWidth = (
+  props: Partial<SanityImageProps> & { image: SanityImageType | null },
+) => <SanityImage fill sizes="100vw" quality={85} {...props} />;
+
+export const SanityImageHomePageCard = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => <SanityImage fill quality={80} {...props} />;
 
-export const SanityVideoPosterImage = (
+export const SanityImageVideoPoster = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => (
   <SanityImage fill sizes="100vw" quality={90} objectFit="cover" {...props} />
 );
 
-export const SanityCarouselImage = (
+export const SanityImageCarousel = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
-) => <SanityImage fill quality={85} objectFit="cover" {...props} />;
+) => (
+  <SanityImage
+    fill
+    sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+    quality={85}
+    objectFit="cover"
+    {...props}
+  />
+);
+
+export const SanityImageHalfWidth = (
+  props: Partial<SanityImageProps> & { image: SanityImageType | null },
+) => (
+  <SanityImage
+    fill
+    sizes="(max-width: 50em) 100vw, 50vw"
+    quality={85}
+    objectFit="cover"
+    {...props}
+  />
+);
 
 export const SanityImpactImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },

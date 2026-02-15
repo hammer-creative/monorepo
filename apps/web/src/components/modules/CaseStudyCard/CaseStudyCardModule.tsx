@@ -3,7 +3,7 @@
 
 import {
   ClientNames,
-  SanityHomePageCardImage,
+  SanityImageHomePageCard,
   Title,
 } from '@/components/common';
 import type { SanityImageType } from '@/components/common/SanityImage';
@@ -66,7 +66,7 @@ function CaseStudyCardItem({ item }: { item: unknown }) {
         {/* Teaser Image */}
         {teaserImage && (
           <div className="image">
-            <SanityHomePageCardImage image={teaserImage} />
+            <SanityImageHomePageCard image={teaserImage} />
           </div>
         )}
 
@@ -78,7 +78,7 @@ function CaseStudyCardItem({ item }: { item: unknown }) {
             </div>
           )}
           {title && (
-            <Title className="case-study-title" as="h3">
+            <Title as="h3" variant="tertiary">
               {title}
             </Title>
           )}

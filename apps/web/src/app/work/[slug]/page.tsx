@@ -121,12 +121,15 @@ export default async function CaseStudyPage({
   return (
     <article className="case-study">
       {filteredModules.map(
-        (mod: {
-          _key: string;
-          _type: string;
-          backgroundColor?: { hex?: string };
-          textColor?: { hex?: string };
-        }) => {
+        (
+          mod: {
+            _key: string;
+            _type: string;
+            backgroundColor?: { hex?: string };
+            textColor?: { hex?: string };
+          },
+          index: number,
+        ) => {
           // Get the React component for this module type
           const Component =
             moduleComponents[mod._type as keyof typeof moduleComponents];
@@ -140,9 +143,14 @@ export default async function CaseStudyPage({
           const moduleClients =
             _type === 'heroModule' || _type === 'textModule' ? clients : [];
 
+          // First non-hero module gets content-start ID
+          const isFirstContentModule =
+            index === 1 && filteredModules[0]._type === 'heroModule';
+
           return (
             <section
               key={_key}
+              id={isFirstContentModule ? 'content-start' : undefined}
               className={`module ${toKebab(_type)}`}
               style={
                 {
