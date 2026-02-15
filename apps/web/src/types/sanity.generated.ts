@@ -42,8 +42,8 @@ export type TextBlock = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
-    listItem?: never;
+    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
       _type: 'link';
@@ -164,8 +164,8 @@ export type ServicesPageHeroModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
-    listItem?: never;
+    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
       _type: 'link';
@@ -220,8 +220,8 @@ export type ServicesPageCardModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
-    listItem?: never;
+    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
       _type: 'link';
@@ -310,8 +310,8 @@ export type TextImageModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
-    listItem?: never;
+    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<
       | {
           href?: string;
@@ -389,8 +389,8 @@ export type TextModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
-    listItem?: never;
+    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<
       | {
           href?: string;
@@ -477,8 +477,8 @@ export type ImpactModule = {
         _type: 'span';
         _key: string;
       }>;
-      style?: 'normal' | 'blockquote';
-      listItem?: never;
+      style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<
         | {
             href?: string;
@@ -511,8 +511,8 @@ export type ImpactModule = {
         _type: 'span';
         _key: string;
       }>;
-      style?: 'normal' | 'blockquote';
-      listItem?: never;
+      style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<
         | {
             href?: string;
@@ -545,8 +545,8 @@ export type ImpactModule = {
         _type: 'span';
         _key: string;
       }>;
-      style?: 'normal' | 'blockquote';
-      listItem?: never;
+      style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<
         | {
             href?: string;
@@ -615,8 +615,8 @@ export type HeroModule = {
       _type: 'span';
       _key: string;
     }>;
-    style?: 'normal' | 'blockquote';
-    listItem?: never;
+    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
       _type: 'link';
@@ -852,8 +852,8 @@ export type BasicPage = {
           _type: 'span';
           _key: string;
         }>;
-        style?: 'normal' | 'blockquote';
-        listItem?: never;
+        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
+        listItem?: 'bullet' | 'number';
         markDefs?: Array<
           | {
               href?: string;

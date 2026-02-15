@@ -22,7 +22,7 @@
 @import './components/client-icons';
 @import './components/arrow';
 @import './components/button';
-
+@import './components/table';
 @import './home.css';
 @import './modules/cards.css';
 @import './modules/carousel.css';
@@ -33,4 +33,5 @@
 @import './modules/text-image.css';
 @import './modules/video.css';
 
+@import './pages/privacy.css';
 @import './pages/services.css';

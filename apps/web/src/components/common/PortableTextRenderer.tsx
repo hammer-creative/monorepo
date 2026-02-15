@@ -93,6 +93,21 @@ export function PortableTextRenderer({
       bullet: ({ children }) => <li>{children}</li>,
       number: ({ children }) => <li>{children}</li>,
     },
+    types: {
+      table: ({ value }) => (
+        <table>
+          <tbody>
+            {value?.rows?.map((row: any, i: number) => (
+              <tr key={i}>
+                {row.cells?.map((cell: string, j: number) => (
+                  <td key={j}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ),
+    },
   };
 
   return <PortableText value={value} components={components} />;

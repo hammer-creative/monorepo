@@ -1,0 +1,18 @@
+/* apps/web/src/styles/pages/privacy.css */
+
+[data-page='/privacy'] {
+  background: $color-nightshade;
+}
+
+[data-page='/privacy'] .layout-wrapper {
+  max-width: var(--viewport-wide);
+  margin: var(--space-fluid-40-80) auto var(--space-fluid-40-80) auto;
+  padding: var(--space-fluid-10-20);
+  display: flex;
+  justify-content: space-around;
+}
+
+[data-page='/privacy'] article {
+  max-width: 80ch;
+  width: 100%;
+}

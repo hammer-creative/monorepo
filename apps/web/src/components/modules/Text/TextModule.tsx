@@ -1,6 +1,5 @@
 // apps/web/src/components/modules/Text/TextModule.tsx
-import { Label, Title } from '@/components/common';
-import { TextBlock } from '@/components/common/TextBlock';
+import { Label, TextBlock, Title } from '@/components/common';
 import type { TextModule as TextModuleType } from '@/types/sanity.generated';
 
 type Layout = NonNullable<TextModuleType['layout']>;
