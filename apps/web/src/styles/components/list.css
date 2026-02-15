@@ -10,6 +10,8 @@
 .hero-module .services-list li {
   font-size: var(--font-size-xs-fluid);
   line-height: var(--line-height-very-loose);
+}
+.services-card .services-list li {
   text-shadow: var(--text-shadow);
 }
 

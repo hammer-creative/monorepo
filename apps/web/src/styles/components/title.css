@@ -41,6 +41,8 @@
 .title.tertiary {
   font-family: var(--font-sans);
   font-size: var(--font-size-lg-fluid);
+  font-weight: 100;
+  line-height: var(--line-height-tight);
 }
 
 .text-module .has-headline .title.secondary {
@@ -71,7 +73,6 @@
   font-size: var(--font-size-promo-fluid);
   line-height: var(--line-height-tight);
   letter-spacing: -0.04em;
-  font-weight: 100;
 }
 
 /* Page specific overrides */
@@ -80,8 +81,9 @@
 }
 
 /* Text shadow for readability on light backgrounds */
-[data-page='/'] .case-study-title,
-[data-page='/services'] .services-card .title,
+[data-page='/'] .case-study-card .title,
+[data-page='/'] .case-study-card .client-name,
+[data-page='/services'] .services-card-module .title,
 [data-page='/services'] .hero-module .title {
   text-shadow: var(--text-shadow);
 }

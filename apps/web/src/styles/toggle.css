@@ -1,7 +1,16 @@
 /* apps/web/src/styles/toggle.css */
 
+/* Base toggle */
+
 .menu-toggle {
-  position: relative;
+  mix-blend-mode: difference;
+}
+
+.menu-toggle {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -11,36 +20,34 @@
   border: none;
   font-family: var(--font-serif);
   text-transform: uppercase;
-
-  span {
-    display: inline-block;
-  }
-
-  svg {
-    width: 0.6em;
-    height: auto;
-  }
 }
 
+.menu-toggle span {
+  display: inline-block;
+}
+
+.menu-toggle svg {
+  width: 0.6em;
+  height: auto;
+}
+
+/* Toggle dot */
 .menu-toggle-dot {
   width: 1.5ch;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-
-  svg {
-    transform: translateX(0);
-    color: $color-hyperbeam;
-    transition:
-      transform 0.5s ease,
-      color 0.5s ease;
-  }
 }
 
-[data-page='/'] .menu-toggle-dot svg {
-  /* color: red; */
+.menu-toggle-dot svg {
+  transform: translateX(0);
+  color: $color-hyperbeam;
+  transition:
+    transform 0.5s ease,
+    color 0.5s ease;
 }
 
+/* Toggle text */
 .menu-toggle-text {
   font-size: var(--font-size-all-caps-fluid);
   width: 6ch;
@@ -53,23 +60,31 @@
   transition: color 0.5s ease;
 }
 
-.menu-toggle.is-open {
-  .menu-toggle-dot svg {
+/* Open state */
+.menu-toggle.is-open .menu-toggle-dot svg {
+  transform: translateX(-1ch);
+  color: $color-hyperbeam;
+}
+
+.menu-toggle.is-open .menu-toggle-text {
+  color: $color-hyperbeam;
+}
+
+@media (min-width: 50em) {
+  .menu-toggle.is-open .menu-toggle-dot svg {
     transform: translateX(-1ch);
-    color: $color-hyperbeam;
   }
 
-  .menu-toggle-text {
-    color: $color-hyperbeam;
+  .menu-toggle.is-open .menu-toggle-text {
+    color: $color-sandstorm;
   }
+}
 
-  @media (min-width: 50em) {
-    .menu-toggle-dot svg {
-      transform: translateX(-1ch);
-    }
+/* Hover states */
+.menu-toggle.is-open:hover .menu-toggle-text {
+  color: $color-hyperbeam;
+}
 
-    .menu-toggle-text {
-      color: $color-sandstorm;
-    }
-  }
+.menu-toggle .menu-toggle-text {
+  color: $color-hyperbeam;
 }

@@ -1,4 +1,4 @@
-/* apps/web/src/styles/overlay.css */
+/* apps/web/src/styles/components/overlay.css */
 
 /* Prevent body scroll when overlay is active */
 body:has(.menu-overlay) {

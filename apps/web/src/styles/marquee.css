@@ -31,12 +31,6 @@
 
   /* Marquee Graphics */
 
-  .marquee {
-    svg,
-    .tagline {
-      z-index: 2;
-    }
-  }
   .marquee svg {
     position: absolute;
     top: 50%;

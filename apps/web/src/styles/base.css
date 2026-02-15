@@ -39,3 +39,9 @@ a[href^='mailto'] {
   color: inherit;
   text-decoration: none;
 }
+
+.image {
+  position: relative;
+  object-fit: cover;
+  overflow: hidden;
+}

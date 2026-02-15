@@ -34,7 +34,7 @@ export function VideoSingle({ video, isInView }: VideoSingleProps) {
     if (!isInView) {
       videoRef.current.pause();
     }
-  }, [isInView, videoMounted]);
+  }, [videoRef, isInView, videoMounted]);
 
   const handleVideoClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;

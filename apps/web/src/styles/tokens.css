@@ -25,6 +25,10 @@
   --space-180: 11.25rem;
   --space-200: 12.5rem;
 
+  --ease-slow: 0.6s ease-in-out;
+  --ease-fast: 0.3s ease-in-out;
+  --ease-menu-item: var(--ease-fast);
+
   --space-fluid-10-20: clamp(
     0.625rem,
     calc(0.625rem + ((1vw - 3.2px) * 1.0417)),
@@ -83,7 +87,7 @@
 
   --font-size-footer-menu-fluid: 12px;
   --font-size-menu-mobile-fluid: clamp(50px, 12vw, 140px);
-  --font-size-fluid-menu-reverse: clamp(40px, calc(56px - 1vw), 56px);
+  --font-size-menu-reverse-fluid: clamp(40px, calc(56px - 1vw), 56px);
 
   --font-size-xs-fluid: clamp(
     14px,

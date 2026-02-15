@@ -68,11 +68,7 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
   // Key forces remount when switching between desktop/mobile
   return (
     <div ref={containerRef}>
-      <VideoMulti
-        key={isMobile ? 'mobile' : 'desktop'}
-        videos={activeVideos}
-        isInView={isInView}
-      />
+      <VideoMulti key={isMobile ? 'mobile' : 'desktop'} videos={activeVideos} />
     </div>
   );
 }
