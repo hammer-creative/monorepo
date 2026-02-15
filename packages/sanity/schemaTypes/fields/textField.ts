@@ -27,6 +27,8 @@ export const portableTextField = (options?: {
   maxLength?: number
   required?: boolean
   enableColorAnnotations?: boolean
+  enableImages?: boolean
+  enableTables?: boolean
 }) => {
   return createPortableTextField({
     name: 'body',
@@ -34,6 +36,8 @@ export const portableTextField = (options?: {
     required: options?.required ?? true,
     maxLength: options?.maxLength ?? 600,
     enableColorAnnotations: options?.enableColorAnnotations ?? false,
+    enableImages: options?.enableImages ?? false,
+    enableTables: options?.enableTables ?? false,
   })
 }
 

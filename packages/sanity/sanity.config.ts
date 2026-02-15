@@ -1,5 +1,6 @@
 // packages/sanity/sanity.config.ts
 
+import {table} from '@sanity/table'
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
@@ -25,9 +26,11 @@ export default defineConfig({
                 S.list()
                   .title('Pages')
                   .items([
+                    S.documentTypeListItem('caseStudy').title('Case Studies'),
+                    S.documentTypeListItem('basicPage').title('Basic Page'),
                     S.documentTypeListItem('homePage').title('Home Page'),
                     S.documentTypeListItem('servicesPage').title('Services Page'),
-                    S.documentTypeListItem('caseStudy').title('Case Studies'),
+                    S.documentTypeListItem('workPage').title('Work Page'),
                   ]),
               ),
             S.divider(),
@@ -49,6 +52,7 @@ export default defineConfig({
       mp4_support: 'standard',
     }),
     media(),
+    table(),
     presentationTool({
       previewUrl: {
         origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localhost:3000',

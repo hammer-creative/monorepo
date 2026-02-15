@@ -15,6 +15,8 @@ interface PortableTextConfig {
   description?: string
   blocks?: any[]
   enableColorAnnotations?: boolean
+  enableImages?: boolean
+  enableTables?: boolean
 }
 
 /**
@@ -30,6 +32,8 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     description = '',
     blocks,
     enableColorAnnotations = false,
+    enableImages = false,
+    enableTables = false,
   } = config
 
   const annotations = [
@@ -109,11 +113,26 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     },
   ]
 
+  const extendedBlocks = [...defaultBlocks]
+
+  if (enableImages) {
+    extendedBlocks.push({
+      type: 'image',
+      options: {hotspot: true},
+    } as any)
+  }
+
+  if (enableTables) {
+    extendedBlocks.push({
+      type: 'table',
+    } as any)
+  }
+
   return defineField({
     name,
     title,
     type: 'array',
-    of: blocks || defaultBlocks,
+    of: blocks || extendedBlocks,
     description: addRequiredLabel(description, required),
     components: {input: PortableTextWithCounter},
     validation: (rule: ArrayRule<any>) => {
