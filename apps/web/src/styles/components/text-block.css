@@ -37,7 +37,7 @@
 /* Module-specific override: Impact module */
 .impact-module .text-block {
   font-family: var(--font-sans);
-  font-size: var(--font-size-md-fluid);
+  font-size: var(--font-size-xs-fluid);
   line-height: var(--line-height-very-loose);
 }
 
