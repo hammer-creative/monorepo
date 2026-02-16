@@ -11,3 +11,4 @@ export * from './SanityImage';
 export { TextBlock } from './TextBlock';
 export { Title } from './Title';
 export { Wordmark } from './Wordmark';
+export { Tagline } from './Tagline';

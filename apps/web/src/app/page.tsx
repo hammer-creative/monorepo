@@ -1,5 +1,8 @@
 // apps/web/src/app/page.tsx
 import { ArrowUpRight, ClientIcons, ExtendedLink } from '@/components/common';
+import { Impressum } from '@/components/common/Impressum';
+import { Tagline } from '@/components/common/Tagline';
+import { WordmarkSVG } from '@/components/common/Wordmark';
 import Scene from '@/components/model/Scene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
@@ -82,6 +85,17 @@ export default async function HomePage() {
   return (
     <div className="layout-container">
       <div className="marquee">
+        <div className="masthead">
+          <div className="row">
+            <div className="wordmark">
+              <WordmarkSVG />
+              <Tagline />
+            </div>
+          </div>
+          <div className="row">
+            <Impressum />
+          </div>
+        </div>
         <Scene />
       </div>
       <div className="layout-wrapper">
