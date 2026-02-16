@@ -16,7 +16,6 @@ mux-uploads
 **/.eslintcache
 
 apps/web/public/model/assets
-apps/web/public/video
 
 scripts/favicon-source-*
 scripts/*image*
