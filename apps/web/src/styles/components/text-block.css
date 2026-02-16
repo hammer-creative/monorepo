@@ -38,6 +38,7 @@
 .impact-module .text-block {
   font-family: var(--font-sans);
   font-size: var(--font-size-md-fluid);
+  line-height: var(--line-height-very-loose);
 }
 
 /* Module-specific override: Text module, headline */
@@ -87,6 +88,10 @@
     font-size: var(--font-size-lg-fluid);
     /* max-width: 50ch;
     width: 100%; */
+  }
+
+  .impact-module .text-block {
+    line-height: var(--line-height-loose);
   }
 }
 
