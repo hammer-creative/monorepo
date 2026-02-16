@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import 'swiper/css';
 
 import type { Swiper as SwiperType } from 'swiper';
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 type CarouselImageItem = NonNullable<CarouselModuleType['images']>[number];
@@ -80,8 +80,8 @@ export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
             slidesPerView: 4,
           },
         }}
-        modules={[Autoplay, Pagination]}
-        className="swiper-container"
+        modules={[Autoplay]}
+        className="swiper-container images"
       >
         {images.map((item: CarouselImageItem) => (
           <SwiperSlide key={item._key}>

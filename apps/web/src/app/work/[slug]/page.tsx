@@ -8,8 +8,10 @@ import {
   TextModule,
   VideoModule,
 } from '@/components/modules';
+import { CaseStudyCarousel } from '@/components/modules/Carousel/CaseStudyCarousel';
 import {
   client,
+  getCaseStudiesForCarousel,
   getCaseStudy,
   getCaseStudySlugs,
   resolveModuleColors,
@@ -97,6 +99,14 @@ export default async function CaseStudyPage({
   // Return 404 if case study not found
   if (!caseStudy) notFound();
 
+  // Fetch all case studies for carousel
+  const allCaseStudies = await getCaseStudiesForCarousel(client);
+
+  // Filter out current case study
+  const otherCaseStudies = allCaseStudies.filter(
+    (cs) => cs.slug?.current !== slug,
+  );
+
   // Use empty array if no clients (allows incomplete drafts)
   const { clients = [] } = caseStudy;
 
@@ -157,6 +167,18 @@ export default async function CaseStudyPage({
             </section>
           );
         },
+      )}
+
+      {/* Related case studies carousel */}
+      {otherCaseStudies.length > 0 && (
+        <section className="module case-study-carousel-module">
+          <CaseStudyCarousel
+            data={{
+              _type: 'caseStudyCarousel',
+              caseStudies: otherCaseStudies,
+            }}
+          />
+        </section>
       )}
     </article>
   );
