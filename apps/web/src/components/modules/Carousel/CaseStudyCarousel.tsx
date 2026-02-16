@@ -110,7 +110,11 @@ export function CaseStudyCarousel({ data }: CaseStudyCarouselProps) {
           return (
             <SwiperSlide key={caseStudy._id}>
               <Link href={`/work/${caseStudy.slug}`}>
-                {teaserImage && <SanityImageCarousel image={teaserImage} />}
+                {teaserImage && (
+                  <div className="image">
+                    <SanityImageCarousel image={teaserImage} />
+                  </div>
+                )}
                 <div className="meta">
                   {hasClients && (
                     <div className="clients">

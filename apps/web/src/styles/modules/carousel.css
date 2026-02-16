@@ -10,3 +10,7 @@
   transition-timing-function: linear !important;
   margin: 0 auto;
 }
+
+.swiper-slide .image {
+  aspect-ratio: 1 / 1;
+}
