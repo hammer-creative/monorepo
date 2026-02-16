@@ -27,14 +27,15 @@
   box-sizing: border-box;
 }
 
-.impact-module .one-text .text-item .text-block {
-  padding-inline-end: 1w;
-}
-
 .impact-module .one-text .text-item,
 .impact-module .two-texts .text-item,
 .impact-module .three-texts .text-item {
   padding-block-end: var(--space-fluid-80-200);
+}
+
+.impact-module .two-texts .text-item,
+.impact-module .three-texts .text-item {
+  padding-inline-end: var(--space-fluid-40-80);
 }
 
 .impact-module .text-item:nth-child(2) {
