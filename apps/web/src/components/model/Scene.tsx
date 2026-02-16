@@ -31,7 +31,7 @@ const PUPIL_SCALE = 1; // Pupil size (1.5 = 50% bigger)
 
 // IRIS PARAMETERS
 const ENABLE_IRIS_ROTATION = true; // Set to false to disable iris spinning
-const IRIS_ROTATION_SPEED = 0.1; // Iris base spin speed (radians per second)
+const IRIS_ROTATION_SPEED = 0.03; // Iris base spin speed (radians per second)
 const IRIS_ROTATION_SPEED_ON_MOVE = 0.5; // Iris spin speed when mouse is moving (radians per second)
 const IRIS_SPEED_LERP = 0.1; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
 const IRIS_SATURATION = 1.3; // Iris color saturation (1.0 = normal, >1.0 = more saturated)
