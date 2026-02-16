@@ -2,78 +2,132 @@
 
 @import './mixins.css';
 
-/* Homepage Marquee */
+/* Homepage Marquee - Layout */
+[data-page='/'] .container {
+  position: relative;
+  overflow: hidden;
+}
 
-[data-page='/'] {
-  /* Layout */
+[data-page='/'] .marquee {
+  background: $color-aircutter;
+}
 
-  .container {
-    position: relative;
-    overflow: hidden;
+[data-page='/'] .model {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Homepage - Masthead - Container */
+[data-page='/'] .masthead {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+[data-page='/'] .masthead .wordmark svg {
+  width: 147px;
+  height: auto;
+  color: $color-nightshade;
+}
+
+[data-page='/'] .masthead .impressum,
+[data-page='/'] .masthead .tagline {
+  color: $color-hyperbeam;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-loose);
+  font-size: var(--font-size-xs-fluid);
+}
+
+.tagline,
+p {
+  line-height: 1;
+}
+
+/* Marquee – Layout */
+
+[data-page='/'] .wordmark {
+  padding-inline-start: var(--space-fluid-10-20);
+  padding-block-start: var(--space-fluid-10-20);
+}
+[data-page='/'] .marquee {
+  height: 100vh;
+}
+
+[data-page='/'] .marquee .masthead {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+[data-page='/'] .marquee .masthead .row:first-child {
+  height: 100%;
+}
+
+[data-page='/'] .marquee .masthead .row .wordmark {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+[data-page='/'] .marquee .masthead .row .wordmark {
+  flex: 1;
+}
+
+[data-page='/'] .marquee .masthead .row .tagline {
+  text-align: center;
+  margin-block: var(--space-fluid-20-40);
+}
+
+[data-page='/'] .marquee .masthead .row .impressum p {
+  text-align: center;
+}
+
+[data-page='/'] .marquee .masthead .row .impressum p:first-child {
+  margin-block-end: var(--space-fluid-10-20);
+}
+
+[data-page='/'] .marquee .masthead .row .impressum {
+  margin-block-start: var(--space-fluid-40-80);
+  margin-block-end: var(--space-fluid-10-20);
+}
+
+@media screen and (min-width: 50em) {
+  [data-page='/'] .marquee .masthead .row .impressum {
+    margin-block: initial;
   }
 
-  .model {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
+  [data-page='/'] .marquee .masthead .row .impressum p:first-child {
+    margin-block-end: initial;
   }
 
-  /* Marquee */
-  .marquee {
-    position: relative;
-    background: $color-aircutter;
+  [data-page='/'] .marquee .masthead .row .wordmark {
+    display: flex;
   }
-
-  .marquee .masthead {
-    position: absolute;
-    inset: 0;
-  }
-
-  /* Marquee Graphics */
-
-  .marquee svg {
-    position: absolute;
-    top: 50%;
-    left: 0;
+  [data-page='/'] .masthead .wordmark svg {
     width: 300px;
-    height: auto;
-    margin-left: 2vw;
+  }
+  [data-page='/'] .marquee .masthead .row .wordmark {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  [data-page='/'] .masthead .impressum,
+  [data-page='/'] .masthead .tagline {
     color: $color-nightshade;
   }
-
-  /* Marquee Text */
-  .marquee .tagline {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    margin-right: 2vw;
-
-    font-family: var(--font-sans);
-    font-weight: 900;
-    letter-spacing: var(--letter-spacing-extra-loose);
-    text-transform: uppercase;
+  [data-page='/'] .masthead .wordmark,
+  [data-page='/'] .masthead .impressum {
+    display: flex;
+    justify-content: space-between;
   }
 
-  /* Impressum */
-  .impressum {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .impressum-left {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-  }
-
-  .impressum-right {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-  }
-
-  .impressum .text {
-    letter-spacing: 0.25em;
+  [data-page='/'] .masthead .wordmark,
+  [data-page='/'] .masthead .impressum {
+    padding: var(--space-fluid-10-20);
   }
 }
