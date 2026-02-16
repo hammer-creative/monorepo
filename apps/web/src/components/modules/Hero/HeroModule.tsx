@@ -123,7 +123,7 @@ export function HeroModule({
         )}
       </div>
 
-      <div className="content">
+      <div id="content-start" className="content">
         {/* Decorative bar */}
         <div className="bar" aria-hidden>
           <svg width="80" height="10" viewBox="0 0 80 10">
