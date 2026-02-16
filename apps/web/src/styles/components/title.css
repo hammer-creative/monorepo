@@ -53,18 +53,9 @@
 
 /* Module-specific overrides - Hero Module */
 .hero-module .title.primary {
-  padding-block: var(--space-fluid-20-40);
-  padding-inline: var(--space-fluid-20-40);
   max-width: 100%;
   width: 100%;
   line-height: var(--line-height-tight);
-}
-
-@media screen and (min-width: 50em) {
-  .hero-module .title.primary {
-    padding-block: var(--space-fluid-10-20);
-    padding-inline: var(--space-fluid-20-40);
-  }
 }
 
 /* Module-specific overrides - Impact Module */

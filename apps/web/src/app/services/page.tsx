@@ -48,7 +48,9 @@ export default async function ServicesPage() {
         )}
 
         {/* Services Cards */}
-        <div className="services-heading">Services</div>
+        <div id="content-start" className="services-heading">
+          <h2>Services</h2>
+        </div>
         <div className="services-cards">
           {regularCards.map(
             (card: {
