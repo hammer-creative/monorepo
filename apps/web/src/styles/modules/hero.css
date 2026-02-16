@@ -58,7 +58,6 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: var(--space-fluid-20-40);
 }
 
 .case-study .hero-module .title-container .title {
