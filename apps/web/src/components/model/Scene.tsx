@@ -333,7 +333,7 @@ const SceneContent = ({
         intensity={DIRECTIONAL_LIGHT_INTENSITY}
       />
       <Suspense fallback={null}>
-        <Model url="/model/model-v7.glb" isPaused={isPaused} />
+        <Model url="/model/model-v7-compressed.glb" isPaused={isPaused} />
       </Suspense>
       <OrbitControls
         enabled={orbitEnabled}
