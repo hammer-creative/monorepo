@@ -254,3 +254,7 @@ footer .menu-secondary .link:hover {
 .mobile-menu.is-open .menu-primary {
   margin-top: -1em;
 }
+
+.mobile-menu.is-open .menu-secondary a {
+  pointer-events: auto;
+}

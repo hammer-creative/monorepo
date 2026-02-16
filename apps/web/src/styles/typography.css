@@ -104,8 +104,7 @@ p.small,
   line-height: var(--line-height-loose);
 } */
 
-.tag,
-.impressum .text {
+.tag {
   @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
   letter-spacing: var(--letter-spacing-loose);
   text-transform: uppercase;

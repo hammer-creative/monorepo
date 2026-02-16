@@ -7,15 +7,15 @@
 
 import { OrbitControls, useGLTF, useVideoTexture } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 // ==========================================
 // TUNABLE PARAMETERS
 // ==========================================
 const MAX_ROTATION = 8; // Max rotation in degrees
-const LERP_SPEED = 0.1; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
-const PARALLAX_FACTOR = 0; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
+const LERP_SPEED = 0.2; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
+const PARALLAX_FACTOR = 0.2; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
 
 // MESH VISIBILITY
 const SHOW_CORNEA = true;
@@ -31,7 +31,7 @@ const PUPIL_SCALE = 1; // Pupil size (1.5 = 50% bigger)
 
 // IRIS PARAMETERS
 const ENABLE_IRIS_ROTATION = true; // Set to false to disable iris spinning
-const IRIS_ROTATION_SPEED = 0.03; // Iris base spin speed (radians per second)
+const IRIS_ROTATION_SPEED = 0.1; // Iris base spin speed (radians per second)
 const IRIS_ROTATION_SPEED_ON_MOVE = 0.5; // Iris spin speed when mouse is moving (radians per second)
 const IRIS_SPEED_LERP = 0.1; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
 const IRIS_SATURATION = 1.3; // Iris color saturation (1.0 = normal, >1.0 = more saturated)
@@ -44,15 +44,76 @@ const DIRECTIONAL_LIGHT_POSITION = [0, 2, 5]; // Light position [x, y, z]
 const TONE_MAPPING_EXPOSURE = 1.0; // Exposure control (0.5 = darker, 1.5 = brighter)
 // ==========================================
 
+const PLAY_BUTTON_Z = 0.14;
+const PLAY_BUTTON_SCALE = 0.025;
+const PLAY_BUTTON_COLOR = '#D4A843';
+
+function PlayButton3D({ onClick, isPlaying }) {
+  const triangleGeometry = useMemo(() => {
+    const shape = new THREE.Shape();
+    shape.moveTo(-0.4, -0.5);
+    shape.lineTo(-0.4, 0.5);
+    shape.lineTo(0.6, 0);
+    shape.closePath();
+    const geo = new THREE.ShapeGeometry(shape);
+    geo.center();
+    return geo;
+  }, []);
+
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <>
+      <mesh
+        position={[0, 0, PLAY_BUTTON_Z]}
+        scale={[PLAY_BUTTON_SCALE, PLAY_BUTTON_SCALE, 1]}
+        geometry={triangleGeometry}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+        onPointerOver={() => {
+          setHovered(true);
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+          document.body.style.cursor = 'auto';
+        }}
+      >
+        <meshBasicMaterial
+          color={hovered ? '#E8C060' : PLAY_BUTTON_COLOR}
+          side={THREE.DoubleSide}
+          depthTest={false}
+          transparent
+          opacity={1}
+        />
+      </mesh>
+    </>
+  );
+}
+
 function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
   const gltf = useGLTF(url);
   const { camera } = useThree();
 
-  const videoTexture = useVideoTexture('/video/sizzle-test.mp4', {
+  const videoTexture = useVideoTexture('/video/Hammer_EyeballReel_1x1.mp4', {
     loop: true,
     muted: true,
     start: true,
   });
+
+  videoTexture.flipY = false;
+
+  const [isPlaying, setIsPlaying] = useState(true);
+  const handleTogglePlay = () => {
+    const video = videoTexture?.image;
+    if (!video) return;
+    isPlaying ? video.pause() : video.play();
+    setIsPlaying(!isPlaying);
+  };
+
+  const groupRef = useRef();
 
   // Refs to track rotation state
   const targetRotation = useRef({ x: 0, y: 0 });
@@ -208,9 +269,9 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
       (targetRotation.current.y - currentRotation.current.y) * LERP_SPEED;
 
     // Apply rotation to entire eyeball model
-    if (gltf.scene) {
-      gltf.scene.rotation.x = currentRotation.current.x;
-      gltf.scene.rotation.y = currentRotation.current.y;
+    if (groupRef.current) {
+      groupRef.current.rotation.x = currentRotation.current.x;
+      groupRef.current.rotation.y = currentRotation.current.y;
     }
 
     // Iris spin - speed up when mouse moves
@@ -247,7 +308,12 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
     }
   });
 
-  return <primitive object={gltf.scene} />;
+  return (
+    <group ref={groupRef}>
+      <primitive object={gltf.scene} />
+      <PlayButton3D onClick={handleTogglePlay} isPlaying={isPlaying} />
+    </group>
+  );
 }
 
 const SceneContent = ({
