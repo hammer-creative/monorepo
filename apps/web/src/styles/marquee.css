@@ -47,10 +47,11 @@ p {
 
 /* Marquee – Layout */
 
-[data-page='/'] .wordmark {
+[data-page='/'] .marquee .wordmark {
   padding-inline-start: var(--space-fluid-10-20);
   padding-block-start: var(--space-fluid-10-20);
 }
+
 [data-page='/'] .marquee {
   height: 100vh;
 }
