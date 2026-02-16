@@ -62,7 +62,7 @@
 
 @media screen and (min-width: 50em) {
   .hero-module .title.primary {
-    padding-block: var(--space-fluid-20-40);
+    padding-block: var(--space-fluid-10-20);
     padding-inline: var(--space-fluid-20-40);
   }
 }
