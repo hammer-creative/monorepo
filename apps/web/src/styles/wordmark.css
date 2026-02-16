@@ -29,6 +29,7 @@ body:has(.menu-overlay) .mobile-menu .wordmark svg {
 header svg {
   color: $color-hyperbeam;
   width: 147px;
+  text-shadow: var(--text-shadow);
 }
 
 /* Footer */
@@ -39,3 +40,7 @@ footer svg {
 footer .wordmark {
   transform: translateY(0%);
 }
+
+/* svg {
+  filter: drop-shadow(0 0 1px white);
+} */
