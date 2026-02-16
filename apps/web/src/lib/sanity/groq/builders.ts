@@ -217,3 +217,16 @@ export const basicPageProjection = `
   ${projections.slug},
   body
 `;
+
+export const caseStudyCarouselProjection = `
+  _id,
+  title,
+  ${projections.slug},
+  ${projections.clients},
+  "teaserImage": modules[0].teaserImage {
+    asset,
+    alt,
+    crop,
+    hotspot
+  }
+`;
