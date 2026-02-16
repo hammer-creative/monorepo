@@ -2,6 +2,7 @@
 
 .hero-module button.scroll-trigger {
   position: relative;
+  padding: var(--space-fluid-10-20);
   background: none;
   border: none;
   cursor: pointer;
