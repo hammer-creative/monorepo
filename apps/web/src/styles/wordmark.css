@@ -29,7 +29,6 @@ body:has(.menu-overlay) .mobile-menu .wordmark svg {
 header svg {
   color: $color-hyperbeam;
   width: 147px;
-  text-shadow: var(--text-shadow);
 }
 
 /* Footer */
