@@ -100,15 +100,6 @@
   /* width: 50%; */
 }
 
-/* Text shadow for readability on light backgrounds */
-[data-page='/'] .case-study-card .title,
-[data-page='/'] .case-study-card .client-name,
-[data-page='/services'] .services-card-module .title,
-[data-page='/services'] .hero-module .title,
-.case-study-carousel-module .case-study-card .title {
-  text-shadow: var(--text-shadow);
-}
-
 .case-study-carousel-module > .title.tertiary {
   font-size: var(--font-size-lg-fluid);
 }
