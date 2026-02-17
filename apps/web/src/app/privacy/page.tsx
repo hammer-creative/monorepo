@@ -1,7 +1,6 @@
 // src/app/privacy/page.tsx
-// src/app/privacy/page.tsx
 import { TextBlock } from '@/components/common';
-import { getBasicPage } from '@/lib/sanity';
+import { client, getBasicPage } from '@/lib/sanity';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function PrivacyPage() {
-  const privacyPage = await getBasicPage('privacy');
+  const privacyPage = await getBasicPage('privacy', client);
 
   if (!privacyPage) return null;
 
@@ -25,7 +24,7 @@ export default async function PrivacyPage() {
         <article className="privacy-policy">
           <h1>{privacyPage.title}</h1>
 
-          <TextBlock body={privacyPage.body} variant="dropquote" />
+          <TextBlock body={privacyPage.body} />
         </article>
       </div>
     </div>

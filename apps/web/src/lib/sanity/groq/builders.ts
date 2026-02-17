@@ -84,11 +84,22 @@ export const projections = {
     name
   }`,
 
-  caseStudyCard: `caseStudies[]-> {
+  caseStudyTeaser: `
     _id,
     title,
-    "slug": slug.current
-  }`,
+    "slug": slug.current,
+    clients[]-> {
+      _id,
+      name
+    },
+    "teaserImage": modules[_type == "heroModule"][0].teaserImage {
+      _type,
+      asset,
+      alt,
+      crop,
+      hotspot
+    }
+  `,
 };
 
 export const moduleProjections = `
@@ -139,13 +150,7 @@ export const moduleProjections = `
   },
   _type == "caseStudyCardModule" => {
     caseStudies[]-> {
-      _id,
-      title,
-      ${projections.slug},
-      ${projections.clients},
-      modules[_type == "heroModule"] {
-        ${projections.teaserImage}
-      }
+      ${projections.caseStudyTeaser}
     }
   },
   _type == "textModule" => {
@@ -218,15 +223,4 @@ export const basicPageProjection = `
   body
 `;
 
-export const caseStudyCarouselProjection = `
-  _id,
-  title,
-  ${projections.slug},
-  ${projections.clients},
-  "teaserImage": modules[0].teaserImage {
-    asset,
-    alt,
-    crop,
-    hotspot
-  }
-`;
+export const caseStudyTeaserProjection = projections.caseStudyTeaser;

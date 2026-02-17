@@ -22,7 +22,7 @@ export const servicesPageCardModule = defineType({
         name: 'image',
         title: 'Background Image',
         required: false,
-        description: 'Minimum dimensions 3760 px × 1080 px, maximum file size 10 MB.',
+        description: 'Minimum dimensions 3760 px × 1080 px, maximum file size 20 MB.',
         imageOptions: {
           hotspot: {
             previews: [{title: '32:9 Landscape', aspectRatio: 32 / 9}],
@@ -36,7 +36,7 @@ export const servicesPageCardModule = defineType({
             createImageDimensionValidation({
               minWidth: 3760,
               minHeight: 1080,
-              maxFileSize: 10,
+              maxFileSize: 20,
             }),
           ),
       }

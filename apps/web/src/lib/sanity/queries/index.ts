@@ -4,3 +4,4 @@ export * from './basicPage';
 export * from './caseStudy';
 export * from './homePage';
 export * from './servicesPage';
+export * from './workPage';

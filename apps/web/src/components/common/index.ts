@@ -1,5 +1,6 @@
 // apps/web/src/components/common/index.ts
 
+export * from './Arrow';
 export * from './Arrows';
 export { ClientIcons } from './ClientIcons';
 export { ClientNames } from './ClientNames';

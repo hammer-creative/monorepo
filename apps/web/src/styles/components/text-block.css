@@ -123,3 +123,33 @@
 [data-page='/privacy'] article a {
   color: $color-hyperbeam;
 }
+
+[data-page='/privacy'] h2,
+h3,
+h4 {
+  margin-block: var(--space-fluid-10-20);
+}
+
+[data-page='/privacy'] article {
+  ul li,
+  ol li {
+    margin-block: var(--space-10);
+    font-size: var(--font-size-sm-fluid);
+    list-style-type: disc; /* filled circle (default) */
+  }
+  [data-page='/privacy'] > * {
+    line-height: 1.4;
+  }
+
+  ol,
+  ul {
+    padding-left: 5em;
+    padding-right: 5em;
+  }
+
+  ol li,
+  ul li {
+    padding-left: 0.1ch; /* indent the text */
+    text-indent: -0.1ch; /* hang the bullet */
+  }
+}

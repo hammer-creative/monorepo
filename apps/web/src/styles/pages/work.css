@@ -1,0 +1,6 @@
+/* apps/web/src/styles/page/work.css */
+
+[data-page='/work'] .layout-wrapper {
+  margin-block-start: var(--space-fluid-60-120);
+  padding-inline: var(--space-fluid-10-20);
+}
