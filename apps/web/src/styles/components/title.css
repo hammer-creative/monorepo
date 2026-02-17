@@ -67,6 +67,26 @@
   margin-block-end: var(--space-20);
 }
 
+/* Module-specific overrides - Case Study Card (home) */
+.case-study-card .title.tertiary,
+.case-study-card .clients span {
+  color: $color-hyperbeam;
+  transition: color var(--ease-fast);
+}
+
+.case-study-card:hover .title.tertiary,
+.case-study-card:hover .clients span {
+  color: $color-aircutter;
+}
+
+/* Module-specific overrides - Case Study Carousel Module */
+.case-study-carousel-module .case-study-card .title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-sm-fluid);
+  text-transform: uppercase;
+  line-height: var(--line-height-very-tight);
+}
+
 /* Page-specific overrides – Homepage – Text Module, promo */
 [data-page='/'] .layout-wrapper h2 {
   /* TODO: change to title.secondary? */
@@ -84,8 +104,13 @@
 [data-page='/'] .case-study-card .title,
 [data-page='/'] .case-study-card .client-name,
 [data-page='/services'] .services-card-module .title,
-[data-page='/services'] .hero-module .title {
+[data-page='/services'] .hero-module .title,
+.case-study-carousel-module .case-study-card .title {
   text-shadow: var(--text-shadow);
+}
+
+.case-study-carousel-module > .title.tertiary {
+  font-size: var(--font-size-lg-fluid);
 }
 
 @media screen and (min-width: 50em) {

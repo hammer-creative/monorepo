@@ -62,10 +62,10 @@
   padding-inline: var(--space-fluid-20-40);
 }
 
-[data-page='/services'] .services-heading h2 {
+/* [data-page='/services'] .services-heading h2 {
   font-size: var(--font-size-lg-fluid);
   font-weight: 100;
-}
+} */
 
 [data-page='/services'] .chyron-card {
   padding-block: var(--space-fluid-20-40);

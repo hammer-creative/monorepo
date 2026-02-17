@@ -2,8 +2,28 @@
 
 @import '../mixins.css';
 
-.swiper-slide {
-  aspect-ratio: 1 / 1;
+.case-study-carousel-module {
+  background: $color-sandstorm;
+}
+
+.case-study-carousel-module .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--space-fluid-20-40);
+  padding-inline: var(--space-fluid-20-40);
+}
+
+.case-study-carousel-module .header svg {
+  width: 45px;
+  height: auto;
+  color: $color-hyperbeam;
+  margin-top: 0.5em;
+  transition: color var(--ease-fast);
+}
+
+.case-study-carousel-module .header svg:hover {
+  color: $color-aircutter;
 }
 
 .swiper-wrapper {
@@ -13,4 +33,13 @@
 
 .swiper-slide .image {
   aspect-ratio: 1 / 1;
+}
+
+.case-study-carousel-module .swiper-slide .meta .title {
+  padding-inline: var(--space-fluid-10-20);
+  padding-block: var(--space-fluid-10-20);
+}
+
+.case-study-carousel-module > .title.tertiary {
+  padding-left: var(--space-fluid-20-40);
 }

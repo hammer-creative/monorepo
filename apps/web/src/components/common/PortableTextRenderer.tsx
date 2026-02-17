@@ -18,6 +18,15 @@ interface SmartLinkProps {
   children?: ReactNode;
 }
 
+interface TableRow {
+  _key?: string;
+  cells?: string[];
+}
+
+interface TableValue {
+  rows?: TableRow[];
+}
+
 function SmartLink({ value, children }: SmartLinkProps) {
   const href = value?.href || '';
   const isInternal = href.startsWith('/') || href.startsWith('#');
@@ -94,12 +103,12 @@ export function PortableTextRenderer({
       number: ({ children }) => <li>{children}</li>,
     },
     types: {
-      table: ({ value }) => (
+      table: ({ value }: { value?: TableValue }) => (
         <table>
           <tbody>
-            {value?.rows?.map((row: any, i: number) => (
-              <tr key={i}>
-                {row.cells?.map((cell: string, j: number) => (
+            {value?.rows?.map((row, i) => (
+              <tr key={row._key ?? i}>
+                {row.cells?.map((cell, j) => (
                   <td key={j}>{cell}</td>
                 ))}
               </tr>

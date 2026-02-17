@@ -1,4 +1,5 @@
 // src/app/services/page.tsx
+import { Title } from '@/components/common';
 import {
   ServicesPageCardModule,
   ServicesPageHeroModule,
@@ -30,74 +31,74 @@ export default async function ServicesPage() {
   const chyronCard = cards[cards.length - 1];
 
   return (
-    <div className="layout-container">
+    <div className="layout-wrapper">
       {/* Hero Module */}
-      <div className="layout-wrapper">
-        {hero && (
-          <section
-            className="module hero-module"
-            style={
-              {
-                '--module-text': hero.textColor?.hex,
-              } as React.CSSProperties
-            }
-          >
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            <ServicesPageHeroModule data={hero as any} />
-          </section>
-        )}
+      {hero && (
+        <section
+          className="module hero-module"
+          style={
+            {
+              '--module-text': hero.textColor?.hex,
+            } as React.CSSProperties
+          }
+        >
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          <ServicesPageHeroModule data={hero as any} />
+        </section>
+      )}
 
-        {/* Services Cards */}
-        <div id="content-start" className="services-heading">
-          <h2>Services</h2>
-        </div>
-        <div className="services-cards">
-          {regularCards.map(
-            (card: {
-              _key: string;
-              backgroundColor?: { hex?: string };
-              textColor?: { hex?: string };
-            }) => {
-              const { _key, backgroundColor, textColor } = card;
+      {/* Services Cards */}
+      <div id="content-start" className="services-heading">
+        <Title as="h2" variant="tertiary">
+          Services
+        </Title>
+      </div>
+      <div className="services-cards">
+        {regularCards.map(
+          (card: {
+            _key: string;
+            backgroundColor?: { hex?: string };
+            textColor?: { hex?: string };
+          }) => {
+            const { _key, backgroundColor, textColor } = card;
 
-              return (
-                <section
-                  key={_key}
-                  className="module services-card-module"
-                  style={
-                    {
-                      '--module-bg': backgroundColor?.hex,
-                      '--module-text': textColor?.hex,
-                    } as React.CSSProperties
-                  }
-                >
-                  <ServicesPageCardModule
-                    data={card as any} // eslint-disable-line @typescript-eslint/no-explicit-any
-                  />
-                </section>
-              );
-            },
-          )}
-        </div>
-
-        {/* Chyron Card */}
-        {chyronCard && (
-          <section
-            className="module chyron-card"
-            style={
-              {
-                '--module-bg': chyronCard.backgroundColor?.hex,
-                '--module-text': chyronCard.textColor?.hex,
-              } as React.CSSProperties
-            }
-          >
-            <ServicesPageCardModule
-              data={chyronCard as any} // eslint-disable-line @typescript-eslint/no-explicit-any
-              showClientIcons
-            />
-          </section>
+            return (
+              <section
+                key={_key}
+                className="module services-card-module"
+                style={
+                  {
+                    '--module-bg': backgroundColor?.hex,
+                    '--module-text': textColor?.hex,
+                  } as React.CSSProperties
+                }
+              >
+                <ServicesPageCardModule
+                  data={card as any} // eslint-disable-line @typescript-eslint/no-explicit-any
+                />
+              </section>
+            );
+          },
         )}
       </div>
+
+      {/* Chyron Card */}
+      {chyronCard && (
+        <section
+          className="module chyron-card"
+          style={
+            {
+              '--module-bg': chyronCard.backgroundColor?.hex,
+              '--module-text': chyronCard.textColor?.hex,
+            } as React.CSSProperties
+          }
+        >
+          <ServicesPageCardModule
+            data={chyronCard as any} // eslint-disable-line @typescript-eslint/no-explicit-any
+            showClientIcons
+          />
+        </section>
+      )}
     </div>
   );
 }
