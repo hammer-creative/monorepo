@@ -15,7 +15,11 @@ mux-uploads
 .eslintcache
 **/.eslintcache
 
+apps/web/public/model/archive
 apps/web/public/model/assets
+apps/web/public/model/bak
+apps/web/public/model/out
+
 
 scripts/favicon-source-*
 scripts/*image*

@@ -26,8 +26,7 @@
   .hero-module .services-list li {
     /* line-height: var(--line-height-default); */
   }
-}
-
-.services-card .services-list ul {
-  columns: 2;
+  .services-card .services-list ul {
+    columns: 2;
+  }
 }
