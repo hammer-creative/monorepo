@@ -333,7 +333,7 @@ const SceneContent = ({
         intensity={DIRECTIONAL_LIGHT_INTENSITY}
       />
       <Suspense fallback={null}>
-        <Model url="/model/model-v7-compressed.glb" isPaused={isPaused} />
+        <Model url="/model/model-v7-modified.glb" isPaused={isPaused} />
       </Suspense>
       <OrbitControls
         enabled={orbitEnabled}
@@ -349,6 +349,7 @@ export default function Scene() {
   const [isPaused, setIsPaused] = useState(false);
   const [panelVisible, setPanelVisible] = useState(true);
 
+  const [maskEnabled, setMaskEnabled] = useState(true);
   const [maskStart, setMaskStart] = useState(50);
   const [maskEnd, setMaskEnd] = useState(71);
   const [maskDiameter, setMaskDiameter] = useState(50);
@@ -375,11 +376,9 @@ export default function Scene() {
 
   // Bottom to top linear gradient
   const [linearGradientEnabled, setLinearGradientEnabled] = useState(true);
-  const [bottomGradientColor, setBottomGradientColor] = useState('#000000');
-  const [topGradientColor, setTopGradientColor] = useState('#c8d5d9');
+  const [linearGradientColor, setLinearGradientColor] = useState('#000000');
   const [linearGradientOpacity, setLinearGradientOpacity] = useState(0.6);
-  const [linearGradientStart, setLinearGradientStart] = useState(0);
-  const [linearGradientEnd, setLinearGradientEnd] = useState(32);
+  const [linearGradientHeight, setLinearGradientHeight] = useState(50);
 
   const [presets, setPresets] = useState([]);
   const [presetCounter, setPresetCounter] = useState(1);
@@ -418,9 +417,17 @@ export default function Scene() {
     return `rgba(${r}, ${g}, ${b}, 1)`;
   };
 
+  const removeAll = () => {
+    setMaskEnabled(false);
+    setBokeh1Enabled(false);
+    setBokeh2Enabled(false);
+    setLinearGradientEnabled(false);
+  };
+
   const savePreset = () => {
     const preset = {
       name: `preset-${String(presetCounter).padStart(3, '0')}`,
+      maskEnabled,
       maskStart,
       maskEnd,
       maskDiameter,
@@ -441,11 +448,9 @@ export default function Scene() {
       backdropGradientStart2,
       backdropGradientEnd2,
       linearGradientEnabled,
-      bottomGradientColor,
-      topGradientColor,
+      linearGradientColor,
       linearGradientOpacity,
-      linearGradientStart,
-      linearGradientEnd,
+      linearGradientHeight,
     };
     const newPresets = [...presets, preset];
     const newCounter = presetCounter + 1;
@@ -456,6 +461,7 @@ export default function Scene() {
   };
 
   const loadPreset = (preset) => {
+    setMaskEnabled(preset.maskEnabled);
     setMaskStart(preset.maskStart);
     setMaskEnd(preset.maskEnd);
     setMaskDiameter(preset.maskDiameter);
@@ -476,11 +482,9 @@ export default function Scene() {
     setBackdropGradientStart2(preset.backdropGradientStart2);
     setBackdropGradientEnd2(preset.backdropGradientEnd2);
     setLinearGradientEnabled(preset.linearGradientEnabled);
-    setBottomGradientColor(preset.bottomGradientColor);
-    setTopGradientColor(preset.topGradientColor);
+    setLinearGradientColor(preset.linearGradientColor);
     setLinearGradientOpacity(preset.linearGradientOpacity);
-    setLinearGradientStart(preset.linearGradientStart);
-    setLinearGradientEnd(preset.linearGradientEnd);
+    setLinearGradientHeight(preset.linearGradientHeight);
   };
 
   const deletePreset = (index) => {
@@ -491,10 +495,20 @@ export default function Scene() {
 
   const copyToClipboard = () => {
     const css = `
-/* Mask */
-mask-image: radial-gradient(circle ${maskDiameter}% at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
--webkit-mask-image: radial-gradient(circle ${maskDiameter}% at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
-
+${
+  maskEnabled
+    ? `/* Mask */
+mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
+-webkit-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
+mask-size: ${maskDiameter}vh ${maskDiameter}vh;
+-webkit-mask-size: ${maskDiameter}vh ${maskDiameter}vh;
+mask-position: center;
+-webkit-mask-position: center;
+mask-repeat: no-repeat;
+-webkit-mask-repeat: no-repeat;
+`
+    : ''
+}
 ${
   bokeh1Enabled
     ? `/* Backdrop Bokeh 1 */
@@ -540,8 +554,11 @@ ${
     ? `/* Linear Gradient */
 .linear-gradient {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, ${bottomGradientColor} ${linearGradientStart}%, ${topGradientColor} ${linearGradientEnd}%);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: ${linearGradientHeight}%;
+  background: linear-gradient(to top, ${linearGradientColor}, transparent);
   opacity: ${linearGradientOpacity};
   pointer-events: none;
   z-index: 3;
@@ -554,16 +571,18 @@ ${
     alert('CSS copied to clipboard!');
   };
 
-  const maskStyle = {
-    maskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
-    WebkitMaskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
-    maskSize: `${maskDiameter}vh ${maskDiameter}vh`,
-    WebkitMaskSize: `${maskDiameter}vh ${maskDiameter}vh`,
-    maskPosition: 'center',
-    WebkitMaskPosition: 'center',
-    maskRepeat: 'no-repeat',
-    WebkitMaskRepeat: 'no-repeat',
-  };
+  const maskStyle = maskEnabled
+    ? {
+        maskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
+        WebkitMaskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
+        maskSize: `${maskDiameter}vh ${maskDiameter}vh`,
+        WebkitMaskSize: `${maskDiameter}vh ${maskDiameter}vh`,
+        maskPosition: 'center',
+        WebkitMaskPosition: 'center',
+        maskRepeat: 'no-repeat',
+        WebkitMaskRepeat: 'no-repeat',
+      }
+    : {};
 
   const backdropBokehStyle1 = {
     position: 'absolute' as const,
@@ -597,8 +616,11 @@ ${
 
   const linearGradientStyle = {
     position: 'absolute' as const,
-    inset: 0,
-    background: `linear-gradient(to top, ${bottomGradientColor} ${linearGradientStart}%, ${topGradientColor} ${linearGradientEnd}%)`,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: `${linearGradientHeight}%`,
+    background: `linear-gradient(to top, ${linearGradientColor}, transparent)`,
     opacity: linearGradientOpacity,
     pointerEvents: 'none' as const,
     zIndex: 3,
@@ -659,7 +681,7 @@ ${
               fontWeight: 'bold',
             }}
           >
-            Copy CSS
+            Copy Source
           </button>
 
           <button
@@ -731,40 +753,53 @@ ${
               borderTop: '1px solid rgba(255,255,255,0.2)',
             }}
           />
-          <strong>Mask</strong>
           <label>
-            diameter {maskDiameter}%
             <input
-              type="range"
-              min={10}
-              max={100}
-              value={maskDiameter}
-              onChange={(e) => setMaskDiameter(+e.target.value)}
-              style={{ width: 120, marginLeft: 8 }}
+              type="checkbox"
+              checked={maskEnabled}
+              onChange={(e) => setMaskEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
             />
+            <strong>Mask</strong>
           </label>
-          <label>
-            start {maskStart}%
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={maskStart}
-              onChange={(e) => setMaskStart(+e.target.value)}
-              style={{ width: 120, marginLeft: 8 }}
-            />
-          </label>
-          <label>
-            feather {maskEnd}%
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={maskEnd}
-              onChange={(e) => setMaskEnd(+e.target.value)}
-              style={{ width: 120, marginLeft: 8 }}
-            />
-          </label>
+
+          {maskEnabled && (
+            <>
+              <label>
+                diameter {maskDiameter}%
+                <input
+                  type="range"
+                  min={10}
+                  max={100}
+                  value={maskDiameter}
+                  onChange={(e) => setMaskDiameter(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                start {maskStart}%
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={maskStart}
+                  onChange={(e) => setMaskStart(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                feather {maskEnd}%
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={maskEnd}
+                  onChange={(e) => setMaskEnd(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
 
           <hr
             style={{
@@ -980,52 +1015,30 @@ ${
               onChange={(e) => setLinearGradientEnabled(e.target.checked)}
               style={{ marginRight: 8 }}
             />
-            <strong>Linear Gradient (Bottom to Top)</strong>
+            <strong>Bottom Fade</strong>
           </label>
 
           {linearGradientEnabled && (
             <>
               <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                bottom color
+                color
                 <input
                   type="color"
-                  value={bottomGradientColor}
-                  onChange={(e) => setBottomGradientColor(e.target.value)}
+                  value={linearGradientColor}
+                  onChange={(e) => setLinearGradientColor(e.target.value)}
                 />
                 <code style={{ fontSize: 10 }}>
-                  {hexToRgba(bottomGradientColor)}
-                </code>
-              </label>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                top color
-                <input
-                  type="color"
-                  value={topGradientColor}
-                  onChange={(e) => setTopGradientColor(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(topGradientColor)}
+                  {hexToRgba(linearGradientColor)}
                 </code>
               </label>
               <label>
-                gradient start {linearGradientStart}%
+                height {linearGradientHeight}%
                 <input
                   type="range"
                   min={0}
                   max={100}
-                  value={linearGradientStart}
-                  onChange={(e) => setLinearGradientStart(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                gradient end {linearGradientEnd}%
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={linearGradientEnd}
-                  onChange={(e) => setLinearGradientEnd(+e.target.value)}
+                  value={linearGradientHeight}
+                  onChange={(e) => setLinearGradientHeight(+e.target.value)}
                   style={{ width: 120, marginLeft: 8 }}
                 />
               </label>
@@ -1043,6 +1056,29 @@ ${
               </label>
             </>
           )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <button
+            onClick={removeAll}
+            style={{
+              padding: '8px 12px',
+              background: '#a44',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
+              fontFamily: 'monospace',
+              fontWeight: 'bold',
+            }}
+          >
+            Remove All Effects
+          </button>
         </div>
       )}
 
