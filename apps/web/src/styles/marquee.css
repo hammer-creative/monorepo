@@ -132,3 +132,19 @@ p {
     padding: var(--space-fluid-10-20);
   }
 }
+
+/* [data-page='/'] .model {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  mask-image: radial-gradient(
+    ellipse 40% 46% at 50% 50%,
+    black 46%,
+    transparent 80%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 78% 78% at 50% 50%,
+    black 35%,
+    transparent 50%
+  );
+} */
