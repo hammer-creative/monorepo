@@ -135,12 +135,13 @@
     calc(2.5rem + ((1vw - 3.2px) * 1.25)),
     54px
   );
+  --font-size-subtitle-fluid: 42px;
 
   --font-weight-default: 500;
   --font-weight-light: 100;
 
   --line-height-very-tight: 0.9;
-  --line-height-tight: 1.1;
+  --line-height-tight: 0.9;
   --line-height-default: 1.2;
   --line-height-medium: 1.4;
   --line-height-loose: 1.6;

@@ -31,7 +31,7 @@
 .hero-module .text-block {
   font-family: var(--font-sans);
   font-size: var(--font-size-lg-fluid);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-default);
 }
 
 /* Module-specific override: Impact module */
@@ -123,10 +123,12 @@
   color: $color-hyperbeam;
 }
 
-[data-page='/privacy'] h2,
-h3,
-h4 {
-  margin-block: var(--space-fluid-10-20);
+[data-page='/privacy'] {
+  h2,
+  h3,
+  h4 {
+    margin-block: var(--space-fluid-10-20);
+  }
 }
 
 [data-page='/privacy'] article {
@@ -150,5 +152,15 @@ h4 {
   ul li {
     padding-left: 0.1ch; /* indent the text */
     text-indent: -0.1ch; /* hang the bullet */
+  }
+}
+
+[data-page='/services'] .chyron-card p.text-block {
+  width: 30ch;
+}
+
+@media screen and (min-width: 50em) {
+  [data-page='/services'] .hero-module p.text-block {
+    width: 30ch;
   }
 }

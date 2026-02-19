@@ -24,7 +24,7 @@ const SHOW_PUPIL = true;
 const SHOW_SCLERA = true;
 
 // VIDEO PUPIL PARAMETERS
-const ENABLE_VIDEO_PUPIL = true; // Set to false to use solid color instead of video
+const ENABLE_VIDEO_PUPIL = false; // Set to false to use solid color instead of video
 const PUPIL_COLOR = new THREE.Color(0xffffff); // Pupil color when video is disabled (black by default)
 const PUPIL_Z_POSITION = 0; // How far back the pupil sits (more negative = deeper inside)
 const PUPIL_SCALE = 1; // Pupil size (1.5 = 50% bigger)
@@ -38,9 +38,9 @@ const IRIS_SATURATION = 1.5; // Iris color saturation (1.0 = normal, >1.0 = more
 const IRIS_CONTRAST = 1.2; // Iris contrast (1.0 = normal, >1.0 = more contrast)
 
 // LIGHTING PARAMETERS
-const AMBIENT_LIGHT_INTENSITY = 0.1; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
-const DIRECTIONAL_LIGHT_INTENSITY = 0.9; // Directional light strength (0-2, try 0.3, 0.5, 0.8)
-const DIRECTIONAL_LIGHT_POSITION = [1, 5, 5]; // Light position [x, y, z]
+const AMBIENT_LIGHT_INTENSITY = 2; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
+const DIRECTIONAL_LIGHT_INTENSITY = 1; // Directional light strength (0-2, try 0.3, 0.5, 0.8)
+const DIRECTIONAL_LIGHT_POSITION = [1, 1, 1]; // Light position [x, y, z]
 const TONE_MAPPING_EXPOSURE = 1.0; // Exposure control (0.5 = darker, 1.5 = brighter)
 // ==========================================
 
@@ -138,8 +138,23 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
 
   // Log everything in the model
   gltf.scene.traverse((child) => {
-    if (child.name === 'Shadow_Catch') {
-      child.visible = false;
+    if (child.isLight) {
+      console.log('LIGHT FOUND:', child.type, child);
+      child.visible = false; // Disable baked lights
+    }
+    // if (child.name === 'Shadow_Catch') {
+    //   child.visible = false;
+    // }
+
+    if (child.isMesh) {
+      console.log('Mesh name:', child.name);
+      console.log('Material type:', child.material.type);
+      console.log('Material:', child.material);
+      console.log('---');
+    }
+
+    if (child.isLight) {
+      console.log('LIGHT FOUND:', child.type, child);
     }
 
     // @ts-ignore
@@ -320,20 +335,154 @@ const SceneContent = ({
   helpersVisible,
   orbitEnabled,
   isPaused,
-}: {
-  helpersVisible: boolean;
-  orbitEnabled: boolean;
-  isPaused: boolean;
+  ambientLightEnabled,
+  ambientLightIntensity,
+  ambientLightColor,
+  directionalLightEnabled,
+  directionalLightIntensity,
+  directionalLightColor,
+  directionalLightPosition,
+  spotLightEnabled,
+  spotLightIntensity,
+  spotLightColor,
+  spotLightPosition,
+  spotLightAngle,
+  spotLightPenumbra,
+  pointLightEnabled,
+  pointLightIntensity,
+  pointLightColor,
+  pointLightPosition,
+  pointLightDistance,
+  pointLightDecay,
+  cycloLightEnabled,
+  cycloLightIntensity,
+  cycloLightColor,
+  cycloLightPosition,
 }) => {
+  const spotLightRef = useRef();
+  const spotLightTargetRef = useRef();
+
+  useEffect(() => {
+    if (spotLightRef.current && spotLightTargetRef.current) {
+      spotLightRef.current.target = spotLightTargetRef.current;
+    }
+  }, []);
+
   return (
     <>
-      <ambientLight intensity={AMBIENT_LIGHT_INTENSITY} />
-      <directionalLight
-        position={DIRECTIONAL_LIGHT_POSITION}
-        intensity={DIRECTIONAL_LIGHT_INTENSITY}
-      />
+      {helpersVisible && (
+        <>
+          <axesHelper args={[1]} />
+          <gridHelper args={[10, 10]} />
+        </>
+      )}
+
+      {ambientLightEnabled && (
+        <ambientLight
+          intensity={ambientLightIntensity}
+          color={ambientLightColor}
+        />
+      )}
+
+      {directionalLightEnabled && (
+        <>
+          <directionalLight
+            position={directionalLightPosition}
+            intensity={directionalLightIntensity}
+            color={directionalLightColor}
+          />
+          {helpersVisible && (
+            <mesh position={directionalLightPosition}>
+              <sphereGeometry args={[0.05, 16, 16]} />
+              <meshBasicMaterial color={directionalLightColor} />
+            </mesh>
+          )}
+        </>
+      )}
+
+      {spotLightEnabled && (
+        <>
+          <object3D ref={spotLightTargetRef} position={[0, 0, 0]} />
+          <spotLight
+            ref={spotLightRef}
+            position={spotLightPosition}
+            intensity={spotLightIntensity}
+            color={spotLightColor}
+            angle={spotLightAngle}
+            penumbra={spotLightPenumbra}
+          />
+          {helpersVisible && (
+            <>
+              <mesh position={spotLightPosition}>
+                <coneGeometry args={[0.05, 0.2, 8]} />
+                <meshBasicMaterial color={spotLightColor} />
+              </mesh>
+              <line>
+                <bufferGeometry attach="geometry">
+                  <bufferAttribute
+                    attach="attributes-position"
+                    count={2}
+                    array={
+                      new Float32Array([
+                        spotLightPosition[0],
+                        spotLightPosition[1],
+                        spotLightPosition[2],
+                        0,
+                        0,
+                        0,
+                      ])
+                    }
+                    itemSize={3}
+                  />
+                </bufferGeometry>
+                <lineBasicMaterial
+                  attach="material"
+                  color={spotLightColor}
+                  opacity={0.5}
+                  transparent
+                />
+              </line>
+            </>
+          )}
+        </>
+      )}
+
+      {pointLightEnabled && (
+        <>
+          <pointLight
+            position={pointLightPosition}
+            intensity={pointLightIntensity}
+            color={pointLightColor}
+            distance={pointLightDistance}
+            decay={pointLightDecay}
+          />
+          {helpersVisible && (
+            <mesh position={pointLightPosition}>
+              <sphereGeometry args={[0.05, 16, 16]} />
+              <meshBasicMaterial color={pointLightColor} />
+            </mesh>
+          )}
+        </>
+      )}
+
+      {cycloLightEnabled && (
+        <>
+          <pointLight
+            position={cycloLightPosition}
+            intensity={cycloLightIntensity}
+            color={cycloLightColor}
+          />
+          {helpersVisible && (
+            <mesh position={cycloLightPosition}>
+              <sphereGeometry args={[0.05, 16, 16]} />
+              <meshBasicMaterial color={cycloLightColor} />
+            </mesh>
+          )}
+        </>
+      )}
+
       <Suspense fallback={null}>
-        <Model url="/model/model-v7-modified.glb" isPaused={isPaused} />
+        <Model url="/model/model-v7-compressed.glb" isPaused={isPaused} />
       </Suspense>
       <OrbitControls
         enabled={orbitEnabled}
@@ -348,6 +497,7 @@ export default function Scene() {
   const [helpersVisible, setHelpersVisible] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [panelVisible, setPanelVisible] = useState(true);
+  const [lightingPanelVisible, setLightingPanelVisible] = useState(false);
 
   const [maskEnabled, setMaskEnabled] = useState(true);
   const [maskStart, setMaskStart] = useState(50);
@@ -379,6 +529,41 @@ export default function Scene() {
   const [linearGradientColor, setLinearGradientColor] = useState('#000000');
   const [linearGradientOpacity, setLinearGradientOpacity] = useState(0.6);
   const [linearGradientHeight, setLinearGradientHeight] = useState(50);
+
+  // Lighting controls
+  const [ambientLightEnabled, setAmbientLightEnabled] = useState(true);
+  const [ambientLightIntensity, setAmbientLightIntensity] = useState(
+    AMBIENT_LIGHT_INTENSITY,
+  );
+  const [ambientLightColor, setAmbientLightColor] = useState('#ffffff');
+
+  const [directionalLightEnabled, setDirectionalLightEnabled] = useState(true);
+  const [directionalLightIntensity, setDirectionalLightIntensity] = useState(
+    DIRECTIONAL_LIGHT_INTENSITY,
+  );
+  const [directionalLightColor, setDirectionalLightColor] = useState('#ffffff');
+  const [directionalLightPosition, setDirectionalLightPosition] = useState(
+    DIRECTIONAL_LIGHT_POSITION,
+  );
+
+  const [spotLightEnabled, setSpotLightEnabled] = useState(false);
+  const [spotLightIntensity, setSpotLightIntensity] = useState(1.0);
+  const [spotLightColor, setSpotLightColor] = useState('#ffffff');
+  const [spotLightPosition, setSpotLightPosition] = useState([0.5, 0.5, 1]);
+  const [spotLightAngle, setSpotLightAngle] = useState(0.5);
+  const [spotLightPenumbra, setSpotLightPenumbra] = useState(0.5);
+
+  const [pointLightEnabled, setPointLightEnabled] = useState(false);
+  const [pointLightIntensity, setPointLightIntensity] = useState(1.0);
+  const [pointLightColor, setPointLightColor] = useState('#ffffff');
+  const [pointLightPosition, setPointLightPosition] = useState([0.3, 0.3, 0.5]);
+  const [pointLightDistance, setPointLightDistance] = useState(0);
+  const [pointLightDecay, setPointLightDecay] = useState(2);
+
+  const [cycloLightEnabled, setCycloLightEnabled] = useState(false);
+  const [cycloLightIntensity, setCycloLightIntensity] = useState(1.0);
+  const [cycloLightColor, setCycloLightColor] = useState('#4a9eff');
+  const [cycloLightPosition, setCycloLightPosition] = useState([0, -2, -3]);
 
   const [presets, setPresets] = useState([]);
   const [presetCounter, setPresetCounter] = useState(1);
@@ -647,11 +832,49 @@ ${
         {panelVisible ? 'Hide' : 'Show'} Panel
       </button>
 
+      <button
+        onClick={() => setHelpersVisible(!helpersVisible)}
+        style={{
+          position: 'absolute',
+          top: 10,
+          right: 10,
+          zIndex: 1001,
+          padding: '8px 12px',
+          background: helpersVisible ? '#4a4' : '#444',
+          color: helpersVisible ? '#000' : '#fff',
+          border: 'none',
+          borderRadius: 4,
+          cursor: 'pointer',
+          fontFamily: 'monospace',
+        }}
+      >
+        Helpers: {helpersVisible ? 'ON' : 'OFF'}
+      </button>
+
+      <button
+        onClick={() => setLightingPanelVisible(!lightingPanelVisible)}
+        style={{
+          position: 'absolute',
+          top: 50,
+          left: 10,
+          zIndex: 1001,
+          padding: '8px 12px',
+          background: '#555',
+          color: '#fff',
+          border: 'none',
+          borderRadius: 4,
+          cursor: 'pointer',
+          fontFamily: 'monospace',
+        }}
+      >
+        {lightingPanelVisible ? 'Hide' : 'Show'} Lighting
+      </button>
+
       {panelVisible && (
         <div
           style={{
             position: 'absolute',
-            top: 50,
+            top: 90,
             left: 10,
             zIndex: 1000,
             background: 'rgba(0,0,0,0.7)',
@@ -1082,6 +1305,558 @@ ${
         </div>
       )}
 
+      {lightingPanelVisible && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 90,
+            right: 10,
+            zIndex: 1000,
+            background: 'rgba(0,0,0,0.7)',
+            color: '#fff',
+            padding: '10px 14px',
+            borderRadius: 8,
+            fontFamily: 'monospace',
+            fontSize: 12,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8,
+            pointerEvents: 'all',
+            maxHeight: '85vh',
+            overflowY: 'auto',
+            width: 220,
+          }}
+        >
+          <strong>Lighting Controls</strong>
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={ambientLightEnabled}
+              onChange={(e) => setAmbientLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Ambient Light</strong>
+          </label>
+
+          {ambientLightEnabled && (
+            <>
+              <label>
+                intensity {ambientLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={5}
+                  step={0.1}
+                  value={ambientLightIntensity}
+                  onChange={(e) => setAmbientLightIntensity(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={ambientLightColor}
+                  onChange={(e) => setAmbientLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(ambientLightColor)}
+                </code>
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={directionalLightEnabled}
+              onChange={(e) => setDirectionalLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Directional Light</strong>
+          </label>
+
+          {directionalLightEnabled && (
+            <>
+              <label>
+                intensity {directionalLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={5}
+                  step={0.1}
+                  value={directionalLightIntensity}
+                  onChange={(e) =>
+                    setDirectionalLightIntensity(+e.target.value)
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={directionalLightColor}
+                  onChange={(e) => setDirectionalLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(directionalLightColor)}
+                </code>
+              </label>
+              <label>
+                X {directionalLightPosition[0].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={directionalLightPosition[0]}
+                  onChange={(e) =>
+                    setDirectionalLightPosition([
+                      +e.target.value,
+                      directionalLightPosition[1],
+                      directionalLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Y {directionalLightPosition[1].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={directionalLightPosition[1]}
+                  onChange={(e) =>
+                    setDirectionalLightPosition([
+                      directionalLightPosition[0],
+                      +e.target.value,
+                      directionalLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Z {directionalLightPosition[2].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={directionalLightPosition[2]}
+                  onChange={(e) =>
+                    setDirectionalLightPosition([
+                      directionalLightPosition[0],
+                      directionalLightPosition[1],
+                      +e.target.value,
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={spotLightEnabled}
+              onChange={(e) => setSpotLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Spot Light</strong>
+          </label>
+
+          {spotLightEnabled && (
+            <>
+              <label>
+                intensity {spotLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={20}
+                  step={0.1}
+                  value={spotLightIntensity}
+                  onChange={(e) => setSpotLightIntensity(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={spotLightColor}
+                  onChange={(e) => setSpotLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(spotLightColor)}
+                </code>
+              </label>
+              <label>
+                angle {spotLightAngle.toFixed(2)}
+                <input
+                  type="range"
+                  min={0.1}
+                  max={1.57}
+                  step={0.01}
+                  value={spotLightAngle}
+                  onChange={(e) => setSpotLightAngle(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                penumbra {spotLightPenumbra.toFixed(2)}
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={spotLightPenumbra}
+                  onChange={(e) => setSpotLightPenumbra(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                X {spotLightPosition[0].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={spotLightPosition[0]}
+                  onChange={(e) =>
+                    setSpotLightPosition([
+                      +e.target.value,
+                      spotLightPosition[1],
+                      spotLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Y {spotLightPosition[1].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={spotLightPosition[1]}
+                  onChange={(e) =>
+                    setSpotLightPosition([
+                      spotLightPosition[0],
+                      +e.target.value,
+                      spotLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Z {spotLightPosition[2].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={spotLightPosition[2]}
+                  onChange={(e) =>
+                    setSpotLightPosition([
+                      spotLightPosition[0],
+                      spotLightPosition[1],
+                      +e.target.value,
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={pointLightEnabled}
+              onChange={(e) => setPointLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Point Light</strong>
+          </label>
+
+          {pointLightEnabled && (
+            <>
+              <label>
+                intensity {pointLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={20}
+                  step={0.1}
+                  value={pointLightIntensity}
+                  onChange={(e) => setPointLightIntensity(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={pointLightColor}
+                  onChange={(e) => setPointLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(pointLightColor)}
+                </code>
+              </label>
+              <label>
+                distance {pointLightDistance.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={10}
+                  step={0.1}
+                  value={pointLightDistance}
+                  onChange={(e) => setPointLightDistance(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                decay {pointLightDecay.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={3}
+                  step={0.1}
+                  value={pointLightDecay}
+                  onChange={(e) => setPointLightDecay(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                X {pointLightPosition[0].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={pointLightPosition[0]}
+                  onChange={(e) =>
+                    setPointLightPosition([
+                      +e.target.value,
+                      pointLightPosition[1],
+                      pointLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Y {pointLightPosition[1].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={pointLightPosition[1]}
+                  onChange={(e) =>
+                    setPointLightPosition([
+                      pointLightPosition[0],
+                      +e.target.value,
+                      pointLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Z {pointLightPosition[2].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={pointLightPosition[2]}
+                  onChange={(e) =>
+                    setPointLightPosition([
+                      pointLightPosition[0],
+                      pointLightPosition[1],
+                      +e.target.value,
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={cycloLightEnabled}
+              onChange={(e) => setCycloLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Cyclorama Light</strong>
+          </label>
+
+          {cycloLightEnabled && (
+            <>
+              <label>
+                intensity {cycloLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={10}
+                  step={0.1}
+                  value={cycloLightIntensity}
+                  onChange={(e) => setCycloLightIntensity(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={cycloLightColor}
+                  onChange={(e) => setCycloLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(cycloLightColor)}
+                </code>
+              </label>
+              <label>
+                X {cycloLightPosition[0].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={cycloLightPosition[0]}
+                  onChange={(e) =>
+                    setCycloLightPosition([
+                      +e.target.value,
+                      cycloLightPosition[1],
+                      cycloLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Y {cycloLightPosition[1].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={cycloLightPosition[1]}
+                  onChange={(e) =>
+                    setCycloLightPosition([
+                      cycloLightPosition[0],
+                      +e.target.value,
+                      cycloLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Z {cycloLightPosition[2].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={cycloLightPosition[2]}
+                  onChange={(e) =>
+                    setCycloLightPosition([
+                      cycloLightPosition[0],
+                      cycloLightPosition[1],
+                      +e.target.value,
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+        </div>
+      )}
+
       <div style={{ position: 'relative', height: '100vh', width: '100vw' }}>
         {bokeh1Enabled && <div style={backdropBokehStyle1} />}
         {bokeh2Enabled && <div style={backdropBokehStyle2} />}
@@ -1109,6 +1884,29 @@ ${
               helpersVisible={helpersVisible}
               orbitEnabled={helpersVisible}
               isPaused={isPaused}
+              ambientLightEnabled={ambientLightEnabled}
+              ambientLightIntensity={ambientLightIntensity}
+              ambientLightColor={ambientLightColor}
+              directionalLightEnabled={directionalLightEnabled}
+              directionalLightIntensity={directionalLightIntensity}
+              directionalLightColor={directionalLightColor}
+              directionalLightPosition={directionalLightPosition}
+              spotLightEnabled={spotLightEnabled}
+              spotLightIntensity={spotLightIntensity}
+              spotLightColor={spotLightColor}
+              spotLightPosition={spotLightPosition}
+              spotLightAngle={spotLightAngle}
+              spotLightPenumbra={spotLightPenumbra}
+              pointLightEnabled={pointLightEnabled}
+              pointLightIntensity={pointLightIntensity}
+              pointLightColor={pointLightColor}
+              pointLightPosition={pointLightPosition}
+              pointLightDistance={pointLightDistance}
+              pointLightDecay={pointLightDecay}
+              cycloLightEnabled={cycloLightEnabled}
+              cycloLightIntensity={cycloLightIntensity}
+              cycloLightColor={cycloLightColor}
+              cycloLightPosition={cycloLightPosition}
             />
           </Canvas>
         </div>

@@ -1,10 +1,16 @@
 // src/app/services/page.tsx
-import { Title } from '@/components/common';
+import { LongArrow, SubTitle, Title } from '@/components/common';
 import {
   ServicesPageCardModule,
   ServicesPageHeroModule,
 } from '@/components/modules';
-import { client, getServicesPage, resolveModuleColors } from '@/lib/sanity';
+import { CaseStudyCarousel } from '@/components/modules/Carousel';
+import {
+  client,
+  getAllCaseStudyTeasers,
+  getServicesPage,
+  resolveModuleColors,
+} from '@/lib/sanity';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -15,11 +21,12 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 60;
+export const revalidate = 30;
 
 export default async function ServicesPage() {
   // Fetch services page data
   const servicesPage = await getServicesPage(client);
+  const allCaseStudies = await getAllCaseStudyTeasers(client);
 
   // Guard: Early return if no page data
   if (!servicesPage) return null;
@@ -49,9 +56,7 @@ export default async function ServicesPage() {
 
       {/* Services Cards */}
       <div id="content-start" className="services-heading">
-        <Title as="h2" variant="tertiary">
-          Services
-        </Title>
+        <SubTitle as="div">Services</SubTitle>
       </div>
       <div className="services-cards">
         {regularCards.map(
@@ -84,18 +89,39 @@ export default async function ServicesPage() {
 
       {/* Chyron Card */}
       {chyronCard && (
-        <section
-          className="module chyron-card"
-          style={
-            {
-              '--module-bg': chyronCard.backgroundColor?.hex,
-              '--module-text': chyronCard.textColor?.hex,
-            } as React.CSSProperties
-          }
-        >
-          <ServicesPageCardModule
-            data={chyronCard as any} // eslint-disable-line @typescript-eslint/no-explicit-any
-            showClientIcons
+        <>
+          <section
+            className="module chyron-card"
+            style={
+              {
+                '--module-bg': chyronCard.backgroundColor?.hex,
+                '--module-text': chyronCard.textColor?.hex,
+              } as React.CSSProperties
+            }
+          >
+            <SubTitle as="div">Clients</SubTitle>
+            <ServicesPageCardModule
+              data={chyronCard as any} // eslint-disable-line @typescript-eslint/no-explicit-any
+              showClientIcons
+            />
+          </section>
+        </>
+      )}
+      {/* Related case studies carousel */}
+
+      {allCaseStudies.length > 0 && (
+        <section className="module case-study-carousel-module">
+          <div className="header">
+            <Title as="h2" variant="tertiary">
+              Case Studies
+            </Title>
+            <LongArrow href="/work" />
+          </div>
+          <CaseStudyCarousel
+            data={{
+              _type: 'caseStudyCarousel',
+              caseStudies: allCaseStudies,
+            }}
           />
         </section>
       )}

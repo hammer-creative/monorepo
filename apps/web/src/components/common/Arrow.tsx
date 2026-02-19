@@ -55,11 +55,7 @@ export function Arrow({ direction = 'right', className, href }: ArrowProps) {
   return svg;
 }
 
-export function LongArrow({
-  direction = 'right',
-  className,
-  href,
-}: ArrowProps) {
+export function LongArrow({ direction = 'down', className, href }: ArrowProps) {
   const svg = (
     <svg
       className={className}
