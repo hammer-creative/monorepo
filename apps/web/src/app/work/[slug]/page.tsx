@@ -9,7 +9,7 @@ import {
   TextModule,
   VideoModule,
 } from '@/components/modules';
-import { CaseStudyCarousel } from '@/components/modules/Carousel/CaseStudyCarousel';
+import { CaseStudyCarousel } from '@/components/modules/Carousel';
 import {
   client,
   getAllCaseStudyTeasers,

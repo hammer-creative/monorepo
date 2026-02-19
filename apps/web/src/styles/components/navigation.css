@@ -11,7 +11,7 @@ footer {
   grid-template-rows: 1fr auto auto auto;
   height: 100%;
   padding-inline: var(--space-fluid-20-40);
-  row-gap: var(--space-fluid-10-20);
+  row-gap: var(--space-fluid-20-60);
 }
 
 footer .footer-content {
@@ -127,7 +127,7 @@ footer .footer-content .menu-primary {
 }
 
 .menu-primary li {
-  line-height: var(--line-height-very-tight);
+  line-height: var(--line-height-default);
 }
 
 .menu-primary li a {

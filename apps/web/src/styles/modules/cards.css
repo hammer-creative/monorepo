@@ -1,5 +1,3 @@
-/* apps/web/src/styles/modules/cards.css */
-
 /* Case Study Card - Base */
 .case-study-card {
   position: relative;
@@ -11,7 +9,6 @@
 .case-study-card .image::after {
   content: '';
   position: absolute;
-  inset: 0;
   background: linear-gradient(
     to bottom,
     transparent 0%,
@@ -28,6 +25,15 @@
 
 .case-study-card:hover .image > * {
   transform: scale(1.05) !important;
+}
+
+.case-study-card .meta {
+  position: absolute;
+  /* inset: 0; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* padding: var(--space-20); */
 }
 
 /* Case Study Grid */
@@ -66,9 +72,9 @@
 .case-study-grid .case-study-card::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  inset: -3px;
   border-radius: inherit;
-  padding: 1px;
+  padding: 3px;
   background: linear-gradient(
     90deg,
     #ffe0b8,
@@ -108,16 +114,6 @@
   }
 }
 
-/* Home page meta overlay */
-.case-study-card .meta {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: var(--space-20);
-}
-
 /* Carousel meta overlay */
 .case-study-carousel-module .case-study-card .meta {
   position: absolute;
@@ -131,7 +127,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: $color-nightshade;
+  padding-inline: var(--space-fluid-20-40);
+  margin-bottom: var(--space-fluid-20-40);
 }
 
 .services-card-module .services-card .content {
@@ -144,14 +141,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-}
-
-.services-card-module .services-card .content .header,
-.services-card-module .services-card .services-list {
-  padding: var(--space-fluid-20-40);
-}
-
-.services-card-module .services-card .content .header .title.primary {
+  padding-inline: var(--space-fluid-20-40);
   margin-block-end: var(--space-fluid-10-20);
 }
 
@@ -159,9 +149,17 @@
   flex: 1;
 }
 
+.services-card-module .services-card .services {
+  background: $color-nightshade;
+}
+
+.services-card-module .services-card .services-list {
+  padding: var(--space-fluid-20-40);
+}
+
+/* Services page overrides */
 [data-page='/services'] .services-card-module .services-card .image {
   aspect-ratio: 1 / 1;
-  height: 50vh;
 }
 
 [data-page='/services'] .services-card-module .services-card .content .wide {
@@ -169,17 +167,33 @@
 }
 
 @media screen and (min-width: 50em) {
-  [data-page='/services'] .services-card-module .services-card .image {
-    aspect-ratio: 16 / 9;
-    height: 50vh;
+  /* Overriding default positioning */
+  .services-card-module .services-card {
+    position: relative;
+  }
+
+  [data-page='/services'] .services-card-module .services-card {
+    .narrow {
+      display: none;
+    }
+    .content .wide {
+      display: block;
+    }
   }
 
   [data-page='/services'] .services-card-module .services-card .content {
     position: absolute;
     inset: 0;
+    margin: var(--space-fluid-20-40);
+  }
+
+  [data-page='/services'] .services-card-module .services-card .content {
     display: flex;
     flex-direction: row;
-    align-items: center;
+  }
+
+  [data-page='/services'] .services-card-module .services-card .content > * {
+    flex: 1 0 33%;
   }
 
   [data-page='/services']
@@ -187,18 +201,50 @@
     .services-card
     .content
     .header {
+    align-self: end;
     position: relative;
-    flex-basis: 60%;
-    align-self: flex-end;
   }
 
-  [data-page='/services'] .services-card-module .services-card .content .wide {
-    display: block;
-    flex: 1;
-    align-self: flex-start;
+  .services-card-module .services-card .services {
+    background: none;
   }
 
-  [data-page='/services'] .services-card-module .services-card .narrow {
-    display: none;
+  [data-page='/services'] .services-card-module .services-card .image {
+    aspect-ratio: 32 / 9;
   }
+
+  [data-page='/services'] .services-card-module .services-card .services-list {
+    padding: 0;
+  }
+
+  /* [data-page='/services'] .services-card-module .services-card .content {
+    position: absolute;
+  } */
+}
+
+/* Chyron card */
+[data-page='/services'] .chyron-card {
+  padding-block-start: var(--space-fluid-20-40);
+  padding-block-end: var(--space-fluid-60-120);
+}
+
+[data-page='/services'] .chyron-card .header {
+  padding-inline: var(--space-fluid-20-40);
+}
+
+[data-page='/services'] .chyron-card .title {
+  margin-bottom: var(--space-fluid-20-40);
+}
+
+[data-page='/services'] .chyron-card .subtitle {
+  padding-inline: var(--space-fluid-20-40);
+  margin-block-end: var(--space-fluid-40-80);
+}
+
+[data-page='/services'] .chyron {
+  margin-block: var(--space-fluid-20-40);
+}
+
+[data-page='/services'] .chyron > * {
+  margin-block: var(--space-fluid-20-40);
 }

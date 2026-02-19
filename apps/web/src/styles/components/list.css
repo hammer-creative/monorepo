@@ -1,32 +1,31 @@
 /* apps/web/src/stylesl/list.css */
 
+.services-card .services-list li,
+.hero-module .services-list li {
+  font-size: var(--font-size-xs-fluid);
+  line-height: var(--line-height-very-loose);
+  list-style: disc;
+}
+
 .services-card .services-list p,
 .hero-module .services-list p {
   color: $color-hyperbeam;
   margin-block-end: var(--space-5);
 }
 
-.services-card .services-list li,
-.hero-module .services-list li {
-  font-size: var(--font-size-xs-fluid);
-  line-height: var(--line-height-very-loose);
+.services-card .services-list ul,
+.hero-module .services-list ul {
+  padding-left: 1.2ch;
+  columns: 1;
 }
 
-.case-study .hero-module .content .meta li {
-  text-indent: -1ch;
-  margin-left: 1ch;
-}
-
-/* Lists */
-.lists {
-  padding: 0;
+.hero-module .lists {
+  gap: calc(1vw + 1ch);
 }
 
 @media screen and (min-width: 50em) {
-  .hero-module .services-list li {
-    /* line-height: var(--line-height-default); */
-  }
   .services-card .services-list ul {
     columns: 2;
+    gap: 3ch;
   }
 }

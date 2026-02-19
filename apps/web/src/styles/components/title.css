@@ -2,7 +2,6 @@
 
 /* Base */
 .title {
-  line-height: var(--line-height-tight);
   white-space: pre-line;
 }
 
@@ -64,7 +63,12 @@
   max-width: 100%;
   width: 100%;
   min-height: 2em;
-  margin-block-end: var(--space-20);
+}
+
+@media screen and (min-width: 50em) {
+  .impact-module .title.tertiary {
+    margin-block-end: var(--space-20);
+  }
 }
 
 /* Module-specific overrides - Case Study Card (home) */
@@ -96,16 +100,6 @@
 }
 
 /* Page specific overrides */
-[data-page='/services'] .services-card-module .title.primary {
-  /* width: 50%; */
-}
-
 .case-study-carousel-module > .title.tertiary {
   font-size: var(--font-size-lg-fluid);
-}
-
-@media screen and (min-width: 50em) {
-  [data-page='/services'] .services-card-module .title.primary {
-    width: 100%;
-  }
 }
