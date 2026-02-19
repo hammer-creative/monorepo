@@ -1,4 +1,5 @@
 // apps/web/src/app/work/[slug]/page.tsx
+import { LongArrow, Title } from '@/components/common';
 import {
   CarouselModule,
   HeroModule,
@@ -8,8 +9,10 @@ import {
   TextModule,
   VideoModule,
 } from '@/components/modules';
+import { CaseStudyCarousel } from '@/components/modules/Carousel';
 import {
   client,
+  getAllCaseStudyTeasers,
   getCaseStudy,
   getCaseStudySlugs,
   resolveModuleColors,
@@ -97,6 +100,11 @@ export default async function CaseStudyPage({
   // Return 404 if case study not found
   if (!caseStudy) notFound();
 
+  // Fetch all case studies for carousel
+  const allCaseStudies = await getAllCaseStudyTeasers(client);
+
+  // Filter out current case study
+  const otherCaseStudies = allCaseStudies.filter((cs) => cs.slug !== slug);
   // Use empty array if no clients (allows incomplete drafts)
   const { clients = [] } = caseStudy;
 
@@ -157,6 +165,25 @@ export default async function CaseStudyPage({
             </section>
           );
         },
+      )}
+
+      {/* Related case studies carousel */}
+      {otherCaseStudies.length > 0 && (
+        <section className="module case-study-carousel-module">
+          <div className="header">
+            <Title as="h2" variant="tertiary">
+              Case Studies
+            </Title>
+            <LongArrow href="/work" />
+          </div>
+
+          <CaseStudyCarousel
+            data={{
+              _type: 'caseStudyCarousel',
+              caseStudies: otherCaseStudies,
+            }}
+          />
+        </section>
       )}
     </article>
   );

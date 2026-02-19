@@ -2,7 +2,7 @@
 'use client';
 
 import {
-  ArrowDown,
+  LongArrow,
   SanityImageHero,
   TextBlock,
   Title,
@@ -74,7 +74,7 @@ export function ServicesPageHeroModule({
           className="scroll-trigger wide"
           aria-label="Scroll to content"
         >
-          <ArrowDown />
+          <LongArrow direction="down" />
         </button>
       )}
 
@@ -92,7 +92,7 @@ export function ServicesPageHeroModule({
                 className="scroll-trigger narrow"
                 aria-label="Scroll to content"
               >
-                <ArrowDown />
+                <LongArrow direction="down" />
               </button>
             )}
           </div>

@@ -24,7 +24,7 @@ const SHOW_PUPIL = true;
 const SHOW_SCLERA = true;
 
 // VIDEO PUPIL PARAMETERS
-const ENABLE_VIDEO_PUPIL = true; // Set to false to use solid color instead of video
+const ENABLE_VIDEO_PUPIL = false; // Set to false to use solid color instead of video
 const PUPIL_COLOR = new THREE.Color(0xffffff); // Pupil color when video is disabled (black by default)
 const PUPIL_Z_POSITION = 0; // How far back the pupil sits (more negative = deeper inside)
 const PUPIL_SCALE = 1; // Pupil size (1.5 = 50% bigger)
@@ -34,18 +34,18 @@ const ENABLE_IRIS_ROTATION = true; // Set to false to disable iris spinning
 const IRIS_ROTATION_SPEED = 0.03; // Iris base spin speed (radians per second)
 const IRIS_ROTATION_SPEED_ON_MOVE = 0.5; // Iris spin speed when mouse is moving (radians per second)
 const IRIS_SPEED_LERP = 0.1; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
-const IRIS_SATURATION = 1.3; // Iris color saturation (1.0 = normal, >1.0 = more saturated)
+const IRIS_SATURATION = 1.5; // Iris color saturation (1.0 = normal, >1.0 = more saturated)
 const IRIS_CONTRAST = 1.2; // Iris contrast (1.0 = normal, >1.0 = more contrast)
 
 // LIGHTING PARAMETERS
-const AMBIENT_LIGHT_INTENSITY = 0.5; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
-const DIRECTIONAL_LIGHT_INTENSITY = 0.5; // Directional light strength (0-2, try 0.3, 0.5, 0.8)
-const DIRECTIONAL_LIGHT_POSITION = [0, 2, 5]; // Light position [x, y, z]
+const AMBIENT_LIGHT_INTENSITY = 2; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
+const DIRECTIONAL_LIGHT_INTENSITY = 1; // Directional light strength (0-2, try 0.3, 0.5, 0.8)
+const DIRECTIONAL_LIGHT_POSITION = [1, 1, 1]; // Light position [x, y, z]
 const TONE_MAPPING_EXPOSURE = 1.0; // Exposure control (0.5 = darker, 1.5 = brighter)
 // ==========================================
 
 const PLAY_BUTTON_Z = 0.14;
-const PLAY_BUTTON_SCALE = 0.025;
+const PLAY_BUTTON_SCALE = 0.01;
 const PLAY_BUTTON_COLOR = '#D4A843';
 
 function PlayButton3D({ onClick, isPlaying }) {
@@ -138,8 +138,23 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
 
   // Log everything in the model
   gltf.scene.traverse((child) => {
-    if (child.name === 'Shadow_Catch') {
-      child.visible = false;
+    if (child.isLight) {
+      console.log('LIGHT FOUND:', child.type, child);
+      child.visible = false; // Disable baked lights
+    }
+    // if (child.name === 'Shadow_Catch') {
+    //   child.visible = false;
+    // }
+
+    if (child.isMesh) {
+      console.log('Mesh name:', child.name);
+      console.log('Material type:', child.material.type);
+      console.log('Material:', child.material);
+      console.log('---');
+    }
+
+    if (child.isLight) {
+      console.log('LIGHT FOUND:', child.type, child);
     }
 
     // @ts-ignore
@@ -320,18 +335,152 @@ const SceneContent = ({
   helpersVisible,
   orbitEnabled,
   isPaused,
-}: {
-  helpersVisible: boolean;
-  orbitEnabled: boolean;
-  isPaused: boolean;
+  ambientLightEnabled,
+  ambientLightIntensity,
+  ambientLightColor,
+  directionalLightEnabled,
+  directionalLightIntensity,
+  directionalLightColor,
+  directionalLightPosition,
+  spotLightEnabled,
+  spotLightIntensity,
+  spotLightColor,
+  spotLightPosition,
+  spotLightAngle,
+  spotLightPenumbra,
+  pointLightEnabled,
+  pointLightIntensity,
+  pointLightColor,
+  pointLightPosition,
+  pointLightDistance,
+  pointLightDecay,
+  cycloLightEnabled,
+  cycloLightIntensity,
+  cycloLightColor,
+  cycloLightPosition,
 }) => {
+  const spotLightRef = useRef();
+  const spotLightTargetRef = useRef();
+
+  useEffect(() => {
+    if (spotLightRef.current && spotLightTargetRef.current) {
+      spotLightRef.current.target = spotLightTargetRef.current;
+    }
+  }, []);
+
   return (
     <>
-      <ambientLight intensity={AMBIENT_LIGHT_INTENSITY} />
-      <directionalLight
-        position={DIRECTIONAL_LIGHT_POSITION}
-        intensity={DIRECTIONAL_LIGHT_INTENSITY}
-      />
+      {helpersVisible && (
+        <>
+          <axesHelper args={[1]} />
+          <gridHelper args={[10, 10]} />
+        </>
+      )}
+
+      {ambientLightEnabled && (
+        <ambientLight
+          intensity={ambientLightIntensity}
+          color={ambientLightColor}
+        />
+      )}
+
+      {directionalLightEnabled && (
+        <>
+          <directionalLight
+            position={directionalLightPosition}
+            intensity={directionalLightIntensity}
+            color={directionalLightColor}
+          />
+          {helpersVisible && (
+            <mesh position={directionalLightPosition}>
+              <sphereGeometry args={[0.05, 16, 16]} />
+              <meshBasicMaterial color={directionalLightColor} />
+            </mesh>
+          )}
+        </>
+      )}
+
+      {spotLightEnabled && (
+        <>
+          <object3D ref={spotLightTargetRef} position={[0, 0, 0]} />
+          <spotLight
+            ref={spotLightRef}
+            position={spotLightPosition}
+            intensity={spotLightIntensity}
+            color={spotLightColor}
+            angle={spotLightAngle}
+            penumbra={spotLightPenumbra}
+          />
+          {helpersVisible && (
+            <>
+              <mesh position={spotLightPosition}>
+                <coneGeometry args={[0.05, 0.2, 8]} />
+                <meshBasicMaterial color={spotLightColor} />
+              </mesh>
+              <line>
+                <bufferGeometry attach="geometry">
+                  <bufferAttribute
+                    attach="attributes-position"
+                    count={2}
+                    array={
+                      new Float32Array([
+                        spotLightPosition[0],
+                        spotLightPosition[1],
+                        spotLightPosition[2],
+                        0,
+                        0,
+                        0,
+                      ])
+                    }
+                    itemSize={3}
+                  />
+                </bufferGeometry>
+                <lineBasicMaterial
+                  attach="material"
+                  color={spotLightColor}
+                  opacity={0.5}
+                  transparent
+                />
+              </line>
+            </>
+          )}
+        </>
+      )}
+
+      {pointLightEnabled && (
+        <>
+          <pointLight
+            position={pointLightPosition}
+            intensity={pointLightIntensity}
+            color={pointLightColor}
+            distance={pointLightDistance}
+            decay={pointLightDecay}
+          />
+          {helpersVisible && (
+            <mesh position={pointLightPosition}>
+              <sphereGeometry args={[0.05, 16, 16]} />
+              <meshBasicMaterial color={pointLightColor} />
+            </mesh>
+          )}
+        </>
+      )}
+
+      {cycloLightEnabled && (
+        <>
+          <pointLight
+            position={cycloLightPosition}
+            intensity={cycloLightIntensity}
+            color={cycloLightColor}
+          />
+          {helpersVisible && (
+            <mesh position={cycloLightPosition}>
+              <sphereGeometry args={[0.05, 16, 16]} />
+              <meshBasicMaterial color={cycloLightColor} />
+            </mesh>
+          )}
+        </>
+      )}
+
       <Suspense fallback={null}>
         <Model url="/model/model-v7-compressed.glb" isPaused={isPaused} />
       </Suspense>
@@ -347,8 +496,78 @@ const SceneContent = ({
 export default function Scene() {
   const [helpersVisible, setHelpersVisible] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [panelVisible, setPanelVisible] = useState(true);
+  const [lightingPanelVisible, setLightingPanelVisible] = useState(false);
 
-  // Pause Three.js rendering during scroll
+  const [maskEnabled, setMaskEnabled] = useState(true);
+  const [maskStart, setMaskStart] = useState(50);
+  const [maskEnd, setMaskEnd] = useState(71);
+  const [maskDiameter, setMaskDiameter] = useState(50);
+
+  // Backdrop bokeh 1 controls
+  const [bokeh1Enabled, setBokeh1Enabled] = useState(true);
+  const [backdropSize1, setBackdropSize1] = useState(59);
+  const [backdropBlur1, setBackdropBlur1] = useState(66);
+  const [backdropOpacity1, setBackdropOpacity1] = useState(1.0);
+  const [backdropColor1_1, setBackdropColor1_1] = useState('#c8d5d9');
+  const [backdropColor1_2, setBackdropColor1_2] = useState('#000000');
+  const [backdropGradientStart1, setBackdropGradientStart1] = useState(0);
+  const [backdropGradientEnd1, setBackdropGradientEnd1] = useState(0);
+
+  // Backdrop bokeh 2 controls
+  const [bokeh2Enabled, setBokeh2Enabled] = useState(true);
+  const [backdropSize2, setBackdropSize2] = useState(70);
+  const [backdropBlur2, setBackdropBlur2] = useState(98);
+  const [backdropOpacity2, setBackdropOpacity2] = useState(0.8);
+  const [backdropColor2_1, setBackdropColor2_1] = useState('#ffffff');
+  const [backdropColor2_2, setBackdropColor2_2] = useState('#666666');
+  const [backdropGradientStart2, setBackdropGradientStart2] = useState(0);
+  const [backdropGradientEnd2, setBackdropGradientEnd2] = useState(100);
+
+  // Bottom to top linear gradient
+  const [linearGradientEnabled, setLinearGradientEnabled] = useState(true);
+  const [linearGradientColor, setLinearGradientColor] = useState('#000000');
+  const [linearGradientOpacity, setLinearGradientOpacity] = useState(0.6);
+  const [linearGradientHeight, setLinearGradientHeight] = useState(50);
+
+  // Lighting controls
+  const [ambientLightEnabled, setAmbientLightEnabled] = useState(true);
+  const [ambientLightIntensity, setAmbientLightIntensity] = useState(
+    AMBIENT_LIGHT_INTENSITY,
+  );
+  const [ambientLightColor, setAmbientLightColor] = useState('#ffffff');
+
+  const [directionalLightEnabled, setDirectionalLightEnabled] = useState(true);
+  const [directionalLightIntensity, setDirectionalLightIntensity] = useState(
+    DIRECTIONAL_LIGHT_INTENSITY,
+  );
+  const [directionalLightColor, setDirectionalLightColor] = useState('#ffffff');
+  const [directionalLightPosition, setDirectionalLightPosition] = useState(
+    DIRECTIONAL_LIGHT_POSITION,
+  );
+
+  const [spotLightEnabled, setSpotLightEnabled] = useState(false);
+  const [spotLightIntensity, setSpotLightIntensity] = useState(1.0);
+  const [spotLightColor, setSpotLightColor] = useState('#ffffff');
+  const [spotLightPosition, setSpotLightPosition] = useState([0.5, 0.5, 1]);
+  const [spotLightAngle, setSpotLightAngle] = useState(0.5);
+  const [spotLightPenumbra, setSpotLightPenumbra] = useState(0.5);
+
+  const [pointLightEnabled, setPointLightEnabled] = useState(false);
+  const [pointLightIntensity, setPointLightIntensity] = useState(1.0);
+  const [pointLightColor, setPointLightColor] = useState('#ffffff');
+  const [pointLightPosition, setPointLightPosition] = useState([0.3, 0.3, 0.5]);
+  const [pointLightDistance, setPointLightDistance] = useState(0);
+  const [pointLightDecay, setPointLightDecay] = useState(2);
+
+  const [cycloLightEnabled, setCycloLightEnabled] = useState(false);
+  const [cycloLightIntensity, setCycloLightIntensity] = useState(1.0);
+  const [cycloLightColor, setCycloLightColor] = useState('#4a9eff');
+  const [cycloLightPosition, setCycloLightPosition] = useState([0, -2, -3]);
+
+  const [presets, setPresets] = useState([]);
+  const [presetCounter, setPresetCounter] = useState(1);
+
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout;
 
@@ -365,40 +584,1333 @@ export default function Scene() {
     };
   }, []);
 
+  useEffect(() => {
+    const saved = localStorage.getItem('bokeh-presets');
+    const savedCounter = localStorage.getItem('bokeh-preset-counter');
+    if (saved) {
+      setPresets(JSON.parse(saved));
+    }
+    if (savedCounter) {
+      setPresetCounter(parseInt(savedCounter));
+    }
+  }, []);
+
+  const hexToRgba = (hex) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, 1)`;
+  };
+
+  const removeAll = () => {
+    setMaskEnabled(false);
+    setBokeh1Enabled(false);
+    setBokeh2Enabled(false);
+    setLinearGradientEnabled(false);
+  };
+
+  const savePreset = () => {
+    const preset = {
+      name: `preset-${String(presetCounter).padStart(3, '0')}`,
+      maskEnabled,
+      maskStart,
+      maskEnd,
+      maskDiameter,
+      bokeh1Enabled,
+      backdropSize1,
+      backdropBlur1,
+      backdropOpacity1,
+      backdropColor1_1,
+      backdropColor1_2,
+      backdropGradientStart1,
+      backdropGradientEnd1,
+      bokeh2Enabled,
+      backdropSize2,
+      backdropBlur2,
+      backdropOpacity2,
+      backdropColor2_1,
+      backdropColor2_2,
+      backdropGradientStart2,
+      backdropGradientEnd2,
+      linearGradientEnabled,
+      linearGradientColor,
+      linearGradientOpacity,
+      linearGradientHeight,
+    };
+    const newPresets = [...presets, preset];
+    const newCounter = presetCounter + 1;
+    setPresets(newPresets);
+    setPresetCounter(newCounter);
+    localStorage.setItem('bokeh-presets', JSON.stringify(newPresets));
+    localStorage.setItem('bokeh-preset-counter', String(newCounter));
+  };
+
+  const loadPreset = (preset) => {
+    setMaskEnabled(preset.maskEnabled);
+    setMaskStart(preset.maskStart);
+    setMaskEnd(preset.maskEnd);
+    setMaskDiameter(preset.maskDiameter);
+    setBokeh1Enabled(preset.bokeh1Enabled);
+    setBackdropSize1(preset.backdropSize1);
+    setBackdropBlur1(preset.backdropBlur1);
+    setBackdropOpacity1(preset.backdropOpacity1);
+    setBackdropColor1_1(preset.backdropColor1_1);
+    setBackdropColor1_2(preset.backdropColor1_2);
+    setBackdropGradientStart1(preset.backdropGradientStart1);
+    setBackdropGradientEnd1(preset.backdropGradientEnd1);
+    setBokeh2Enabled(preset.bokeh2Enabled);
+    setBackdropSize2(preset.backdropSize2);
+    setBackdropBlur2(preset.backdropBlur2);
+    setBackdropOpacity2(preset.backdropOpacity2);
+    setBackdropColor2_1(preset.backdropColor2_1);
+    setBackdropColor2_2(preset.backdropColor2_2);
+    setBackdropGradientStart2(preset.backdropGradientStart2);
+    setBackdropGradientEnd2(preset.backdropGradientEnd2);
+    setLinearGradientEnabled(preset.linearGradientEnabled);
+    setLinearGradientColor(preset.linearGradientColor);
+    setLinearGradientOpacity(preset.linearGradientOpacity);
+    setLinearGradientHeight(preset.linearGradientHeight);
+  };
+
+  const deletePreset = (index) => {
+    const newPresets = presets.filter((_, i) => i !== index);
+    setPresets(newPresets);
+    localStorage.setItem('bokeh-presets', JSON.stringify(newPresets));
+  };
+
+  const copyToClipboard = () => {
+    const css = `
+${
+  maskEnabled
+    ? `/* Mask */
+mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
+-webkit-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
+mask-size: ${maskDiameter}vh ${maskDiameter}vh;
+-webkit-mask-size: ${maskDiameter}vh ${maskDiameter}vh;
+mask-position: center;
+-webkit-mask-position: center;
+mask-repeat: no-repeat;
+-webkit-mask-repeat: no-repeat;
+`
+    : ''
+}
+${
+  bokeh1Enabled
+    ? `/* Backdrop Bokeh 1 */
+.bokeh-1 {
+  position: absolute;
+  width: min(${backdropSize1}vw, ${backdropSize1}vh);
+  height: min(${backdropSize1}vw, ${backdropSize1}vh);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, ${backdropColor1_1} ${backdropGradientStart1}%, ${backdropColor1_2} ${backdropGradientEnd1}%);
+  opacity: ${backdropOpacity1};
+  filter: blur(${backdropBlur1}px);
+  pointer-events: none;
+  z-index: 1;
+}
+`
+    : ''
+}
+${
+  bokeh2Enabled
+    ? `/* Backdrop Bokeh 2 */
+.bokeh-2 {
+  position: absolute;
+  width: min(${backdropSize2}vw, ${backdropSize2}vh);
+  height: min(${backdropSize2}vw, ${backdropSize2}vh);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, ${backdropColor2_1} ${backdropGradientStart2}%, ${backdropColor2_2} ${backdropGradientEnd2}%);
+  opacity: ${backdropOpacity2};
+  filter: blur(${backdropBlur2}px);
+  pointer-events: none;
+  z-index: 2;
+}
+`
+    : ''
+}
+${
+  linearGradientEnabled
+    ? `/* Linear Gradient */
+.linear-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: ${linearGradientHeight}%;
+  background: linear-gradient(to top, ${linearGradientColor}, transparent);
+  opacity: ${linearGradientOpacity};
+  pointer-events: none;
+  z-index: 3;
+}
+`
+    : ''
+}`;
+
+    navigator.clipboard.writeText(css.trim());
+    alert('CSS copied to clipboard!');
+  };
+
+  const maskStyle = maskEnabled
+    ? {
+        maskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
+        WebkitMaskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
+        maskSize: `${maskDiameter}vh ${maskDiameter}vh`,
+        WebkitMaskSize: `${maskDiameter}vh ${maskDiameter}vh`,
+        maskPosition: 'center',
+        WebkitMaskPosition: 'center',
+        maskRepeat: 'no-repeat',
+        WebkitMaskRepeat: 'no-repeat',
+      }
+    : {};
+
+  const backdropBokehStyle1 = {
+    position: 'absolute' as const,
+    width: `min(${backdropSize1}vw, ${backdropSize1}vh)`,
+    height: `min(${backdropSize1}vw, ${backdropSize1}vh)`,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    borderRadius: '50%',
+    background: `radial-gradient(circle, ${backdropColor1_1} ${backdropGradientStart1}%, ${backdropColor1_2} ${backdropGradientEnd1}%)`,
+    opacity: backdropOpacity1,
+    filter: `blur(${backdropBlur1}px)`,
+    pointerEvents: 'none' as const,
+    zIndex: 1,
+  };
+
+  const backdropBokehStyle2 = {
+    position: 'absolute' as const,
+    width: `min(${backdropSize2}vw, ${backdropSize2}vh)`,
+    height: `min(${backdropSize2}vw, ${backdropSize2}vh)`,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    borderRadius: '50%',
+    background: `radial-gradient(circle, ${backdropColor2_1} ${backdropGradientStart2}%, ${backdropColor2_2} ${backdropGradientEnd2}%)`,
+    opacity: backdropOpacity2,
+    filter: `blur(${backdropBlur2}px)`,
+    pointerEvents: 'none' as const,
+    zIndex: 2,
+  };
+
+  const linearGradientStyle = {
+    position: 'absolute' as const,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: `${linearGradientHeight}%`,
+    background: `linear-gradient(to top, ${linearGradientColor}, transparent)`,
+    opacity: linearGradientOpacity,
+    pointerEvents: 'none' as const,
+    zIndex: 3,
+  };
+
   return (
-    <div className="model">
-      {/* <button
+    <>
+      <button
+        onClick={() => setPanelVisible(!panelVisible)}
+        style={{
+          position: 'absolute',
+          top: 10,
+          left: 10,
+          zIndex: 1001,
+          padding: '8px 12px',
+          background: '#333',
+          color: '#fff',
+          border: 'none',
+          borderRadius: 4,
+          cursor: 'pointer',
+          fontFamily: 'monospace',
+        }}
+      >
+        {panelVisible ? 'Hide' : 'Show'} Panel
+      </button>
+
+      <button
         onClick={() => setHelpersVisible(!helpersVisible)}
         style={{
           position: 'absolute',
           top: 10,
           right: 10,
-          zIndex: 1000,
-          padding: '10px 20px',
+          zIndex: 1001,
+          padding: '8px 12px',
           background: helpersVisible ? '#4a4' : '#444',
           color: helpersVisible ? '#000' : '#fff',
           border: 'none',
-          borderRadius: 5,
+          borderRadius: 4,
           cursor: 'pointer',
           fontFamily: 'monospace',
         }}
       >
-        Helpers/Orbit: {helpersVisible ? 'ON' : 'OFF'}
-      </button> */}
+        Helpers: {helpersVisible ? 'ON' : 'OFF'}
+      </button>
 
-      <Canvas
-        camera={{ position: [0, 0, 0.4], fov: 50 }}
-        gl={{
-          toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: TONE_MAPPING_EXPOSURE,
+      <button
+        onClick={() => setLightingPanelVisible(!lightingPanelVisible)}
+        style={{
+          position: 'absolute',
+          top: 50,
+          left: 10,
+          zIndex: 1001,
+          padding: '8px 12px',
+          background: '#555',
+          color: '#fff',
+          border: 'none',
+          borderRadius: 4,
+          cursor: 'pointer',
+          fontFamily: 'monospace',
         }}
       >
-        <SceneContent
-          helpersVisible={helpersVisible}
-          orbitEnabled={helpersVisible}
-          isPaused={isPaused}
-        />
-      </Canvas>
-    </div>
+        {lightingPanelVisible ? 'Hide' : 'Show'} Lighting
+      </button>
+
+      {panelVisible && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 90,
+            left: 10,
+            zIndex: 1000,
+            background: 'rgba(0,0,0,0.7)',
+            color: '#fff',
+            padding: '10px 14px',
+            borderRadius: 8,
+            fontFamily: 'monospace',
+            fontSize: 12,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8,
+            pointerEvents: 'all',
+            maxHeight: '85vh',
+            overflowY: 'auto',
+          }}
+        >
+          <button
+            onClick={copyToClipboard}
+            style={{
+              padding: '8px 12px',
+              background: '#4a9eff',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
+              fontFamily: 'monospace',
+              fontWeight: 'bold',
+            }}
+          >
+            Copy Source
+          </button>
+
+          <button
+            onClick={savePreset}
+            style={{
+              padding: '8px 12px',
+              background: '#4a9e4a',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
+              fontFamily: 'monospace',
+              fontWeight: 'bold',
+            }}
+          >
+            Save Preset
+          </button>
+
+          {presets.length > 0 && (
+            <>
+              <hr
+                style={{
+                  width: '100%',
+                  border: 'none',
+                  borderTop: '1px solid rgba(255,255,255,0.2)',
+                }}
+              />
+              <strong>Presets</strong>
+              {presets.map((preset, i) => (
+                <div key={i} style={{ display: 'flex', gap: 8 }}>
+                  <button
+                    onClick={() => loadPreset(preset)}
+                    style={{
+                      flex: 1,
+                      padding: '6px 10px',
+                      background: '#555',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 4,
+                      cursor: 'pointer',
+                      fontFamily: 'monospace',
+                    }}
+                  >
+                    {preset.name}
+                  </button>
+                  <button
+                    onClick={() => deletePreset(i)}
+                    style={{
+                      padding: '6px 10px',
+                      background: '#a44',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 4,
+                      cursor: 'pointer',
+                      fontFamily: 'monospace',
+                    }}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={maskEnabled}
+              onChange={(e) => setMaskEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Mask</strong>
+          </label>
+
+          {maskEnabled && (
+            <>
+              <label>
+                diameter {maskDiameter}%
+                <input
+                  type="range"
+                  min={10}
+                  max={100}
+                  value={maskDiameter}
+                  onChange={(e) => setMaskDiameter(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                start {maskStart}%
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={maskStart}
+                  onChange={(e) => setMaskStart(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                feather {maskEnd}%
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={maskEnd}
+                  onChange={(e) => setMaskEnd(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={bokeh1Enabled}
+              onChange={(e) => setBokeh1Enabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Backdrop Bokeh 1</strong>
+          </label>
+
+          {bokeh1Enabled && (
+            <>
+              <label>
+                size {backdropSize1}
+                <input
+                  type="range"
+                  min={10}
+                  max={200}
+                  value={backdropSize1}
+                  onChange={(e) => setBackdropSize1(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                blur {backdropBlur1}px
+                <input
+                  type="range"
+                  min={0}
+                  max={200}
+                  value={backdropBlur1}
+                  onChange={(e) => setBackdropBlur1(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                opacity {backdropOpacity1.toFixed(2)}
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={backdropOpacity1}
+                  onChange={(e) => setBackdropOpacity1(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                color 1
+                <input
+                  type="color"
+                  value={backdropColor1_1}
+                  onChange={(e) => setBackdropColor1_1(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(backdropColor1_1)}
+                </code>
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                color 2
+                <input
+                  type="color"
+                  value={backdropColor1_2}
+                  onChange={(e) => setBackdropColor1_2(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(backdropColor1_2)}
+                </code>
+              </label>
+              <label>
+                gradient start {backdropGradientStart1}%
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={backdropGradientStart1}
+                  onChange={(e) => setBackdropGradientStart1(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                gradient end {backdropGradientEnd1}%
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={backdropGradientEnd1}
+                  onChange={(e) => setBackdropGradientEnd1(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={bokeh2Enabled}
+              onChange={(e) => setBokeh2Enabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Backdrop Bokeh 2</strong>
+          </label>
+
+          {bokeh2Enabled && (
+            <>
+              <label>
+                size {backdropSize2}
+                <input
+                  type="range"
+                  min={10}
+                  max={200}
+                  value={backdropSize2}
+                  onChange={(e) => setBackdropSize2(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                blur {backdropBlur2}px
+                <input
+                  type="range"
+                  min={0}
+                  max={200}
+                  value={backdropBlur2}
+                  onChange={(e) => setBackdropBlur2(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                opacity {backdropOpacity2.toFixed(2)}
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={backdropOpacity2}
+                  onChange={(e) => setBackdropOpacity2(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                color 1
+                <input
+                  type="color"
+                  value={backdropColor2_1}
+                  onChange={(e) => setBackdropColor2_1(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(backdropColor2_1)}
+                </code>
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                color 2
+                <input
+                  type="color"
+                  value={backdropColor2_2}
+                  onChange={(e) => setBackdropColor2_2(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(backdropColor2_2)}
+                </code>
+              </label>
+              <label>
+                gradient start {backdropGradientStart2}%
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={backdropGradientStart2}
+                  onChange={(e) => setBackdropGradientStart2(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                gradient end {backdropGradientEnd2}%
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={backdropGradientEnd2}
+                  onChange={(e) => setBackdropGradientEnd2(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={linearGradientEnabled}
+              onChange={(e) => setLinearGradientEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Bottom Fade</strong>
+          </label>
+
+          {linearGradientEnabled && (
+            <>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                color
+                <input
+                  type="color"
+                  value={linearGradientColor}
+                  onChange={(e) => setLinearGradientColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(linearGradientColor)}
+                </code>
+              </label>
+              <label>
+                height {linearGradientHeight}%
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={linearGradientHeight}
+                  onChange={(e) => setLinearGradientHeight(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                opacity {linearGradientOpacity.toFixed(2)}
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={linearGradientOpacity}
+                  onChange={(e) => setLinearGradientOpacity(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <button
+            onClick={removeAll}
+            style={{
+              padding: '8px 12px',
+              background: '#a44',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
+              fontFamily: 'monospace',
+              fontWeight: 'bold',
+            }}
+          >
+            Remove All Effects
+          </button>
+        </div>
+      )}
+
+      {lightingPanelVisible && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 90,
+            right: 10,
+            zIndex: 1000,
+            background: 'rgba(0,0,0,0.7)',
+            color: '#fff',
+            padding: '10px 14px',
+            borderRadius: 8,
+            fontFamily: 'monospace',
+            fontSize: 12,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8,
+            pointerEvents: 'all',
+            maxHeight: '85vh',
+            overflowY: 'auto',
+            width: 220,
+          }}
+        >
+          <strong>Lighting Controls</strong>
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={ambientLightEnabled}
+              onChange={(e) => setAmbientLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Ambient Light</strong>
+          </label>
+
+          {ambientLightEnabled && (
+            <>
+              <label>
+                intensity {ambientLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={5}
+                  step={0.1}
+                  value={ambientLightIntensity}
+                  onChange={(e) => setAmbientLightIntensity(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={ambientLightColor}
+                  onChange={(e) => setAmbientLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(ambientLightColor)}
+                </code>
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={directionalLightEnabled}
+              onChange={(e) => setDirectionalLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Directional Light</strong>
+          </label>
+
+          {directionalLightEnabled && (
+            <>
+              <label>
+                intensity {directionalLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={5}
+                  step={0.1}
+                  value={directionalLightIntensity}
+                  onChange={(e) =>
+                    setDirectionalLightIntensity(+e.target.value)
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={directionalLightColor}
+                  onChange={(e) => setDirectionalLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(directionalLightColor)}
+                </code>
+              </label>
+              <label>
+                X {directionalLightPosition[0].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={directionalLightPosition[0]}
+                  onChange={(e) =>
+                    setDirectionalLightPosition([
+                      +e.target.value,
+                      directionalLightPosition[1],
+                      directionalLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Y {directionalLightPosition[1].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={directionalLightPosition[1]}
+                  onChange={(e) =>
+                    setDirectionalLightPosition([
+                      directionalLightPosition[0],
+                      +e.target.value,
+                      directionalLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Z {directionalLightPosition[2].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={directionalLightPosition[2]}
+                  onChange={(e) =>
+                    setDirectionalLightPosition([
+                      directionalLightPosition[0],
+                      directionalLightPosition[1],
+                      +e.target.value,
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={spotLightEnabled}
+              onChange={(e) => setSpotLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Spot Light</strong>
+          </label>
+
+          {spotLightEnabled && (
+            <>
+              <label>
+                intensity {spotLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={20}
+                  step={0.1}
+                  value={spotLightIntensity}
+                  onChange={(e) => setSpotLightIntensity(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={spotLightColor}
+                  onChange={(e) => setSpotLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(spotLightColor)}
+                </code>
+              </label>
+              <label>
+                angle {spotLightAngle.toFixed(2)}
+                <input
+                  type="range"
+                  min={0.1}
+                  max={1.57}
+                  step={0.01}
+                  value={spotLightAngle}
+                  onChange={(e) => setSpotLightAngle(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                penumbra {spotLightPenumbra.toFixed(2)}
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={spotLightPenumbra}
+                  onChange={(e) => setSpotLightPenumbra(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                X {spotLightPosition[0].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={spotLightPosition[0]}
+                  onChange={(e) =>
+                    setSpotLightPosition([
+                      +e.target.value,
+                      spotLightPosition[1],
+                      spotLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Y {spotLightPosition[1].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={spotLightPosition[1]}
+                  onChange={(e) =>
+                    setSpotLightPosition([
+                      spotLightPosition[0],
+                      +e.target.value,
+                      spotLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Z {spotLightPosition[2].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={spotLightPosition[2]}
+                  onChange={(e) =>
+                    setSpotLightPosition([
+                      spotLightPosition[0],
+                      spotLightPosition[1],
+                      +e.target.value,
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={pointLightEnabled}
+              onChange={(e) => setPointLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Point Light</strong>
+          </label>
+
+          {pointLightEnabled && (
+            <>
+              <label>
+                intensity {pointLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={20}
+                  step={0.1}
+                  value={pointLightIntensity}
+                  onChange={(e) => setPointLightIntensity(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={pointLightColor}
+                  onChange={(e) => setPointLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(pointLightColor)}
+                </code>
+              </label>
+              <label>
+                distance {pointLightDistance.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={10}
+                  step={0.1}
+                  value={pointLightDistance}
+                  onChange={(e) => setPointLightDistance(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                decay {pointLightDecay.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={3}
+                  step={0.1}
+                  value={pointLightDecay}
+                  onChange={(e) => setPointLightDecay(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                X {pointLightPosition[0].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={pointLightPosition[0]}
+                  onChange={(e) =>
+                    setPointLightPosition([
+                      +e.target.value,
+                      pointLightPosition[1],
+                      pointLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Y {pointLightPosition[1].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={pointLightPosition[1]}
+                  onChange={(e) =>
+                    setPointLightPosition([
+                      pointLightPosition[0],
+                      +e.target.value,
+                      pointLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Z {pointLightPosition[2].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={pointLightPosition[2]}
+                  onChange={(e) =>
+                    setPointLightPosition([
+                      pointLightPosition[0],
+                      pointLightPosition[1],
+                      +e.target.value,
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+
+          <hr
+            style={{
+              width: '100%',
+              border: 'none',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+            }}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={cycloLightEnabled}
+              onChange={(e) => setCycloLightEnabled(e.target.checked)}
+              style={{ marginRight: 8 }}
+            />
+            <strong>Cyclorama Light</strong>
+          </label>
+
+          {cycloLightEnabled && (
+            <>
+              <label>
+                intensity {cycloLightIntensity.toFixed(1)}
+                <input
+                  type="range"
+                  min={0}
+                  max={10}
+                  step={0.1}
+                  value={cycloLightIntensity}
+                  onChange={(e) => setCycloLightIntensity(+e.target.value)}
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                }}
+              >
+                color
+                <input
+                  type="color"
+                  value={cycloLightColor}
+                  onChange={(e) => setCycloLightColor(e.target.value)}
+                />
+                <code style={{ fontSize: 10 }}>
+                  {hexToRgba(cycloLightColor)}
+                </code>
+              </label>
+              <label>
+                X {cycloLightPosition[0].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={cycloLightPosition[0]}
+                  onChange={(e) =>
+                    setCycloLightPosition([
+                      +e.target.value,
+                      cycloLightPosition[1],
+                      cycloLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Y {cycloLightPosition[1].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={cycloLightPosition[1]}
+                  onChange={(e) =>
+                    setCycloLightPosition([
+                      cycloLightPosition[0],
+                      +e.target.value,
+                      cycloLightPosition[2],
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+              <label>
+                Z {cycloLightPosition[2].toFixed(1)}
+                <input
+                  type="range"
+                  min={-5}
+                  max={5}
+                  step={0.1}
+                  value={cycloLightPosition[2]}
+                  onChange={(e) =>
+                    setCycloLightPosition([
+                      cycloLightPosition[0],
+                      cycloLightPosition[1],
+                      +e.target.value,
+                    ])
+                  }
+                  style={{ width: 120, marginLeft: 8 }}
+                />
+              </label>
+            </>
+          )}
+        </div>
+      )}
+
+      <div style={{ position: 'relative', height: '100vh', width: '100vw' }}>
+        {bokeh1Enabled && <div style={backdropBokehStyle1} />}
+        {bokeh2Enabled && <div style={backdropBokehStyle2} />}
+        {linearGradientEnabled && <div style={linearGradientStyle} />}
+
+        <div
+          className="model"
+          style={{
+            ...maskStyle,
+            position: 'relative',
+            zIndex: 10,
+            height: '100%',
+            width: '100%',
+          }}
+        >
+          <Canvas
+            camera={{ position: [0, 0, 0.4], fov: 50 }}
+            gl={{
+              toneMapping: THREE.ACESFilmicToneMapping,
+              toneMappingExposure: TONE_MAPPING_EXPOSURE,
+              alpha: true,
+            }}
+          >
+            <SceneContent
+              helpersVisible={helpersVisible}
+              orbitEnabled={helpersVisible}
+              isPaused={isPaused}
+              ambientLightEnabled={ambientLightEnabled}
+              ambientLightIntensity={ambientLightIntensity}
+              ambientLightColor={ambientLightColor}
+              directionalLightEnabled={directionalLightEnabled}
+              directionalLightIntensity={directionalLightIntensity}
+              directionalLightColor={directionalLightColor}
+              directionalLightPosition={directionalLightPosition}
+              spotLightEnabled={spotLightEnabled}
+              spotLightIntensity={spotLightIntensity}
+              spotLightColor={spotLightColor}
+              spotLightPosition={spotLightPosition}
+              spotLightAngle={spotLightAngle}
+              spotLightPenumbra={spotLightPenumbra}
+              pointLightEnabled={pointLightEnabled}
+              pointLightIntensity={pointLightIntensity}
+              pointLightColor={pointLightColor}
+              pointLightPosition={pointLightPosition}
+              pointLightDistance={pointLightDistance}
+              pointLightDecay={pointLightDecay}
+              cycloLightEnabled={cycloLightEnabled}
+              cycloLightIntensity={cycloLightIntensity}
+              cycloLightColor={cycloLightColor}
+              cycloLightPosition={cycloLightPosition}
+            />
+          </Canvas>
+        </div>
+      </div>
+    </>
   );
 }

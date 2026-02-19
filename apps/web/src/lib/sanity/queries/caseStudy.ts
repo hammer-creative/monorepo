@@ -1,6 +1,10 @@
-// apps/web/src/lib/sanity/queries/caseStudy.ts
-import { caseStudyProjection } from '@/lib/sanity/groq';
+// queries/caseStudy.ts
+import {
+  caseStudyProjection,
+  caseStudyTeaserProjection,
+} from '@/lib/sanity/groq';
 import { fetchAll, fetchOne, fetchSlugs } from '@/lib/sanity/groq/helpers';
+import type { CaseStudyTeaserItem } from '@/types/caseStudy';
 import type { CaseStudy } from '@/types/sanity.generated';
 import type { SanityClient } from 'next-sanity';
 
@@ -16,12 +20,12 @@ export async function getCaseStudy(
   );
 }
 
-export async function getAllCaseStudies(
+export async function getAllCaseStudyTeasers(
   sanityClient?: SanityClient,
-): Promise<CaseStudy[]> {
-  return fetchAll<CaseStudy>(
+): Promise<CaseStudyTeaserItem[]> {
+  return fetchAll<CaseStudyTeaserItem>(
     'caseStudy',
-    caseStudyProjection,
+    caseStudyTeaserProjection,
     '| order(_createdAt desc)',
     sanityClient,
   );

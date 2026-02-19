@@ -261,7 +261,25 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     async (href: string) => {
       if (isNavigatingRef.current) return;
 
-      // If clicking current page, just close the menu normally
+      // External links - open manually and close menu
+      const isExternal = href.startsWith('http') || href.startsWith('//');
+      const isMailto = href.startsWith('mailto:');
+
+      if (isMailto) {
+        window.location.href = href;
+        setShouldRender(false);
+        closeMenu();
+        return;
+      }
+
+      if (isExternal) {
+        window.open(href, '_blank', 'noopener,noreferrer');
+        setShouldRender(false);
+        closeMenu();
+        return;
+      }
+
+      // Clicking current page - just close
       if (href === pathname) {
         closeMenu();
         return;

@@ -20,6 +20,7 @@
 .label.client-label {
   font-size: var(--font-size-all-caps-fluid);
   line-height: var(--line-height-loose);
+  margin-block-end: var(--space-5);
 }
 
 .label.centered {
