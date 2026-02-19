@@ -17,6 +17,7 @@
 @import './components/label';
 @import './components/list';
 @import './components/link';
+@import './components/subtitle';
 @import './components/title';
 @import './components/text-block';
 @import './components/client-icons';
@@ -35,3 +36,4 @@
 
 @import './pages/privacy.css';
 @import './pages/services.css';
+@import './pages/work.css';

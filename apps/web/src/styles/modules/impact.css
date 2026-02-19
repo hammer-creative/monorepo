@@ -3,29 +3,49 @@
 @import '../mixins.css';
 
 /* Content */
+.impact-module .text-block {
+  padding-inline-end: 15vw;
+}
+
 .impact-module .content {
   display: flex;
   flex-direction: column;
 }
 
+.impact-module .content.one-text .text-item {
+  order: 2;
+}
+
+.impact-module .content.one-text .image {
+  order: 1;
+}
+
 /* Text Item */
 .impact-module .text-item {
   padding-inline: var(--space-fluid-20-40);
-  padding-block: var(--space-fluid-20-40);
-  min-height: 200px;
+  padding-block-start: var(--space-fluid-20-40);
   box-sizing: border-box;
 }
 
+.impact-module .one-text .text-item,
+.impact-module .two-texts .text-item,
+.impact-module .three-texts .text-item {
+  padding-block-end: var(--space-fluid-80-200);
+}
+
+.impact-module .two-texts .text-item,
+.impact-module .three-texts .text-item {
+  padding-inline-end: var(--space-fluid-40-80);
+}
+
 .impact-module .text-item:nth-child(2) {
-  border-top: 1px solid $color-aircutter;
-  border-bottom: 1px solid $color-aircutter;
+  border-top: 1px solid var(--color-medium-gray);
+  border-bottom: 1px solid var(--color-medium-gray);
 }
 
 /* Image */
 .impact-module .image {
   aspect-ratio: 16 / 9;
-  height: 100vh;
-  width: 100%;
 }
 
 /* Responsive */
@@ -33,6 +53,18 @@
   /* Content */
   .impact-module .content {
     flex-direction: row;
+  }
+
+  .impact-module .content.one-text .text-item {
+    order: initial;
+  }
+
+  .impact-module .content.one-text .image {
+    order: initial;
+  }
+
+  .impact-module .content.one-text .text-block {
+    padding-inline-end: 10vw;
   }
 
   /* Equal distribution for any number of items */
@@ -44,7 +76,15 @@
   .impact-module .text-item:nth-child(2) {
     border-top: none;
     border-bottom: none;
-    border-right: 1px solid var(--color-medium-gray);
     border-left: 1px solid var(--color-medium-gray);
+    border-right: 1px solid var(--color-medium-gray);
+  }
+
+  .impact-module .text-block {
+    padding-inline-end: var(--space-20);
+  }
+
+  .impact-module .one-text .text-item {
+    padding-inline-end: initial;
   }
 }

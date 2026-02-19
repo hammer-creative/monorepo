@@ -1,6 +1,6 @@
 /* apps/web/src/styles/modules/hero.css */
 
-/* Base header structure */
+/* Base */
 .hero-module .header {
   position: relative;
   display: flex;
@@ -9,7 +9,6 @@
   container-type: inline-size;
 }
 
-/* Image */
 .hero-module .header .image {
   flex: 1;
   min-height: 0;
@@ -22,7 +21,7 @@
   }
 }
 
-/* Dark gradient overlay on image for text readability */
+/* Services page */
 [data-page='/services'] .header .image::after {
   content: '';
   position: absolute;
@@ -36,7 +35,6 @@
   pointer-events: none;
 }
 
-/* Services page content wrapper */
 [data-page='/services'] .header .content-wrapper {
   position: absolute;
   bottom: 0;
@@ -47,13 +45,32 @@
   gap: var(--space-fluid-20-40);
 }
 
-[data-page='/services'] .header .title-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+[data-page='/services'] .header .title-container button {
+  display: none;
 }
 
-/* Case study specific */
+[data-page='/services'] .services-heading {
+  margin-block: var(--space-fluid-20-40);
+  padding-inline: var(--space-fluid-20-40);
+}
+
+@media screen and (min-width: 50em) {
+  [data-page='/services'] .header .title-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  [data-page='/services'] .header .title-container .body {
+    flex: 1;
+  }
+
+  [data-page='/services'] .header .title-container button {
+    flex: 1;
+  }
+}
+
+/* Case study */
 .case-study .hero-module .title-container {
   display: flex;
   align-items: center;
@@ -65,7 +82,14 @@
   min-width: 0;
 }
 
-/* Bar */
+.case-study .hero-module .title.primary {
+  padding-block: var(--space-fluid-20-40);
+  padding-inline: var(--space-fluid-20-40);
+  max-width: 100%;
+  width: 100%;
+  line-height: var(--line-height-tight);
+}
+
 .case-study .hero-module .bar {
   display: none;
   line-height: 0;
@@ -77,15 +101,22 @@
   .case-study .hero-module .bar {
     display: block;
   }
+
+  .case-study .hero-module .title.primary {
+    padding-block: var(--space-fluid-20-40);
+    padding-inline: var(--space-fluid-20-40);
+  }
+
+  .case-study .hero-module .header .title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: var(--module-bg);
+    width: 50%;
+  }
 }
 
-/* Content */
-.hero-module .content {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Meta */
+/* Case study meta */
 .case-study .hero-module .content .meta {
   display: flex;
   flex-direction: column;
@@ -104,25 +135,20 @@
 .case-study .hero-module .content .meta .lists {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 
-/* Labels */
+@media screen and (min-width: 50em) {
+  .case-study .hero-module .content .meta .lists {
+    justify-content: space-evenly;
+  }
+}
+
 .case-study .hero-module .services p:first-of-type,
 .case-study .hero-module .clients .client-label {
   color: $color-hyperbeam !important;
 }
 
-/* Wide viewport */
 @media screen and (min-width: 50em) {
-  .case-study .hero-module .header .title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background: var(--module-bg);
-    width: 50%;
-  }
-
   .case-study .hero-module .content .meta {
     flex-direction: row;
   }

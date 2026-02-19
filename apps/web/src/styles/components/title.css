@@ -2,7 +2,6 @@
 
 /* Base */
 .title {
-  line-height: var(--line-height-tight);
   white-space: pre-line;
 }
 
@@ -53,18 +52,9 @@
 
 /* Module-specific overrides - Hero Module */
 .hero-module .title.primary {
-  padding-block: var(--space-fluid-20-40);
-  padding-inline: var(--space-fluid-20-40);
   max-width: 100%;
   width: 100%;
   line-height: var(--line-height-tight);
-}
-
-@media screen and (min-width: 50em) {
-  .hero-module .title.primary {
-    padding-block: var(--space-fluid-10-20);
-    padding-inline: var(--space-fluid-20-40);
-  }
 }
 
 /* Module-specific overrides - Impact Module */
@@ -73,7 +63,32 @@
   max-width: 100%;
   width: 100%;
   min-height: 2em;
-  margin-block-end: var(--space-20);
+}
+
+@media screen and (min-width: 50em) {
+  .impact-module .title.tertiary {
+    margin-block-end: var(--space-20);
+  }
+}
+
+/* Module-specific overrides - Case Study Card (home) */
+.case-study-card .title.tertiary,
+.case-study-card .clients span {
+  color: $color-hyperbeam;
+  transition: color var(--ease-fast);
+}
+
+.case-study-card:hover .title.tertiary,
+.case-study-card:hover .clients span {
+  color: $color-aircutter;
+}
+
+/* Module-specific overrides - Case Study Carousel Module */
+.case-study-carousel-module .case-study-card .title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-sm-fluid);
+  text-transform: uppercase;
+  line-height: var(--line-height-very-tight);
 }
 
 /* Page-specific overrides – Homepage – Text Module, promo */
@@ -85,20 +100,6 @@
 }
 
 /* Page specific overrides */
-[data-page='/services'] .services-card-module .title.primary {
-  /* width: 50%; */
-}
-
-/* Text shadow for readability on light backgrounds */
-[data-page='/'] .case-study-card .title,
-[data-page='/'] .case-study-card .client-name,
-[data-page='/services'] .services-card-module .title,
-[data-page='/services'] .hero-module .title {
-  text-shadow: var(--text-shadow);
-}
-
-@media screen and (min-width: 50em) {
-  [data-page='/services'] .services-card-module .title.primary {
-    width: 100%;
-  }
+.case-study-carousel-module > .title.tertiary {
+  font-size: var(--font-size-lg-fluid);
 }

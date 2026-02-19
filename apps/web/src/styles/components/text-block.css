@@ -31,13 +31,14 @@
 .hero-module .text-block {
   font-family: var(--font-sans);
   font-size: var(--font-size-lg-fluid);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-default);
 }
 
 /* Module-specific override: Impact module */
 .impact-module .text-block {
   font-family: var(--font-sans);
-  font-size: var(--font-size-md-fluid);
+  font-size: var(--font-size-xs-fluid);
+  line-height: var(--line-height-very-loose);
 }
 
 /* Module-specific override: Text module, headline */
@@ -70,7 +71,6 @@
 [data-page='/services'] .hero-module p.text-block,
 [data-page='/services'] .services-card-module p.text-block {
   line-height: var(--line-height-loose);
-  text-shadow: var(--text-shadow);
 }
 
 @media (min-width: 50em) {
@@ -87,6 +87,10 @@
     font-size: var(--font-size-lg-fluid);
     /* max-width: 50ch;
     width: 100%; */
+  }
+
+  .impact-module .text-block {
+    line-height: var(--line-height-loose);
   }
 }
 
@@ -117,4 +121,46 @@
 
 [data-page='/privacy'] article a {
   color: $color-hyperbeam;
+}
+
+[data-page='/privacy'] {
+  h2,
+  h3,
+  h4 {
+    margin-block: var(--space-fluid-10-20);
+  }
+}
+
+[data-page='/privacy'] article {
+  ul li,
+  ol li {
+    margin-block: var(--space-10);
+    font-size: var(--font-size-sm-fluid);
+    list-style-type: disc; /* filled circle (default) */
+  }
+  [data-page='/privacy'] > * {
+    line-height: 1.4;
+  }
+
+  ol,
+  ul {
+    padding-left: 5em;
+    padding-right: 5em;
+  }
+
+  ol li,
+  ul li {
+    padding-left: 0.1ch; /* indent the text */
+    text-indent: -0.1ch; /* hang the bullet */
+  }
+}
+
+[data-page='/services'] .chyron-card p.text-block {
+  width: 30ch;
+}
+
+@media screen and (min-width: 50em) {
+  [data-page='/services'] .hero-module p.text-block {
+    width: 30ch;
+  }
 }

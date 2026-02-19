@@ -65,14 +65,20 @@ export function ServicesPageCardModule({
   return (
     <div className="services-card">
       {imageContent}
+
+      {showClientIcons && (
+        <div className="chyron">
+          <ClientIcons chyron />
+        </div>
+      )}
+
       <div className="content">
         {headerContent}
         {/* Wide: services inside content */}
         <div className="wide">{servicesContent}</div>
       </div>
       {/* Narrow: services outside content */}
-      <div className="narrow">{servicesContent}</div>
-      {showClientIcons && <ClientIcons chyron />}
+      {!showClientIcons && <div className="narrow">{servicesContent}</div>}
     </div>
   );
 }

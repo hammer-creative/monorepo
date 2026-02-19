@@ -26,12 +26,12 @@
   margin-block-end: var(--space-fluid-20-80);
 }
 
-[data-page='/'] [data-module-index='3'] .case-study-cards {
+[data-page='/'] [data-module-index='3'] .case-study-grid {
   margin-block-end: var(--space-fluid-20-80);
 }
 
 /* Module 4 */
-[data-page='/'] [data-module-index='4'] .content.promo {
+[data-page='/work'] .content.promo {
   padding-inline-end: var(--space-fluid-40-80);
 }
 
@@ -63,7 +63,7 @@
   }
 
   /* Module 3 */
-  [data-page='/'] [data-module-index='3'] .case-study-cards {
+  [data-page='/'] [data-module-index='3'] .case-study-grid {
     margin-block-end: var(--space-fluid-10-20);
   }
 

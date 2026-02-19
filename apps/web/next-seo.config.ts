@@ -4,12 +4,14 @@ const SEO: DefaultSeoProps = {
   title: 'Hammer Creative',
   titleTemplate: 'Hammer Creative',
   defaultTitle: 'Hammer Creative',
-  description: 'The Gaming Agency',
+  description:
+    'Hammer Creative is a video game marketing agency partnering with publishers and studios to deliver strategy, creative, and campaigns that drive cultural impact.',
   canonical: 'https://hammercreative.com',
   openGraph: {
     url: 'https://hammercreative.com',
     title: 'Hammer Creative',
-    description: 'The Gaming Agency',
+    description:
+      'Hammer Creative is a video game marketing agency partnering with publishers and studios to deliver strategy, creative, and campaigns that drive cultural impact.',
     type: 'website',
     locale: 'en_US',
     site_name: 'Hammer Creative',
@@ -31,41 +33,10 @@ const SEO: DefaultSeoProps = {
       property: 'dc:creator',
       content: 'Hammer Creative',
     },
-    { name: 'msapplication-TileColor', content: '#2d89ef' },
+    { name: 'msapplication-TileColor', content: '#141515' },
     { name: 'msapplication-config', content: '/favicons/browserconfig.xml' },
-    { name: 'theme-color', content: '#2d89ef' },
+    { name: 'theme-color', content: '#141515' },
   ],
-  // additionalLinkTags: [
-  //   { rel: 'icon', href: '/favicons/favicon-16x16.png', sizes: '16x16' },
-  //   { rel: 'icon', href: '/favicons/favicon-32x32.png', sizes: '32x32' },
-  //   {
-  //     rel: 'icon',
-  //     href: '/favicons/android-chrome-192x192.png',
-  //     sizes: '192x192',
-  //   },
-  //   {
-  //     rel: 'icon',
-  //     href: '/favicons/android-chrome-512x512.png',
-  //     sizes: '512x512',
-  //   },
-  //   {
-  //     rel: 'apple-touch-icon',
-  //     href: '/favicons/apple-touch-icon-precomposed.png',
-  //     sizes: '180x180',
-  //   },
-  //   {
-  //     rel: 'apple-touch-icon',
-  //     href: '/favicons/apple-touch-icon.png',
-  //     sizes: '180x180',
-  //   },
-  //   { rel: 'manifest', href: '/favicons/site.webmanifest' },
-  //   {
-  //     rel: 'mask-icon',
-  //     href: '/favicons/safari-pinned-tab.svg',
-  //     color: '#5bbad5',
-  //   },
-  //   { rel: 'shortcut icon', href: '/favicons/favicon.ico' },
-  // ],
 };
 
 export default SEO;
