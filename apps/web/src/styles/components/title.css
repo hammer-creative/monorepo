@@ -5,6 +5,10 @@
   white-space: pre-line;
 }
 
+.case-study-card h3.title {
+  width: 20ch;
+}
+
 /* Default */
 .title.default {
   font-family: var(--font-sans);
@@ -102,4 +106,23 @@
 /* Page specific overrides */
 .case-study-carousel-module > .title.tertiary {
   font-size: var(--font-size-lg-fluid);
+}
+
+@media screen and (min-width: 50em) {
+  .chyron-card .title {
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  [data-page='/services'] .chyron-card .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  [data-page='/services'] .chyron-card p.text-block {
+    width: 40ch !important;
+    text-align: center;
+    width: 100%;
+  }
 }

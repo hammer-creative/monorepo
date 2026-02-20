@@ -36,8 +36,9 @@
 }
 
 .case-study-carousel-module .swiper-slide .meta .title {
-  padding-inline: var(--space-fluid-10-20);
-  padding-block: var(--space-fluid-10-20);
+  white-space: pre-line;
+  /* padding-inline: var(--space-fluid-10-20);
+  padding-block: var(--space-fluid-10-20); */
 }
 
 .case-study-carousel-module > .title.tertiary {

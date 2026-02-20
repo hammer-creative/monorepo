@@ -25,7 +25,8 @@
 @import './components/button';
 @import './components/table';
 @import './home.css';
-@import './modules/cards.css';
+@import './modules/cards-case-studies.css';
+@import './modules/cards-services.css';
 @import './modules/carousel.css';
 @import './modules/hero.css';
 @import './modules/impact.css';

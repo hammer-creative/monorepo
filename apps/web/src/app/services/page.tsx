@@ -115,7 +115,7 @@ export default async function ServicesPage() {
             <Title as="h2" variant="tertiary">
               Case Studies
             </Title>
-            <LongArrow href="/work" />
+            <LongArrow direction="right" href="/work" />
           </div>
           <CaseStudyCarousel
             data={{
