@@ -15,8 +15,8 @@
 'use client';
 
 import {
-  ArrowDown,
   Label,
+  LongArrow,
   SanityImageHero,
   TextBlock,
   Title,
@@ -93,7 +93,7 @@ export function HeroModule({
       className={`scroll-trigger ${isWide ? 'wide' : 'narrow'}`}
       aria-label="Scroll to content"
     >
-      <ArrowDown />
+      <LongArrow direction="down" />
     </button>
   );
 
