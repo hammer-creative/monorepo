@@ -34,7 +34,9 @@ export function TextImageModule({
 
   return (
     <div className={`${bem}`}>
-      {textLeft && body && <TextBlock body={body} className={`${bem}__text`} />}
+      {textLeft && body && (
+        <TextBlock body={body} className={`is-first ${bem}__text`} />
+      )}
       {image && (
         <SanityImageHalfWidth image={image} className={`${bem}__image`} fill />
       )}

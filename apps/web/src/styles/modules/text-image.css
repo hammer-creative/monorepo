@@ -1,6 +1,6 @@
 /* apps/web/src/styles/modules/text-image.css */
 
-/* Layout, text-image-module */
+/* Layout: text-image-module */
 .text-image-card {
   display: flex;
   flex-direction: column;
@@ -10,8 +10,17 @@
   flex: 1;
 }
 
-.text-image-card__text {
-  padding: var(--flow-space-1);
+/* Layout: image/text ordering */
+.text-image-card .image {
+  order: 1;
+}
+
+.text-image-card .text {
+  order: 2;
+  padding-block: var(--flow-space-2);
+  p {
+    padding-inline: var(--flow-space-2);
+  }
 }
 
 @media screen and (min-width: 50em) {
@@ -19,24 +28,13 @@
     flex-direction: row;
   }
 
-  .text-image-card__text {
-    padding: 0;
-  }
-
-  .text-image-card__text {
-    padding-block: var(--flow-space-2);
-  }
-
-  .text-image-card__text p {
-    padding-inline-start: var(--flow-space-2);
-  }
-
-  .text-image-card .image + .text p {
-    padding-inline-end: var(--flow-space-4);
+  .text-image-card .text-image-card__text.is-first {
+    order: 1;
   }
 }
 
 /* Typography, text-image-module */
 .text-image-card__text p {
   @mixin body-small;
+  line-height: var(--line-height-default);
 }
