@@ -12,16 +12,6 @@
   padding-inline: var(--space-fluid-20-40);
 }
 
-.home__masthead {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  pointer-events: none;
-  display: none;
-}
-
 /* Module 0: We are fans and experts... */
 
 /* Module 1: View our services... */

@@ -5,11 +5,11 @@
     285px
   );
   --z-image: 0;
-  --z-masthead: 1;
   --z-menu: 1;
   --z-model: 1;
   --z-bokeh-1: 1;
   --z-bokeh-2: 1;
+  --z-masthead: 10;
   --z-linear-gradient-1: 1;
   --z-menu-overlay: 200;
   --z-mobile-menu: 300;

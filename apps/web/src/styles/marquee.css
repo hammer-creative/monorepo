@@ -35,7 +35,7 @@
 }
 
 .home__wordmark svg {
-  width: 100%;
+  width: 55vw;
   height: auto;
   color: var(--color-nightshade);
 }
@@ -49,7 +49,7 @@
   color: var(--color-hyperbeam);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-loose);
-  font-size: var(--font-size--4);
+  font-size: var(--font-size--2);
   line-height: 1;
 }
 
@@ -57,11 +57,27 @@
   text-align: center;
 }
 
-@media (min-width: 50em) {
+.home__masthead .tagline {
+  margin-block-end: var(--space-fluid-100-200);
+}
+
+.home__masthead .impressum-left {
+  margin-block-end: var(--space-fluid-20-40);
+}
+
+@media (min-width: 70em) {
   .home__wordmark {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .home__masthead .tagline {
+    margin-block-end: initial;
+  }
+
+  .home__masthead .impressum-left {
+    margin-block-end: initial;
   }
 
   .home__wordmark svg {
