@@ -11,5 +11,8 @@ body:has(.menu-overlay) {
   position: fixed;
   inset: 0;
   background: $color-nightshade;
-  z-index: 200;
+}
+
+.image img {
+  z-index: 0;
 }

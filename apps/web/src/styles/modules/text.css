@@ -1,71 +1,99 @@
 /* apps/web/src/styles/modules/text.css */
 
-.text-module .text-block {
-}
-
-/* Challenge */
-.text-module .content.challenge {
+/* Layout, text-module */
+.text-card {
   display: flex;
   flex-direction: column;
+}
+
+/* Layout, text-module, center-aligned editorial copy */
+.text-card--challenge,
+.text-card--testimonial {
   align-items: center;
-  justify-content: center;
-  gap: var(--space-fluid-10-20);
-  padding-block: var(--space-fluid-40-80);
+  padding-block: var(--flow-space-4);
+  gap: var(--flow-space-1);
+}
+
+.text-card--challenge .text-card__text,
+.text-card--testimonial .text-card__text {
+  padding-inline: var(--card-frame-1);
+}
+
+/* Layout, text-module, left-right aligned headline and editorial copy */
+.text-card--has-headline {
+  padding-inline: var(--card-frame-1);
+  padding-block: var(--flow-space-2);
+}
+
+.text-card--has-headline .text-card__headline > * {
+  margin-bottom: var(--flow-space-1);
+}
+
+.text-card--has-headline .text-card__text p {
+  padding-inline-end: var(--gutter-padding-1);
+}
+
+.text-card--challenge .text-card__label {
   text-align: center;
 }
 
-/* Headline Left - Content */
-.text-module .content.has-headline {
-  display: flex;
-  flex-direction: column;
-  padding-block: var(--space-fluid-20-60);
-  padding-inline: var(--space-fluid-20-60);
-}
+/* Layout, text-module, responsive */
+@media screen and (min-width: 50em) {
+  /* Layout, text-module, grid override for left-right aligned headline and editorial copy */
 
-/* Headline Left - Header */
-.text-module .content.has-headline .header {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-20);
-  margin-bottom: var(--space-20);
-}
-
-/* Testimonial */
-.text-module .content.testimonial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-fluid-20-40);
-  padding-block: var(--space-fluid-40-120);
-  text-align: center;
-}
-
-.text-module .body p:not(:last-child) {
-  margin-bottom: var(--space-20);
-}
-
-/* Responsive */
-@media (min-width: 50em) {
-  /* Headline Left - Content */
-  .text-module .content.has-headline {
-    flex-direction: row;
+  .text-card--has-headline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .text-module .body .text-block {
-    padding-inline-start: var(--space-fluid-20-40);
+  .text-card--has-headline .text-card__text {
+    grid-column: 2;
   }
 
-  /* Headline Left - Header */
-  .text-module .content.has-headline .header {
-    flex: 1;
-    margin-bottom: 0;
+  .text-card--has-headline .text-card__headline > * {
+    margin-bottom: initial;
+  }
+
+  .text-card--has-headline .text-card__headline {
+    grid-column: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
 
-  /* Headline Left - Body */
-  .text-module .content.has-headline .body {
-    flex: 1;
+  .text-card--has-headline .text-card__title {
+    margin-top: auto;
+    margin-inline-end: var(
+      --gutter-margin-0
+    ); /* pseudo-gap to keep title from encroaching on editorial copy */
+    margin-bottom: 5px; /* nudge title up a bit to align with editorial copy baseline */
   }
+  .text-card--has-headline .text-card__label {
+    margin-top: 5px; /* nudge label down a bit to align with editorial copy ascenders */
+  }
+}
+
+/* Typography, text-module */
+.text-card .title {
+  @mixin title-secondary;
+}
+
+/* Typography, text-module, center-aligned editorial copy */
+.text-card--challenge .text-card__text p,
+.text-card--testimonial .text-card__text p {
+  @mixin body-medium;
+  line-height: var(--line-height-default); /* overriding mixin */
+  text-align: center;
+  max-width: 40ch;
+}
+
+@media screen and (min-width: 50em) {
+  .text-card__text p {
+    padding-inline-end: initial;
+  }
+}
+
+/* Typography, text-module, left-right aligned headline and editorial copy */
+.text-card--has-headline .text-card__text p {
+  @mixin body-medium;
+  line-height: var(--line-height-default); /* overriding mixin */
 }

@@ -1,19 +1,40 @@
 /* apps/web/src/styles/header.css */
 
 /* Headroom wrapper - contains the header */
-.headroom-wrapper {
+
+header {
   position: absolute;
   inset: 0;
+  z-index: 100;
 }
 
 /* Base headroom styles */
 .headroom {
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-fluid-20-40);
+  max-width: 100%;
   width: 100%;
-  padding: var(--space-fluid-10-20);
-  z-index: 100;
+}
+
+.headroom .wordmark {
+  transition: transform 0.3s ease;
+}
+
+/* Instant out, delayed back in */
+.headroom:has(.menu-toggle.is-open) .wordmark {
+  transform: translateY(-200%);
+  transition: transform 0.3s ease;
+}
+
+.headroom:not(:has(.menu-toggle.is-open)) .wordmark {
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+
+  transition-delay: 1.1s;
 }
 
 /* Unfixed state - header in normal flow */
@@ -25,13 +46,13 @@
 /* Transition applied during scroll */
 .headroom--scrolled {
   transition: transform 300ms ease-in-out;
-  mix-blend-mode: difference;
+  mix-blend-mode: plus-lighter;
 }
 
 /* Hidden state - scrolling down */
 .headroom--unpinned {
   position: fixed;
-  transform: translateY(-100%);
+  transform: translateY(-200%);
 }
 
 /* Visible state - scrolling up */

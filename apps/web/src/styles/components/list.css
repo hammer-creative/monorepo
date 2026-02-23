@@ -3,24 +3,14 @@
 .services-card .services-list li,
 .hero-module .services-list li {
   font-size: var(--font-size-xs-fluid);
-  line-height: var(--line-height-very-loose);
+  line-height: var(--line-height-loose);
   list-style: disc;
-}
-
-.services-card .services-list p,
-.hero-module .services-list p {
-  color: $color-hyperbeam;
-  margin-block-end: var(--space-5);
 }
 
 .services-card .services-list ul,
 .hero-module .services-list ul {
-  padding-left: 1.2ch;
+  padding-left: 1.5ch;
   columns: 1;
-}
-
-.hero-module .lists {
-  gap: calc(1vw + 1ch);
 }
 
 @media screen and (min-width: 50em) {
