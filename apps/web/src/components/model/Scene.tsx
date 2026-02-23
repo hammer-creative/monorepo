@@ -59,45 +59,54 @@ const log = (...args) => {
 function PlayButton3D({ onClick, isPlaying }) {
   const triangleGeometry = useMemo(() => {
     const shape = new THREE.Shape();
-    shape.moveTo(-0.4, -0.5);
-    shape.lineTo(-0.4, 0.5);
-    shape.lineTo(0.6, 0);
+    shape.moveTo(25.5 / 17.32, -8.66 / 17.32);
+    shape.lineTo(0, -17.32 / 17.32);
+    shape.lineTo(0, 0);
     shape.closePath();
     const geo = new THREE.ShapeGeometry(shape);
     geo.center();
     return geo;
   }, []);
 
-  const [hovered, setHovered] = useState(false);
+  const hoveredRef = useRef(false);
+  const meshRef = useRef<THREE.Mesh>(null);
+  const materialRef = useRef(
+    new THREE.MeshBasicMaterial({
+      color: new THREE.Color(PLAY_BUTTON_COLOR),
+      side: THREE.DoubleSide,
+      depthTest: false,
+      transparent: true,
+      opacity: 1,
+    }),
+  );
+
+  useFrame(() => {
+    const targetColor = new THREE.Color(
+      hoveredRef.current ? '#C7D3D3' : PLAY_BUTTON_COLOR,
+    );
+    materialRef.current.color.lerp(targetColor, 0.2);
+  });
 
   return (
-    <>
-      <mesh
-        position={[0, 0, PLAY_BUTTON_Z]}
-        scale={[PLAY_BUTTON_SCALE, PLAY_BUTTON_SCALE, 1]}
-        geometry={triangleGeometry}
-        onClick={(e) => {
-          e.stopPropagation();
-          onClick();
-        }}
-        onPointerOver={() => {
-          setHovered(true);
-          document.body.style.cursor = 'pointer';
-        }}
-        onPointerOut={() => {
-          setHovered(false);
-          document.body.style.cursor = 'auto';
-        }}
-      >
-        <meshBasicMaterial
-          color={hovered ? '#E8C060' : PLAY_BUTTON_COLOR}
-          side={THREE.DoubleSide}
-          depthTest={false}
-          transparent
-          opacity={1}
-        />
-      </mesh>
-    </>
+    <mesh
+      ref={meshRef}
+      position={[0, 0, PLAY_BUTTON_Z]}
+      scale={[PLAY_BUTTON_SCALE, PLAY_BUTTON_SCALE, 1]}
+      geometry={triangleGeometry}
+      material={materialRef.current}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      onPointerOver={() => {
+        hoveredRef.current = true;
+        document.body.style.cursor = 'pointer';
+      }}
+      onPointerOut={() => {
+        hoveredRef.current = false;
+        document.body.style.cursor = 'auto';
+      }}
+    />
   );
 }
 
