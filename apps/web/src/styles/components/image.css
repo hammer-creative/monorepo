@@ -7,6 +7,10 @@
   overflow: hidden;
 }
 
+.image img {
+  z-index: var(--z-image);
+}
+
 /* Image, modules - carousel card */
 
 /* Image, modules - case study card */

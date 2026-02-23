@@ -5,10 +5,6 @@
   white-space: pre-line;
 }
 
-.case-study-card h3.title {
-  width: 20ch;
-}
-
 /* Default */
 .title.default {
   font-family: var(--font-sans);
@@ -98,7 +94,7 @@
 /* Page-specific overrides – Homepage – Text Module, promo */
 [data-page='/'] .layout-wrapper h2 {
   /* TODO: change to title.secondary? */
-  font-size: var(--font-size-promo-fluid);
+  font-size: var(--font-size-3);
   line-height: var(--line-height-tight);
   letter-spacing: -0.04em;
 }

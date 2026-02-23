@@ -61,11 +61,7 @@ export function ServicesPageHeroModule({
   return (
     <div className="header">
       {/* Hero Image */}
-      {hasImage && (
-        <div className="image">
-          <SanityImageHero image={image} fill priority />
-        </div>
-      )}
+      {hasImage && <SanityImageHero image={image} fill priority />}
 
       {/* Wide viewport: button over image */}
       {isWide && (

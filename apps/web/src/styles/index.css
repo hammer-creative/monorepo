@@ -24,6 +24,7 @@
 @import './components/arrow';
 @import './components/button';
 @import './components/table';
+@import './components/model';
 @import './home.css';
 @import './modules/cards-case-studies.css';
 @import './modules/cards-services.css';

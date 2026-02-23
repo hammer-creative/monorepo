@@ -8,7 +8,7 @@ const LAYOUT_CLASS_MAP: Record<Layout, string> = {
   challenge: 'challenge',
   headlineLeft: 'has-headline',
   testimonial: 'testimonial',
-  homePage: 'promo',
+  homePage: 'home',
 } as const;
 
 function isValidTextModule(
@@ -17,73 +17,59 @@ function isValidTextModule(
   return data !== null;
 }
 
+/**
+ * TextModule renders a content block with a layout-driven modifier class.
+ * Layout differences are handled via CSS using the modifier on the wrapper.
+ * Child components receive BEM element classes from the parent for layout targeting.
+ * All layout variants are driven by LAYOUT_CLASS_MAP and the layoutClass modifier.
+ *
+ * @param data - TextModule data from Sanity
+ * @param data.title - Optional title text
+ * @param data.body - Optional body content as PortableText
+ * @param data.layout - Layout variant key (challenge, headlineLeft, testimonial, homePage)
+ * @param data.attribution - Optional attribution text for testimonial layout
+ * @param data.tag - Optional tag/label text
+ * @param data.clients - Optional array of client objects to render via Label
+ */
 export function TextModule({ data }: { data: TextModuleType | null }) {
   if (!isValidTextModule(data)) return null;
 
-  const { title, body, layout, attribution, tag } = data;
+  const { title, body, layout, attribution, tag, clients } = data;
 
   if (!layout || (!body && !attribution && !title)) return null;
 
-  const clientNames = (
-    (data.clients ?? []) as unknown as Array<{ _id: string; name?: string }>
-  )
-    .map((c) => c?.name)
-    .filter((name): name is string => typeof name === 'string');
-
   const layoutClass = LAYOUT_CLASS_MAP[layout] ?? '';
+  const bem = 'text-card';
   const hasAttribution = attribution != null;
   const hasBody = body != null;
   const hasTag = tag != null;
-  const hasTitle = title != null;
-  const hasClients = clientNames.length > 0;
+  const hasTitle = title != null && layout !== 'challenge'; // TODO: temporary workaround, title field should not be populated for challenge layout in Sanity
+  const hasClients = clients != null;
 
   return (
-    <div className={`content ${layoutClass}`}>
-      {layout === 'challenge' && (
-        <>
-          {hasTag && <Label as="div">{tag}</Label>}
-          {hasBody && <TextBlock body={body} variant="dropquote" />}
-        </>
-      )}
-
-      {layout === 'headlineLeft' && (
-        <>
-          <div className="header">
-            {hasTag && <Label as="div">{tag}</Label>}
-            {hasTitle && (
-              <Title as="h2" variant="secondary">
-                {title}
-              </Title>
-            )}
-          </div>
-          <div className="body">
-            {hasBody && <TextBlock body={body} variant="has-headline" />}
-          </div>
-        </>
-      )}
-
-      {layout === 'testimonial' && (
-        <>
-          {hasBody && <TextBlock body={body} variant="dropquote" />}
-          {hasAttribution && (
-            <Label as="div" variant="centered">
-              {attribution}
+    <div className={`${bem} ${bem}--${layoutClass}`}>
+      {(hasTag || hasTitle) && (
+        <div className={`${bem}__headline`}>
+          {hasTag && (
+            <Label as="div" className={`${bem}__label`}>
+              {tag}
             </Label>
           )}
-          {hasClients && (
-            <Label as="div" variant="centered">
-              {clientNames}
-            </Label>
-          )}
-        </>
+          {hasTitle && <Title className={`${bem}__title`}>{title}</Title>}
+        </div>
       )}
-
-      {layout === 'homePage' && (
-        <>
-          {hasTag && <Label as="div">{tag}</Label>}
-          {hasTitle && <Title>{title}</Title>}
-          {hasBody && <TextBlock body={body} />}
-        </>
+      {hasBody && <TextBlock body={body} className={`${bem}__text`} />}
+      {hasAttribution && (
+        <Label as="div" className={`${bem}__attribution`}>
+          {attribution}
+        </Label>
+      )}
+      {hasClients && (
+        <Label
+          as="div"
+          clients={clients as unknown as Array<{ _id: string; name?: string }>}
+          className={`${bem}__clients`}
+        />
       )}
     </div>
   );

@@ -53,7 +53,6 @@ export function CarouselBase({
     <div ref={containerRef}>
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        spaceBetween={5}
         speed={5000}
         loop={true}
         freeMode={true}

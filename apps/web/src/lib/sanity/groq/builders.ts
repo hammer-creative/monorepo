@@ -193,6 +193,9 @@ export const moduleProjections = `
     textColor {
       ${projections.color}
     },
+    layout != "threeText" => {
+      ${projections.image}
+    },
     ${projections.image},
     textBlock1 {
       ${projections.textBlock}

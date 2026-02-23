@@ -1,4 +1,20 @@
-/* apps/web/src/styles/modules/carousel.css */
+/* apps/web/src/styles/modules/cards-case-studies.css */
+
+.case-study-card .title {
+  @mixin title-tertiary;
+  width: 20ch;
+}
+
+.case-study-card .title,
+.case-study-card .client-name {
+  color: var(--color-hyperbeam);
+  transition: color var(--ease-card);
+}
+
+.case-study-card a:hover .title,
+.case-study-card a:hover .client-name {
+  color: var(--color-aircutter);
+}
 
 .case-study-card {
   position: relative;

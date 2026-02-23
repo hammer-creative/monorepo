@@ -4,10 +4,16 @@
     calc(285px - ((1vw - 3.2px) * 8.625)),
     285px
   );
+  --z-image: 0;
+  --z-masthead: 1;
   --z-menu: 1;
-  --z-header: 1;
-  --z-overlay: 40;
-  --z-mobile-menu: 40;
+  --z-model: 1;
+  --z-bokeh-1: 1;
+  --z-bokeh-2: 1;
+  --z-linear-gradient-1: 1;
+  --z-menu-overlay: 200;
+  --z-mobile-menu: 300;
+  --z-header: 400;
   --z-menu-toggle: 2000;
   --z-headroom: auto;
   --z-wordmark: 1000;
@@ -52,6 +58,7 @@
   --ease-slow: 0.6s ease-in-out;
   --ease-fast: 0.3s ease-in-out;
   --ease-menu-item: var(--ease-fast);
+  --ease-card: 0.6s ease-in-out;
 
   /* formula: (max_px - min_px) / 16 = multiplier */
 
@@ -285,11 +292,7 @@
     calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
     14px
   );
-  --font-size-promo-fluid: clamp(
-    40px,
-    calc(2.5rem + ((1vw - 3.2px) * 1.25)),
-    54px
-  );
+
   --font-size-subtitle-fluid: 42px;
 
   --font-weight-default: 500;
@@ -325,8 +328,8 @@
   /* (40 - 18) / 16 = 1.375 */
   --font-size-2: clamp(24px, calc(1.5rem + ((1vw - 3.2px) * 1.5)), 48px);
   /* (48 - 24) / 16 = 1.5 */
-  --font-size-3: clamp(30px, calc(1.875rem + ((1vw - 3.2px) * 1.875)), 60px);
-  /* (60 - 30) / 16 = 1.875 */
+  --font-size-3: clamp(40px, calc(2.5rem + ((1vw - 3.2px) * 1.25)), 54px);
+  /* (54 - 40) / 16 = 0.875 */
   --font-size-4: clamp(30px, calc(1.875rem + ((1vw - 3.2px) * 3.125)), 80px);
   /* (80 - 30) / 16 = 3.125 */
 

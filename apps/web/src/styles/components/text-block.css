@@ -54,16 +54,16 @@
 
 /* Module-specific override: Text module, promo */
 [data-page='/'] .layout-wrapper {
-  section:first-child .promo .body,
-  section:nth-child(6) .promo .body {
-    font-size: var(--font-size-promo-fluid);
+  section:first-child .home .body,
+  section:nth-child(6) .home .body {
+    font-size: var(--font-size-3);
     line-height: var(--line-height-tight);
     letter-spacing: -0.04em;
     color: $color-sandstorm;
   }
 }
 
-[data-page='/'] .layout-wrapper section:nth-child(2) .promo .body {
+[data-page='/'] .layout-wrapper section:nth-child(2) .home .body {
   font-size: var(--font-size-sm-fluid);
   line-height: var(--line-height-very-loose);
 }
@@ -91,67 +91,6 @@
 
   .impact-module .body {
     line-height: var(--line-height-loose);
-  }
-}
-
-[data-page='/privacy'] article > * {
-  color: $color-aircutter;
-}
-
-[data-page='/privacy'] article p {
-  font-size: var(--font-size-sm-fluid);
-}
-
-[data-page='/privacy'] article h1 {
-  font-size: var(--font-size-xl-fluid);
-  margin-bottom: var(--space-40);
-  text-align: center;
-}
-
-[data-page='/privacy'] article h2 {
-  font-size: var(--font-size-lg-fluid);
-  text-transform: normal;
-  margin-block: var(--space-40);
-  text-align: center;
-}
-
-[data-page='/privacy'] article p {
-  margin-block-end: var(--space-fluid-10-20);
-}
-
-[data-page='/privacy'] article a {
-  color: $color-hyperbeam;
-}
-
-[data-page='/privacy'] {
-  h2,
-  h3,
-  h4 {
-    margin-block: var(--space-fluid-10-20);
-  }
-}
-
-[data-page='/privacy'] article {
-  ul li,
-  ol li {
-    margin-block: var(--space-10);
-    font-size: var(--font-size-sm-fluid);
-    list-style-type: disc; /* filled circle (default) */
-  }
-  [data-page='/privacy'] > * {
-    line-height: 1.4;
-  }
-
-  ol,
-  ul {
-    padding-left: 5em;
-    padding-right: 5em;
-  }
-
-  ol li,
-  ul li {
-    padding-left: 0.1ch; /* indent the text */
-    text-indent: -0.1ch; /* hang the bullet */
   }
 }
 

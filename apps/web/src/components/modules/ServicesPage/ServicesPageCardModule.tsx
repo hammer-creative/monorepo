@@ -38,9 +38,7 @@ export function ServicesPageCardModule({
 
   // Image container with Next.js Image fill
   const imageContent = image && (
-    <div className="image">
-      <SanityImageFullWidth image={image} fill className="card-image" />
-    </div>
+    <SanityImageFullWidth image={image} fill className="card-image" />
   );
 
   // Header with title and body text
