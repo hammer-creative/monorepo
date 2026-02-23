@@ -1,6 +1,9 @@
 /* apps/web/src/stylesl/label.css */
 
-.label {
+.label--list,
+.label--client-label,
+[data-page]:not([data-page='/']) .text-card__label,
+.text-card__attribution {
   font-size: var(--font-size-all-caps-fluid);
   font-weight: 900;
   letter-spacing: var(--letter-spacing-loose);
@@ -9,33 +12,18 @@
   display: block;
 }
 
-.label.client-name {
-  font-weight: initial;
-  text-transform: initial;
-  letter-spacing: var(--letter-spacing-default);
-  font-size: var(--font-size-xs-fluid);
-  line-height: var(--line-height-loose);
+.label--client-name {
+  @mixin body-medium;
+  line-height: var(--line-height-default);
 }
 
-.label.client-label {
+.label--client-label {
   font-size: var(--font-size-all-caps-fluid);
   line-height: var(--line-height-loose);
   margin-block-end: var(--space-5);
 }
 
-.label.centered {
-  font-size: var(--font-size-all-caps-fluid);
-  text-align: center;
-}
-
 .label.list {
   font-size: var(--font-size-all-caps-fluid);
   line-height: var(--line-height-loose);
-}
-
-[data-page='/'] .layout-wrapper .text-module .promo .label {
-  text-transform: initial;
-  font-size: var(--font-size-sm-fluid);
-  letter-spacing: var(--letter-spacing-default);
-  font-weight: 100;
 }

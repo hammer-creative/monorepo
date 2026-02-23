@@ -1,134 +1,82 @@
 /* apps/web/src/styles/marquee.css */
-
 @import './mixins.css';
 
-/* Homepage Marquee - Layout */
-[data-page='/'] .container {
+.home__marquee {
   position: relative;
   overflow: hidden;
+  height: 100vh;
+  background: var(--color-aircutter);
 }
 
-[data-page='/'] .marquee {
-  background: $color-aircutter;
-}
-
-[data-page='/'] .model {
+.home__scene {
   position: relative;
   width: 100vw;
   height: 100vh;
 }
 
-/* Homepage - Masthead - Container */
-[data-page='/'] .masthead {
+/* Layout, homepage: masthead, wordmark (contains tagline ;) */
+.home__masthead {
   position: absolute;
   inset: 0;
-  z-index: 100;
   pointer-events: none;
-}
-
-[data-page='/'] .masthead .wordmark svg {
-  width: 147px;
-  height: auto;
-  color: $color-nightshade;
-}
-
-[data-page='/'] .masthead .impressum,
-[data-page='/'] .masthead .tagline {
-  color: $color-hyperbeam;
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-loose);
-  font-size: var(--font-size-xs-fluid);
-}
-
-.tagline,
-p {
-  line-height: 1;
-}
-
-/* Marquee – Layout */
-
-[data-page='/'] .marquee .wordmark {
-  padding-inline-start: var(--space-fluid-10-20);
-  padding-block-start: var(--space-fluid-10-20);
-}
-
-[data-page='/'] .marquee {
-  height: 100vh;
-}
-
-[data-page='/'] .marquee .masthead {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: var(--card-frame-1);
+  z-index: var(--z-masthead);
 }
 
-[data-page='/'] .marquee .masthead .row:first-child {
-  height: 100%;
-}
-
-[data-page='/'] .marquee .masthead .row .wordmark {
+.home__wordmark {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-}
-
-[data-page='/'] .marquee .masthead .row .wordmark {
   flex: 1;
 }
 
-[data-page='/'] .marquee .masthead .row .tagline {
+.home__wordmark svg {
+  width: 100%;
+  height: auto;
+  color: var(--color-nightshade);
+}
+
+.home__wordmark .tagline {
   text-align: center;
-  margin-block: var(--space-fluid-20-40);
 }
 
-[data-page='/'] .marquee .masthead .row .impressum p {
+.home__masthead .impressum,
+.home__masthead .tagline {
+  color: var(--color-hyperbeam);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-loose);
+  font-size: var(--font-size--4);
+  line-height: 1;
+}
+
+.home__masthead .impressum p {
   text-align: center;
 }
 
-[data-page='/'] .marquee .masthead .row .impressum p:first-child {
-  margin-block-end: var(--space-fluid-10-20);
-}
-
-[data-page='/'] .marquee .masthead .row .impressum {
-  margin-block-start: var(--space-fluid-40-80);
-  margin-block-end: var(--space-fluid-10-20);
-}
-
-@media screen and (min-width: 50em) {
-  [data-page='/'] .marquee .masthead .row .impressum {
-    margin-block: initial;
-  }
-
-  [data-page='/'] .marquee .masthead .row .impressum p:first-child {
-    margin-block-end: initial;
-  }
-
-  [data-page='/'] .marquee .masthead .row .wordmark {
-    display: flex;
-  }
-  [data-page='/'] .masthead .wordmark svg {
-    width: 300px;
-  }
-  [data-page='/'] .marquee .masthead .row .wordmark {
-    display: flex;
+@media (min-width: 50em) {
+  .home__wordmark {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
 
-  [data-page='/'] .masthead .impressum,
-  [data-page='/'] .masthead .tagline {
-    color: $color-nightshade;
-  }
-  [data-page='/'] .masthead .wordmark,
-  [data-page='/'] .masthead .impressum {
-    display: flex;
-    justify-content: space-between;
+  .home__wordmark svg {
+    width: 300px;
   }
 
-  [data-page='/'] .masthead .wordmark,
-  [data-page='/'] .masthead .impressum {
+  .home__masthead .impressum,
+  .home__masthead .tagline {
+    color: var(--color-nightshade);
+  }
+
+  .home__masthead .impressum {
+    display: flex;
+    justify-content: space-between;
     padding: var(--space-fluid-10-20);
+    margin-block: initial;
   }
 }

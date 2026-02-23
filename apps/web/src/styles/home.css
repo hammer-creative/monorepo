@@ -1,13 +1,10 @@
 /* apps/web/src/styles/home.css */
 @import './mixins.css';
 
-/* Layout Wrapper */
-.layout-wrapper {
-  position: relative;
-}
+/* Layout, homepage, model positioning and masthead z-indices */
 
-/* Home Page Layout */
-[data-page='/'] .layout-wrapper {
+.home__modules {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-fluid-20-40);
@@ -15,10 +12,46 @@
   padding-inline: var(--space-fluid-20-40);
 }
 
-/* Module 1 */
-[data-page='/'] [data-module-index='1'] .content,
-[data-page='/'] [data-module-index='1'] .label {
-  margin-block-end: var(--space-fluid-20-40);
+.home__masthead {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+  display: none;
+}
+
+/* Module 0: We are fans and experts... */
+
+/* Module 1: View our services... */
+[data-page='/'] [data-module-index='1'] .text-card__text {
+  margin-bottom: var(--card-frame-1);
+}
+
+/* Typography */
+
+/* Module 0: We are fans and experts... */
+[data-page='/'] [data-module-index='0'] .text-card__text p {
+  @mixin body-large;
+}
+
+/* Module 1: View our services... */
+[data-page='/'] [data-module-index='1'] .text-card__text p {
+  @mixin body-extra-small;
+  line-height: 2;
+}
+
+/* Module 2: Our work... */
+[data-page='/'] [data-module-index='2'] .label {
+  @mixin body-extra-small;
+  line-height: 2;
+}
+
+[data-page='/'] [data-module-index='2'] .title {
+  @mixin title-secondary;
+  font-family: var(--font-sans); /* override */
+  text-transform: initial;
 }
 
 /* Module 3 */
@@ -31,7 +64,7 @@
 }
 
 /* Module 4 */
-[data-page='/work'] .content.promo {
+[data-page='/work'] .content.home {
   padding-inline-end: var(--space-fluid-40-80);
 }
 
@@ -40,7 +73,6 @@
   margin-block-end: var(--space-fluid-20-80);
 }
 
-/* Responsive */
 @media (min-width: 50em) {
   /* Module 0 */
   [data-page='/'] [data-module-index='0'] {
@@ -57,7 +89,7 @@
     padding-left: var(--space-fluid-10-20);
   }
 
-  [data-page='/'] [data-module-index='1'] .content.promo {
+  [data-page='/'] [data-module-index='1'] .text-card--promo {
     max-width: 30em;
     margin-block-end: var(--space-fluid-20-40);
   }
@@ -68,7 +100,7 @@
   }
 
   /* Module 4 */
-  [data-page='/'] [data-module-index='4'] .content.promo {
+  [data-page='/'] [data-module-index='4'] .text-card--promo {
     max-width: 70em;
     padding-inline-start: var(--space-fluid-40-80);
     padding-inline-end: var(--space-fluid-80-160);

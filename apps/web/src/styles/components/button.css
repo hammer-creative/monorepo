@@ -1,38 +1,33 @@
 /* apps/web/src/styles/components/button.css */
 
-.hero-module button.scroll-trigger {
-  position: relative;
-  padding: var(--space-fluid-10-20);
+.hero-card__scroll-trigger {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.hero-module button.scroll-trigger svg {
+.hero-card__scroll-trigger svg {
+  width: calc(var(--font-size-4) * 0.7);
+  height: calc(var(--font-size-4) * 0.7);
+  margin-top: 8px;
+  line-height: 1;
   color: $color-hyperbeam;
   transition: color 0.3s ease;
 }
 
-.hero-module button.scroll-trigger:hover svg {
+@media screen and (min-width: 50em) {
+  .hero-card__scroll-trigger svg {
+    margin-top: initial;
+    width: calc(var(--font-size-4));
+    height: calc(var(--font-size-4));
+  }
+}
+
+.hero-card__scroll-trigger:hover svg {
   color: $color-aircutter;
 }
 
-.hero-module button svg {
-  width: var(--font-size-xl-fluid);
-  height: auto;
-  line-height: 1;
-}
-
 @media screen and (min-width: 50em) {
-  .hero-module button.scroll-trigger {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
   [data-page='/services'] .hero-module button {
     padding-inline: var(--space-fluid-10-20);
     padding-block: var(--space-fluid-20-40);
@@ -40,9 +35,9 @@
 }
 
 [data-page^='/work'] #content-start {
-  scroll-margin-top: var(--space-fluid-20-40);
+  /* scroll-margin-top: var(--space-fluid-20-40); */
 }
 
-[data-page^='/services'] #content-start {
+[data-page='/services'] #content-start {
   scroll-margin-top: var(--space-fluid-20-40);
 }

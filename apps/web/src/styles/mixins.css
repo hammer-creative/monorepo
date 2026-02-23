@@ -2,6 +2,106 @@
 
 @import './tokens.css';
 
+/* Aspect ratios */
+@define mixin aspect-ratio-square {
+  aspect-ratio: var(--aspect-ratio-square);
+}
+
+@define-mixin aspect-ratio-hero-image {
+  aspect-ratio: var(--aspect-ratio-square);
+
+  @media screen and (min-width: 50em) {
+    aspect-ratio: var(--aspect-ratio-full-width);
+  }
+}
+
+@define-mixin aspect-ratio-full-width-image {
+  aspect-ratio: var(--aspect-ratio-full-width);
+}
+
+@define-mixin aspect-ratio-half-width {
+  aspect-ratio: var(--aspect-ratio-square);
+
+  @media screen and (min-width: 50em) {
+    aspect-ratio: var(--aspect-ratio-half-width);
+  }
+}
+
+@define-mixin aspect-ratio-impact {
+  aspect-ratio: 32 / 1;
+  @media screen and (min-width: 50em) {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@define-mixin body-extra-small {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-default);
+  font-size: var(--font-size--2);
+  line-height: var(--line-height-0);
+  letter-spacing: var(--letter-spacing-default);
+}
+
+@define-mixin body-small {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-default);
+  font-size: var(--font-size--1);
+  line-height: var(--line-height-0);
+  letter-spacing: initial;
+}
+
+@define-mixin body-medium {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-default);
+  font-size: var(--font-size-0);
+  line-height: var(--line-height-0);
+  letter-spacing: var(--letter-spacing-);
+}
+
+@define-mixin body-large {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-default);
+  font-size: var(--font-size-3);
+  line-height: 1.1em;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+@define-mixin title-primary {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  text-transform: uppercase;
+}
+
+@define-mixin title-secondary {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  text-transform: uppercase;
+}
+
+@define-mixin title-tertiary {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-3);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+@define-mixin link-hover $color, $hover-color, $transition {
+  color: $color;
+  transition: color $transition;
+
+  &:hover,
+  &:active {
+    color: $hover-color;
+  }
+}
+
 /* LAYOUT MIXINS */
 
 /**

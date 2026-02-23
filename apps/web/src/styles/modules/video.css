@@ -1,32 +1,6 @@
 /* apps/web/src/styles/videos.css */
 
-/* Z-INDEX LAYERS */
-.video-modal {
-  z-index: 210;
-}
-
-.video-modal-content {
-  z-index: 220;
-}
-
-.video-modal-content button,
-.video-modal-progress {
-  z-index: 230;
-}
-
-.single-video .video-modal-pause,
-.single-video .video-modal-play,
-.single-video .video-modal-mute {
-  z-index: 200;
-}
-
-/* When hovering video container, buttons turn aircutter */
-.container.single-video div[role='button']:hover .video-modal-pause,
-.container.single-video div[role='button']:hover .video-modal-play {
-  color: $color-aircutter;
-}
-
-/* Mute button: blue when muted, orange when unmuted */
+/* MUTE BUTTON STATES */
 .single-video .video-modal-mute[data-muted='true'] {
   color: $color-aircutter;
 }
@@ -35,7 +9,6 @@
   color: $color-hyperbeam;
 }
 
-/* On hover, swap the colors */
 .single-video .video-modal-mute[data-muted='true']:hover {
   color: $color-hyperbeam;
 }
@@ -43,6 +16,33 @@
 .single-video .video-modal-mute[data-muted='false']:hover {
   color: $color-aircutter;
 }
+
+.video-modal-content .video-modal-volume[data-muted='true'] {
+  color: $color-aircutter;
+}
+
+.video-modal-content .video-modal-volume[data-muted='false'] {
+  color: $color-hyperbeam;
+}
+
+.video-modal-content .video-modal-volume[data-muted='true']:hover {
+  color: $color-hyperbeam;
+}
+
+.video-modal-content .video-modal-volume[data-muted='false']:hover {
+  color: $color-aircutter;
+}
+
+.video-modal-content:hover .video-modal-play {
+  color: $color-aircutter;
+}
+
+/* HOVER STATES FOR SINGLE VIDEO */
+.container.single-video div[role='button']:hover .video-modal-pause,
+.container.single-video div[role='button']:hover .video-modal-play {
+  color: $color-aircutter;
+}
+
 /* MUX PLAYER CONFIGURATION */
 mux-player {
   --play-button: none;
@@ -157,7 +157,8 @@ mux-player {
 .video-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: $color-nightshade;
+  z-index: 2100;
 }
 
 .video-modal-content {
@@ -165,10 +166,15 @@ mux-player {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100vw;
+  width: calc(100vw - (var(--card-frame-2) * 2));
   background: #000;
-  overflow: hidden;
+  overflow: visible;
   border: none;
+  z-index: 2200;
+}
+
+html:has(.video-modal) {
+  overflow: hidden;
 }
 
 /* VIDEO CONTROLS - BASE */
@@ -187,7 +193,6 @@ mux-player {
   transition: color 300ms ease-in-out;
 }
 
-/* Only video-modal-content buttons get direct hover states */
 .video-modal-content .video-modal-close:hover,
 .video-modal-content .video-modal-close:active,
 .video-modal-content .video-modal-pause:hover,
@@ -209,7 +214,6 @@ mux-player {
   font-size: var(--font-size-lg-fluid);
 }
 
-/* Scale the SVG icons inside the buttons */
 .video-modal-content .video-modal-pause svg,
 .video-modal-content .video-modal-play svg,
 .video-modal-content .video-modal-volume svg,
@@ -248,6 +252,18 @@ mux-player {
   right: var(--space-fluid-20-40);
 }
 
+/* VIDEO CONTROLS - Z-INDEX */
+.video-modal-content button,
+.video-modal-progress {
+  z-index: 10;
+}
+
+.single-video .video-modal-pause,
+.single-video .video-modal-play,
+.single-video .video-modal-mute {
+  z-index: 10;
+}
+
 /* VIDEO PROGRESS BAR */
 .video-modal-progress {
   position: absolute;
@@ -257,7 +273,6 @@ mux-player {
   height: 0.75rem;
   background-color: rgba(255, 255, 255, 0.3);
   cursor: pointer;
-  z-index: 200;
 }
 
 .video-progress-buffered {

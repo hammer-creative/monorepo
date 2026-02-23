@@ -2,52 +2,44 @@
 import { SanityImageHalfWidth, TextBlock } from '@/components/common';
 import type { TextImageModule as TextImageModuleType } from '@/types/sanity.generated';
 
-type Layout = NonNullable<TextImageModuleType['layout']>;
-
-const LAYOUT_CLASS_MAP: Record<Layout, string> = {
-  textLeft: 'text-left',
-  textRight: 'text-right',
-} as const;
-
 function isValidTextImageModule(
   data: TextImageModuleType | null,
 ): data is TextImageModuleType {
   return data !== null;
 }
 
+/**
+ * TextImageModule renders a two-column card with an image and text block.
+ * Layout order is controlled by DOM order via the textLeft boolean.
+ * Child components receive BEM element classes from the parent for layout targeting.
+ *
+ * @param data - TextImageModule data from Sanity
+ * @param data.body - Optional body content as PortableText
+ * @param data.image - Optional image object
+ * @param data.layout - Layout variant key (textLeft, textRight)
+ */
 export function TextImageModule({
   data,
 }: {
   data: TextImageModuleType | null;
 }) {
-  // Guard: Early return if no valid data
   if (!isValidTextImageModule(data)) return null;
 
-  // Destructure module data
   const { body = null, image = null, layout = null } = data;
 
-  // Guard: Early return if no layout or no content
   if (!layout || (!body && !image)) return null;
 
-  // Derive layout class and helper flags
-  const layoutClass = LAYOUT_CLASS_MAP[layout] ?? '';
-  const hasBody = body != null;
-  const hasImage = image != null;
+  const textLeft = layout === 'textLeft';
+  const bem = 'text-image-card';
 
   return (
-    <div className={`content ${layoutClass}`}>
-      {/* Image */}
-      {hasImage && (
-        <div className="image">
-          <SanityImageHalfWidth image={image} fill />
-        </div>
+    <div className={`${bem}`}>
+      {textLeft && body && <TextBlock body={body} className={`${bem}__text`} />}
+      {image && (
+        <SanityImageHalfWidth image={image} className={`${bem}__image`} fill />
       )}
-
-      {/* Body */}
-      {hasBody && (
-        <div className="body">
-          <TextBlock body={body} />
-        </div>
+      {!textLeft && body && (
+        <TextBlock body={body} className={`${bem}__text`} />
       )}
     </div>
   );

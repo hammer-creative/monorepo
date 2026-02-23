@@ -8,12 +8,12 @@
 @import './typography.css';
 @import './wordmark.css';
 @import './marquee.css';
-@import './overlay';
 @import './toggle';
 @import './layout/layout.css';
 @import './layout/header.css';
 @import './layout/overlay.css';
 @import './components/navigation.css';
+@import './components/image';
 @import './components/label';
 @import './components/list';
 @import './components/link';
@@ -24,8 +24,10 @@
 @import './components/arrow';
 @import './components/button';
 @import './components/table';
+@import './components/model';
 @import './home.css';
-@import './modules/cards.css';
+@import './modules/cards-case-studies.css';
+@import './modules/cards-services.css';
 @import './modules/carousel.css';
 @import './modules/hero.css';
 @import './modules/impact.css';

@@ -53,7 +53,6 @@ export function CarouselBase({
     <div ref={containerRef}>
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        spaceBetween={20}
         speed={5000}
         loop={true}
         freeMode={true}
@@ -69,7 +68,7 @@ export function CarouselBase({
             slidesPerView: 3,
           },
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 3,
           },
         }}
         modules={[Autoplay, Pagination]}

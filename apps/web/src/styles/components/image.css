@@ -1,0 +1,44 @@
+/* apps/web/src/styles/components/image.css */
+
+@import '../mixins';
+
+/* Image - base style */
+.image {
+  overflow: hidden;
+}
+
+.image img {
+  z-index: var(--z-image);
+}
+
+/* Image, modules - carousel card */
+
+/* Image, modules - case study card */
+
+/* Image, modules - half-width */
+
+/* Image, modules - hero */
+.hero-card__image--hero {
+  @mixin aspect-ratio-hero-image;
+  /* min-height: 100vh; */
+}
+
+.single-image-card__image--full-width {
+  aspect-ratio: 16 / 9;
+}
+
+.text-image-card__image--half-width {
+  @mixin aspect-ratio-half-width;
+}
+
+.impact-cards--one-text-one-image .impact-card__image--impact {
+  @mixin aspect-ratio-impact;
+}
+
+/* Image, modules - full-width */
+
+/* Image, modules - text + image */
+
+.image--video-poster {
+  aspect-ratio: 16 /9;
+}

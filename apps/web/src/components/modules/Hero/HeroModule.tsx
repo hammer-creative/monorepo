@@ -1,22 +1,9 @@
-// TODO: remove mq and replace with pure css
-
-// .scroll-trigger {
-//   /* mobile: hidden */
-//   display: none;
-// }
-
-// @media (min-width: 60em) {
-//   .scroll-trigger {
-//     display: block;
-//   }
-// }
-
 // apps/web/src/components/modules/Hero/HeroModule.tsx
 'use client';
 
 import {
-  ArrowDown,
   Label,
+  LongArrow,
   SanityImageHero,
   TextBlock,
   Title,
@@ -31,9 +18,8 @@ import type {
   HeroModule as HeroModuleType,
 } from '@/types/sanity.generated';
 
-/**
- * Type guard to validate HeroModule data
- */
+const bem = 'hero-card';
+
 function isValidHeroModule(
   data: HeroModuleType | null,
 ): data is HeroModuleType {
@@ -41,11 +27,17 @@ function isValidHeroModule(
 }
 
 /**
- * Hero module component for case study pages
- * Displays full-width hero image with title, body text, and metadata
- * Includes scroll trigger button that repositions based on viewport width
+ * HeroModule renders a full-width hero image with title, body text, and metadata.
+ * Scroll trigger button repositions based on viewport width.
+ * Layout differences are handled via CSS using the modifier on the wrapper.
+ * Child components receive BEM element classes from the parent for layout targeting.
  *
- * @param data - Hero module content from Sanity
+ * @param data - HeroModule data from Sanity
+ * @param data.title - Hero title text
+ * @param data.body - Optional body content as PortableText
+ * @param data.image - Hero image
+ * @param data.services - Optional list of services
+ * @param data.deliverables - Optional list of deliverables
  * @param clients - Array of client data
  * @param onScrollTrigger - Optional callback when scroll button is clicked
  */
@@ -60,24 +52,18 @@ export function HeroModule({
 }) {
   const isWide = useMediaQuery('(min-width: 50em)');
 
-  // Guard: early return if no valid data
   if (!isValidHeroModule(data)) return null;
 
   const { title, body, image, services = [], deliverables = [] } = data;
 
-  // Extract client names from client data
-  const clientNames = (clients ?? [])
-    .map((c) => c?.name)
-    .filter((name): name is string => typeof name === 'string');
-
-  // Determine which sections to render
   const hasTitle = !!title;
-  const hasMeta = !!body || clientNames.length > 0;
-  const hasLists = services.length > 0 || deliverables.length > 0;
+  const hasBody = !!body;
+  const hasClients = (clients ?? []).length > 0;
+  const hasServices = services.length > 0;
+  const hasDeliverables = deliverables.length > 0;
+  const hasLists = hasServices || hasDeliverables;
+  const hasSummary = hasBody || hasClients;
 
-  /**
-   * Smooth scroll to content start and trigger animations
-   */
   const handleScrollClick = () => {
     const target = document.getElementById('content-start');
     if (target) {
@@ -86,71 +72,74 @@ export function HeroModule({
     }
   };
 
-  // Scroll trigger button
   const scrollButton = (
     <button
       onClick={handleScrollClick}
-      className={`scroll-trigger ${isWide ? 'wide' : 'narrow'}`}
+      className={`${bem}__scroll-trigger`}
       aria-label="Scroll to content"
     >
-      <ArrowDown />
+      <LongArrow direction="down" />
     </button>
   );
 
   return (
     <>
-      <div className="header">
+      <div className={`${bem}__image-wrapper`}>
         {image && (
-          <div className="image">
-            <SanityImageHero image={image} fill priority />
+          <>
+            <SanityImageHero
+              image={image}
+              fill
+              priority
+              className={`${bem}__image`}
+            />
             {isWide && scrollButton}
-          </div>
+          </>
         )}
-
         {hasTitle && !isWide && (
-          <div className="title-container">
-            <Title as="h1" variant="primary">
+          <div className={`${bem}__title-wrapper`}>
+            <Title as="h1" variant="primary" className={`${bem}__title`}>
               {title}
             </Title>
             {scrollButton}
           </div>
         )}
-
         {hasTitle && isWide && (
-          <Title as="h1" variant="primary">
+          <Title as="h1" variant="primary" className={`${bem}__title`}>
             {title}
           </Title>
         )}
       </div>
 
-      <div id="content-start" className="content">
-        {/* Decorative bar */}
-        <div className="bar" aria-hidden>
+      <div id="content-start" className={`${bem}__content`}>
+        <div className={`${bem}__bar`} aria-hidden>
           <svg width="80" height="10" viewBox="0 0 80 10">
             <rect width="80" height="10" fill="#FFCC98" />
           </svg>
         </div>
-        {/* Body text, clients, and lists */}
-        {(hasMeta || hasLists) && (
-          <div className="meta">
-            {hasMeta && (
-              <div className="body">
-                {body && <TextBlock body={body} variant="hero" />}
-                {clientNames.length > 0 && (
-                  <div className="clients">
+
+        {(hasSummary || hasLists) && (
+          <div className={`${bem}__details`}>
+            {hasSummary && (
+              <div className={`${bem}__summary`}>
+                {hasBody && (
+                  <TextBlock body={body} className={`${bem}__text`} />
+                )}
+                {hasClients && (
+                  <div className={`${bem}__clients`}>
                     <Label variant="client-label">Client</Label>
-                    <Label clients={clientNames} variant="client-name" />
+                    <Label
+                      clients={clients as Client[]}
+                      variant="client-name"
+                    />
                   </div>
                 )}
               </div>
             )}
-
             {hasLists && (
-              <div className="lists">
-                {services.length > 0 && (
-                  <ServicesListModule services={services} />
-                )}
-                {deliverables.length > 0 && (
+              <div className={`${bem}__lists`}>
+                {hasServices && <ServicesListModule services={services} />}
+                {hasDeliverables && (
                   <DeliverablesListModule deliverables={deliverables} />
                 )}
               </div>

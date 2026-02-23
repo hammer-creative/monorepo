@@ -1,4 +1,28 @@
 :root {
+  --width-wordmark-header: clamp(
+    147px,
+    calc(285px - ((1vw - 3.2px) * 8.625)),
+    285px
+  );
+  --z-image: 0;
+  --z-masthead: 1;
+  --z-menu: 1;
+  --z-model: 1;
+  --z-bokeh-1: 1;
+  --z-bokeh-2: 1;
+  --z-linear-gradient-1: 1;
+  --z-menu-overlay: 200;
+  --z-mobile-menu: 300;
+  --z-header: 400;
+  --z-menu-toggle: 2000;
+  --z-headroom: auto;
+  --z-wordmark: 1000;
+  --color-nightshade: $color-nightshade; /* #141515 */
+  --color-sandstorm: $color-sandstorm; /* #778888 */
+  --color-aircutter: $color-aircutter; /* #C7D3D3 */
+  --color-hyperbeam: $color-hyperbeam; /* #FFCC98 */
+  --color-hydroblast: $color-hydroblast; /* #35808D */
+  --color-vinewhip: $color-vinewhip; /* #274040 */
   --color-medium-gray: #778888;
   --viewport-layout: 120rem;
   --viewport-jumbo: 80rem;
@@ -6,6 +30,12 @@
   --viewport-default: 45rem;
   --viewport-medium: 40rem;
   --viewport-narrow: 20rem;
+
+  --aspect-ratio-square: 1 / 1;
+  --aspect-ratio-full-width: 16 / 9;
+  --aspect-ratio-half-width: 5 / 7;
+  --aspect-ratio-impact: 7 / 5;
+  --aspect-ratio-case-study-card: 1 / 1;
 
   --breakpoint-wide: var(--viewport-wide);
 
@@ -28,72 +58,204 @@
   --ease-slow: 0.6s ease-in-out;
   --ease-fast: 0.3s ease-in-out;
   --ease-menu-item: var(--ease-fast);
+  --ease-card: 0.6s ease-in-out;
+
+  /* formula: (max_px - min_px) / 16 = multiplier */
 
   --space-fluid-10-20: clamp(
     0.625rem,
-    calc(0.625rem + ((1vw - 3.2px) * 1.0417)),
+    calc(0.625rem + ((1vw - 3.2px) * 0.625)),
     1.25rem
-  );
+  ); /* 10px → 20px */
   --space-fluid-10-40: clamp(
     0.625rem,
-    calc(0.625rem + ((1vw - 3.2px) * 3.125)),
+    calc(0.625rem + ((1vw - 3.2px) * 1.875)),
     2.5rem
-  );
+  ); /* 10px → 40px */
   --space-fluid-10-60: clamp(
     0.625rem,
-    calc(0.625rem + ((1vw - 3.2px) * 5.2083)),
+    calc(0.625rem + ((1vw - 3.2px) * 3.125)),
     3.75rem
-  );
+  ); /* 10px → 60px */
+  --space-fluid-10-80: clamp(
+    0.625rem,
+    calc(0.625rem + ((1vw - 3.2px) * 4.375)),
+    5rem
+  ); /* 10px → 80px */
+  --space-fluid-10-100: clamp(
+    0.625rem,
+    calc(0.625rem + ((1vw - 3.2px) * 5.625)),
+    6.25rem
+  ); /* 10px → 100px */
+  --space-fluid-10-120: clamp(
+    0.625rem,
+    calc(0.625rem + ((1vw - 3.2px) * 6.875)),
+    7.5rem
+  ); /* 10px → 120px */
+  --space-fluid-10-160: clamp(
+    0.625rem,
+    calc(0.625rem + ((1vw - 3.2px) * 9.375)),
+    10rem
+  ); /* 10px → 160px */
+  --space-fluid-10-200: clamp(
+    0.625rem,
+    calc(0.625rem + ((1vw - 3.2px) * 11.875)),
+    12.5rem
+  ); /* 10px → 200px */
+
   --space-fluid-20-40: clamp(
     1.25rem,
-    calc(1.25rem + ((1vw - 3.2px) * 2.0833)),
+    calc(1.25rem + ((1vw - 3.2px) * 1.25)),
     2.5rem
-  );
+  ); /* 20px → 40px */
   --space-fluid-20-60: clamp(
     1.25rem,
-    calc(1.25rem + ((1vw - 3.2px) * 4.1667)),
+    calc(1.25rem + ((1vw - 3.2px) * 2.5)),
     3.75rem
-  );
+  ); /* 20px → 60px */
   --space-fluid-20-80: clamp(
     1.25rem,
-    calc(1.25rem + ((1vw - 3.2px) * 6.25)),
+    calc(1.25rem + ((1vw - 3.2px) * 3.75)),
     5rem
-  );
-  --space-fluid-40-80: clamp(
-    2.5rem,
-    calc(2.5rem + ((1vw - 3.2px) * 4.1667)),
-    5rem
-  );
+  ); /* 20px → 80px */
   --space-fluid-20-100: clamp(
     1.25rem,
-    calc(1.25rem + ((1vw - 3.2px) * 8.3333)),
+    calc(1.25rem + ((1vw - 3.2px) * 5)),
     6.25rem
-  );
+  ); /* 20px → 100px */
+  --space-fluid-20-120: clamp(
+    1.25rem,
+    calc(1.25rem + ((1vw - 3.2px) * 6.25)),
+    7.5rem
+  ); /* 20px → 120px */
+  --space-fluid-20-140: clamp(
+    1.25rem,
+    calc(1.25rem + ((1vw - 3.2px) * 7.5)),
+    8.75rem
+  ); /* 20px → 140px */
+  --space-fluid-20-160: clamp(
+    1.25rem,
+    calc(1.25rem + ((1vw - 3.2px) * 8.75)),
+    10rem
+  ); /* 20px → 160px */
+  --space-fluid-20-200: clamp(
+    1.25rem,
+    calc(1.25rem + ((1vw - 3.2px) * 11.25)),
+    12.5rem
+  ); /* 20px → 200px */
+
+  --space-fluid-40-60: clamp(
+    2.5rem,
+    calc(2.5rem + ((1vw - 3.2px) * 1.25)),
+    3.75rem
+  ); /* 40px → 60px */
+  --space-fluid-40-80: clamp(
+    2.5rem,
+    calc(2.5rem + ((1vw - 3.2px) * 2.5)),
+    5rem
+  ); /* 40px → 80px */
+  --space-fluid-40-100: clamp(
+    2.5rem,
+    calc(2.5rem + ((1vw - 3.2px) * 3.75)),
+    6.25rem
+  ); /* 40px → 100px */
   --space-fluid-40-120: clamp(
     2.5rem,
-    calc(2.5rem + ((1vw - 3.2px) * 8.3333)),
+    calc(2.5rem + ((1vw - 3.2px) * 5)),
     7.5rem
-  );
+  ); /* 40px → 120px */
+  --space-fluid-40-160: clamp(
+    2.5rem,
+    calc(2.5rem + ((1vw - 3.2px) * 7.5)),
+    10rem
+  ); /* 40px → 160px */
+  --space-fluid-40-200: clamp(
+    2.5rem,
+    calc(2.5rem + ((1vw - 3.2px) * 10)),
+    12.5rem
+  ); /* 40px → 200px */
+
+  --space-fluid-60-80: clamp(
+    3.75rem,
+    calc(3.75rem + ((1vw - 3.2px) * 1.25)),
+    5rem
+  ); /* 60px → 80px */
+  --space-fluid-60-100: clamp(
+    3.75rem,
+    calc(3.75rem + ((1vw - 3.2px) * 2.5)),
+    6.25rem
+  ); /* 60px → 100px */
   --space-fluid-60-120: clamp(
     3.75rem,
-    calc(3.75rem + ((1vw - 3.2px) * 6.25)),
+    calc(3.75rem + ((1vw - 3.2px) * 3.75)),
     7.5rem
-  );
+  ); /* 60px → 120px */
+  --space-fluid-60-160: clamp(
+    3.75rem,
+    calc(3.75rem + ((1vw - 3.2px) * 6.25)),
+    10rem
+  ); /* 60px → 160px */
+  --space-fluid-60-200: clamp(
+    3.75rem,
+    calc(3.75rem + ((1vw - 3.2px) * 8.75)),
+    12.5rem
+  ); /* 60px → 200px */
+
+  --space-fluid-80-100: clamp(
+    5rem,
+    calc(5rem + ((1vw - 3.2px) * 1.25)),
+    6.25rem
+  ); /* 80px → 100px */
+  --space-fluid-80-120: clamp(
+    5rem,
+    calc(5rem + ((1vw - 3.2px) * 2.5)),
+    7.5rem
+  ); /* 80px → 120px */
   --space-fluid-80-160: clamp(
     5rem,
-    calc(5rem + ((1vw - 3.2px) * 8.3333)),
+    calc(5rem + ((1vw - 3.2px) * 5)),
     10rem
-  );
+  ); /* 80px → 160px */
   --space-fluid-80-200: clamp(
     5rem,
-    calc(5rem + ((1vw - 3.2px) * 12.5)),
+    calc(5rem + ((1vw - 3.2px) * 7.5)),
     12.5rem
-  );
+  ); /* 80px → 200px */
+
+  --space-fluid-100-160: clamp(
+    6.25rem,
+    calc(6.25rem + ((1vw - 3.2px) * 3.75)),
+    10rem
+  ); /* 100px → 160px */
+  --space-fluid-100-200: clamp(
+    6.25rem,
+    calc(6.25rem + ((1vw - 3.2px) * 6.25)),
+    12.5rem
+  ); /* 100px → 200px */
+
+  --space-fluid-120-160: clamp(
+    7.5rem,
+    calc(7.5rem + ((1vw - 3.2px) * 2.5)),
+    10rem
+  ); /* 120px → 160px */
+  --space-fluid-120-200: clamp(
+    7.5rem,
+    calc(7.5rem + ((1vw - 3.2px) * 5)),
+    12.5rem
+  ); /* 120px → 200px */
+
+  --space-fluid-160-200: clamp(
+    10rem,
+    calc(10rem + ((1vw - 3.2px) * 2.5)),
+    12.5rem
+  ); /* 160px → 200px */
+
+  /* inverse — larger at narrow, smaller at wide */
   --space-fluid-40-20: clamp(
     1.25rem,
-    calc(2.5rem - ((1vw - 3.2px) * 2.0833)),
+    calc(2.5rem - ((1vw - 3.2px) * 1.25)),
     2.5rem
-  );
+  ); /* 40px → 20px */
 
   --font-sans: var(--font-diatype-medium);
   --font-sans-italic: var(--font-diatype-medium-italic);
@@ -130,290 +292,68 @@
     calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
     14px
   );
-  --font-size-promo-fluid: clamp(
-    40px,
-    calc(2.5rem + ((1vw - 3.2px) * 1.25)),
-    54px
-  );
+
   --font-size-subtitle-fluid: 42px;
 
   --font-weight-default: 500;
   --font-weight-light: 100;
 
+  --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6);
+
+  --card-frame-0: var(--space-fluid-10-20);
+  --card-frame-1: var(--space-fluid-20-40);
+  --card-frame-2: var(--space-fluid-20-80);
+
+  --flow-space-0: var(--space-fluid-10-20);
+  --flow-space-1: var(--space-fluid-20-40);
+  --flow-space-2: var(--space-fluid-40-60);
+  --flow-space-3: var(--space-fluid-40-80);
+  --flow-space-4: var(--space-fluid-60-120);
+  --flow-space-5: var(--space-fluid-80-160);
+
+  --gutter-margin-0: var(--space-fluid-20-40);
+  --gutter-padding-0: var(--space-fluid-20-40);
+  --gutter-padding-1: var(--space-fluid-10-120);
+  --gutter-padding-2: var(--space-fluid-10-200);
+
+  --font-size--3: clamp(10px, calc(0.625rem + ((1vw - 3.2px) * 0.25)), 14px);
+  /* (14 - 10) / 16 = 0.25 */
+  --font-size--2: clamp(14px, calc(0.875rem + ((1vw - 3.2px) * 0.25)), 18px);
+  /* (18 - 14) / 16 = 0.25 */
+  --font-size--1: clamp(16px, calc(1rem + ((1vw - 3.2px) * 0.4375)), 27px);
+  /* stays smaller longer, still hits 27px at 1920px */
+  --font-size-0: clamp(16px, calc(1rem + ((1vw - 3.2px) * 1.25)), 36px);
+  /* (36 - 16) / 16 = 1.25 */
+  --font-size-1: clamp(18px, calc(1.125rem + ((1vw - 3.2px) * 1.375)), 40px);
+  /* (40 - 18) / 16 = 1.375 */
+  --font-size-2: clamp(24px, calc(1.5rem + ((1vw - 3.2px) * 1.5)), 48px);
+  /* (48 - 24) / 16 = 1.5 */
+  --font-size-3: clamp(40px, calc(2.5rem + ((1vw - 3.2px) * 1.25)), 54px);
+  /* (54 - 40) / 16 = 0.875 */
+  --font-size-4: clamp(30px, calc(1.875rem + ((1vw - 3.2px) * 3.125)), 80px);
+  /* (80 - 30) / 16 = 3.125 */
+
+  /* line-heights: loose at narrow, tighter at wide — scales with font-size level */
+  --line-height--3: clamp(1.5em, calc(2em - ((1vw - 3.2px) * 0.03125)), 2em);
+  --line-height--2: clamp(
+    1.4em,
+    calc(1.9em - ((1vw - 3.2px) * 0.03125)),
+    1.9em
+  );
+  --line-height--1: clamp(1.3em, calc(1.7em - ((1vw - 3.2px) * 0.025)), 1.7em);
+  --line-height-0: clamp(1.2em, calc(1.6em - ((1vw - 3.2px) * 0.025)), 1.6em);
+  --line-height-1: clamp(1.1em, calc(1.5em - ((1vw - 3.2px) * 0.025)), 1.5em);
+  --line-height-2: clamp(1em, calc(1.4em - ((1vw - 3.2px) * 0.025)), 1.4em);
+
   --line-height-very-tight: 0.9;
-  --line-height-tight: 0.9;
+  --line-height-tight: 1;
   --line-height-default: 1.2;
   --line-height-medium: 1.4;
   --line-height-loose: 1.6;
   --line-height-very-loose: 2;
 
-  --line-height-hero: --letter-spacing-default: 1;
+  --letter-spacing-default: 0.02em;
   --letter-spacing-tight: -0.03em;
   --letter-spacing-loose: 0.15em;
   --letter-spacing-extra-loose: 0.25em;
-
-  --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6);
-}
-
-/* Typography */
-.font-sans {
-  font-family: var(--font-sans);
-}
-.font-serif {
-  font-family: var(--font-serif);
-}
-.font-weight-100 {
-  font-weight: 100;
-}
-.font-weight-900 {
-  font-weight: 900;
-}
-
-.text-xs-fluid {
-  font-size: var(--font-size-xs-fluid);
-}
-.text-sm-fluid {
-  font-size: var(--font-size-sm-fluid);
-}
-.text-md-fluid {
-  font-size: var(--font-size-md-fluid);
-}
-.text-lg-fluid {
-  font-size: var(--font-size-lg-fluid);
-}
-.text-xl-fluid {
-  font-size: var(--font-size-xl-fluid);
-}
-
-.letter-spacing-tight {
-  letter-spacing: -0.01em;
-}
-.letter-spacing-wide {
-  letter-spacing: 0.5em;
-}
-
-.line-height-default {
-  line-height: 1.2;
-}
-.line-height-tight {
-  line-height: 0.9;
-}
-.line-height-loose {
-  line-height: 1;
-}
-.line-height-loose-2x {
-  line-height: 2;
-}
-
-.uppercase {
-  text-transform: uppercase;
-}
-.ws-pre-line {
-  white-space: pre-line;
-}
-.align-center {
-  text-align: center;
-}
-
-/* Layout */
-.block {
-  display: block;
-}
-.flex {
-  display: flex;
-}
-.flex-row {
-  flex-direction: row;
-}
-.flex-col {
-  flex-direction: column;
-}
-.flex-1 {
-  flex: 1;
-}
-.grid {
-  display: grid;
-}
-
-.justify-center {
-  justify-content: center;
-}
-.self-end {
-  align-self: end;
-}
-
-.grid-cols-1 {
-  grid-template-columns: 1fr;
-}
-.grid-cols-2 {
-  grid-template-columns: 1fr 1fr;
-}
-.grid-rows-auto {
-  grid-template-rows: auto auto;
-}
-
-.col-span-2 {
-  grid-column: span 2;
-}
-.row-span-2 {
-  grid-row: span 2;
-}
-
-.display-none {
-  display: none;
-}
-
-.absolute {
-  position: absolute;
-}
-.bottom-0 {
-  bottom: 0;
-}
-.left-0 {
-  left: 0;
-}
-
-/* Spacing */
-.gap-10 {
-  gap: var(--space-10);
-}
-.gap-20 {
-  gap: var(--space-20);
-}
-.gap-30 {
-  gap: var(--space-30);
-}
-.gap-40 {
-  gap: var(--space-40);
-}
-
-.px-fluid-10-20 {
-  padding-inline: var(--space-fluid-10-20);
-}
-.px-fluid-20-40 {
-  padding-inline: var(--space-fluid-20-40);
-}
-.px-fluid-20-60 {
-  padding-inline: var(--space-fluid-20-60);
-}
-.px-fluid-20-80 {
-  padding-inline: var(--space-fluid-20-80);
-}
-
-.py-fluid-10-20 {
-  padding-block: var(--space-fluid-10-20);
-}
-.py-fluid-20-40 {
-  padding-block: var(--space-fluid-20-40);
-}
-.py-fluid-20-60 {
-  padding-block: var(--space-fluid-20-60);
-}
-.py-fluid-20-80 {
-  padding-block: var(--space-fluid-20-80);
-}
-.py-fluid-40-120 {
-  padding-block: var(--space-fluid-40-120);
-}
-
-.mb-3 {
-  margin-block-end: 3px;
-}
-.mb-10 {
-  margin-block-end: var(--space-10);
-}
-.mb-20 {
-  margin-block-end: var(--space-20);
-}
-.mr-5p {
-  margin-inline-end: 5%;
-}
-
-/* Sizing */
-.w-full {
-  width: 100%;
-}
-.w-half {
-  width: 50%;
-}
-.w-50 {
-  width: 50%;
-}
-.w-40 {
-  width: 40%;
-}
-.w-thirds {
-  width: 33.333%;
-}
-.w-two-thirds {
-  width: 66.666%;
-}
-
-.max-w-40 {
-  max-width: 40%;
-}
-.min-h-2em {
-  min-height: 2em;
-}
-
-.h-screen {
-  height: 100vh;
-}
-
-.aspect-16-9 {
-  aspect-ratio: 16 / 9;
-}
-.aspect-1-1 {
-  aspect-ratio: 1 / 1;
-}
-
-/* Text */
-.word-break-keep {
-  word-break: keep-all;
-}
-.overflow-wrap-normal {
-  overflow-wrap: normal;
-}
-
-.max-w-prose-40 {
-  max-width: 40ch;
-}
-
-.max-w-prose-50 {
-  max-width: 50ch;
-}
-
-.max-w-prose-60 {
-  max-width: 60ch;
-}
-.max-w-prose-80 {
-  max-width: 80ch;
-}
-
-/* Responsive */
-@media (min-width: 50em) {
-  .md\:grid-cols-2 {
-    grid-template-columns: 1fr 1fr;
-  }
-  .md\:col-span-1 {
-    grid-column: span 1;
-  }
-  .md\:col-start-2 {
-    grid-column-start: 2;
-  }
-  .md\:row-span-2 {
-    grid-row: span 2;
-  }
-  .md\:row-start-1 {
-    grid-row-start: 1;
-  }
-  .md\:self-end {
-    align-self: end;
-  }
-  .md\:mb-0 {
-    margin-bottom: 0;
-  }
-  .md\:flex-row {
-    flex-direction: row;
-  }
 }

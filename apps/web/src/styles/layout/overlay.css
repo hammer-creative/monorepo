@@ -4,6 +4,7 @@
 body:has(.menu-overlay) {
   position: fixed;
   width: 100%;
+  z-index:;
 }
 
 /* Full-screen overlay backdrop */
@@ -11,5 +12,9 @@ body:has(.menu-overlay) {
   position: fixed;
   inset: 0;
   background: $color-nightshade;
-  z-index: 200;
+  z-index: var(--z-menu-overlay);
+}
+
+body:has(.menu-overlay) .mobile-menu.is-open {
+  z-index: var(--z-mobile-menu);
 }

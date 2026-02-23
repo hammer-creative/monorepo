@@ -33,22 +33,20 @@ export function Header({ navigationData }: HeaderProps) {
 
   if (isHome) {
     return (
-      <header>
+      <Headroom tag="header" disableInlineStyles>
         <MenuToggle />
-      </header>
+      </Headroom>
     );
   }
 
   return (
-    <>
-      <Headroom tag="header" disableInlineStyles>
-        <Wordmark
-          text={navigationData.wordmark.text}
-          href={navigationData.wordmark.href}
-          className="wordmark"
-        />
-      </Headroom>
+    <Headroom tag="header" disableInlineStyles>
+      <Wordmark
+        text={navigationData.wordmark.text}
+        href={navigationData.wordmark.href}
+        className="wordmark"
+      />
       <MenuToggle />
-    </>
+    </Headroom>
   );
 }

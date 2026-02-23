@@ -3,7 +3,7 @@ import { ArrowUpRight, ClientIcons, ExtendedLink } from '@/components/common';
 import { Impressum } from '@/components/common/Impressum';
 import { Tagline } from '@/components/common/Tagline';
 import { WordmarkSVG } from '@/components/common/Wordmark';
-import Scene from '@/components/model/Scene';
+import { MarqueeScene } from '@/components/marquee/MarqueeScene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
 import {
@@ -20,13 +20,10 @@ import type {
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
-import type { ReactNode } from 'react';
 
 import { homePageAnimations } from './page.animations';
 
-interface HomePageData {
-  homePage: HomePageType | null;
-}
+const bem = 'home';
 
 const moduleComponents = {
   caseStudyCardModule: CaseStudyCardModule,
@@ -40,133 +37,112 @@ interface InjectedLink {
   href: string;
   label: string;
   className?: string;
-  arrowComponent?: ReactNode;
 }
 
-const injectedLinks: InjectedLink[] = [
+const INJECTED_LINKS: InjectedLink[] = [
   {
     moduleIndex: 1,
     href: '/services',
     label: 'View Our Services',
     className: 'label',
   },
-  {
-    moduleIndex: 3,
-    href: '/work',
-    label: 'View All Work',
-    className: 'label',
-  },
+  { moduleIndex: 3, href: '/work', label: 'View All Work', className: 'label' },
 ];
 
 export const metadata: Metadata = {
   title: 'Home',
-  openGraph: {
-    title: 'Home',
-    type: 'website',
-  },
+  openGraph: { title: 'Home', type: 'website' },
 };
 
 export const revalidate = 60;
 
-async function getHomePageData(): Promise<HomePageData> {
+async function getHomePageData(): Promise<{ homePage: HomePageType | null }> {
   const draft = await draftMode();
   const sanityClient = draft.isEnabled ? draftClient : client;
   const homePage = await getHomePage(sanityClient);
   return { homePage };
 }
 
+function getAnimateConfig(type: string, index: number) {
+  if (type === 'textModule' && index === 0)
+    return homePageAnimations.textModuleFirst;
+  if (type === 'textModule' && index === 1)
+    return homePageAnimations.textModuleSecond;
+  return null;
+}
+
 export default async function HomePage() {
   const { homePage } = await getHomePageData();
-
   if (!homePage) return null;
 
-  const resolvedModules = homePage.modules?.map(resolveModuleColors) || [];
+  const resolvedModules = homePage.modules?.map(resolveModuleColors) ?? [];
 
   return (
-    <div className="layout-container">
-      <div className="marquee">
-        <div className="masthead">
-          <div className="row">
-            <div className="wordmark">
-              <WordmarkSVG />
-              <Tagline />
-            </div>
+    <>
+      <div className={`${bem}__marquee`}>
+        <div className={`${bem}__masthead`}>
+          <div className={`${bem}__wordmark`}>
+            <WordmarkSVG />
+            <Tagline />
           </div>
-          <div className="row">
-            <Impressum />
-          </div>
+          <Impressum />
         </div>
-        <Scene />
+        <div className={`${bem}__scene`}>
+          <MarqueeScene />
+        </div>
       </div>
-      <div className="layout-wrapper">
+      <div className={`${bem}__modules`}>
         {resolvedModules.flatMap((mod, index) => {
           const Component =
             moduleComponents[mod._type as keyof typeof moduleComponents];
-
           if (!Component) {
             console.warn(`No component found for module type "${mod._type}"`);
             return [];
           }
 
-          const moduleClass = `module ${toKebab(mod._type)}`;
-          const { backgroundColor, textColor } = mod;
+          const links = INJECTED_LINKS.filter((l) => l.moduleIndex === index);
+          const animateConfig = getAnimateConfig(mod._type, index);
 
-          let animateConfig;
-          if (mod._type === 'textModule' && index === 0) {
-            animateConfig = homePageAnimations.textModuleFirst;
-          } else if (mod._type === 'textModule' && index === 1) {
-            animateConfig = homePageAnimations.textModuleSecond;
-          }
-
-          const linksForThisModule = injectedLinks.filter(
-            (link) => link.moduleIndex === index,
+          const content = (
+            <>
+              {/* @ts-expect-error - Dynamic module rendering */}
+              <Component data={mod as ModuleData} />
+              {links.map((link, i) => (
+                <ExtendedLink
+                  key={i}
+                  href={link.href}
+                  className={link.className}
+                  arrowComponent={<ArrowUpRight />}
+                >
+                  {link.label}
+                </ExtendedLink>
+              ))}
+            </>
           );
 
-          const sections = [
+          const section = (
             <section
               key={mod._key}
-              className={moduleClass}
+              className={`module ${toKebab(mod._type)}`}
               data-module-index={index}
               style={
                 {
-                  '--module-bg': backgroundColor?.hex,
-                  '--module-text': textColor?.hex,
+                  '--module-bg': mod.backgroundColor?.hex,
+                  '--module-text': mod.textColor?.hex,
                 } as React.CSSProperties
               }
             >
               {animateConfig ? (
                 <AnimateOnScroll config={animateConfig}>
-                  {/* @ts-expect-error - Dynamic module rendering */}
-                  <Component data={mod as ModuleData} />
-                  {linksForThisModule.map((link, linkIndex) => (
-                    <ExtendedLink
-                      key={`link-${index}-${linkIndex}`}
-                      href={link.href}
-                      className={link.className}
-                      arrowComponent={<ArrowUpRight />}
-                    >
-                      {link.label}
-                    </ExtendedLink>
-                  ))}
+                  {content}
                 </AnimateOnScroll>
               ) : (
-                <>
-                  {/* @ts-expect-error - Dynamic module rendering */}
-                  <Component data={mod as ModuleData} />
-                  {linksForThisModule.map((link, linkIndex) => (
-                    <ExtendedLink
-                      key={`link-${index}-${linkIndex}`}
-                      href={link.href}
-                      className={link.className}
-                      arrowComponent={<ArrowUpRight />}
-                    >
-                      {link.label}
-                    </ExtendedLink>
-                  ))}
-                </>
+                content
               )}
-            </section>,
-          ];
+            </section>
+          );
+
+          const sections = [section];
 
           if (index === resolvedModules.length - 2) {
             sections.push(
@@ -182,6 +158,6 @@ export default async function HomePage() {
           return sections;
         })}
       </div>
-    </div>
+    </>
   );
 }

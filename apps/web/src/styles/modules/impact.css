@@ -1,9 +1,79 @@
 /* apps/web/src/styles/modules/impact.css */
 
-@import '../mixins.css';
+/* Layout, imoact-module */
+.impact-cards {
+  display: flex;
+  flex-direction: column;
+}
 
-/* Content */
-.impact-module .text-block {
+.impact-cards > * {
+  flex: 1;
+}
+
+.impact-cards .image {
+  order: -1; /* float image to the top */
+}
+
+.impact-card__item .title,
+.impact-card__item .text {
+  padding-inline: var(--gutter-padding-0);
+}
+
+.impact-card__text p {
+}
+
+.impact-card__item .title {
+  @mixin title-tertiary;
+  padding-block-start: var(--gutter-padding-0);
+  max-width: 100%;
+  width: 100%;
+  min-height: 3em;
+}
+
+/* Layout, impact-module, responsive */
+@media screen and (min-width: 50em) {
+  .impact-cards {
+    flex-direction: row;
+  }
+
+  .impact-cards .image {
+    order: 2; /* image always displayed last */
+  }
+
+  .impact-card__item {
+    min-height: initial;
+  }
+
+  .impact-card__text {
+    padding-block-end: var(--space-fluid-100-160);
+  }
+
+  .impact-card__title {
+    margin-block-end: var(--space-20);
+  }
+}
+
+/* Borders, impact-module */
+.impact-card__item {
+  min-height: 300px;
+  border-bottom: 1px solid var(--color-medium-gray);
+}
+
+/* Borders, impact-module, responsive */
+@media screen and (min-width: 50em) {
+  .impact-card__item:nth-child(2) {
+    border-left: 1px solid var(--color-medium-gray);
+    border-right: 1px solid var(--color-medium-gray);
+  }
+}
+
+/* Typography, impact-module */
+.impact-card__text p {
+  @mixin body-extra-small;
+}
+
+/* DELETE BELOW HERE */
+/* .impact-module .body {
   padding-inline-end: 15vw;
 }
 
@@ -20,7 +90,7 @@
   order: 1;
 }
 
-/* Text Item */
+
 .impact-module .text-item {
   padding-inline: var(--space-fluid-20-40);
   padding-block-start: var(--space-fluid-20-40);
@@ -43,14 +113,14 @@
   border-bottom: 1px solid var(--color-medium-gray);
 }
 
-/* Image */
+
 .impact-module .image {
   aspect-ratio: 16 / 9;
 }
 
-/* Responsive */
+
 @media (min-width: 50em) {
-  /* Content */
+
   .impact-module .content {
     flex-direction: row;
   }
@@ -63,11 +133,11 @@
     order: initial;
   }
 
-  .impact-module .content.one-text .text-block {
+  .impact-module .content.one-text .body {
     padding-inline-end: 10vw;
   }
 
-  /* Equal distribution for any number of items */
+
   .impact-module .content > * {
     flex: 1;
     box-sizing: border-box;
@@ -80,11 +150,11 @@
     border-right: 1px solid var(--color-medium-gray);
   }
 
-  .impact-module .text-block {
+  .impact-module .body {
     padding-inline-end: var(--space-20);
   }
 
   .impact-module .one-text .text-item {
     padding-inline-end: initial;
   }
-}
+} */

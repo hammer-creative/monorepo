@@ -1,9 +1,23 @@
-/* apps/web/src/styles/typography.css
-
-Contains typographic rhythm, scaling, and sizing. Does not contain spacing, color, or special effects */
+/* apps/web/src/styles/typography.css */
 
 /* @import './tokens.css'; */
 @import './mixins';
+
+body {
+  font-family: var(--font-sans);
+}
+
+.title {
+  white-space: pre-line;
+}
+
+.text p:not(:last-of-type) {
+  margin-block-end: var(--space-fluid-10-20);
+}
+
+.text blockquote {
+  margin-block: var(--space-fluid-40-80);
+}
 
 .title {
   line-height: var(--line-height-tight);
@@ -20,32 +34,6 @@ Contains typographic rhythm, scaling, and sizing. Does not contain spacing, colo
 
   /* mb-3 mr-5p pt-4 text-lg-fluid ws-pre-line */
 }
-
-.title.tertiary {
-}
-
-@media (min-width: 50em) {
-  .title.primary {
-  }
-
-  .title.secondary {
-  }
-}
-
-body {
-  font-family: var(--font-sans);
-}
-
-.title.primary {
-}
-
-.title.secondary {
-}
-/* HEADINGS */
-/* h1,
-h2 {
-  font-weight: 700;
-} */
 
 h3 {
   /* font-weight: 100; */

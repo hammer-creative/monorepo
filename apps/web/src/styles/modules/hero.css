@@ -1,26 +1,105 @@
 /* apps/web/src/styles/modules/hero.css */
 
-/* Base */
-.hero-module .header {
+/* Layout, hero-module */
+.case-study .hero-module {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-card__scroll-trigger {
+  position: relative;
+}
+
+.hero-card__image-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  container-type: inline-size;
+  /* container-type: inline-size; */
 }
 
-.hero-module .header .image {
+.hero-card__title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: var(--card-frame-1);
+}
+
+.hero-card__title {
+  /* padding: var(--card-frame-0); */
+}
+
+.hero-card__image--hero {
   flex: 1;
   min-height: 0;
-  aspect-ratio: 1 / 1;
 }
 
+.hero-card__bar {
+  display: none;
+}
+
+/* Layout, hero module: editorial content */
+.hero-card__details {
+  padding-inline: var(--card-frame-1);
+  padding-block-end: var(--card-frame-1);
+}
+
+.hero-card__details > * > * {
+  margin-bottom: var(--card-frame-2);
+}
+
+.hero-card__details {
+  /* padding: var(--card-frame-0); */
+}
+
+/* Layout, hero module: lists */
+.hero-card__lists {
+  display: flex;
+  gap: var(--gutter-padding-1);
+}
+
+/* Responsive layout, hero-module */
 @media screen and (min-width: 50em) {
-  .hero-module .header .image {
-    aspect-ratio: 16 / 9;
+  .case-study .hero-card__bar {
+    display: block;
+  }
+
+  .hero-card__scroll-trigger {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--card-frame-0);
+  }
+
+  .hero-card__title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: var(--module-bg);
+    width: 50%;
+    padding: var(--card-frame-0);
+  }
+  .hero-card__details {
+    display: flex;
+  }
+  .hero-card__details > * {
+    flex: 1;
   }
 }
 
+/* Typography, hero-module */
+.case-study .hero-module .hero-card__title {
+  @mixin title-primary;
+}
+
+.case-study .hero-card__text {
+  @mixin body-large;
+}
+
+/* DELETE BELOW HERE */
 /* Services page */
 [data-page='/services'] .header .image::after {
   content: '';
@@ -124,7 +203,7 @@
   padding-block-end: var(--space-fluid-20-40);
 }
 
-.case-study .hero-module .content .meta .text-block {
+.case-study .hero-module .content .meta .body {
   margin-block-end: var(--space-fluid-20-40);
 }
 
@@ -157,7 +236,7 @@
     flex: 1;
   }
 
-  .case-study .hero-module .content .meta .text-block {
+  .case-study .hero-module .content .meta .body {
     padding-inline-end: 5vw;
   }
 

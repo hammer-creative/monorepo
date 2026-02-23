@@ -28,9 +28,7 @@ export function CaseStudyCarousel({ data }: CaseStudyCarouselProps) {
         return (
           <SwiperSlide key={_id} className="case-study-card">
             <Link href={`/work/${slug ?? ''}`}>
-              <div className="image">
-                <SanityImageCarousel image={teaserImage} />
-              </div>
+              <SanityImageCarousel image={teaserImage} />
               <div className="meta">
                 {title && (
                   <Title as="h3" variant="tertiary">

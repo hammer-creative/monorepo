@@ -2,165 +2,104 @@
 
 /* components/text-block.css */
 
-.text-block {
+.body {
   line-height: var(--line-height-loose);
 }
 
 /* Module-specific overrides */
-.text-module .text-block.dropquote {
+.text-module .body.dropquote {
   font-family: var(--font-sans);
   font-size: var(--font-size-md-fluid);
 }
 
-.text-module .text-block.dropquote {
+.text-module .body.dropquote {
   padding-inline: var(--space-fluid-20-60);
 }
 
-.text-module .text-block.dropquote {
+.text-module .body.dropquote {
   max-width: 55ch;
   width: 100%;
   text-wrap: balance;
 }
 
 /* Module-specific override: Services page */
-[data-page='/services'] .text-block.small {
+[data-page='/services'] .body.small {
   font-size: var(--font-size-xs-fluid);
 }
 
 /* Module-specific override: Hero module */
-.hero-module .text-block {
+.hero-module .body {
   font-family: var(--font-sans);
   font-size: var(--font-size-lg-fluid);
   line-height: var(--line-height-default);
 }
 
 /* Module-specific override: Impact module */
-.impact-module .text-block {
+.impact-module .body {
   font-family: var(--font-sans);
   font-size: var(--font-size-xs-fluid);
   line-height: var(--line-height-very-loose);
 }
 
 /* Module-specific override: Text module, headline */
-.text-module .text-block.has-headline {
+.text-module .body.has-headline {
   font-family: var(--font-sans);
   font-size: var(--font-size-md-fluid);
 }
 
 /* Module-specific override: Text + image module, headline */
-.text-image-module .text-block {
+.text-image-module .body {
   font-size: var(--font-size-md-fluid);
 }
 
 /* Module-specific override: Text module, promo */
 [data-page='/'] .layout-wrapper {
-  section:first-child .promo .text-block,
-  section:nth-child(6) .promo .text-block {
-    font-size: var(--font-size-promo-fluid);
+  section:first-child .home .body,
+  section:nth-child(6) .home .body {
+    font-size: var(--font-size-3);
     line-height: var(--line-height-tight);
     letter-spacing: -0.04em;
     color: $color-sandstorm;
   }
 }
 
-[data-page='/'] .layout-wrapper section:nth-child(2) .promo .text-block {
+[data-page='/'] .layout-wrapper section:nth-child(2) .home .body {
   font-size: var(--font-size-sm-fluid);
   line-height: var(--line-height-very-loose);
 }
 
-[data-page='/services'] .hero-module p.text-block,
-[data-page='/services'] .services-card-module p.text-block {
+[data-page='/services'] .hero-module p.body,
+[data-page='/services'] .services-card-module p.body {
   line-height: var(--line-height-loose);
 }
 
 @media (min-width: 50em) {
-  .text-module .text-block.default {
+  .text-module .body.default {
     font-size: var(--font-size-sm-fluid);
   }
 
-  .text-module .text-block {
+  .text-module .body {
     line-height: var(--line-height-medium);
   }
 
   /* Module-specific override: Text module, dropquote */
-  .text-module .text-block.dropquote {
+  .text-module .body.dropquote {
     font-size: var(--font-size-lg-fluid);
     /* max-width: 50ch;
     width: 100%; */
   }
 
-  .impact-module .text-block {
+  .impact-module .body {
     line-height: var(--line-height-loose);
   }
 }
 
-[data-page='/privacy'] article > * {
-  color: $color-aircutter;
-}
-
-[data-page='/privacy'] article p {
-  font-size: var(--font-size-sm-fluid);
-}
-
-[data-page='/privacy'] article h1 {
-  font-size: var(--font-size-xl-fluid);
-  margin-bottom: var(--space-40);
-  text-align: center;
-}
-
-[data-page='/privacy'] article h2 {
-  font-size: var(--font-size-lg-fluid);
-  text-transform: normal;
-  margin-block: var(--space-40);
-  text-align: center;
-}
-
-[data-page='/privacy'] article p {
-  margin-block-end: var(--space-fluid-10-20);
-}
-
-[data-page='/privacy'] article a {
-  color: $color-hyperbeam;
-}
-
-[data-page='/privacy'] {
-  h2,
-  h3,
-  h4 {
-    margin-block: var(--space-fluid-10-20);
-  }
-}
-
-[data-page='/privacy'] article {
-  ul li,
-  ol li {
-    margin-block: var(--space-10);
-    font-size: var(--font-size-sm-fluid);
-    list-style-type: disc; /* filled circle (default) */
-  }
-  [data-page='/privacy'] > * {
-    line-height: 1.4;
-  }
-
-  ol,
-  ul {
-    padding-left: 5em;
-    padding-right: 5em;
-  }
-
-  ol li,
-  ul li {
-    padding-left: 0.1ch; /* indent the text */
-    text-indent: -0.1ch; /* hang the bullet */
-  }
-}
-
-[data-page='/services'] .chyron-card p.text-block {
+[data-page='/services'] .chyron-card p.body {
   width: 30ch;
 }
 
 @media screen and (min-width: 50em) {
-  [data-page='/services'] .hero-module p.text-block {
+  [data-page='/services'] .hero-module p.body {
     width: 30ch;
   }
 }

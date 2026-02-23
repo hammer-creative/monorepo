@@ -94,7 +94,7 @@
 /* Page-specific overrides – Homepage – Text Module, promo */
 [data-page='/'] .layout-wrapper h2 {
   /* TODO: change to title.secondary? */
-  font-size: var(--font-size-promo-fluid);
+  font-size: var(--font-size-3);
   line-height: var(--line-height-tight);
   letter-spacing: -0.04em;
 }
@@ -102,4 +102,23 @@
 /* Page specific overrides */
 .case-study-carousel-module > .title.tertiary {
   font-size: var(--font-size-lg-fluid);
+}
+
+@media screen and (min-width: 50em) {
+  .chyron-card .title {
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  [data-page='/services'] .chyron-card .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  [data-page='/services'] .chyron-card p.body {
+    width: 40ch !important;
+    text-align: center;
+    width: 100%;
+  }
 }

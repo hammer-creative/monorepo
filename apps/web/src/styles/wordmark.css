@@ -19,16 +19,16 @@ body:has(.menu-overlay) .mobile-menu .wordmark svg {
   height: auto;
 }
 
-/* body:has(.menu-overlay) .mobile-menu .wordmark {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-} */
-
 /* Header */
 header svg {
-  color: $color-hyperbeam;
-  width: 147px;
+  color: var(--color-hyperbeam);
+  width: var(--width-wordmark-header);
+  height: auto;
+  transition: color var(--ease-menu-item);
+}
+
+header svg:hover {
+  color: var(--color-aircutter);
 }
 
 /* Footer */
@@ -39,7 +39,3 @@ footer svg {
 footer .wordmark {
   transform: translateY(0%);
 }
-
-/* svg {
-  filter: drop-shadow(0 0 1px white);
-} */

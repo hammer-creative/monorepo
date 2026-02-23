@@ -26,9 +26,7 @@ export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
       {images.map((item: CarouselImageItem) => (
         <>
           <SwiperSlide key={item._key}>
-            <div className="image">
-              <SanityImageCarousel image={item.image ?? null} />
-            </div>
+            <SanityImageCarousel image={item.image ?? null} />
           </SwiperSlide>
         </>
       ))}
