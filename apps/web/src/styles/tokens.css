@@ -35,7 +35,7 @@
   --aspect-ratio-full-width: 16 / 9;
   --aspect-ratio-half-width: 5 / 7;
   --aspect-ratio-impact: 7 / 5;
-  --aspect-ratio-case-study-card-landscape: 1.725 / 1;
+  --aspect-ratio-case-study-card-landscape: 69 / 40;
   --breakpoint-wide: var(--viewport-wide);
 
   --space-5: 0.3125rem; /* 5px */
