@@ -44,18 +44,18 @@
   text-transform: initial;
 }
 
-/* Module 3 */
+/* Module 3: Case study grid */
 [data-page='/'] [data-module-index='3'] {
   margin-block-end: var(--space-fluid-20-80);
 }
 
 [data-page='/'] [data-module-index='3'] .case-study-grid {
-  margin-block-end: var(--space-fluid-20-80);
+  margin-block-end: var(--space-fluid-10-20);
 }
 
-/* Module 4 */
-[data-page='/work'] .content.home {
-  padding-inline-end: var(--space-fluid-40-80);
+/* Module 4: Hammer is always in the trenches... */
+[data-page='/'] [data-module-index='4'] .text-card__text p {
+  @mixin body-large;
 }
 
 /* Client Icons Module */
@@ -71,7 +71,7 @@
     padding-block-end: var(--space-fluid-20-40);
   }
 
-  /* Module 1 */
+  /* Module 1: View our services... */
   [data-page='/'] [data-module-index='1'] {
     position: relative;
     max-width: 40em;
@@ -79,18 +79,17 @@
     padding-left: var(--space-fluid-10-20);
   }
 
-  [data-page='/'] [data-module-index='1'] .text-card--promo {
+  [data-page='/'] [data-module-index='1'] .text-card--home {
     max-width: 30em;
     margin-block-end: var(--space-fluid-20-40);
   }
 
-  /* Module 3 */
-  [data-page='/'] [data-module-index='3'] .case-study-grid {
-    margin-block-end: var(--space-fluid-10-20);
+  [data-page='/'] [data-module-index='3'] .label {
+    display: block;
   }
 
   /* Module 4 */
-  [data-page='/'] [data-module-index='4'] .text-card--promo {
+  [data-page='/'] [data-module-index='4'] .text-card--home {
     max-width: 70em;
     padding-inline-start: var(--space-fluid-40-80);
     padding-inline-end: var(--space-fluid-80-160);
@@ -99,6 +98,6 @@
 
   /* Client Icons Module */
   [data-page='/'] .client-icons-module {
-    margin-block-end: var(--space-fluid-10-20);
+    margin-block-end: var(--space-fluid-20-40);
   }
 }
