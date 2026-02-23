@@ -1,16 +1,16 @@
 {
   "name": "Hammer Creative",
-  "short_name": "Hammer",
-  "description": "The Gaming Agency",
+  "short_name": "Hammer Creative",
+  "description": "Hammer Creative is a video game marketing agency partnering with publishers and studios to deliver strategy, creative, and campaigns that drive cultural impact.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#ffffff",
-  "theme_color": "#2d89ef",
+  "background_color": "#141515",
+  "theme_color": "#ffcc98",
   "lang": "en-US",
   "dir": "ltr",
-  "categories": ["business", "entertainment"],
+  "categories": ["business", "entertainment", "gaming", "video games"],
   "icons": [
     {
       "src": "/favicons/android-chrome-192x192.png",

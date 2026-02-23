@@ -32,10 +32,10 @@
 
 .menu-toggle-dot svg {
   transform: translateX(0);
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
   transition:
     transform 0.5s ease,
-    color 0.5s ease;
+    color var(--ease-menu-item);
 }
 
 /* Toggle text */
@@ -47,18 +47,24 @@
   letter-spacing: var(--letter-spacing-extra-loose);
   font-family: var(--font-serif);
   text-transform: uppercase;
-  color: $color-vinewhip;
-  transition: color 0.5s ease;
+  color: var(--color-vinewhip);
+  transition: color var(--ease-menu-item);
+}
+
+/* Hover — only when not open */
+.menu-toggle:not(.is-open):hover .menu-toggle-dot svg,
+.menu-toggle:not(.is-open):hover .menu-toggle-text {
+  color: var(--color-aircutter);
 }
 
 /* Open state */
 .menu-toggle.is-open .menu-toggle-dot svg {
   transform: translateX(-1ch);
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
 }
 
 .menu-toggle.is-open .menu-toggle-text {
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
 }
 
 @media (min-width: 50em) {
@@ -67,15 +73,24 @@
   }
 
   .menu-toggle.is-open .menu-toggle-text {
-    color: $color-sandstorm;
+    color: var(--color-sandstorm);
   }
 }
 
-/* Hover states */
 .menu-toggle.is-open:hover .menu-toggle-text {
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
 }
 
 .menu-toggle .menu-toggle-text {
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
+}
+
+[data-page='/'] .menu-toggle:not(.is-open) .menu-toggle-dot svg,
+[data-page='/'] .menu-toggle:not(.is-open) .menu-toggle-text {
+  color: var(--color-vinewhip);
+}
+
+[data-page='/'] .menu-toggle:not(.is-open):hover .menu-toggle-dot svg,
+[data-page='/'] .menu-toggle:not(.is-open):hover .menu-toggle-text {
+  color: var(--color-sandstorm);
 }

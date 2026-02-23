@@ -2,39 +2,34 @@
 import { SanityImageFullWidth } from '@/components/common';
 import type { SingleImageModule as SingleImageModuleType } from '@/types/sanity.generated';
 
-// Type guard: Check if module data exists and is valid
+const bem = 'single-image-card';
+
 function isValidSingleImageModule(
   data: SingleImageModuleType | null,
 ): data is SingleImageModuleType {
   return data !== null;
 }
 
+/**
+ * SingleImageModule renders a full-width image block.
+ *
+ * @param data - SingleImageModule data from Sanity
+ * @param data.image - Full width image
+ */
 export function SingleImageModule({
   data,
 }: {
   data: SingleImageModuleType | null;
 }) {
-  // Guard: Early return if no valid data
   if (!isValidSingleImageModule(data)) return null;
 
-  // Destructure module data
   const { image } = data;
 
-  // Derive helper flags
-  const hasImage = image != null;
+  if (!image) return null;
 
   return (
-    <div className="wrapper">
-      {/* Single Image: Image */}
-      <div className="row single-image">
-        <div className="content">
-          {hasImage && (
-            <div className="image">
-              <SanityImageFullWidth image={image} />
-            </div>
-          )}
-        </div>
-      </div>
+    <div className={bem}>
+      <SanityImageFullWidth image={image} className={`${bem}__image`} />
     </div>
   );
 }

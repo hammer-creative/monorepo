@@ -10,12 +10,17 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
+// DEBUG
+const SHOW_HELPER_PANELS = false;
+const ENABLE_CONSOLE_LOGS = false;
+// ==========================================
+
 // ==========================================
 // TUNABLE PARAMETERS
 // ==========================================
-const MAX_ROTATION = 8; // Max rotation in degrees
-const LERP_SPEED = 0.2; // Inertia speed (0.01 = slow drift, 0.1 = snappy)
-const PARALLAX_FACTOR = 0.2; // Pupil lag (0.5 = lots of lag, 0.9 = almost none)
+const MAX_ROTATION = 8;
+const LERP_SPEED = 0.2;
+const PARALLAX_FACTOR = 0.2;
 
 // MESH VISIBILITY
 const SHOW_CORNEA = true;
@@ -24,29 +29,32 @@ const SHOW_PUPIL = true;
 const SHOW_SCLERA = true;
 
 // VIDEO PUPIL PARAMETERS
-const ENABLE_VIDEO_PUPIL = false; // Set to false to use solid color instead of video
-const PUPIL_COLOR = new THREE.Color(0xffffff); // Pupil color when video is disabled (black by default)
-const PUPIL_Z_POSITION = 0; // How far back the pupil sits (more negative = deeper inside)
-const PUPIL_SCALE = 1; // Pupil size (1.5 = 50% bigger)
+const ENABLE_VIDEO_PUPIL = true;
+const PUPIL_COLOR = new THREE.Color(0xffffff);
+const PUPIL_Z_POSITION = 0;
+const PUPIL_SCALE = 1;
 
 // IRIS PARAMETERS
-const ENABLE_IRIS_ROTATION = true; // Set to false to disable iris spinning
-const IRIS_ROTATION_SPEED = 0.03; // Iris base spin speed (radians per second)
-const IRIS_ROTATION_SPEED_ON_MOVE = 0.5; // Iris spin speed when mouse is moving (radians per second)
-const IRIS_SPEED_LERP = 0.1; // How fast iris accelerates/decelerates (0.01 = slow, 0.1 = fast)
-const IRIS_SATURATION = 1.5; // Iris color saturation (1.0 = normal, >1.0 = more saturated)
-const IRIS_CONTRAST = 1.2; // Iris contrast (1.0 = normal, >1.0 = more contrast)
+const ENABLE_IRIS_ROTATION = true;
+const IRIS_ROTATION_SPEED = 0.03;
+const IRIS_ROTATION_SPEED_ON_MOVE = 0.5;
+const IRIS_SPEED_LERP = 0.1;
+const IRIS_SATURATION = 1.5;
+const IRIS_CONTRAST = 1.2;
 
 // LIGHTING PARAMETERS
-const AMBIENT_LIGHT_INTENSITY = 2; // Overall scene brightness (0-5, try 0.5, 1.0, 1.5)
-const DIRECTIONAL_LIGHT_INTENSITY = 1; // Directional light strength (0-2, try 0.3, 0.5, 0.8)
-const DIRECTIONAL_LIGHT_POSITION = [1, 1, 1]; // Light position [x, y, z]
-const TONE_MAPPING_EXPOSURE = 1.0; // Exposure control (0.5 = darker, 1.5 = brighter)
-// ==========================================
+const AMBIENT_LIGHT_INTENSITY = 2;
+const DIRECTIONAL_LIGHT_INTENSITY = 1;
+const DIRECTIONAL_LIGHT_POSITION = [1, 1, 1];
+const TONE_MAPPING_EXPOSURE = 1.0;
 
 const PLAY_BUTTON_Z = 0.14;
 const PLAY_BUTTON_SCALE = 0.01;
 const PLAY_BUTTON_COLOR = '#D4A843';
+
+const log = (...args) => {
+  if (ENABLE_CONSOLE_LOGS) console.log(...args);
+};
 
 function PlayButton3D({ onClick, isPlaying }) {
   const triangleGeometry = useMemo(() => {
@@ -93,7 +101,15 @@ function PlayButton3D({ onClick, isPlaying }) {
   );
 }
 
-function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
+function Model({
+  url,
+  isPaused,
+  onPlayClick,
+}: {
+  url: string;
+  isPaused: boolean;
+  onPlayClick?: () => void;
+}) {
   const gltf = useGLTF(url);
   const { camera } = useThree();
 
@@ -115,66 +131,52 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
 
   const groupRef = useRef();
 
-  // Refs to track rotation state
   const targetRotation = useRef({ x: 0, y: 0 });
   const currentRotation = useRef({ x: 0, y: 0 });
   const currentPupilRotation = useRef({ x: 0, y: 0 });
 
-  // Refs for drift detection
   const lastPointer = useRef({ x: 0, y: 0 });
   const idleFrames = useRef(0);
 
-  // Refs to meshes
   const pupilMeshRef = useRef(null);
   const irisMeshRef = useRef(null);
 
-  // Ref for iris rotation speed and accumulated rotation
   const currentIrisSpeed = useRef(IRIS_ROTATION_SPEED);
   const irisRotationAccumulator = useRef(0);
   const lastTime = useRef(0);
 
-  // Convert max rotation from degrees to radians
   const MAX_ROTATION_RAD = THREE.MathUtils.degToRad(MAX_ROTATION);
 
-  // Log everything in the model
   gltf.scene.traverse((child) => {
     if (child.isLight) {
-      console.log('LIGHT FOUND:', child.type, child);
-      child.visible = false; // Disable baked lights
+      log('LIGHT FOUND:', child.type, child);
+      child.visible = false;
     }
-    // if (child.name === 'Shadow_Catch') {
-    //   child.visible = false;
-    // }
 
     if (child.isMesh) {
-      console.log('Mesh name:', child.name);
-      console.log('Material type:', child.material.type);
-      console.log('Material:', child.material);
-      console.log('---');
+      log('Mesh name:', child.name);
+      log('Material type:', child.material.type);
+      log('Material:', child.material);
+      log('---');
     }
 
     if (child.isLight) {
-      console.log('LIGHT FOUND:', child.type, child);
+      log('LIGHT FOUND:', child.type, child);
     }
 
-    // @ts-ignore
     if (child.isMesh) {
-      // Toggle cornea visibility
       if (child.name === 'Cornea_Mesh_2') {
         child.visible = SHOW_CORNEA;
       }
 
-      // Store reference to iris mesh for spinning
       if (child.name === 'Iris_Mesh') {
         irisMeshRef.current = child;
         child.visible = SHOW_IRIS;
         child.scale.set(1.008, 1.008, 1.0);
 
-        // Modify material properties
         child.material.roughness = 0.9;
         child.material.metalness = 0.0;
 
-        // Custom shader to control saturation and contrast
         child.material.onBeforeCompile = (shader) => {
           shader.fragmentShader = shader.fragmentShader.replace(
             '#include <map_fragment>',
@@ -182,14 +184,12 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
             #include <map_fragment>
 
             #ifdef USE_MAP
-              // Saturation adjustment
-              float saturation = ${IRIS_SATURATION.toFixed(2)}; // 1.0 = normal, >1.0 = more saturated
+              float saturation = ${IRIS_SATURATION.toFixed(2)};
               vec3 luminance = vec3(0.299, 0.587, 0.114);
               float gray = dot(diffuseColor.rgb, luminance);
               diffuseColor.rgb = mix(vec3(gray), diffuseColor.rgb, saturation);
 
-              // Contrast adjustment
-              float contrast = ${IRIS_CONTRAST.toFixed(2)}; // 1.0 = normal, >1.0 = more contrast
+              float contrast = ${IRIS_CONTRAST.toFixed(2)};
               diffuseColor.rgb = (diffuseColor.rgb - 0.5) * contrast + 0.5;
               diffuseColor.rgb = clamp(diffuseColor.rgb, 0.0, 1.0);
             #endif
@@ -200,7 +200,6 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
         child.material.needsUpdate = true;
       }
 
-      // Replace pupil texture with video or solid color
       if (child.name === 'Pupil_Mesh_2' && videoTexture) {
         child.visible = SHOW_PUPIL;
 
@@ -212,23 +211,18 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
         }
         child.material.needsUpdate = true;
 
-        // Store reference to pupil mesh for parallax rotation
         pupilMeshRef.current = child;
-        // Position pupil behind the sclera opening
         child.position.z = PUPIL_Z_POSITION;
         child.scale.set(PUPIL_SCALE, PUPIL_SCALE, PUPIL_SCALE);
       }
 
-      // Toggle sclera visibility
       if (child.name === 'Sclera_Mesh_2') {
         child.visible = SHOW_SCLERA;
       }
     }
   });
 
-  // Mouse tracking - update target rotation based on mouse position
   useFrame((state) => {
-    // Skip all rendering when paused
     if (isPaused) return;
 
     const currentTime = state.clock.elapsedTime;
@@ -236,35 +230,27 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
       lastTime.current === 0 ? 0 : currentTime - lastTime.current;
     lastTime.current = currentTime;
 
-    // Detect if mouse has moved since last frame
     const hasMouseMoved =
       Math.abs(state.pointer.x - lastPointer.current.x) > 0.001 ||
       Math.abs(state.pointer.y - lastPointer.current.y) > 0.001;
 
     if (hasMouseMoved) {
-      // Mouse is active - reset idle counter and update last position
       idleFrames.current = 0;
       lastPointer.current = { x: state.pointer.x, y: state.pointer.y };
 
-      // Calculate target rotation from mouse position
       targetRotation.current.y = state.pointer.x * MAX_ROTATION_RAD;
       targetRotation.current.x = -state.pointer.y * MAX_ROTATION_RAD;
     } else {
-      // Mouse hasn't moved - increment idle counter
       idleFrames.current++;
 
-      // After 60 frames (~1 second) of no movement, start random drift
       if (idleFrames.current > 60) {
-        // Smooth random drift - use current rotation as base, don't reset to center
         const time = Date.now() * 0.001;
         const driftX = Math.sin(time * 0.7) * MAX_ROTATION_RAD * 0.3;
         const driftY = Math.cos(time * 0.5) * MAX_ROTATION_RAD * 0.3;
 
-        // Drift from current position instead of snapping
         targetRotation.current.x += (driftX - targetRotation.current.x) * 0.01;
         targetRotation.current.y += (driftY - targetRotation.current.y) * 0.01;
 
-        // Clamp to max rotation limits
         const maxRad = MAX_ROTATION_RAD;
         targetRotation.current.x = Math.max(
           -maxRad,
@@ -277,47 +263,37 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
       }
     }
 
-    // Smoothly interpolate current rotation toward target (creates inertia/lag)
     currentRotation.current.x +=
       (targetRotation.current.x - currentRotation.current.x) * LERP_SPEED;
     currentRotation.current.y +=
       (targetRotation.current.y - currentRotation.current.y) * LERP_SPEED;
 
-    // Apply rotation to entire eyeball model
     if (groupRef.current) {
       groupRef.current.rotation.x = currentRotation.current.x;
       groupRef.current.rotation.y = currentRotation.current.y;
     }
 
-    // Iris spin - speed up when mouse moves
     if (ENABLE_IRIS_ROTATION && irisMeshRef.current && deltaTime > 0) {
-      // Target speed based on mouse movement
       const targetSpeed = hasMouseMoved
         ? IRIS_ROTATION_SPEED_ON_MOVE
         : IRIS_ROTATION_SPEED;
 
-      // Smoothly interpolate speed (acceleration/deceleration)
       currentIrisSpeed.current +=
         (targetSpeed - currentIrisSpeed.current) * IRIS_SPEED_LERP;
 
-      // Accumulate rotation
       irisRotationAccumulator.current += currentIrisSpeed.current * deltaTime;
       irisMeshRef.current.rotation.z = irisRotationAccumulator.current;
     }
 
-    // Pupil parallax - pupil lags behind eyeball rotation
     if (pupilMeshRef.current) {
-      // Target pupil rotation is a fraction of the eyeball rotation (creates parallax)
       const targetPupilX = currentRotation.current.x * PARALLAX_FACTOR;
       const targetPupilY = currentRotation.current.y * PARALLAX_FACTOR;
 
-      // Smoothly interpolate pupil rotation
       currentPupilRotation.current.x +=
         (targetPupilX - currentPupilRotation.current.x) * LERP_SPEED;
       currentPupilRotation.current.y +=
         (targetPupilY - currentPupilRotation.current.y) * LERP_SPEED;
 
-      // Apply rotation to pupil mesh
       pupilMeshRef.current.rotation.x = currentPupilRotation.current.x;
       pupilMeshRef.current.rotation.y = currentPupilRotation.current.y;
     }
@@ -326,7 +302,7 @@ function Model({ url, isPaused }: { url: string; isPaused: boolean }) {
   return (
     <group ref={groupRef}>
       <primitive object={gltf.scene} />
-      <PlayButton3D onClick={handleTogglePlay} isPlaying={isPlaying} />
+      <PlayButton3D onClick={() => onPlayClick?.()} isPlaying={isPlaying} />
     </group>
   );
 }
@@ -335,6 +311,7 @@ const SceneContent = ({
   helpersVisible,
   orbitEnabled,
   isPaused,
+  onPlayClick,
   ambientLightEnabled,
   ambientLightIntensity,
   ambientLightColor,
@@ -482,7 +459,11 @@ const SceneContent = ({
       )}
 
       <Suspense fallback={null}>
-        <Model url="/model/model-v7-compressed.glb" isPaused={isPaused} />
+        <Model
+          url="/model/model-v7-compressed.glb"
+          isPaused={isPaused}
+          onPlayClick={onPlayClick}
+        />
       </Suspense>
       <OrbitControls
         enabled={orbitEnabled}
@@ -493,77 +474,73 @@ const SceneContent = ({
   );
 };
 
-export default function Scene() {
+export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
   const [helpersVisible, setHelpersVisible] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [panelVisible, setPanelVisible] = useState(true);
+  const [panelVisible, setPanelVisible] = useState(SHOW_HELPER_PANELS);
   const [lightingPanelVisible, setLightingPanelVisible] = useState(false);
 
-  const [maskEnabled, setMaskEnabled] = useState(true);
-  const [maskStart, setMaskStart] = useState(50);
-  const [maskEnd, setMaskEnd] = useState(71);
-  const [maskDiameter, setMaskDiameter] = useState(50);
+  const [maskEnabled, setMaskEnabled] = useState(false);
+  const [maskStart, setMaskStart] = useState(0);
+  const [maskEnd, setMaskEnd] = useState(0);
+  const [maskDiameter, setMaskDiameter] = useState(0);
 
-  // Backdrop bokeh 1 controls
   const [bokeh1Enabled, setBokeh1Enabled] = useState(true);
-  const [backdropSize1, setBackdropSize1] = useState(59);
-  const [backdropBlur1, setBackdropBlur1] = useState(66);
-  const [backdropOpacity1, setBackdropOpacity1] = useState(1.0);
-  const [backdropColor1_1, setBackdropColor1_1] = useState('#c8d5d9');
+  const [backdropSize1, setBackdropSize1] = useState(0);
+  const [backdropBlur1, setBackdropBlur1] = useState(0);
+  const [backdropOpacity1, setBackdropOpacity1] = useState(0);
+  const [backdropColor1_1, setBackdropColor1_1] = useState('#000000');
   const [backdropColor1_2, setBackdropColor1_2] = useState('#000000');
   const [backdropGradientStart1, setBackdropGradientStart1] = useState(0);
   const [backdropGradientEnd1, setBackdropGradientEnd1] = useState(0);
 
-  // Backdrop bokeh 2 controls
   const [bokeh2Enabled, setBokeh2Enabled] = useState(true);
-  const [backdropSize2, setBackdropSize2] = useState(70);
-  const [backdropBlur2, setBackdropBlur2] = useState(98);
-  const [backdropOpacity2, setBackdropOpacity2] = useState(0.8);
-  const [backdropColor2_1, setBackdropColor2_1] = useState('#ffffff');
-  const [backdropColor2_2, setBackdropColor2_2] = useState('#666666');
+  const [backdropSize2, setBackdropSize2] = useState(0);
+  const [backdropBlur2, setBackdropBlur2] = useState(0);
+  const [backdropOpacity2, setBackdropOpacity2] = useState(0);
+  const [backdropColor2_1, setBackdropColor2_1] = useState('#000000');
+  const [backdropColor2_2, setBackdropColor2_2] = useState('#000000');
   const [backdropGradientStart2, setBackdropGradientStart2] = useState(0);
-  const [backdropGradientEnd2, setBackdropGradientEnd2] = useState(100);
+  const [backdropGradientEnd2, setBackdropGradientEnd2] = useState(0);
 
-  // Bottom to top linear gradient
-  const [linearGradientEnabled, setLinearGradientEnabled] = useState(true);
+  const [linearGradientEnabled, setLinearGradientEnabled] = useState(false);
   const [linearGradientColor, setLinearGradientColor] = useState('#000000');
-  const [linearGradientOpacity, setLinearGradientOpacity] = useState(0.6);
-  const [linearGradientHeight, setLinearGradientHeight] = useState(50);
+  const [linearGradientOpacity, setLinearGradientOpacity] = useState(0);
+  const [linearGradientHeight, setLinearGradientHeight] = useState(0);
 
-  // Lighting controls
   const [ambientLightEnabled, setAmbientLightEnabled] = useState(true);
-  const [ambientLightIntensity, setAmbientLightIntensity] = useState(
-    AMBIENT_LIGHT_INTENSITY,
+  const [ambientLightIntensity, setAmbientLightIntensity] = useState(0.4);
+  const [ambientLightColor, setAmbientLightColor] = useState(
+    'rgba(171, 183, 222, 1)',
   );
-  const [ambientLightColor, setAmbientLightColor] = useState('#ffffff');
 
   const [directionalLightEnabled, setDirectionalLightEnabled] = useState(true);
-  const [directionalLightIntensity, setDirectionalLightIntensity] = useState(
-    DIRECTIONAL_LIGHT_INTENSITY,
+  const [directionalLightIntensity, setDirectionalLightIntensity] =
+    useState(3.6);
+  const [directionalLightColor, setDirectionalLightColor] = useState(
+    'rgba(226, 206, 202, 1)',
   );
-  const [directionalLightColor, setDirectionalLightColor] = useState('#ffffff');
-  const [directionalLightPosition, setDirectionalLightPosition] = useState(
-    DIRECTIONAL_LIGHT_POSITION,
-  );
-
+  const [directionalLightPosition, setDirectionalLightPosition] = useState([
+    0.0, 0.3, 0.3,
+  ]);
   const [spotLightEnabled, setSpotLightEnabled] = useState(false);
-  const [spotLightIntensity, setSpotLightIntensity] = useState(1.0);
-  const [spotLightColor, setSpotLightColor] = useState('#ffffff');
-  const [spotLightPosition, setSpotLightPosition] = useState([0.5, 0.5, 1]);
-  const [spotLightAngle, setSpotLightAngle] = useState(0.5);
-  const [spotLightPenumbra, setSpotLightPenumbra] = useState(0.5);
+  const [spotLightIntensity, setSpotLightIntensity] = useState(0);
+  const [spotLightColor, setSpotLightColor] = useState('#000000');
+  const [spotLightPosition, setSpotLightPosition] = useState([0, 0, 0]);
+  const [spotLightAngle, setSpotLightAngle] = useState(0);
+  const [spotLightPenumbra, setSpotLightPenumbra] = useState(0);
 
   const [pointLightEnabled, setPointLightEnabled] = useState(false);
-  const [pointLightIntensity, setPointLightIntensity] = useState(1.0);
-  const [pointLightColor, setPointLightColor] = useState('#ffffff');
-  const [pointLightPosition, setPointLightPosition] = useState([0.3, 0.3, 0.5]);
+  const [pointLightIntensity, setPointLightIntensity] = useState(0);
+  const [pointLightColor, setPointLightColor] = useState('#000000');
+  const [pointLightPosition, setPointLightPosition] = useState([0, 0, 0]);
   const [pointLightDistance, setPointLightDistance] = useState(0);
-  const [pointLightDecay, setPointLightDecay] = useState(2);
+  const [pointLightDecay, setPointLightDecay] = useState(0);
 
   const [cycloLightEnabled, setCycloLightEnabled] = useState(false);
-  const [cycloLightIntensity, setCycloLightIntensity] = useState(1.0);
-  const [cycloLightColor, setCycloLightColor] = useState('#4a9eff');
-  const [cycloLightPosition, setCycloLightPosition] = useState([0, -2, -3]);
+  const [cycloLightIntensity, setCycloLightIntensity] = useState(0);
+  const [cycloLightColor, setCycloLightColor] = useState('#000000');
+  const [cycloLightPosition, setCycloLightPosition] = useState([0, 0, 0]);
 
   const [presets, setPresets] = useState([]);
   const [presetCounter, setPresetCounter] = useState(1);
@@ -813,64 +790,68 @@ ${
 
   return (
     <>
-      <button
-        onClick={() => setPanelVisible(!panelVisible)}
-        style={{
-          position: 'absolute',
-          top: 10,
-          left: 10,
-          zIndex: 1001,
-          padding: '8px 12px',
-          background: '#333',
-          color: '#fff',
-          border: 'none',
-          borderRadius: 4,
-          cursor: 'pointer',
-          fontFamily: 'monospace',
-        }}
-      >
-        {panelVisible ? 'Hide' : 'Show'} Panel
-      </button>
+      {SHOW_HELPER_PANELS && (
+        <>
+          <button
+            onClick={() => setPanelVisible(!panelVisible)}
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: 10,
+              zIndex: 1001,
+              padding: '8px 12px',
+              background: '#333',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
+              fontFamily: 'monospace',
+            }}
+          >
+            {panelVisible ? 'Hide' : 'Show'} Panel
+          </button>
 
-      <button
-        onClick={() => setHelpersVisible(!helpersVisible)}
-        style={{
-          position: 'absolute',
-          top: 10,
-          right: 10,
-          zIndex: 1001,
-          padding: '8px 12px',
-          background: helpersVisible ? '#4a4' : '#444',
-          color: helpersVisible ? '#000' : '#fff',
-          border: 'none',
-          borderRadius: 4,
-          cursor: 'pointer',
-          fontFamily: 'monospace',
-        }}
-      >
-        Helpers: {helpersVisible ? 'ON' : 'OFF'}
-      </button>
+          <button
+            onClick={() => setHelpersVisible(!helpersVisible)}
+            style={{
+              position: 'absolute',
+              top: 10,
+              right: 10,
+              zIndex: 1001,
+              padding: '8px 12px',
+              background: helpersVisible ? '#4a4' : '#444',
+              color: helpersVisible ? '#000' : '#fff',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
+              fontFamily: 'monospace',
+            }}
+          >
+            Helpers: {helpersVisible ? 'ON' : 'OFF'}
+          </button>
 
-      <button
-        onClick={() => setLightingPanelVisible(!lightingPanelVisible)}
-        style={{
-          position: 'absolute',
-          top: 50,
-          left: 10,
-          zIndex: 1001,
-          padding: '8px 12px',
-          background: '#555',
-          color: '#fff',
-          border: 'none',
-          borderRadius: 4,
-          cursor: 'pointer',
-          fontFamily: 'monospace',
-        }}
-      >
-        {lightingPanelVisible ? 'Hide' : 'Show'} Lighting
-      </button>
+          <button
+            onClick={() => setLightingPanelVisible(!lightingPanelVisible)}
+            style={{
+              position: 'absolute',
+              top: 50,
+              left: 10,
+              zIndex: 1001,
+              padding: '8px 12px',
+              background: '#555',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
+              fontFamily: 'monospace',
+            }}
+          >
+            {lightingPanelVisible ? 'Hide' : 'Show'} Lighting
+          </button>
+        </>
+      )}
 
-      {panelVisible && (
+      {SHOW_HELPER_PANELS && panelVisible && (
         <div
           style={{
             position: 'absolute',
@@ -1305,7 +1286,7 @@ ${
         </div>
       )}
 
-      {lightingPanelVisible && (
+      {SHOW_HELPER_PANELS && lightingPanelVisible && (
         <div
           style={{
             position: 'absolute',
@@ -1345,7 +1326,6 @@ ${
             />
             <strong>Ambient Light</strong>
           </label>
-
           {ambientLightEnabled && (
             <>
               <label>
@@ -1397,7 +1377,6 @@ ${
             />
             <strong>Directional Light</strong>
           </label>
-
           {directionalLightEnabled && (
             <>
               <label>
@@ -1505,7 +1484,6 @@ ${
             />
             <strong>Spot Light</strong>
           </label>
-
           {spotLightEnabled && (
             <>
               <label>
@@ -1635,7 +1613,6 @@ ${
             />
             <strong>Point Light</strong>
           </label>
-
           {pointLightEnabled && (
             <>
               <label>
@@ -1765,7 +1742,6 @@ ${
             />
             <strong>Cyclorama Light</strong>
           </label>
-
           {cycloLightEnabled && (
             <>
               <label>
@@ -1857,17 +1833,27 @@ ${
         </div>
       )}
 
-      <div style={{ position: 'relative', height: '100vh', width: '100vw' }}>
-        {bokeh1Enabled && <div style={backdropBokehStyle1} />}
-        {bokeh2Enabled && <div style={backdropBokehStyle2} />}
-        {linearGradientEnabled && <div style={linearGradientStyle} />}
+      <div
+        className="model__special-fx"
+        style={{ position: 'relative', height: '100vh', width: '100vw' }}
+      >
+        {/* <div className="bokeh-1" style={backdropBokehStyle1} />
+
+        <div className="bokeh-2" style={backdropBokehStyle2} />
+
+        <div className="linear-gradient" style={linearGradientStyle} /> */}
+
+        <div className="bokeh-1" />
+
+        <div className="bokeh-2" />
+
+        <div className="linear-gradient" />
 
         <div
           className="model"
           style={{
             ...maskStyle,
             position: 'relative',
-            zIndex: 10,
             height: '100%',
             width: '100%',
           }}
@@ -1884,6 +1870,7 @@ ${
               helpersVisible={helpersVisible}
               orbitEnabled={helpersVisible}
               isPaused={isPaused}
+              onPlayClick={onPlayClick}
               ambientLightEnabled={ambientLightEnabled}
               ambientLightIntensity={ambientLightIntensity}
               ambientLightColor={ambientLightColor}

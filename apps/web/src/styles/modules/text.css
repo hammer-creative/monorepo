@@ -73,9 +73,9 @@
 }
 
 /* Typography, text-module */
-.text-card .title {
+/* .text-card .title {
   @mixin title-secondary;
-}
+} */
 
 /* Typography, text-module, center-aligned editorial copy */
 .text-card--challenge .text-card__text p,

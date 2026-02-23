@@ -56,10 +56,7 @@ function SmartLink({ value, children }: SmartLinkProps) {
   return <span>{children}</span>;
 }
 
-export function PortableTextRenderer({
-  value,
-  className = '',
-}: PortableTextRendererProps) {
+export function PortableTextRenderer({ value }: PortableTextRendererProps) {
   if (!value || value.length === 0) return null;
 
   const components: PortableTextComponents = {
@@ -70,7 +67,7 @@ export function PortableTextRenderer({
       h4: ({ children }) => <h4>{children}</h4>,
       h5: ({ children }) => <h5>{children}</h5>,
       h6: ({ children }) => <h6>{children}</h6>,
-      normal: ({ children }) => <p className={className}>{children}</p>,
+      normal: ({ children }) => <p>{children}</p>,
       blockquote: ({ children }: { children?: ReactNode }) => (
         <blockquote>{children}</blockquote>
       ),

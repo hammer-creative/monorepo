@@ -61,8 +61,8 @@
 @define-mixin body-large {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
-  font-size: var(--font-size-2);
-  line-height: var(--line-height-1);
+  font-size: var(--font-size-3);
+  line-height: 1.1em;
   letter-spacing: var(--letter-spacing-tight);
 }
 
@@ -90,6 +90,16 @@
   font-size: var(--font-size-1);
   line-height: var(--line-height-3);
   letter-spacing: var(--letter-spacing-tight);
+}
+
+@define-mixin link-hover $color, $hover-color, $transition {
+  color: $color;
+  transition: color $transition;
+
+  &:hover,
+  &:active {
+    color: $hover-color;
+  }
 }
 
 /* LAYOUT MIXINS */

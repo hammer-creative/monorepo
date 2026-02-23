@@ -1,12 +1,20 @@
 /* apps/web/src/stylesl/label.css */
 
-.label {
+.label--list,
+.label--client-label,
+[data-page]:not([data-page='/']) .text-card__label,
+.text-card__attribution {
   font-size: var(--font-size-all-caps-fluid);
   font-weight: 900;
   letter-spacing: var(--letter-spacing-loose);
   line-height: var(--line-height-default);
   text-transform: uppercase;
   display: block;
+}
+
+.label--client-name {
+  @mixin body-medium;
+  line-height: var(--line-height-default);
 }
 
 .label--client-label {
@@ -18,24 +26,4 @@
 .label.list {
   font-size: var(--font-size-all-caps-fluid);
   line-height: var(--line-height-loose);
-}
-
-[data-page='/'] .layout-wrapper .text-module .promo .label {
-  text-transform: initial;
-  font-size: var(--font-size-sm-fluid);
-  letter-spacing: var(--letter-spacing-default);
-  font-weight: 100;
-}
-
-.case-study .hero-module .label--list {
-  margin-block-end: 0.4em;
-}
-
-.case-study .hero-module .label--client-label {
-  margin-block-end: 0.6em;
-}
-
-.case-study .hero-module .label--client-label,
-.case-study .hero-module .label--list {
-  color: $color-hyperbeam;
 }

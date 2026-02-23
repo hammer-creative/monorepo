@@ -21,9 +21,14 @@ body:has(.menu-overlay) .mobile-menu .wordmark svg {
 
 /* Header */
 header svg {
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
   width: var(--width-wordmark-header);
   height: auto;
+  transition: color var(--ease-menu-item);
+}
+
+header svg:hover {
+  color: var(--color-aircutter);
 }
 
 /* Footer */

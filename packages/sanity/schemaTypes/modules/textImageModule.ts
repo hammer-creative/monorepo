@@ -35,7 +35,10 @@ export const textImageModule = defineType({
         description: 'Minimum dimensions 1960 px × 1400 px, maximum file size 5 MB.',
         imageOptions: {
           hotspot: {
-            previews: [{title: '14:10 Rectangle', aspectRatio: 14 / 10}],
+            previews: [
+              {title: '14:10 Rectangle', aspectRatio: 14 / 10},
+              {title: '1:1 Square', aspectRatio: 1 / 1},
+            ],
           },
         },
       })

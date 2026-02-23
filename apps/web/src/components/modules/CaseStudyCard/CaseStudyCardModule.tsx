@@ -31,11 +31,7 @@ function CaseStudyCardItem({ item }: { item: CaseStudyTeaserItem }) {
   return (
     <div className="case-study-card">
       <Link href={`/work/${slug}`}>
-        {teaserImage && (
-          <div className="image">
-            <SanityImageHomePageCard image={teaserImage} />
-          </div>
-        )}
+        {teaserImage && <SanityImageHomePageCard image={teaserImage} />}
         <div className="meta">
           {hasClients && (
             <div className="clients">
