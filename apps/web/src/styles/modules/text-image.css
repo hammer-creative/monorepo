@@ -30,11 +30,14 @@
 
   .text-image-card .text-image-card__text.is-first {
     order: 1;
+    p {
+      padding-inline-end: var(--flow-space-3);
+    }
   }
 }
 
 /* Typography, text-image-module */
 .text-image-card__text p {
   @mixin body-small;
-  line-height: var(--line-height-default);
+  line-height: var(--line-height-loose);
 }
