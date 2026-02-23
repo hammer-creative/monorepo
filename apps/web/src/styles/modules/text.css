@@ -93,6 +93,10 @@
 }
 
 /* Typography, text-module, left-right aligned headline and editorial copy */
+.text-card--has-headline .text-card__title {
+  @mixin title-secondary;
+}
+
 .text-card--has-headline .text-card__text p {
   @mixin body-medium;
   line-height: var(--line-height-default); /* overriding mixin */

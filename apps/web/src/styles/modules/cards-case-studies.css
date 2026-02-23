@@ -77,12 +77,6 @@
   display: none;
 }
 
-.case-study-grid .case-study-card .image {
-  position: relative;
-  aspect-ratio: 945 / 656;
-  overflow: hidden;
-}
-
 .case-study-grid .case-study-card .case-study-clients span {
   color: $color-hyperbeam;
 }

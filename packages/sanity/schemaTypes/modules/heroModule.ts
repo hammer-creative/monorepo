@@ -25,7 +25,16 @@ export const heroModule = defineType({
         description: 'Minimum dimensions 3840 px × 2160 px, maximum file size 20 MB.',
         imageOptions: {
           hotspot: {
-            previews: [{title: '16:9 Landscape', aspectRatio: 16 / 9}],
+            previews: [
+              {
+                title: '16:9 Landscape',
+                aspectRatio: 16 / 9,
+              },
+              {
+                title: '1:1 Square',
+                aspectRatio: 1 / 1,
+              },
+            ],
           },
         },
       })
@@ -49,7 +58,10 @@ export const heroModule = defineType({
         description: 'Minimum dimensions 1380 px × 800 px, maximum file size 3 MB.',
         imageOptions: {
           hotspot: {
-            previews: [{title: '5:3 Landscape', aspectRatio: 5 / 3}],
+            previews: [
+              {title: '16:9 Landscape-ish', aspectRatio: 16 / 9},
+              {title: '1:1 Square', aspectRatio: 1 / 1},
+            ],
           },
         },
       })

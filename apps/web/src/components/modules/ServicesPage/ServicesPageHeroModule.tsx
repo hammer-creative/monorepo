@@ -60,6 +60,16 @@ export function ServicesPageHeroModule({
     }
   };
 
+  const scrollButton = (
+    <button
+      onClick={handleScrollClick}
+      className={`${bem}__scroll-trigger`}
+      aria-label="Scroll to content"
+    >
+      <LongArrow direction="down" />
+    </button>
+  );
+
   return (
     <div className={`${bem}__image-wrapper`}>
       {/* Hero Image */}
@@ -73,15 +83,7 @@ export function ServicesPageHeroModule({
       )}
 
       {/* Wide viewport: button over image */}
-      {isWide && (
-        <button
-          onClick={handleScrollClick}
-          className="scroll-trigger wide"
-          aria-label="Scroll to content"
-        >
-          <LongArrow direction="down" />
-        </button>
-      )}
+      {isWide && scrollButton}
 
       {/* Content wrapper for narrow viewport grouping */}
       <div className="content-wrapper">
@@ -91,15 +93,6 @@ export function ServicesPageHeroModule({
             <Title as="h1" variant="primary" className={`${bem}__title`}>
               {title}
             </Title>
-            {!isWide && (
-              <button
-                onClick={handleScrollClick}
-                className="scroll-trigger narrow"
-                aria-label="Scroll to content"
-              >
-                <LongArrow direction="down" />
-              </button>
-            )}
           </div>
         )}
 
