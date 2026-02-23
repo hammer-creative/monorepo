@@ -3,7 +3,7 @@
 /* apps/web/src/styles/components/navigation.css */
 
 footer {
-  background: $color-sandstorm;
+  background: var(--color-sandstorm);
 }
 
 .footer-content {
@@ -109,7 +109,6 @@ footer .footer-content .menu-primary {
 .mobile-menu.is-open {
   opacity: 1;
   visibility: visible;
-  z-index: 300;
 }
 
 .mobile-menu.is-open li a {
@@ -143,31 +142,31 @@ footer .footer-content .menu-primary {
 /* Footer - primary menu colors */
 footer .menu-primary li a {
   font-size: var(--font-size-menu-reverse-fluid);
-  color: $color-nightshade;
+  color: var(--color-nightshade);
 }
 
 footer .menu-primary li a:hover {
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
 }
 
 /* Footer - secondary menu colors */
 footer .menu-secondary .link,
 footer .menu-secondary .text {
-  color: $color-nightshade;
+  color: var(--color-nightshade);
 }
 
 footer .menu-secondary .link:hover {
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
 }
 
 /* Mobile menu - primary menu */
 .mobile-menu.is-open .menu-primary li a {
   font-size: var(--font-size-menu-mobile-fluid);
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
 }
 
 .mobile-menu.is-open .menu-primary li a:hover {
-  color: $color-sandstorm;
+  color: var(--color-sandstorm);
 }
 
 .mobile-menu.is-open .menu-primary li a svg {
@@ -176,11 +175,11 @@ footer .menu-secondary .link:hover {
 
 @media screen and (min-width: 50em) {
   .mobile-menu.is-open .menu-primary li a {
-    color: $color-sandstorm;
+    color: var(--color-sandstorm);
   }
 
   .mobile-menu.is-open .menu-primary li a:hover {
-    color: $color-hyperbeam;
+    color: var(--color-hyperbeam);
   }
 
   .mobile-menu.is-open .menu-primary li a svg {
@@ -189,7 +188,7 @@ footer .menu-secondary .link:hover {
     height: 0.75em;
     opacity: 0;
     margin-top: 0.15em;
-    color: $color-hyperbeam;
+    color: var(--color-hyperbeam);
     margin-inline-start: 0.05em;
     transition:
       opacity var(--ease-fast),
@@ -205,11 +204,11 @@ footer .menu-secondary .link:hover {
 
 @media screen and (min-width: 70em) {
   .mobile-menu .menu-primary li a {
-    color: $color-sandstorm;
+    color: var(--color-sandstorm);
   }
 
   .mobile-menu .menu-primary li a:hover {
-    color: $color-hyperbeam;
+    color: var(--color-hyperbeam);
   }
 
   .mobile-menu .menu-primary li a:hover svg {
@@ -221,12 +220,12 @@ footer .menu-secondary .link:hover {
 /* Mobile menu - secondary menu */
 .mobile-menu .menu-secondary .link,
 .mobile-menu .menu-secondary .text {
-  color: $color-sandstorm;
+  color: var(--color-sandstorm);
 }
 
 .mobile-menu .menu-secondary .link:hover,
 .mobile-menu .menu-secondary .text:hover {
-  color: $color-hyperbeam;
+  color: var(--color-hyperbeam);
 }
 
 /* Secondary menu - typography */
@@ -244,15 +243,6 @@ footer .menu-secondary .link:hover {
 .mobile-menu.is-open .footer-content {
   padding-block-start: var(--space-fluid-10-20);
   padding-block-end: var(--space-fluid-20-40);
-}
-
-.menu-toggle {
-  padding-block-start: var(--space-fluid-10-20);
-  padding-inline-end: var(--space-fluid-10-20);
-}
-
-.mobile-menu.is-open .menu-primary {
-  margin-top: -1em;
 }
 
 .mobile-menu.is-open .menu-secondary a {

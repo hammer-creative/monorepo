@@ -9,23 +9,10 @@
   display: block;
 }
 
-.label.client-name {
-  font-weight: initial;
-  text-transform: initial;
-  letter-spacing: var(--letter-spacing-default);
-  font-size: var(--font-size-xs-fluid);
-  line-height: var(--line-height-loose);
-}
-
-.label.client-label {
+.label--client-label {
   font-size: var(--font-size-all-caps-fluid);
   line-height: var(--line-height-loose);
   margin-block-end: var(--space-5);
-}
-
-.label.centered {
-  font-size: var(--font-size-all-caps-fluid);
-  text-align: center;
 }
 
 .label.list {
@@ -38,4 +25,17 @@
   font-size: var(--font-size-sm-fluid);
   letter-spacing: var(--letter-spacing-default);
   font-weight: 100;
+}
+
+.case-study .hero-module .label--list {
+  margin-block-end: 0.4em;
+}
+
+.case-study .hero-module .label--client-label {
+  margin-block-end: 0.6em;
+}
+
+.case-study .hero-module .label--client-label,
+.case-study .hero-module .label--list {
+  color: $color-hyperbeam;
 }

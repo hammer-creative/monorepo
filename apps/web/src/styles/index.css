@@ -8,12 +8,12 @@
 @import './typography.css';
 @import './wordmark.css';
 @import './marquee.css';
-@import './overlay';
 @import './toggle';
 @import './layout/layout.css';
 @import './layout/header.css';
 @import './layout/overlay.css';
 @import './components/navigation.css';
+@import './components/image';
 @import './components/label';
 @import './components/list';
 @import './components/link';

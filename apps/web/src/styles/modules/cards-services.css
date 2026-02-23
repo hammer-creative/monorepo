@@ -86,7 +86,13 @@
   }
 
   [data-page='/services'] .services-card-module .services-card .image {
-    aspect-ratio: 32 / 9;
+    aspect-ratio: 1 / 1;
+  }
+
+  @media screen and (min-width: 50em) {
+    [data-page='/services'] .services-card-module .services-card .image {
+      aspect-ratio: 94 / 35;
+    }
   }
 
   [data-page='/services'] .services-card-module .services-card .services-list {

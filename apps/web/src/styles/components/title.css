@@ -120,7 +120,7 @@
     align-items: center;
   }
 
-  [data-page='/services'] .chyron-card p.text-block {
+  [data-page='/services'] .chyron-card p.body {
     width: 40ch !important;
     text-align: center;
     width: 100%;

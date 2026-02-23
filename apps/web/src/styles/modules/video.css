@@ -1,7 +1,7 @@
 /* apps/web/src/styles/videos.css */
 
 /* Z-INDEX LAYERS */
-.video-modal {
+/* .video-modal {
   z-index: 210;
 }
 
@@ -18,7 +18,7 @@
 .single-video .video-modal-play,
 .single-video .video-modal-mute {
   z-index: 200;
-}
+} */
 
 /* When hovering video container, buttons turn aircutter */
 .container.single-video div[role='button']:hover .video-modal-pause,
