@@ -14,6 +14,7 @@ export default function sanityImageLoader({
   const refH = Number(url.searchParams.get('h'));
   url.searchParams.set('w', String(width));
   url.searchParams.set('q', String(quality ?? 90));
+  url.searchParams.set('auto', 'format');
   if (refW && refH) {
     url.searchParams.set('h', String(Math.round(width * (refH / refW))));
   }

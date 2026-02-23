@@ -17,7 +17,7 @@ interface SanityImageProps {
     | 'full-width'
     | 'half-width'
     | 'carousel'
-    | 'home-page-card'
+    | 'case-study-card'
     | 'video-poster'
     | 'impact';
   objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
@@ -141,9 +141,17 @@ export const SanityImageFullWidth = (
 /**
  * Home page card image.
  */
-export const SanityImageHomePageCard = (
+export const SanityImageCaseStudyCard = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
-) => <SanityImage fill quality={80} variant="home-page-card" {...props} />;
+) => (
+  <SanityImage
+    fill
+    sizes="(max-width: 640px) 100vw, 1280px"
+    quality={90}
+    variant="case-study-card"
+    {...props}
+  />
+);
 
 /**
  * Video poster image — used as a cover image behind video players.

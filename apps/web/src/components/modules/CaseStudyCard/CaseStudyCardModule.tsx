@@ -3,7 +3,7 @@
 
 import {
   ClientNames,
-  SanityImageHomePageCard,
+  SanityImageCaseStudyCard,
   Title,
 } from '@/components/common';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
@@ -31,7 +31,7 @@ function CaseStudyCardItem({ item }: { item: CaseStudyTeaserItem }) {
   return (
     <div className="case-study-card">
       <Link href={`/work/${slug}`}>
-        {teaserImage && <SanityImageHomePageCard image={teaserImage} />}
+        {teaserImage && <SanityImageCaseStudyCard image={teaserImage} />}
         <div className="meta">
           {hasClients && (
             <div className="clients">
