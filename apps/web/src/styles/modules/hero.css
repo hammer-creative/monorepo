@@ -58,7 +58,7 @@
   gap: var(--gutter-padding-1);
 }
 
-/* Responsive layout, hero-module */
+/* Responsive layout: Case study hero-module */
 @media screen and (min-width: 50em) {
   .case-study .hero-card__bar {
     display: block;
@@ -90,7 +90,7 @@
   }
 }
 
-/* Typography, hero-module */
+/* Typography: Case study hero-module */
 .case-study .hero-module .hero-card__title {
   @mixin title-primary;
 }
@@ -100,28 +100,8 @@
 }
 
 /* DELETE BELOW HERE */
-/* Services page */
-[data-page='/services'] .header .image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 65%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
-  pointer-events: none;
-}
-
+/* Layout: Services page hero-module */
 [data-page='/services'] .header .content-wrapper {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: var(--space-fluid-20-40);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-fluid-20-40);
 }
 
 [data-page='/services'] .header .title-container button {
@@ -129,19 +109,10 @@
 }
 
 [data-page='/services'] .services-heading {
-  margin-block: var(--space-fluid-20-40);
-  padding-inline: var(--space-fluid-20-40);
 }
 
 @media screen and (min-width: 50em) {
-  [data-page='/services'] .header .title-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  [data-page='/services'] .header .title-container .body {
-    flex: 1;
+  [data-page='/services'] {
   }
 
   [data-page='/services'] .header .title-container button {
@@ -149,7 +120,7 @@
   }
 }
 
-/* Case study */
+/* Case study hero */
 .case-study .hero-module .title-container {
   display: flex;
   align-items: center;

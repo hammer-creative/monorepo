@@ -37,6 +37,8 @@ export function ServicesPageHeroModule({
 }) {
   const isWide = useMediaQuery('(min-width: 50em)');
 
+  const bem = 'hero-card';
+
   // Guard: early return if no valid data
   if (!isValidServicesPageHeroModule(data)) return null;
 
@@ -59,9 +61,16 @@ export function ServicesPageHeroModule({
   };
 
   return (
-    <div className="header">
+    <div className={`${bem}__image-wrapper`}>
       {/* Hero Image */}
-      {hasImage && <SanityImageHero image={image} fill priority />}
+      {hasImage && (
+        <SanityImageHero
+          image={image}
+          fill
+          priority
+          className={`${bem}__image`}
+        />
+      )}
 
       {/* Wide viewport: button over image */}
       {isWide && (
@@ -78,8 +87,8 @@ export function ServicesPageHeroModule({
       <div className="content-wrapper">
         {/* Title with scroll button on narrow */}
         {hasTitle && (
-          <div className="title-container">
-            <Title as="h1" variant="primary">
+          <div className={`${bem}__title-wrapper`}>
+            <Title as="h1" variant="primary" className={`${bem}__title`}>
               {title}
             </Title>
             {!isWide && (
@@ -95,11 +104,7 @@ export function ServicesPageHeroModule({
         )}
 
         {/* Body Text */}
-        {hasBody && (
-          <div className="body">
-            <TextBlock body={body} variant="small" />
-          </div>
-        )}
+        {hasBody && <TextBlock body={body} className={`${bem}__text`} />}
       </div>
     </div>
   );

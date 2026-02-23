@@ -85,6 +85,7 @@ export function HeroModule({
   return (
     <>
       <div className={`${bem}__image-wrapper`}>
+        {/* TODO: Change image to hasImage  */}
         {image && (
           <>
             <SanityImageHero
