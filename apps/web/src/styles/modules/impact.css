@@ -69,7 +69,7 @@
 
 /* Typography, impact-module */
 .impact-card__text p {
-  @mixin body-extra-small;
+  @mixin body-xs;
 }
 
 /* DELETE BELOW HERE */

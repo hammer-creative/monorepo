@@ -99,14 +99,14 @@ export function HeroModule({
         )}
         {hasTitle && !isWide && (
           <div className={`${bem}__title-wrapper`}>
-            <Title as="h1" variant="primary" className={`${bem}__title`}>
+            <Title as="h1" className={`${bem}__title`}>
               {title}
             </Title>
             {scrollButton}
           </div>
         )}
         {hasTitle && isWide && (
-          <Title as="h1" variant="primary" className={`${bem}__title`}>
+          <Title as="h1" className={`${bem}__title`}>
             {title}
           </Title>
         )}
@@ -127,13 +127,12 @@ export function HeroModule({
                   <TextBlock body={body} className={`${bem}__text`} />
                 )}
                 {hasClients && (
-                  <div className={`${bem}__clients`}>
-                    <Label variant="client-label">Client</Label>
-                    <Label
-                      clients={clients as Client[]}
-                      variant="client-name"
-                    />
-                  </div>
+                  <Label
+                    clients={clients}
+                    tag="Client"
+                    className={`${bem}__clients`}
+                    variant="client-names"
+                  />
                 )}
               </div>
             )}

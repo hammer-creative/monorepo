@@ -73,7 +73,7 @@ p {
 }
 
 p.large {
-  @mixin typography var(--font-sans), var(--font-size-fluid-large);
+  @mixin typography var(--font-sans), var(--font-size-fluid-lg);
   line-height: var(--line-height-fluid-reverse);
 }
 

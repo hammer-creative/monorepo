@@ -1,4 +1,5 @@
-// /Users/j/Documents/projects/hammer/monorepo/apps/web/eslint.config.mjs
+// apps/web/eslint.config.mjs
+
 import path from 'path';
 import { fileURLToPath } from 'url';
 import nextPlugin from '@next/eslint-plugin-next';

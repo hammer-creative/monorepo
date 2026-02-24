@@ -73,13 +73,22 @@ mux-player {
 
 /* VIDEO MODULE LAYOUTS */
 .video-module .single-video {
-  @mixin single-video-border;
+  /* TODO: remove */
+  /* @mixin single-video-border; */
+  border: 5px solid red;
 }
 
+/* TODO: get rid of this */
 .video-module .multi-video {
-  @mixin flex-responsive column, row, 40em;
-  @mixin multi-video-border;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-10);
+}
+
+@media screen and (min-width: 50em) {
+  .video-module .multi-video {
+    flex-direction: row;
+  }
 }
 
 .video-module .multi-video .video-item {

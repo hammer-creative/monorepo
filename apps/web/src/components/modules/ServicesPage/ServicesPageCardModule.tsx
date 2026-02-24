@@ -5,8 +5,19 @@ import { ClientIcons } from '@/components/common/ClientIcons';
 import { ServicesListModule } from '@/components/modules/ServicesList/';
 import type { ServicesPageCardModule as ServicesPageCardModuleType } from '@/types/sanity.generated';
 
+const bem = 'services-card';
+
 /**
- * Type guard to validate ServicesPageCardModule data
+ * Props for `ServicesPageCardModule`.
+ */
+interface ServicesPageCardModuleProps {
+  data: ServicesPageCardModuleType | null;
+  /** Renders the `ClientIcons` chyron in place of the services list. */
+  showClientIcons?: boolean;
+}
+
+/**
+ * Type guard to validate `ServicesPageCardModule` data.
  */
 function isValidServicesPageCardModule(
   data: ServicesPageCardModuleType | null,
@@ -14,19 +25,16 @@ function isValidServicesPageCardModule(
   return data !== null;
 }
 
-interface ServicesPageCardModuleProps {
-  data: ServicesPageCardModuleType | null;
-  showClientIcons?: boolean;
-}
-
 /**
- * Services page card module with responsive layout
+ * Renders a services page card with responsive layout.
  *
- * Narrow: image + header stacked, services below
- * Wide: image + header + services all within content
+ * Narrow: image and header stacked, services below.
+ * Wide: image, header, and services all within content.
  *
- * Note: Duplicates servicesContent in DOM with CSS show/hide to avoid CLS from client-side media queries
- * TODO: Evaluate if duplicate DOM is acceptable or explore container queries/SSR alternatives
+ * @remarks
+ * Services content is duplicated in the DOM with CSS show/hide to avoid CLS
+ * from client-side media queries. TODO: evaluate container queries or SSR
+ * alternatives if duplicate DOM becomes a concern.
  */
 export function ServicesPageCardModule({
   data,
@@ -36,47 +44,47 @@ export function ServicesPageCardModule({
 
   const { title, body, image, services } = data;
 
-  // Image container with Next.js Image fill
   const imageContent = image && (
-    <SanityImageFullWidth image={image} fill className="card-image" />
+    <SanityImageFullWidth image={image} fill className={`${bem}__image`} />
   );
 
-  // Header with title and body text
   const headerContent = (
-    <div className="header">
+    <div className={`${bem}__header`}>
       {title && (
-        <Title as="h2" variant="primary">
+        <Title as="h2" className={`${bem}__title`}>
           {title}
         </Title>
       )}
-      {body && <TextBlock body={body} variant="small" />}
+      {body && <TextBlock body={body} className={`${bem}__text`} />}
     </div>
   );
 
-  // Services list - rendered twice for responsive positioning
   const servicesContent = services && !showClientIcons && (
-    <div className="services">
-      <ServicesListModule services={services as unknown[]} />
+    <div className={`${bem}__services`}>
+      <ServicesListModule
+        services={services as unknown[]}
+        className={`${bem}__services-list`}
+      />
     </div>
   );
 
   return (
-    <div className="services-card">
+    <div className={bem}>
       {imageContent}
 
       {showClientIcons && (
-        <div className="chyron">
+        <div className={`${bem}__chyron`}>
           <ClientIcons chyron />
         </div>
       )}
 
-      <div className="content">
+      <div className={`${bem}__content`}>
         {headerContent}
-        {/* Wide: services inside content */}
-        <div className="wide">{servicesContent}</div>
+        <div className={`${bem}__wide`}>{servicesContent}</div>
       </div>
-      {/* Narrow: services outside content */}
-      {!showClientIcons && <div className="narrow">{servicesContent}</div>}
+      {!showClientIcons && (
+        <div className={`${bem}__narrow`}>{servicesContent}</div>
+      )}
     </div>
   );
 }

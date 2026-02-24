@@ -1,4 +1,5 @@
 // apps/web/src/components/common/PortableTextRenderer.tsx
+
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import type { PortableTextBlock } from '@portabletext/types';
 import Link from 'next/link';

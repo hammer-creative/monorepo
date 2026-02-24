@@ -1,4 +1,5 @@
 // apps/web/src/components/common/ExtendedLink.tsx
+
 'use client';
 
 import Link from 'next/link';
@@ -18,6 +19,7 @@ export function ExtendedLink({
   href,
   email,
   className,
+
   onClick,
   preventNavigation = false,
   arrowComponent,

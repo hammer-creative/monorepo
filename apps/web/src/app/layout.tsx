@@ -1,19 +1,19 @@
 // apps/web/src/app/layout.tsx
+
+import '@/styles/index.css';
+
 import { MobileMenu } from '@/components/navigation/MobileMenu';
 import { organizationJsonLd, websiteJsonLd } from '@/config';
 import { NavigationProvider } from '@/contexts/NavigationContext';
 import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
-import { GoogleAnalytics } from '@next/third-parties/google';
-
-import '@/styles/index.css';
-
 import {
   DIATYPE_MEDIUM,
   DIATYPE_MEDIUM_ITALIC,
   MOHOL_BOLD,
   MOHOL_REGULAR,
 } from '@/utils/fontConfig';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export { metadata } from '@/config';
 

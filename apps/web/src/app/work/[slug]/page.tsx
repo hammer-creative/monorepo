@@ -1,4 +1,5 @@
 // apps/web/src/app/work/[slug]/page.tsx
+
 import { LongArrow, Title } from '@/components/common';
 import {
   CarouselModule,
@@ -171,9 +172,7 @@ export default async function CaseStudyPage({
       {otherCaseStudies.length > 0 && (
         <section className="module case-study-carousel-module">
           <div className="header">
-            <Title as="h2" variant="tertiary">
-              Case Studies
-            </Title>
+            <Title as="h3">Case Studies</Title>
             <LongArrow direction="right" href="/work" />
           </div>
 

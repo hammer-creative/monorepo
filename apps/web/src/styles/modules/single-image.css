@@ -3,21 +3,18 @@
 @import '../mixins.css';
 
 .single-image-module {
-  @mixin single-image-border;
+  /* TODO: plz fix, pretty sure we don't need any of this */
+  border: 5px solid red;
 }
 
 .single-image-module .wrapper {
   .row.single-image {
     position: relative;
-
-    .image {
-      aspect-ratio: 1 / 1;
-    }
   }
 
   @media screen and (min-width: 50rem) {
     .row.single-image .image {
-      aspect-ratio: 16 / 9;
+      /* TODO: do we need this? */
       height: 100vh;
       width: 100%;
     }

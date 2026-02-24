@@ -1,5 +1,5 @@
 // components/navigation/RadixMenu.tsx
-import { Arrow } from '@/components/common/Arrow';
+import { MenuArrowLarge } from '@/components/common/Arrow';
 import { ExtendedLink } from '@/components/common/ExtendedLink';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
@@ -51,7 +51,7 @@ export function RadixMenu({
                   preventNavigation={!!onLinkClick}
                 >
                   {item.label}
-                  {showArrow && <Arrow />}
+                  {showArrow && <MenuArrowLarge />}
                 </ExtendedLink>
               </NavigationMenu.Item>
             );

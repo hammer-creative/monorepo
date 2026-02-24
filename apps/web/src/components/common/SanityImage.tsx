@@ -1,3 +1,7 @@
+// apps/web/src/components/common/SanityImage.tsx
+
+// TODO: typechecking error and evaluate sizes for each component
+
 import { urlFor } from '@/lib/sanity/image';
 import type { ImageItem } from '@/types/sanity.generated';
 import Image from 'next/image';
@@ -18,6 +22,7 @@ interface SanityImageProps {
     | 'half-width'
     | 'carousel'
     | 'case-study-card'
+    | 'teaser'
     | 'video-poster'
     | 'impact';
   objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
@@ -139,22 +144,22 @@ export const SanityImageFullWidth = (
 );
 
 /**
- * Home page card image.
+ * Home page teaser card image.
  */
-export const SanityImageCaseStudyCard = (
+export const SanityImageTeaser = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => (
   <SanityImage
     fill
     sizes="(max-width: 640px) 100vw, 1280px"
     quality={90}
-    variant="case-study-card"
+    variant="teaser"
     {...props}
   />
 );
 
 /**
- * Video poster image — used as a cover image behind video players.
+ * Video poster image — used as a poster image in front of video playback and video controls.
  */
 export const SanityImageVideoPoster = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },

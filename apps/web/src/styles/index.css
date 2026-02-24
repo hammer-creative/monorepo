@@ -1,34 +1,40 @@
 /* apps/web/src/styles/index.css */
 
-/* Imports */
+/* BASE & UTILS */
 @import './reset.css';
 @import './tokens.css';
 @import './base.css';
 @import './utils.css';
+@import './toggle';
 @import './typography.css';
 @import './wordmark.css';
-@import './marquee.css';
-@import './toggle';
+
+/* LAYOUT */
 @import './layout/layout.css';
 @import './layout/header.css';
 @import './layout/overlay.css';
-@import './components/navigation.css';
+
+/* COMPONENTS */
+@import './components/arrow';
+@import './components/button';
+@import './components/client-icons';
 @import './components/image';
 @import './components/label';
 @import './components/list';
 @import './components/link';
-@import './components/subtitle';
+@import './components/marquee.css';
+@import './components/navigation.css';
 @import './components/title';
 @import './components/text-block';
-@import './components/client-icons';
-@import './components/arrow';
-@import './components/button';
 @import './components/table';
-@import './components/model';
-@import './home.css';
+
+/* SCENE */
+@import './scene/model';
+
+/* SANITY MODULES */
 @import './modules/cards-case-studies.css';
+@import './modules/cards-carousel.css';
 @import './modules/cards-services.css';
-@import './modules/carousel.css';
 @import './modules/hero.css';
 @import './modules/impact.css';
 @import './modules/single-image.css';
@@ -36,6 +42,8 @@
 @import './modules/text-image.css';
 @import './modules/video.css';
 
+/* PAGES */
+@import './home.css';
 @import './pages/privacy.css';
 @import './pages/services.css';
 @import './pages/work.css';

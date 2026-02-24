@@ -1,4 +1,5 @@
 // apps/web/src/components/common/Arrow.tsx
+
 import Link from 'next/link';
 
 interface ArrowProps {
@@ -14,7 +15,15 @@ const rotations = {
   up: 270,
 };
 
-export function Arrow({ direction = 'right', className, href }: ArrowProps) {
+/**
+ * Standard arrow icon. Rotates via CSS transform to support all four
+ * directions. Wraps in a `Link` when `href` is provided.
+ */
+export function MenuArrowLarge({
+  direction = 'right',
+  className,
+  href,
+}: ArrowProps) {
   const svg = (
     <svg
       className={className}
@@ -55,6 +64,10 @@ export function Arrow({ direction = 'right', className, href }: ArrowProps) {
   return svg;
 }
 
+/**
+ * Long arrow icon with a full-width shaft. Rotates via CSS transform to
+ * support all four directions. Wraps in a `Link` when `href` is provided.
+ */
 export function LongArrow({ direction = 'down', className, href }: ArrowProps) {
   const svg = (
     <svg
@@ -82,4 +95,38 @@ export function LongArrow({ direction = 'down', className, href }: ArrowProps) {
   }
 
   return svg;
+}
+
+/**
+ * Small 8×8 arrow icon used in menu contexts. Does not support rotation or
+ * href — use `Arrow` for those needs.
+ */
+export function LinkArrowSmall({ className }: Pick<ArrowProps, 'className'>) {
+  return (
+    <svg
+      className={className}
+      width="8"
+      height="8"
+      viewBox="0 0 8 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect x="0.274902" width="5.79529" height="1.83009" fill="currentColor" />
+      <rect
+        x="7.8999"
+        width="7.62538"
+        height="1.83009"
+        transform="rotate(90 7.8999 0)"
+        fill="currentColor"
+      />
+      <rect
+        x="7.43896"
+        y="1.77258"
+        width="8.66543"
+        height="1.85482"
+        transform="rotate(135 7.43896 1.77258)"
+        fill="currentColor"
+      />
+    </svg>
+  );
 }

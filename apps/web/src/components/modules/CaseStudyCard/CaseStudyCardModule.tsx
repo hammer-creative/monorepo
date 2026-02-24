@@ -1,11 +1,7 @@
 // apps/web/src/components/modules/CaseStudyCard/CaseStudyCardModule.tsx
 'use client';
 
-import {
-  ClientNames,
-  SanityImageCaseStudyCard,
-  Title,
-} from '@/components/common';
+import { Label, SanityImageTeaser, Title } from '@/components/common';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
 import type { CaseStudyTeaserItem } from '@/types/caseStudy';
 import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
@@ -17,29 +13,32 @@ import {
   generateCaseStudyAnimations,
 } from './caseStudy.animations';
 
+const bem = 'case-study';
+
+/**
+ * Renders a single case study card with image, client names, and title.
+ * Returns null if both title and image are absent.
+ */
 function CaseStudyCardItem({ item }: { item: CaseStudyTeaserItem }) {
   const { slug, title, clients, teaserImage } = item;
 
-  const clientNames = (clients ?? [])
-    .map((c) => c?.name)
-    .filter((name): name is string => typeof name === 'string');
-
   if (!title && !teaserImage) return null;
 
-  const hasClients = clientNames.length > 0;
-
   return (
-    <div className="case-study-card">
+    <div className={`${bem}__card`}>
       <Link href={`/work/${slug}`}>
-        {teaserImage && <SanityImageCaseStudyCard image={teaserImage} />}
-        <div className="meta">
-          {hasClients && (
-            <div className="clients">
-              <ClientNames clientNames={clientNames} />
-            </div>
-          )}
+        {teaserImage && (
+          <SanityImageTeaser image={teaserImage} className={`${bem}__image`} />
+        )}
+        <div className={`${bem}__details`}>
+          <Label
+            clients={clients}
+            tag="Client"
+            variant="client-label"
+            className={`${bem}__clients`}
+          />
           {title && (
-            <Title as="h3" variant="tertiary">
+            <Title as="h3" className={`${bem}__title`}>
               {title}
             </Title>
           )}
@@ -49,6 +48,10 @@ function CaseStudyCardItem({ item }: { item: CaseStudyTeaserItem }) {
   );
 }
 
+/**
+ * Type guard ensuring `data` is a valid `CaseStudyCardModule` with at least
+ * one resolved case study.
+ */
 function isValidCaseStudyCardModule(
   data: CaseStudyCardModuleType | null,
 ): data is CaseStudyCardModuleType & { caseStudies: CaseStudyTeaserItem[] } {
@@ -59,6 +62,11 @@ function isValidCaseStudyCardModule(
   );
 }
 
+/**
+ * Renders a grid of case study cards from a Sanity `CaseStudyCardModule`.
+ * On desktop, all cards animate together via a generated stagger config.
+ * On mobile, each card animates independently.
+ */
 export function CaseStudyCardModule({
   data,
 }: {
@@ -72,19 +80,16 @@ export function CaseStudyCardModule({
 
   if (!isValidCaseStudyCardModule(data)) return null;
 
-  const { caseStudies } = data;
-
-  const validCaseStudies = caseStudies.filter(
+  const validCaseStudies = data.caseStudies.filter(
     (cs) => !('_ref' in cs),
   ) as CaseStudyTeaserItem[];
 
   if (isDesktop) {
-    const animationConfiguration = generateCaseStudyAnimations(
-      validCaseStudies.length,
-    );
     return (
-      <AnimateOnScroll config={animationConfiguration}>
-        <div className="case-study-grid">
+      <AnimateOnScroll
+        config={generateCaseStudyAnimations(validCaseStudies.length)}
+      >
+        <div className={`${bem}__grid`}>
           {validCaseStudies.map((caseStudy) => (
             <CaseStudyCardItem key={caseStudy._id} item={caseStudy} />
           ))}
@@ -94,7 +99,7 @@ export function CaseStudyCardModule({
   }
 
   return (
-    <div className="case-study-grid">
+    <div className={`${bem}__grid`}>
       {validCaseStudies.map((caseStudy) => (
         <AnimateOnScroll key={caseStudy._id} config={caseStudyAnimations.card}>
           <CaseStudyCardItem item={caseStudy} />

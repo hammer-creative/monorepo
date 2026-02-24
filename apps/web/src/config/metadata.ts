@@ -3,6 +3,11 @@ import type { Metadata, Viewport } from 'next';
 
 const isStaging = process.env.CONTEXT !== 'production';
 
+/**
+ * Base metadata merged into every page. Handles SEO, social cards, favicons,
+ * PWA config, and staging noindex. Consumed directly by the root layout and
+ * extended per-page via `buildMetadata`.
+ */
 export const metadata: Metadata = {
   title: {
     default: 'Hammer Creative',
@@ -60,7 +65,6 @@ export const metadata: Metadata = {
   authors: [{ name: 'Hammer Creative', url: 'https://hammercreative.com' }],
   creator: 'Hammer Creative',
   publisher: 'Hammer Creative',
-  // manifest: '/favicons/site.webmanifest',
   icons: {
     icon: [
       { url: '/favicons/favicon.ico', sizes: 'any' },
@@ -106,6 +110,26 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Builds per-page metadata by merging a page title into the base config.
+ * The title template in the base metadata will produce `"<title> | Hammer Creative"`.
+ *
+ * @param title - The page-level title, e.g. `"Services"` or `"Work"`.
+ */
+export function buildMetadata(title: string): Metadata {
+  return {
+    title,
+    openGraph: {
+      ...metadata.openGraph,
+      title: `${title} | Hammer Creative`,
+    },
+  };
+}
+
+/**
+ * Viewport config shared across all pages. Exported separately per Next.js
+ * App Router requirements — viewport cannot be nested inside `metadata`.
+ */
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,

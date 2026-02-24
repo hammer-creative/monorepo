@@ -87,7 +87,7 @@ export function ServicesPageHeroModule({
 
       {/* Content wrapper for narrow viewport grouping */}
       <div className="content-wrapper">
-        {/* Title with scroll button on narrow */}
+        {/* Title */}
         {hasTitle && (
           <div className={`${bem}__title-wrapper`}>
             <Title as="h1" variant="primary" className={`${bem}__title`}>

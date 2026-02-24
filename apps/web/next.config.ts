@@ -1,3 +1,5 @@
+// apps/web/next.config.ts
+
 import { withSentryConfig } from '@sentry/nextjs';
 // apps/web/next.config.ts
 

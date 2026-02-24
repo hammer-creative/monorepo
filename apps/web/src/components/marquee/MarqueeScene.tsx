@@ -10,7 +10,7 @@ const HOME_VIDEO = {
   _type: 'videoItem',
   video: {
     asset: {
-      playbackId: 'DyN1avE9URhVMPpG1vwM01NcyCbgnyq79014rh2uFvgfg',
+      playbackId: 'D7873s6vpqJd01NXNlttmcaWQ6mrybBsiUeVN65pYyrI',
     },
   },
 } as unknown as VideoItem;

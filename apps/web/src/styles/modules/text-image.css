@@ -38,6 +38,6 @@
 
 /* Typography, text-image-module */
 .text-image-card__text p {
-  @mixin body-small;
+  @mixin body-sm;
   line-height: var(--line-height-loose);
 }

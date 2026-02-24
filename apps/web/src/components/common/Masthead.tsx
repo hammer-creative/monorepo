@@ -1,4 +1,5 @@
 // apps/web/src/components/marquee/Masthead.tsx
+
 import { WordmarkSVG } from './Wordmark';
 
 function Tagline() {

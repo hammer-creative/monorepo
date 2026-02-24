@@ -1,3 +1,5 @@
+// apps/web/next-seo.config.ts
+
 import { type DefaultSeoProps } from 'next-seo';
 
 const SEO: DefaultSeoProps = {

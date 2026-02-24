@@ -1,52 +1,56 @@
-// src/app/services/page.tsx
-import { LongArrow, SubTitle, Title } from '@/components/common';
+// apps/web/src/app/services/page.tsx
+
+import { LongArrow, Title } from '@/components/common';
 import {
   ServicesPageCardModule,
   ServicesPageHeroModule,
 } from '@/components/modules';
 import { CaseStudyCarousel } from '@/components/modules/Carousel';
+import { buildMetadata } from '@/config/metadata';
 import {
   client,
   getAllCaseStudyTeasers,
   getServicesPage,
   resolveModuleColors,
 } from '@/lib/sanity';
-import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'Services',
-  openGraph: {
-    title: 'Services',
-    type: 'website',
-  },
-};
+const bem = 'services';
+
+export const metadata = buildMetadata('Services');
 
 export const revalidate = 30;
 
+/**
+ * Fetches and renders the Services page from Sanity. The first module is the
+ * hero, the last is the chyron/clients card, everything between renders as
+ * service cards.
+ *
+ * @remarks
+ * `CaseStudyCarousel` expects a Sanity module shape `{ _type, caseStudies }`
+ * because it was built to consume CMS documents directly. Since the studies
+ * here come from a standalone query, we reconstruct that shape at the call
+ * site. Consider accepting a plain `caseStudies` prop to remove the coupling.
+ */
 export default async function ServicesPage() {
-  // Fetch services page data
-  const servicesPage = await getServicesPage(client);
-  const allCaseStudies = await getAllCaseStudyTeasers(client);
+  const [servicesPage, allCaseStudies] = await Promise.all([
+    getServicesPage(client),
+    getAllCaseStudyTeasers(client),
+  ]);
 
-  // Guard: Early return if no page data
   if (!servicesPage) return null;
 
-  // Resolve color values for all modules
-  const modules = servicesPage.modules?.map(resolveModuleColors) || [];
+  const modules = servicesPage.modules?.map(resolveModuleColors) ?? [];
   const [hero, ...cards] = modules;
   const regularCards = cards.slice(0, -1);
-  const chyronCard = cards[cards.length - 1];
+  const chyronCard = cards.at(-1);
 
   return (
-    <div className="layout-wrapper">
-      {/* Hero Module */}
+    <>
       {hero && (
         <section
-          className="module hero-module"
+          className={`module ${bem}__hero`}
           style={
-            {
-              '--module-text': hero.textColor?.hex,
-            } as React.CSSProperties
+            { '--module-text': hero.textColor?.hex } as React.CSSProperties
           }
         >
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -54,77 +58,55 @@ export default async function ServicesPage() {
         </section>
       )}
 
-      {/* Services Cards */}
-      <div id="content-start" className="services-heading">
-        <SubTitle as="div">Services</SubTitle>
-      </div>
-      <div className="services-cards">
-        {regularCards.map(
-          (card: {
-            _key: string;
-            backgroundColor?: { hex?: string };
-            textColor?: { hex?: string };
-          }) => {
-            const { _key, backgroundColor, textColor } = card;
-
-            return (
-              <section
-                key={_key}
-                className="module services-card-module"
-                style={
-                  {
-                    '--module-bg': backgroundColor?.hex,
-                    '--module-text': textColor?.hex,
-                  } as React.CSSProperties
-                }
-              >
-                <ServicesPageCardModule
-                  data={card as any} // eslint-disable-line @typescript-eslint/no-explicit-any
-                />
-              </section>
-            );
-          },
-        )}
+      <div id="content-start" className={`${bem}__heading`}>
+        <Title as="div">Services</Title>
       </div>
 
-      {/* Chyron Card */}
-      {chyronCard && (
-        <>
+      <div className={`${bem}__cards`}>
+        {regularCards.map((card) => (
           <section
-            className="module chyron-card"
+            key={card._key}
+            className={`module ${bem}__card`}
             style={
               {
-                '--module-bg': chyronCard.backgroundColor?.hex,
-                '--module-text': chyronCard.textColor?.hex,
+                '--module-bg': card.backgroundColor?.hex,
+                '--module-text': card.textColor?.hex,
               } as React.CSSProperties
             }
           >
-            <SubTitle as="div">Clients</SubTitle>
-            <ServicesPageCardModule
-              data={chyronCard as any} // eslint-disable-line @typescript-eslint/no-explicit-any
-              showClientIcons
-            />
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            <ServicesPageCardModule data={card as any} />
           </section>
-        </>
+        ))}
+      </div>
+
+      {chyronCard && (
+        <section
+          className={`module ${bem}__chyron`}
+          style={
+            {
+              '--module-bg': chyronCard.backgroundColor?.hex,
+              '--module-text': chyronCard.textColor?.hex,
+            } as React.CSSProperties
+          }
+        >
+          <Title as="div">Clients</Title>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          <ServicesPageCardModule data={chyronCard as any} showClientIcons />
+        </section>
       )}
-      {/* Related case studies carousel */}
 
       {allCaseStudies.length > 0 && (
-        <section className="module case-study-carousel-module">
-          <div className="header">
-            <Title as="h2" variant="tertiary">
-              Case Studies
-            </Title>
-            <LongArrow direction="right" href="/work" />
-          </div>
+        <section className={`module ${bem}__case-studies`}>
+          <Title as="h2" variant="tertiary">
+            Case Studies
+          </Title>
+          <LongArrow direction="right" href="/work" />
           <CaseStudyCarousel
-            data={{
-              _type: 'caseStudyCarousel',
-              caseStudies: allCaseStudies,
-            }}
+            data={{ _type: 'caseStudyCarousel', caseStudies: allCaseStudies }}
           />
         </section>
       )}
-    </div>
+    </>
   );
 }

@@ -1,6 +1,6 @@
-import { DEFAULT_COLORS } from '@hammercreative/ui';
+// apps/web/postcss.config.mjs
 
-console.log('🔧 PostCSS config loaded!');
+import { DEFAULT_COLORS } from '@hammercreative/ui';
 
 export default {
   plugins: {

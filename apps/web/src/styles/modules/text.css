@@ -22,7 +22,8 @@
 /* Layout, text-module, left-right aligned headline and editorial copy */
 .text-card--has-headline {
   padding-inline: var(--card-frame-1);
-  padding-block: var(--flow-space-2);
+  padding-block-start: var(--flow-space-2);
+  padding-block-end: var(--flow-space-3);
 }
 
 .text-card--has-headline .text-card__headline > * {
@@ -80,7 +81,7 @@
 /* Typography, text-module, center-aligned editorial copy */
 .text-card--challenge .text-card__text p,
 .text-card--testimonial .text-card__text p {
-  @mixin body-medium;
+  @mixin body-md;
   line-height: var(--line-height-default); /* overriding mixin */
   text-align: center;
   max-width: 40ch;
@@ -94,10 +95,10 @@
 
 /* Typography, text-module, left-right aligned headline and editorial copy */
 .text-card--has-headline .text-card__title {
-  @mixin title-secondary;
+  @mixin title-secondary var(--font-serif), uppercase;
 }
 
 .text-card--has-headline .text-card__text p {
-  @mixin body-medium;
+  @mixin body-md;
   line-height: var(--line-height-default); /* overriding mixin */
 }

@@ -1,0 +1,99 @@
+/* apps/web/src/styles/components/marquee.css */
+
+@import './mixins.css';
+
+.home__marquee {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  background: var(--color-aircutter);
+}
+
+.home__scene {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Layout, homepage: masthead, wordmark (contains tagline ;) */
+.home__masthead {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--card-frame-1);
+  z-index: var(--z-masthead);
+}
+
+.home__wordmark {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  flex: 1;
+}
+
+.home__wordmark svg {
+  width: 55vw;
+  height: auto;
+  color: var(--color-nightshade);
+}
+
+.home__wordmark .tagline {
+  text-align: center;
+}
+
+.home__masthead .impressum,
+.home__masthead .tagline {
+  color: var(--color-hyperbeam);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-loose);
+  font-size: var(--font-size--2);
+  line-height: 1;
+}
+
+.home__masthead .impressum p {
+  text-align: center;
+}
+
+.home__masthead .tagline {
+  margin-block-end: var(--space-fluid-100-200);
+}
+
+.home__masthead .impressum-left {
+  margin-block-end: var(--space-fluid-20-40);
+}
+
+@media (min-width: 70em) {
+  .home__wordmark {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .home__masthead .tagline {
+    margin-block-end: initial;
+  }
+
+  .home__masthead .impressum-left {
+    margin-block-end: initial;
+  }
+
+  .home__wordmark svg {
+    width: 300px;
+  }
+
+  .home__masthead .impressum,
+  .home__masthead .tagline {
+    color: var(--color-nightshade);
+  }
+
+  .home__masthead .impressum {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-fluid-10-20);
+    margin-block: initial;
+  }
+}

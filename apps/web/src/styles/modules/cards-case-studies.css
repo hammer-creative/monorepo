@@ -1,88 +1,107 @@
 /* apps/web/src/styles/modules/cards-case-studies.css */
 
-.case-study-card .title {
-  @mixin title-tertiary;
-  width: 20ch;
+/* Layout: page header */
+[data-page='/work'] section:first-of-type {
+  padding-block-start: var(--space-fluid-80-120);
+  padding-inline: var(--card-frame-0);
 }
 
-.case-study-card .title,
-.case-study-card .client-name {
-  color: var(--color-hyperbeam);
-  transition: color var(--ease-card);
+[data-page='/work'] section:first-of-type .text-card {
+  padding-inline-start: var(--card-frame-0);
 }
 
-.case-study-card a:hover .title,
-.case-study-card a:hover .client-name {
-  color: var(--color-aircutter);
+[data-page='/work'] section:last-of-type {
+  padding-block-end: var(--space-fluid-80-120);
 }
 
-.case-study-card {
-  position: relative;
-  border: 1px solid transparent;
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+@media (min-width: 50em) {
+  [data-page='/work'] section:first-of-type .text-card {
+    padding-inline-start: var(--space-fluid-60-120);
+  }
 }
 
-/* Darkens bottom of image so meta text is readable */
-.case-study-card .image::after {
-  content: '';
-  position: absolute;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 65%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
-  pointer-events: none;
-}
-
-/* Subtle zoom on hover */
-.case-study-card .image > * {
-  transition: transform 1s ease;
-  transform-origin: center;
-}
-
-.case-study-card:hover .image > * {
-  transform: scale(1.05) !important;
-}
-
-.case-study-card .meta {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: var(--space-20);
-}
-
-.case-study-grid {
+/* Grid: single column mobile, two columns above 50em */
+.case-study__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  grid-template-columns: 1fr;
   gap: var(--space-fluid-10-20);
+  padding-inline: var(--card-frame-0);
 }
 
-/* Lock to 2 columns above 60em */
-@media (min-width: 60em) {
-  .case-study-grid {
+@media (min-width: 50em) {
+  .case-study__grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.case-study-grid .case-study-card {
+/* Layout: Case study cards */
+.case-study__card {
   position: relative;
-  width: 100%;
+  /* Transparent border reserved for gradient border animation */
+  border: 3px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }
 
-/* Tags are shown in carousel, not grid */
-.case-study-grid .case-study-card .tag {
-  display: none;
+.case-study__card a {
+  display: block;
+  position: relative;
 }
 
-.case-study-grid .case-study-card .case-study-clients span {
-  color: $color-hyperbeam;
+/* Typography: page header */
+[data-page='/work'] section:first-of-type .text-card__label {
+  @mixin small-caps initial;
+  color: var(--color-sandstorm);
 }
 
-/* Animated gradient border, fades in on hover */
-.case-study-grid .case-study-card::before {
+[data-page='/work'] section:first-of-type .text-card__title {
+  @mixin title-primary var(--font-sans);
+  color: var(--color-sandstorm);
+  margin-block-end: var(--card-frame-0);
+}
+
+/* Typography: title and client names overlaid on image */
+.case-study__card .case-study__details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: var(--card-frame-0);
+}
+
+/* Typography: colors and hover transition */
+.case-study__card .case-study__title {
+  @mixin case-study-title var(--font-sans), initial;
+  font-family: var(--font-sans);
+  width: 15ch;
+}
+
+.case-study__card .case-study__title,
+.case-study__card .client-names__names {
+  color: var(--color-hyperbeam);
+  transition: color var(--ease-card);
+}
+
+.case-study__card a:hover .case-study__title,
+.case-study__card a:hover .client-names__names {
+  color: var(--color-aircutter);
+}
+
+/* Fx: Subtle zoom on hover */
+.case-study__card .image > * {
+  transition: transform 1s ease;
+  transform-origin: center;
+}
+
+.case-study__card:hover .image > * {
+  transform: scale(1.05) !important;
+}
+
+/* Fx: Animated gradient border, fades in on hover */
+.case-study__card::before {
   content: '';
   position: absolute;
   inset: -3px;
@@ -122,7 +141,7 @@
   pointer-events: none;
 }
 
-.case-study-grid .case-study-card:hover::before {
+.case-study__card:hover::before {
   opacity: 1;
   animation: gradient-border-shift 2s linear infinite;
 }
@@ -135,29 +154,11 @@
     background-position: 200% 0%;
   }
 }
-
 /* No animated border for carousel cards */
-.case-study-carousel-module .case-study-card {
+.case-study-carousel-module .case-study__card {
   transition: box-shadow 0.3s ease;
 }
 
-.case-study-carousel-module .case-study-card:hover {
+.case-study-carousel-module .case-study__card:hover {
   box-shadow: inset 0 0 0 3px $color-aircutter;
-}
-
-/* Meta pinned to bottom-left in carousel */
-.case-study-carousel-module .case-study-card .meta {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-/* Meta spans full height in card module to allow top/bottom placement */
-.case-study-card-module .case-study-card .meta {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
 }

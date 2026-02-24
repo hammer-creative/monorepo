@@ -36,6 +36,9 @@
 }
 
 /* Image, modules - full-width */
+.single-image-module .image {
+  @mixin aspect-ratio-full-width;
+}
 
 /* Image, modules - text + image */
 
@@ -43,6 +46,6 @@
   aspect-ratio: 16 /9;
 }
 
-.case-study-grid .case-study-card .image {
-  @mixin aspect-ratio-case-study-card;
+.case-study__grid .case-study__image--teaser {
+  @mixin aspect-ratio-teaser-card;
 }

@@ -1,14 +1,15 @@
 /* apps/web/src/stylesl/list.css */
 
-.services-card .services-list li,
-.hero-module .services-list li {
-  font-size: var(--font-size-xs-fluid);
-  line-height: var(--line-height-loose);
+.hero-card__lists {
+}
+
+.services-list li {
+  font-size: var(--font-size--1);
+  line-height: var(--line-height-medium);
   list-style: disc;
 }
 
-.services-card .services-list ul,
-.hero-module .services-list ul {
+.services-list ul {
   padding-left: 1.5ch;
   columns: 1;
 }

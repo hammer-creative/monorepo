@@ -1,4 +1,5 @@
 // apps/web/src/types/caseStudy.ts
+
 import type { SanityImageType } from '@/components/common/SanityImage';
 import type { CaseStudy } from '@/types/sanity.generated';
 

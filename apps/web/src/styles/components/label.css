@@ -1,6 +1,6 @@
 /* apps/web/src/stylesl/label.css */
 
-.label--list,
+/* .label--list,
 .label--client-label,
 [data-page]:not([data-page='/']) .text-card__label,
 .text-card__attribution {
@@ -10,10 +10,10 @@
   line-height: var(--line-height-default);
   text-transform: uppercase;
   display: block;
-}
+} */
 
-.label--client-name {
-  @mixin body-medium;
+/* .label--client-name {
+  @mixin body-md;
   line-height: var(--line-height-default);
 }
 
@@ -26,4 +26,30 @@
 .label.list {
   font-size: var(--font-size-all-caps-fluid);
   line-height: var(--line-height-loose);
+}
+
+.client-names__names {
+  @mixin small-caps;
+} */
+
+.label--small-caps {
+  @mixin small-caps uppercase;
+}
+
+.hero-card__clients .label--tag,
+.hero-card__lists .label--small-caps {
+  color: var(--color-hyperbeam);
+}
+
+.hero-card__clients .label--tag {
+  @mixin small-caps uppercase;
+}
+
+.hero-card__clients .label--client-names {
+  font-size: var(--font-size--1);
+}
+
+.services-list .label,
+.hero-card__clients .label--tag {
+  margin-bottom: 3px;
 }

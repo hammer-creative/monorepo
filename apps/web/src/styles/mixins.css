@@ -2,11 +2,14 @@
 
 @import './tokens.css';
 
-/* Aspect ratios */
+/* ASPECT RATIOS */
+
+/* Square */
 @define mixin aspect-ratio-square {
   aspect-ratio: var(--aspect-ratio-square);
 }
 
+/* Hero */
 @define-mixin aspect-ratio-hero-image {
   aspect-ratio: var(--aspect-ratio-square);
 
@@ -15,10 +18,17 @@
   }
 }
 
+/* Full-width */
+/* TODO: Is this redundant (see above) */
 @define-mixin aspect-ratio-full-width-image {
-  aspect-ratio: var(--aspect-ratio-full-width);
+  aspect-ratio: var(--aspect-ratio-square);
+
+  @media screen and (min-width: 50em) {
+    aspect-ratio: var(--aspect-ratio-full-width);
+  }
 }
 
+/* Half-width */
 @define-mixin aspect-ratio-half-width {
   aspect-ratio: var(--aspect-ratio-square);
 
@@ -27,13 +37,16 @@
   }
 }
 
-@define-mixin aspect-ratio-case-study-card {
+/* Case study teaser card */
+@define-mixin aspect-ratio-teaser-card {
   aspect-ratio: var(--aspect-ratio-square);
+
   @media screen and (min-width: 50em) {
-    aspect-ratio: var(--aspect-ratio-case-study-card-landscape);
+    aspect-ratio: var(--aspect-ratio-teaser-card);
   }
 }
 
+/* Impact card */
 @define-mixin aspect-ratio-impact {
   aspect-ratio: 32 / 1;
   @media screen and (min-width: 50em) {
@@ -41,7 +54,9 @@
   }
 }
 
-@define-mixin body-extra-small {
+/* TYPOGRAPHY */
+
+@define-mixin label-small {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
   font-size: var(--font-size--2);
@@ -49,7 +64,25 @@
   letter-spacing: var(--letter-spacing-default);
 }
 
-@define-mixin body-small {
+@define-mixin label-medium {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-default);
+  font-size: var(--font-size--2);
+  line-height: var(--line-height-0);
+  letter-spacing: var(--letter-spacing-default);
+}
+
+/* Body, extra-small: used for body copy on home page and impact cards */
+@define-mixin body-xs {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-default);
+  font-size: var(--font-size--2);
+  line-height: var(--line-height-0);
+  letter-spacing: var(--letter-spacing-default);
+}
+
+/* Body, small */
+@define-mixin body-sm {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
   font-size: var(--font-size--1);
@@ -57,7 +90,8 @@
   letter-spacing: initial;
 }
 
-@define-mixin body-medium {
+/* Body, medium  */
+@define-mixin body-md {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
   font-size: var(--font-size-0);
@@ -65,7 +99,8 @@
   letter-spacing: var(--letter-spacing-);
 }
 
-@define-mixin body-large {
+/* Body, large  */
+@define-mixin body-lg {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
   font-size: var(--font-size-2);
@@ -73,22 +108,22 @@
   letter-spacing: var(--letter-spacing-tight);
 }
 
-@define-mixin title-primary {
-  font-family: var(--font-serif);
+@define-mixin title-primary $font-family, $text-transform {
+  font-family: $font-family;
   font-weight: 400;
   font-size: var(--font-size-3);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
-  text-transform: uppercase;
+  text-transform: $text-transform;
 }
 
-@define-mixin title-secondary {
-  font-family: var(--font-serif);
+@define-mixin title-secondary $font-family, $text-transform {
+  font-family: $font-family;
   font-weight: 400;
   font-size: var(--font-size-2);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
-  text-transform: uppercase;
+  text-transform: $text-transform;
 }
 
 @define-mixin title-tertiary {
@@ -97,6 +132,15 @@
   font-size: var(--font-size-1);
   line-height: var(--line-height-3);
   letter-spacing: var(--letter-spacing-tight);
+}
+
+@define-mixin small-caps $text-transform {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-default);
+  font-size: var(--font-size--2);
+  line-height: var(--line-height-default);
+  letter-spacing: var(--letter-spacing-tight);
+  text-transform: $text-transform;
 }
 
 @define-mixin link-hover $color, $hover-color, $transition {
@@ -109,106 +153,16 @@
   }
 }
 
-/* LAYOUT MIXINS */
-
-/**
- * Basic flex container
- * @param {string} $direction - flex-direction (default: column)
- * @param {string} $wrap - flex-wrap (default: nowrap)
- */
-@define-mixin flex $direction: column, $wrap: nowrap {
-  display: flex;
-  flex-direction: $direction;
-  flex-wrap: $wrap;
-}
-
-/**
- * Responsive flex container - changes direction at breakpoint
- * @param {string} $mobile-direction - flex-direction on mobile (default: column)
- * @param {string} $desktop-direction - flex-direction on desktop (default: row)
- * @param {string} $breakpoint - when to switch (default: 50rem)
- */
-@define-mixin flex-responsive $mobile-direction: column,
-  $desktop-direction: $mobile-direction, $breakpoint: 50rem {
-  display: flex;
-  flex-direction: $mobile-direction;
-
-  @media screen and (min-width: $breakpoint) {
-    flex-direction: $desktop-direction;
-  }
-}
-
-/**
- * Base flex (legacy - keeping for compatibility)
- */
-@define-mixin flex-base $direction: column, $wrap: nowrap {
-  display: flex;
-  flex-direction: $direction;
-  flex-wrap: $wrap;
-}
-
-/* TYPOGRAPHY MIXINS */
-
-@define-mixin typography $font-family, $font-size {
+/* Modules overrides */
+@define-mixin case-study-title $font-family, $text-transform {
   font-family: $font-family;
-  font-size: $font-size;
-}
+  font-weight: 400;
+  font-size: var(--font-size-4);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  text-transform: $text-transform;
 
-@define-mixin letter-spacing-responsive $narrow, $wide {
-  letter-spacing: $narrow;
-
-  @media (min-width: 80rem) {
-    letter-spacing: $wide;
+  @media screen and (min-width: 50em) {
+    font-size: var(--font-size-1);
   }
-}
-
-@define-mixin footer-menu-items {
-  @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-loose);
-  line-height: 2;
-  display: block;
-}
-
-@define-mixin all-caps-accent {
-  @mixin typography var(--font-sans), var(--font-size-fluid-small);
-  letter-spacing: var(--letter-spacing-wide);
-  text-transform: uppercase;
-}
-
-@define-mixin gutters-text-large {
-  padding-left: var(--space-fluid-20-40);
-  padding-right: var(--space-fluid-20-40);
-}
-
-@define-mixin gutters-text-impact {
-  padding-left: var(--space-fluid-20-40);
-  padding-right: var(--space-fluid-20-40);
-}
-
-@define-mixin gutters-text-small {
-  padding-left: var(--space-fluid-20-40);
-  padding-right: var(--space-fluid-20-40);
-}
-
-@define-mixin gutters-carousel {
-  padding: var(--space-fluid-10-20);
-}
-
-@define-mixin head-foot-text {
-  padding-top: var(--space-fluid-20-40);
-  padding-bottom: var(--space-fluid-20-60);
-}
-
-@define-mixin single-video-border {
-  padding: var(--space-fluid-10-20);
-  padding-bottom: 0;
-}
-
-@define-mixin single-image-border {
-  padding: var(--space-fluid-10-20);
-}
-
-@define-mixin multi-video-border {
-  padding: var(--space-fluid-10-20);
 }

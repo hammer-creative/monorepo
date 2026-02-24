@@ -1,4 +1,6 @@
-// types/sanity.ts
+// apps/web/src/types/portable-text.ts
+
+// TODO: what the heck is going on here?
 import type { PortableTextBlock } from '@portabletext/types';
 
 export interface SanityImage {
