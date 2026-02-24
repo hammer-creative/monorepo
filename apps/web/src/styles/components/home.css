@@ -101,3 +101,38 @@
     margin-block-end: var(--space-fluid-20-40);
   }
 }
+
+@media screen and (min-width: 50em) {
+  [data-page='/'] [data-module-index='3'] {
+    .label {
+      text-align: right;
+    }
+  }
+}
+
+/* TODO: this is pointless */
+[data-page='/'] [data-module-index='1'],
+[data-page='/'] [data-module-index='3'] {
+  .label {
+    font-size: var(--font-size-sm-fluid);
+    line-height: var(--line-height-very-loose);
+    color: $color-hyperbeam;
+    letter-spacing: var(--letter-spacing-extra-loose);
+    text-transform: uppercase;
+  }
+  a {
+    transition: color 0.3s ease-out;
+
+    &:hover {
+      color: $color-sandstorm;
+    }
+
+    > svg {
+      color: inherit;
+      vertical-align: 0.15em;
+      margin-left: 0.3em;
+      width: 0.6em;
+      height: auto;
+    }
+  }
+}

@@ -7,7 +7,6 @@ export { Label } from './Label';
 export { LinkList } from './LinkList';
 export { PortableTextRenderer } from './PortableTextRenderer';
 export * from './SanityImage';
-export { SubTitle } from './SubTitle';
 export { TextBlock } from './TextBlock';
 export { Title } from './Title';
 export { Wordmark } from './Wordmark';

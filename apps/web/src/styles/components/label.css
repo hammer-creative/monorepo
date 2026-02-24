@@ -1,46 +1,11 @@
 /* apps/web/src/stylesl/label.css */
 
-/* .label--list,
-.label--client-label,
-[data-page]:not([data-page='/']) .text-card__label,
-.text-card__attribution {
-  font-size: var(--font-size-all-caps-fluid);
-  font-weight: 900;
-  letter-spacing: var(--letter-spacing-loose);
-  line-height: var(--line-height-default);
-  text-transform: uppercase;
-  display: block;
-} */
-
-/* .label--client-name {
-  @mixin body-md;
-  line-height: var(--line-height-default);
-}
-
-.label--client-label {
-  font-size: var(--font-size-all-caps-fluid);
-  line-height: var(--line-height-loose);
-  margin-block-end: var(--space-5);
-}
-
-.label.list {
-  font-size: var(--font-size-all-caps-fluid);
-  line-height: var(--line-height-loose);
-}
-
-.client-names__names {
-  @mixin small-caps;
-} */
-
+/* BASE STYLE */
 .label--small-caps {
   @mixin small-caps uppercase;
 }
 
-.hero-card__clients .label--tag,
-.hero-card__lists .label--small-caps {
-  color: var(--color-hyperbeam);
-}
-
+/* MODULE OVERRIDES */
 .hero-card__clients .label--tag {
   @mixin small-caps uppercase;
 }

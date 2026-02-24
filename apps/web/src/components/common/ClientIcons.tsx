@@ -1,4 +1,5 @@
 // apps/web/src/components/common/ClientIcons.tsx
+
 'use client';
 
 import { useMediaQuery } from '@/hooks/useMediaQuery';

@@ -1,54 +1,40 @@
-// apps/web/src/components/modules/Carousel/CaseStudyCarousel.tsx
+// apps/web/src/components/modules/Carousel/CarouselModule.tsx
+
+// TODO: is this correct?
+
 'use client';
 
-import { SanityImageCarousel, Title } from '@/components/common';
-import type { CaseStudyTeaserItem } from '@/types/caseStudy';
-import Link from 'next/link';
+import { SanityImageCarousel } from '@/components/common/SanityImage';
+import type { CarouselModule as CarouselModuleType } from '@/types/sanity.generated';
 import { SwiperSlide } from 'swiper/react';
 
 import { CarouselBase } from './CarouselBase';
 
-const bem = 'case-study';
+const bem = 'image';
 
-/**
- * Props for `CaseStudyCarousel`.
- */
-interface CaseStudyCarouselProps {
-  data: {
-    _type: 'caseStudyCarousel';
-    caseStudies: CaseStudyTeaserItem[];
-  } | null;
+type CarouselImageItem = NonNullable<CarouselModuleType['images']>[number];
+
+function isValidCarouselModule(
+  data: CarouselModuleType | null,
+): data is CarouselModuleType {
+  return data !== null;
 }
 
-/**
- * Renders a horizontally scrolling carousel of case study cards using Swiper.
- * Each slide links to the case study detail page.
- */
-export function CaseStudyCarousel({ data }: CaseStudyCarouselProps) {
-  if (!data?.caseStudies?.length) return null;
+export function CarouselModule({ data }: { data: CarouselModuleType | null }) {
+  if (!isValidCarouselModule(data)) return null;
+
+  const { images } = data;
+  if (!images || images.length === 0) return null;
 
   return (
-    <CarouselBase reverseDirection={true} className={`${bem}__carousel`}>
-      {data.caseStudies.map((caseStudy) => {
-        const { teaserImage, title, slug, _id } = caseStudy;
-
-        if (!teaserImage) return null;
-
-        return (
-          <SwiperSlide key={_id} className={`${bem}__card`}>
-            <Link href={`/work/${slug ?? ''}`}>
-              <SanityImageCarousel image={teaserImage} />
-              <div className={`${bem}__details`}>
-                {title && (
-                  <Title as="h3" className={`${bem}__title`}>
-                    {title}
-                  </Title>
-                )}
-              </div>
-            </Link>
+    <CarouselBase reverseDirection={false} className={`${bem}__carousel`}>
+      {images.map((item: CarouselImageItem) => (
+        <>
+          <SwiperSlide key={item._key} className={`${bem}__card`}>
+            <SanityImageCarousel image={item.image ?? null} />
           </SwiperSlide>
-        );
-      })}
+        </>
+      ))}
     </CarouselBase>
   );
 }
