@@ -47,67 +47,77 @@ export default function ModelDevPage() {
   const [linearGradientHeight, setLinearGradientHeight] = useState(0);
 
   const [ambientLightEnabled, setAmbientLightEnabled] = useState(
-    C.AMBIENT_LIGHT_ENABLED,
+    C.LIGHTING_CONFIG.ambientLight.enabled,
   );
   const [ambientLightIntensity, setAmbientLightIntensity] = useState(
-    C.AMBIENT_LIGHT_INTENSITY_DEFAULT,
+    C.LIGHTING_CONFIG.ambientLight.intensity,
   );
   const [ambientLightColor, setAmbientLightColor] = useState(
-    C.AMBIENT_LIGHT_COLOR,
+    C.LIGHTING_CONFIG.ambientLight.color,
   );
 
   const [directionalLightEnabled, setDirectionalLightEnabled] = useState(
-    C.DIRECTIONAL_LIGHT_ENABLED,
+    C.LIGHTING_CONFIG.directionalLight.enabled,
   );
   const [directionalLightIntensity, setDirectionalLightIntensity] = useState(
-    C.DIRECTIONAL_LIGHT_INTENSITY_DEFAULT,
+    C.LIGHTING_CONFIG.directionalLight.intensity,
   );
   const [directionalLightColor, setDirectionalLightColor] = useState(
-    C.DIRECTIONAL_LIGHT_COLOR,
+    C.LIGHTING_CONFIG.directionalLight.color,
   );
   const [directionalLightPosition, setDirectionalLightPosition] = useState(
-    C.DIRECTIONAL_LIGHT_POSITION_DEFAULT,
+    C.LIGHTING_CONFIG.directionalLight.position,
   );
 
   const [spotLightEnabled, setSpotLightEnabled] = useState(
-    C.SPOT_LIGHT_ENABLED,
+    C.LIGHTING_CONFIG.spotLight.enabled,
   );
   const [spotLightIntensity, setSpotLightIntensity] = useState(
-    C.SPOT_LIGHT_INTENSITY,
+    C.LIGHTING_CONFIG.spotLight.intensity,
   );
-  const [spotLightColor, setSpotLightColor] = useState(C.SPOT_LIGHT_COLOR);
+  const [spotLightColor, setSpotLightColor] = useState(
+    C.LIGHTING_CONFIG.spotLight.color,
+  );
   const [spotLightPosition, setSpotLightPosition] = useState(
-    C.SPOT_LIGHT_POSITION,
+    C.LIGHTING_CONFIG.spotLight.position,
   );
-  const [spotLightAngle, setSpotLightAngle] = useState(C.SPOT_LIGHT_ANGLE);
+  const [spotLightAngle, setSpotLightAngle] = useState(
+    C.LIGHTING_CONFIG.spotLight.angle,
+  );
   const [spotLightPenumbra, setSpotLightPenumbra] = useState(
-    C.SPOT_LIGHT_PENUMBRA,
+    C.LIGHTING_CONFIG.spotLight.penumbra,
   );
 
   const [pointLightEnabled, setPointLightEnabled] = useState(
-    C.POINT_LIGHT_ENABLED,
+    C.LIGHTING_CONFIG.pointLight.enabled,
   );
   const [pointLightIntensity, setPointLightIntensity] = useState(
-    C.POINT_LIGHT_INTENSITY,
+    C.LIGHTING_CONFIG.pointLight.intensity,
   );
-  const [pointLightColor, setPointLightColor] = useState(C.POINT_LIGHT_COLOR);
+  const [pointLightColor, setPointLightColor] = useState(
+    C.LIGHTING_CONFIG.pointLight.color,
+  );
   const [pointLightPosition, setPointLightPosition] = useState(
-    C.POINT_LIGHT_POSITION,
+    C.LIGHTING_CONFIG.pointLight.position,
   );
   const [pointLightDistance, setPointLightDistance] = useState(
-    C.POINT_LIGHT_DISTANCE,
+    C.LIGHTING_CONFIG.pointLight.distance,
   );
-  const [pointLightDecay, setPointLightDecay] = useState(C.POINT_LIGHT_DECAY);
+  const [pointLightDecay, setPointLightDecay] = useState(
+    C.LIGHTING_CONFIG.pointLight.decay,
+  );
 
   const [cycloLightEnabled, setCycloLightEnabled] = useState(
-    C.CYCLO_LIGHT_ENABLED,
+    C.LIGHTING_CONFIG.cycloLight.enabled,
   );
   const [cycloLightIntensity, setCycloLightIntensity] = useState(
-    C.CYCLO_LIGHT_INTENSITY,
+    C.LIGHTING_CONFIG.cycloLight.intensity,
   );
-  const [cycloLightColor, setCycloLightColor] = useState(C.CYCLO_LIGHT_COLOR);
+  const [cycloLightColor, setCycloLightColor] = useState(
+    C.LIGHTING_CONFIG.cycloLight.color,
+  );
   const [cycloLightPosition, setCycloLightPosition] = useState(
-    C.CYCLO_LIGHT_POSITION,
+    C.LIGHTING_CONFIG.cycloLight.position,
   );
 
   const [presets, setPresets] = useState([]);
@@ -316,8 +326,8 @@ export const LIGHTING_CONFIG = {
     ? {
         maskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
         WebkitMaskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
-        maskSize: '100% 100%',
-        WebkitMaskSize: '100% 100%',
+        maskSize: `${maskDiameter}vh ${maskDiameter}vh`,
+        WebkitMaskSize: `${maskDiameter}vh ${maskDiameter}vh`,
         maskPosition: 'center',
         WebkitMaskPosition: 'center',
         maskRepeat: 'no-repeat',

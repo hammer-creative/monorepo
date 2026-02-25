@@ -163,7 +163,7 @@ export default function SceneContent({
 
       <Suspense fallback={null}>
         <SceneModel
-          url="/model/model-v7-compressed.glb"
+          url="/model/model-v7-modified-v3.glb"
           isPaused={isPaused}
           onPlayClick={onPlayClick}
         />

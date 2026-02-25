@@ -14,11 +14,11 @@
   /* Z-INDICES */
   --z-image: 0;
   --z-menu: 1;
-  --z-model: 10;
-  --z-bokeh-1: -1;
-  --z-bokeh-2: -1;
-  --z-linear-gradient-1: -1;
-  --z-masthead: 10;
+  --z-bokeh-1: 1;
+  --z-bokeh-2: 2;
+  --z-linear-gradient-1: 3;
+  --z-model: 4;
+  --z-masthead: 100;
   --z-menu-overlay: 200;
   --z-mobile-menu: 300;
   --z-header: 400;

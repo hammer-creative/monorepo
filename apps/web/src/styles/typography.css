@@ -72,7 +72,7 @@ p {
   text-justify: inter-word;
 }
 
-p.large {
+/* p.large {
   @mixin typography var(--font-sans), var(--font-size-fluid-lg);
   line-height: var(--line-height-fluid-reverse);
 }
@@ -85,26 +85,25 @@ p.medium {
 p.small,
 .client-name {
   @mixin typography var(--font-sans), var(--font-size-fluid-small);
-}
+} */
 
 /* ul li {
   @mixin typography var(--font-sans), var(--font-size-fluid-xsmall);
   line-height: var(--line-height-loose);
 } */
 
-.tag {
+/* .tag {
   @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
   letter-spacing: var(--letter-spacing-loose);
   text-transform: uppercase;
   line-height: 2;
-}
+} */
 
 /* Blockquote override for case study pages */
 .case-study blockquote {
-  @mixin typography var(--font-sans), var(--font-size-fluid-small);
-  line-height: var(--line-height-fluid-reverse);
+  font-family: inherit;
+  font-size: inherit;
+  /* line-height: var(--line-height-fluid-reverse); */
   padding: var(--space-fluid-20-60) 0;
   font-weight: 900;
 }
-
-/* Footer typography */

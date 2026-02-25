@@ -43,7 +43,7 @@
 @import './modules/video.css';
 
 /* PAGES */
-@import './home.css';
+@import './pages/home.css';
 @import './pages/privacy.css';
 @import './pages/services.css';
 @import './pages/work.css';

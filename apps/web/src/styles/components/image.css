@@ -37,7 +37,7 @@
 
 /* Image, modules - full-width */
 .single-image-module .image {
-  @mixin aspect-ratio-full-width;
+  /* @mixin aspect-ratio-full-width; */
 }
 
 /* Image, modules - text + image */

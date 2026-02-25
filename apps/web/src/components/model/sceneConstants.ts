@@ -16,10 +16,11 @@ export const PARALLAX_FACTOR = 0.2;
 // ==========================================
 // MESH VISIBILITY
 // ==========================================
-export const SHOW_CORNEA = true;
+export const SHOW_CORNEA = false;
 export const SHOW_IRIS = true;
 export const SHOW_PUPIL = true;
 export const SHOW_SCLERA = true;
+export const SCLERA_SCALE = 1.0;
 
 // ==========================================
 // VIDEO PUPIL PARAMETERS
@@ -36,49 +37,13 @@ export const ENABLE_IRIS_ROTATION = true;
 export const IRIS_ROTATION_SPEED = 0.03;
 export const IRIS_ROTATION_SPEED_ON_MOVE = 0.5;
 export const IRIS_SPEED_LERP = 0.1;
-export const IRIS_SATURATION = 1.5;
+export const IRIS_SATURATION = 1.2;
 export const IRIS_CONTRAST = 1.2;
 
 // ==========================================
-// LIGHTING PARAMETERS
+// RENDER PARAMETERS
 // ==========================================
-export const AMBIENT_LIGHT_INTENSITY = 2;
-export const DIRECTIONAL_LIGHT_INTENSITY = 1;
-export const DIRECTIONAL_LIGHT_POSITION = [1, 1, 1] as [number, number, number];
 export const TONE_MAPPING_EXPOSURE = 1.0;
-
-// ==========================================
-// LIGHTING DEFAULTS
-// ==========================================
-export const AMBIENT_LIGHT_ENABLED = true;
-export const AMBIENT_LIGHT_COLOR = '#ffffff';
-export const AMBIENT_LIGHT_INTENSITY_DEFAULT = 0.4;
-
-export const DIRECTIONAL_LIGHT_ENABLED = true;
-export const DIRECTIONAL_LIGHT_COLOR = '#ffffff';
-export const DIRECTIONAL_LIGHT_INTENSITY_DEFAULT = 3.6;
-export const DIRECTIONAL_LIGHT_POSITION_DEFAULT: [number, number, number] = [
-  0.0, 0.3, 0.3,
-];
-
-export const SPOT_LIGHT_ENABLED = false;
-export const SPOT_LIGHT_INTENSITY = 0;
-export const SPOT_LIGHT_COLOR = '#000000';
-export const SPOT_LIGHT_POSITION: [number, number, number] = [0, 0, 0];
-export const SPOT_LIGHT_ANGLE = 0;
-export const SPOT_LIGHT_PENUMBRA = 0;
-
-export const POINT_LIGHT_ENABLED = false;
-export const POINT_LIGHT_INTENSITY = 0;
-export const POINT_LIGHT_COLOR = '#000000';
-export const POINT_LIGHT_POSITION: [number, number, number] = [0, 0, 0];
-export const POINT_LIGHT_DISTANCE = 0;
-export const POINT_LIGHT_DECAY = 0;
-
-export const CYCLO_LIGHT_ENABLED = false;
-export const CYCLO_LIGHT_INTENSITY = 0;
-export const CYCLO_LIGHT_COLOR = '#000000';
-export const CYCLO_LIGHT_POSITION: [number, number, number] = [0, 0, 0];
 
 // ==========================================
 // PLAY BUTTON PARAMETERS
@@ -86,3 +51,42 @@ export const CYCLO_LIGHT_POSITION: [number, number, number] = [0, 0, 0];
 export const PLAY_BUTTON_Z = 0.14;
 export const PLAY_BUTTON_SCALE = 0.01;
 export const PLAY_BUTTON_COLOR = '#D4A843';
+
+// ==========================================
+// LIGHTING CONFIG — paste from dev panel to update
+// ==========================================
+export const LIGHTING_CONFIG = {
+  ambientLight: {
+    enabled: true,
+    intensity: 5,
+    color: '#a9b7bd',
+  },
+  directionalLight: {
+    enabled: true,
+    intensity: 5,
+    color: '#dbe1e1',
+    position: [0, 0, 0],
+  },
+  spotLight: {
+    enabled: false,
+    intensity: 0,
+    color: '#000000',
+    position: [0, 0, 0],
+    angle: 0,
+    penumbra: 0,
+  },
+  pointLight: {
+    enabled: false,
+    intensity: 0,
+    color: '#000000',
+    position: [0, 0, 0],
+    distance: 0,
+    decay: 0,
+  },
+  cycloLight: {
+    enabled: false,
+    intensity: 0,
+    color: '#000000',
+    position: [0, 0, 0],
+  },
+};

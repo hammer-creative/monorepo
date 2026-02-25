@@ -134,13 +134,14 @@
   letter-spacing: var(--letter-spacing-tight);
 }
 
-@define-mixin small-caps $text-transform {
+@define-mixin small-caps $text-transform, $color {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
-  font-size: var(--font-size--2);
+  font-size: var(--font-size--3);
   line-height: var(--line-height-default);
   letter-spacing: var(--letter-spacing-tight);
   text-transform: $text-transform;
+  color: $color;
 }
 
 @define-mixin link-hover $color, $hover-color, $transition {

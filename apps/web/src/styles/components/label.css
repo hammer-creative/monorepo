@@ -1,13 +1,17 @@
 /* apps/web/src/stylesl/label.css */
 
 /* BASE STYLE */
-.label--small-caps {
-  @mixin small-caps uppercase;
+.hero-card__details .label--small-caps {
+  @mixin small-caps uppercase, var(--color-hyperbeam);
+  letter-spacing: var(--letter-spacing-loose);
+  padding-bottom: 3px;
 }
 
 /* MODULE OVERRIDES */
 .hero-card__clients .label--tag {
-  @mixin small-caps uppercase;
+  @mixin small-caps uppercase, var(--color-hyperbeam);
+  letter-spacing: var(--letter-spacing-loose);
+  padding-bottom: 3px;
 }
 
 .hero-card__clients .label--client-names {
