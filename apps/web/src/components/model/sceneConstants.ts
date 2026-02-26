@@ -18,7 +18,7 @@ export const PARALLAX_FACTOR = 0.2;
 // ==========================================
 export const SHOW_CORNEA = false;
 export const SHOW_IRIS = true;
-export const SHOW_PUPIL = true;
+export const SHOW_PUPIL = false;
 export const SHOW_SCLERA = true;
 export const SCLERA_SCALE = 1.0;
 
@@ -26,9 +26,10 @@ export const SCLERA_SCALE = 1.0;
 // VIDEO PUPIL PARAMETERS
 // ==========================================
 export const ENABLE_VIDEO_PUPIL = true;
-export const PUPIL_COLOR = new THREE.Color(0xffffff);
+export const PUPIL_COLOR = new THREE.Color(0x000000);
 export const PUPIL_Z_POSITION = 0;
 export const PUPIL_SCALE = 1;
+export const PUPIL_CONVEXITY = 0; // how far center bulges forward, try 0.01–0.08
 
 // ==========================================
 // IRIS PARAMETERS
@@ -51,6 +52,47 @@ export const TONE_MAPPING_EXPOSURE = 1.0;
 export const PLAY_BUTTON_Z = 0.14;
 export const PLAY_BUTTON_SCALE = 0.01;
 export const PLAY_BUTTON_COLOR = '#D4A843';
+
+// ==========================================
+// EYE LIGHTS (CATCHLIGHTS)
+// Pixar-style painted highlights on cornea.
+// Set png: '/path/to/file.png' to use a hand-painted texture instead of procedural.
+// parallaxStrength — how far the light slides as eye rotates
+// skewStrength     — how much it tilts on Y rotation
+// stretchStrength  — how much it stretches horizontally on Y rotation
+// ==========================================
+export const EYE_LIGHTS = [
+  {
+    id: 'main',
+    position: [-0.035, 0.032, 0.148] as [number, number, number],
+    size: [0.055, 0.04] as [number, number],
+    opacity: 0.75,
+    parallaxStrength: 0.08,
+    skewStrength: 0.3,
+    stretchStrength: 0.5,
+    png: null as string | null,
+  },
+  {
+    id: 'secondary',
+    position: [0.04, 0.025, 0.148] as [number, number, number],
+    size: [0.03, 0.022] as [number, number],
+    opacity: 0.45,
+    parallaxStrength: 0.05,
+    skewStrength: 0.2,
+    stretchStrength: 0.3,
+    png: null as string | null,
+  },
+  {
+    id: 'tertiary',
+    position: [-0.01, -0.02, 0.148] as [number, number, number],
+    size: [0.02, 0.015] as [number, number],
+    opacity: 0.25,
+    parallaxStrength: 0.03,
+    skewStrength: 0.15,
+    stretchStrength: 0.2,
+    png: null as string | null,
+  },
+];
 
 // ==========================================
 // LIGHTING CONFIG — paste from dev panel to update
@@ -90,3 +132,21 @@ export const LIGHTING_CONFIG = {
     position: [0, 0, 0],
   },
 };
+
+// ==========================================
+// IRIS EDGE GRADIENT
+// ==========================================
+
+export const IRIS_EDGE_FADE_START = 0.75;
+export const IRIS_EDGE_FADE_END = 1;
+export const IRIS_EDGE_COLOR_R = 0; // edge color RGB 0–1
+export const IRIS_EDGE_COLOR_G = 0;
+export const IRIS_EDGE_COLOR_B = 0;
+
+export const CORNEA_RADIUS = 0.148;
+export const EYE_LIGHT_Z_OFFSET = 0.005;
+
+export const IRIS_ROUGHNESS = 1.0;
+
+export const SCLERA_INNER_FADE_START = 0; // inner hole edge
+export const SCLERA_INNER_FADE_END = 0; // fades to normal above this

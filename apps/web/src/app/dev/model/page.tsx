@@ -1,136 +1,201 @@
-// apps/web/src/dev/model/page.tsx
-
 'use client';
 
 /* eslint-disable */
 // @ts-nocheck
-import * as C from '@/components/model/sceneConstants';
+import { TONE_MAPPING_EXPOSURE } from '@/components/model/sceneConstants';
 import SceneContent from '@/components/model/SceneContent';
 import { Canvas } from '@react-three/fiber';
 import { useState } from 'react';
 import * as THREE from 'three';
 
-const { TONE_MAPPING_EXPOSURE } = C;
+// ─── Lighting defaults ───────────────────────────────────────────────────────
+// NOT imported from sceneConstants. These are the panel's own starting point.
+// Workflow: tweak sliders → "Copy Lighting Config" → paste into sceneConstants.
+// sceneConstants is the exported snapshot, not the source of truth.
 
+const LIGHTING_DEFAULTS = {
+  ambientLight: { enabled: true, intensity: 5, color: '#a9b7bd' },
+  directionalLight: {
+    enabled: true,
+    intensity: 5,
+    color: '#dbe1e1',
+    position: [5, 5, 5],
+  },
+  spotLight: {
+    enabled: false,
+    intensity: 5,
+    color: '#ffffff',
+    position: [0, 5, 3],
+    angle: 0.3,
+    penumbra: 0.5,
+  },
+  pointLight: {
+    enabled: false,
+    intensity: 5,
+    color: '#ffffff',
+    position: [2, 2, 2],
+    distance: 10,
+    decay: 2,
+  },
+  cycloLight: {
+    enabled: false,
+    intensity: 2,
+    color: '#ffffff',
+    position: [0, -3, 0],
+  },
+};
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+const hexToRgba = (hex) => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, 1)`;
+};
+
+const HR = () => (
+  <hr
+    style={{
+      width: '100%',
+      border: 'none',
+      borderTop: '1px solid rgba(255,255,255,0.2)',
+    }}
+  />
+);
+
+const btnBase = {
+  border: 'none',
+  borderRadius: 4,
+  cursor: 'pointer',
+  fontFamily: 'monospace',
+  fontWeight: 'bold',
+  padding: '8px 12px',
+  color: '#fff',
+};
+
+// ─── Component ───────────────────────────────────────────────────────────────
 export default function ModelDevPage() {
   const [helpersVisible, setHelpersVisible] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [panelVisible, setPanelVisible] = useState(true);
   const [lightingPanelVisible, setLightingPanelVisible] = useState(false);
 
+  // ── Mask ─────────────────────────────────────────────────────────────────
+  // Defaults match production PostCSS:
+  //   mask-image: radial-gradient(circle at 50% 50%, black 42%, transparent 63%)
+  //   mask-size: 97vh 97vh
   const [maskEnabled, setMaskEnabled] = useState(false);
-  const [maskStart, setMaskStart] = useState(0);
-  const [maskEnd, setMaskEnd] = useState(0);
-  const [maskDiameter, setMaskDiameter] = useState(0);
+  const [maskStart, setMaskStart] = useState(42);
+  const [maskEnd, setMaskEnd] = useState(63);
+  const [maskDiameter, setMaskDiameter] = useState(97);
 
-  const [bokeh1Enabled, setBokeh1Enabled] = useState(true);
-  const [backdropSize1, setBackdropSize1] = useState(0);
+  // ── Bokeh 1 ───────────────────────────────────────────────────────────────
+  const [bokeh1Enabled, setBokeh1Enabled] = useState(false);
+  const [backdropSize1, setBackdropSize1] = useState(100);
   const [backdropBlur1, setBackdropBlur1] = useState(0);
   const [backdropOpacity1, setBackdropOpacity1] = useState(0);
   const [backdropColor1_1, setBackdropColor1_1] = useState('#000000');
   const [backdropColor1_2, setBackdropColor1_2] = useState('#000000');
   const [backdropGradientStart1, setBackdropGradientStart1] = useState(0);
-  const [backdropGradientEnd1, setBackdropGradientEnd1] = useState(0);
+  const [backdropGradientEnd1, setBackdropGradientEnd1] = useState(100);
 
-  const [bokeh2Enabled, setBokeh2Enabled] = useState(true);
-  const [backdropSize2, setBackdropSize2] = useState(0);
+  // ── Bokeh 2 ───────────────────────────────────────────────────────────────
+  const [bokeh2Enabled, setBokeh2Enabled] = useState(false);
+  const [backdropSize2, setBackdropSize2] = useState(100);
   const [backdropBlur2, setBackdropBlur2] = useState(0);
   const [backdropOpacity2, setBackdropOpacity2] = useState(0);
   const [backdropColor2_1, setBackdropColor2_1] = useState('#000000');
   const [backdropColor2_2, setBackdropColor2_2] = useState('#000000');
   const [backdropGradientStart2, setBackdropGradientStart2] = useState(0);
-  const [backdropGradientEnd2, setBackdropGradientEnd2] = useState(0);
+  const [backdropGradientEnd2, setBackdropGradientEnd2] = useState(100);
 
+  // ── Bottom Fade ───────────────────────────────────────────────────────────
   const [linearGradientEnabled, setLinearGradientEnabled] = useState(false);
   const [linearGradientColor, setLinearGradientColor] = useState('#000000');
   const [linearGradientOpacity, setLinearGradientOpacity] = useState(0);
-  const [linearGradientHeight, setLinearGradientHeight] = useState(0);
+  const [linearGradientHeight, setLinearGradientHeight] = useState(30);
 
-  const [ambientLightEnabled, setAmbientLightEnabled] = useState(
-    C.LIGHTING_CONFIG.ambientLight.enabled,
-  );
-  const [ambientLightIntensity, setAmbientLightIntensity] = useState(
-    C.LIGHTING_CONFIG.ambientLight.intensity,
-  );
-  const [ambientLightColor, setAmbientLightColor] = useState(
-    C.LIGHTING_CONFIG.ambientLight.color,
-  );
-
-  const [directionalLightEnabled, setDirectionalLightEnabled] = useState(
-    C.LIGHTING_CONFIG.directionalLight.enabled,
-  );
-  const [directionalLightIntensity, setDirectionalLightIntensity] = useState(
-    C.LIGHTING_CONFIG.directionalLight.intensity,
-  );
-  const [directionalLightColor, setDirectionalLightColor] = useState(
-    C.LIGHTING_CONFIG.directionalLight.color,
-  );
-  const [directionalLightPosition, setDirectionalLightPosition] = useState(
-    C.LIGHTING_CONFIG.directionalLight.position,
-  );
-
-  const [spotLightEnabled, setSpotLightEnabled] = useState(
-    C.LIGHTING_CONFIG.spotLight.enabled,
-  );
-  const [spotLightIntensity, setSpotLightIntensity] = useState(
-    C.LIGHTING_CONFIG.spotLight.intensity,
-  );
-  const [spotLightColor, setSpotLightColor] = useState(
-    C.LIGHTING_CONFIG.spotLight.color,
-  );
-  const [spotLightPosition, setSpotLightPosition] = useState(
-    C.LIGHTING_CONFIG.spotLight.position,
-  );
-  const [spotLightAngle, setSpotLightAngle] = useState(
-    C.LIGHTING_CONFIG.spotLight.angle,
-  );
-  const [spotLightPenumbra, setSpotLightPenumbra] = useState(
-    C.LIGHTING_CONFIG.spotLight.penumbra,
-  );
-
-  const [pointLightEnabled, setPointLightEnabled] = useState(
-    C.LIGHTING_CONFIG.pointLight.enabled,
-  );
-  const [pointLightIntensity, setPointLightIntensity] = useState(
-    C.LIGHTING_CONFIG.pointLight.intensity,
-  );
-  const [pointLightColor, setPointLightColor] = useState(
-    C.LIGHTING_CONFIG.pointLight.color,
-  );
-  const [pointLightPosition, setPointLightPosition] = useState(
-    C.LIGHTING_CONFIG.pointLight.position,
-  );
-  const [pointLightDistance, setPointLightDistance] = useState(
-    C.LIGHTING_CONFIG.pointLight.distance,
-  );
-  const [pointLightDecay, setPointLightDecay] = useState(
-    C.LIGHTING_CONFIG.pointLight.decay,
-  );
-
-  const [cycloLightEnabled, setCycloLightEnabled] = useState(
-    C.LIGHTING_CONFIG.cycloLight.enabled,
-  );
-  const [cycloLightIntensity, setCycloLightIntensity] = useState(
-    C.LIGHTING_CONFIG.cycloLight.intensity,
-  );
-  const [cycloLightColor, setCycloLightColor] = useState(
-    C.LIGHTING_CONFIG.cycloLight.color,
-  );
-  const [cycloLightPosition, setCycloLightPosition] = useState(
-    C.LIGHTING_CONFIG.cycloLight.position,
-  );
-
+  // ── Presets ───────────────────────────────────────────────────────────────
   const [presets, setPresets] = useState([]);
   const [presetCounter, setPresetCounter] = useState(1);
 
-  const hexToRgba = (hex) => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r}, ${g}, ${b}, 1)`;
-  };
+  // ── Lighting — initialized from LIGHTING_DEFAULTS, not sceneConstants ─────
+  const [ambientLightEnabled, setAmbientLightEnabled] = useState(
+    LIGHTING_DEFAULTS.ambientLight.enabled,
+  );
+  const [ambientLightIntensity, setAmbientLightIntensity] = useState(
+    LIGHTING_DEFAULTS.ambientLight.intensity,
+  );
+  const [ambientLightColor, setAmbientLightColor] = useState(
+    LIGHTING_DEFAULTS.ambientLight.color,
+  );
 
-  const removeAll = () => {
+  const [directionalLightEnabled, setDirectionalLightEnabled] = useState(
+    LIGHTING_DEFAULTS.directionalLight.enabled,
+  );
+  const [directionalLightIntensity, setDirectionalLightIntensity] = useState(
+    LIGHTING_DEFAULTS.directionalLight.intensity,
+  );
+  const [directionalLightColor, setDirectionalLightColor] = useState(
+    LIGHTING_DEFAULTS.directionalLight.color,
+  );
+  const [directionalLightPosition, setDirectionalLightPosition] = useState(
+    LIGHTING_DEFAULTS.directionalLight.position,
+  );
+
+  const [spotLightEnabled, setSpotLightEnabled] = useState(
+    LIGHTING_DEFAULTS.spotLight.enabled,
+  );
+  const [spotLightIntensity, setSpotLightIntensity] = useState(
+    LIGHTING_DEFAULTS.spotLight.intensity,
+  );
+  const [spotLightColor, setSpotLightColor] = useState(
+    LIGHTING_DEFAULTS.spotLight.color,
+  );
+  const [spotLightPosition, setSpotLightPosition] = useState(
+    LIGHTING_DEFAULTS.spotLight.position,
+  );
+  const [spotLightAngle, setSpotLightAngle] = useState(
+    LIGHTING_DEFAULTS.spotLight.angle,
+  );
+  const [spotLightPenumbra, setSpotLightPenumbra] = useState(
+    LIGHTING_DEFAULTS.spotLight.penumbra,
+  );
+
+  const [pointLightEnabled, setPointLightEnabled] = useState(
+    LIGHTING_DEFAULTS.pointLight.enabled,
+  );
+  const [pointLightIntensity, setPointLightIntensity] = useState(
+    LIGHTING_DEFAULTS.pointLight.intensity,
+  );
+  const [pointLightColor, setPointLightColor] = useState(
+    LIGHTING_DEFAULTS.pointLight.color,
+  );
+  const [pointLightPosition, setPointLightPosition] = useState(
+    LIGHTING_DEFAULTS.pointLight.position,
+  );
+  const [pointLightDistance, setPointLightDistance] = useState(
+    LIGHTING_DEFAULTS.pointLight.distance,
+  );
+  const [pointLightDecay, setPointLightDecay] = useState(
+    LIGHTING_DEFAULTS.pointLight.decay,
+  );
+
+  const [cycloLightEnabled, setCycloLightEnabled] = useState(
+    LIGHTING_DEFAULTS.cycloLight.enabled,
+  );
+  const [cycloLightIntensity, setCycloLightIntensity] = useState(
+    LIGHTING_DEFAULTS.cycloLight.intensity,
+  );
+  const [cycloLightColor, setCycloLightColor] = useState(
+    LIGHTING_DEFAULTS.cycloLight.color,
+  );
+  const [cycloLightPosition, setCycloLightPosition] = useState(
+    LIGHTING_DEFAULTS.cycloLight.position,
+  );
+
+  // ── Actions ───────────────────────────────────────────────────────────────
+  const removeAllEffects = () => {
     setMaskEnabled(false);
     setBokeh1Enabled(false);
     setBokeh2Enabled(false);
@@ -138,8 +203,9 @@ export default function ModelDevPage() {
   };
 
   const savePreset = () => {
+    const name = `preset-${String(presetCounter).padStart(3, '0')}`;
     const preset = {
-      name: `preset-${String(presetCounter).padStart(3, '0')}`,
+      name,
       maskEnabled,
       maskStart,
       maskEnd,
@@ -165,12 +231,11 @@ export default function ModelDevPage() {
       linearGradientOpacity,
       linearGradientHeight,
     };
-    const newPresets = [...presets, preset];
-    const newCounter = presetCounter + 1;
-    setPresets(newPresets);
-    setPresetCounter(newCounter);
-    localStorage.setItem('bokeh-presets', JSON.stringify(newPresets));
-    localStorage.setItem('bokeh-preset-counter', String(newCounter));
+    const next = [...presets, preset];
+    setPresets(next);
+    setPresetCounter((c) => c + 1);
+    localStorage.setItem('bokeh-presets', JSON.stringify(next));
+    localStorage.setItem('bokeh-preset-counter', String(presetCounter + 1));
   };
 
   const loadPreset = (preset) => {
@@ -201,16 +266,17 @@ export default function ModelDevPage() {
   };
 
   const deletePreset = (index) => {
-    const newPresets = presets.filter((_, i) => i !== index);
-    setPresets(newPresets);
-    localStorage.setItem('bokeh-presets', JSON.stringify(newPresets));
+    const next = presets.filter((_, i) => i !== index);
+    setPresets(next);
+    localStorage.setItem('bokeh-presets', JSON.stringify(next));
   };
 
   const copyCssToClipboard = () => {
-    const css = `
-${
-  maskEnabled
-    ? `/* Mask */
+    const parts: string[] = [];
+
+    if (maskEnabled) {
+      parts.push(
+        `/* Mask */
 mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
 -webkit-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
 mask-size: ${maskDiameter}vh ${maskDiameter}vh;
@@ -218,13 +284,13 @@ mask-size: ${maskDiameter}vh ${maskDiameter}vh;
 mask-position: center;
 -webkit-mask-position: center;
 mask-repeat: no-repeat;
--webkit-mask-repeat: no-repeat;`
-    : ''
-}
+-webkit-mask-repeat: no-repeat;`,
+      );
+    }
 
-${
-  bokeh1Enabled
-    ? `.bokeh-1 {
+    if (bokeh1Enabled) {
+      parts.push(
+        `.bokeh-1 {
   position: absolute;
   width: min(${backdropSize1}vw, ${backdropSize1}vh);
   height: min(${backdropSize1}vw, ${backdropSize1}vh);
@@ -237,13 +303,13 @@ ${
   filter: blur(${backdropBlur1}px);
   pointer-events: none;
   z-index: 1;
-}`
-    : ''
-}
+}`,
+      );
+    }
 
-${
-  bokeh2Enabled
-    ? `.bokeh-2 {
+    if (bokeh2Enabled) {
+      parts.push(
+        `.bokeh-2 {
   position: absolute;
   width: min(${backdropSize2}vw, ${backdropSize2}vh);
   height: min(${backdropSize2}vw, ${backdropSize2}vh);
@@ -256,13 +322,13 @@ ${
   filter: blur(${backdropBlur2}px);
   pointer-events: none;
   z-index: 2;
-}`
-    : ''
-}
+}`,
+      );
+    }
 
-${
-  linearGradientEnabled
-    ? `.linear-gradient {
+    if (linearGradientEnabled) {
+      parts.push(
+        `.linear-gradient {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -272,16 +338,16 @@ ${
   opacity: ${linearGradientOpacity};
   pointer-events: none;
   z-index: 3;
-}`
-    : ''
-}`.trim();
+}`,
+      );
+    }
 
-    navigator.clipboard.writeText(css);
+    navigator.clipboard.writeText(parts.join('\n\n'));
     alert('CSS copied to clipboard!');
   };
 
   const copyLightingToClipboard = () => {
-    const config = `// Lighting config — paste into sceneConstants.ts
+    const config = `// LIGHTING_CONFIG — paste into sceneConstants.ts
 export const LIGHTING_CONFIG = {
   ambientLight: {
     enabled: ${ambientLightEnabled},
@@ -317,11 +383,11 @@ export const LIGHTING_CONFIG = {
     position: [${cycloLightPosition.join(', ')}],
   },
 };`;
-
     navigator.clipboard.writeText(config);
     alert('Lighting config copied to clipboard!');
   };
 
+  // ── Derived styles ────────────────────────────────────────────────────────
   const maskStyle = maskEnabled
     ? {
         maskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
@@ -335,7 +401,7 @@ export const LIGHTING_CONFIG = {
       }
     : {};
 
-  const backdropBokehStyle1 = {
+  const bokeh1Style = {
     position: 'absolute',
     width: `min(${backdropSize1}vw, ${backdropSize1}vh)`,
     height: `min(${backdropSize1}vw, ${backdropSize1}vh)`,
@@ -350,7 +416,7 @@ export const LIGHTING_CONFIG = {
     zIndex: 1,
   };
 
-  const backdropBokehStyle2 = {
+  const bokeh2Style = {
     position: 'absolute',
     width: `min(${backdropSize2}vw, ${backdropSize2}vh)`,
     height: `min(${backdropSize2}vw, ${backdropSize2}vh)`,
@@ -377,141 +443,154 @@ export const LIGHTING_CONFIG = {
     zIndex: 3,
   };
 
+  // ── Panel shared styles ───────────────────────────────────────────────────
+  const panelStyle = {
+    position: 'absolute',
+    zIndex: 1000,
+    background: 'rgba(0,0,0,0.75)',
+    color: '#fff',
+    padding: '10px 14px',
+    borderRadius: 8,
+    fontFamily: 'monospace',
+    fontSize: 12,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
+    pointerEvents: 'all',
+    maxHeight: '85vh',
+    overflowY: 'auto',
+  };
+
+  const sliderLabel = (label: string) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: 6,
+    flexWrap: 'wrap',
+    minWidth: 0,
+  });
+
+  const slider = (min, max, step, value, onChange) => (
+    <input
+      type="range"
+      min={min}
+      max={max}
+      step={step}
+      value={value}
+      onChange={(e) => onChange(+e.target.value)}
+      style={{ width: 110, marginLeft: 8 }}
+    />
+  );
+
+  const colorRow = (label: string, value: string, onChange) => (
+    <label
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+        flexWrap: 'wrap',
+      }}
+    >
+      {label}
+      <input
+        type="color"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+      <code style={{ fontSize: 10 }}>{hexToRgba(value)}</code>
+    </label>
+  );
+
+  const xyzSliders = (pos, setPos, range = 5) => (
+    <>
+      {['X', 'Y', 'Z'].map((axis, i) => (
+        <label key={axis}>
+          {axis} {pos[i].toFixed(1)}
+          {slider(-range, range, 0.1, pos[i], (v) => {
+            const next = [...pos];
+            next[i] = v;
+            setPos(next);
+          })}
+        </label>
+      ))}
+    </>
+  );
+
+  // ─────────────────────────────────────────────────────────────────────────
   return (
     <div style={{ position: 'relative', height: '100vh', width: '100vw' }}>
-      {/* Effects Panel */}
+      {/* ── Top-bar buttons ────────────────────────────────────────────── */}
       <button
-        onClick={() => setPanelVisible(!panelVisible)}
+        onClick={() => setPanelVisible((v) => !v)}
         style={{
+          ...btnBase,
           position: 'absolute',
           top: 10,
           left: 10,
           zIndex: 1001,
-          padding: '8px 12px',
           background: '#333',
-          color: '#fff',
-          border: 'none',
-          borderRadius: 4,
-          cursor: 'pointer',
-          fontFamily: 'monospace',
         }}
       >
         {panelVisible ? 'Hide' : 'Show'} Panel
       </button>
 
       <button
-        onClick={() => setHelpersVisible(!helpersVisible)}
+        onClick={() => setLightingPanelVisible((v) => !v)}
         style={{
-          position: 'absolute',
-          top: 10,
-          right: 10,
-          zIndex: 1001,
-          padding: '8px 12px',
-          background: helpersVisible ? '#4a4' : '#444',
-          color: helpersVisible ? '#000' : '#fff',
-          border: 'none',
-          borderRadius: 4,
-          cursor: 'pointer',
-          fontFamily: 'monospace',
-        }}
-      >
-        Helpers: {helpersVisible ? 'ON' : 'OFF'}
-      </button>
-
-      <button
-        onClick={() => setLightingPanelVisible(!lightingPanelVisible)}
-        style={{
+          ...btnBase,
           position: 'absolute',
           top: 50,
           left: 10,
           zIndex: 1001,
-          padding: '8px 12px',
           background: '#555',
-          color: '#fff',
-          border: 'none',
-          borderRadius: 4,
-          cursor: 'pointer',
-          fontFamily: 'monospace',
         }}
       >
         {lightingPanelVisible ? 'Hide' : 'Show'} Lighting
       </button>
 
+      <button
+        onClick={() => setHelpersVisible((v) => !v)}
+        style={{
+          ...btnBase,
+          position: 'absolute',
+          top: 10,
+          right: 10,
+          zIndex: 1001,
+          background: helpersVisible ? '#4a4' : '#444',
+          color: helpersVisible ? '#000' : '#fff',
+        }}
+      >
+        Helpers: {helpersVisible ? 'ON' : 'OFF'}
+      </button>
+
+      {/* ── Effects panel ──────────────────────────────────────────────── */}
       {panelVisible && (
-        <div
-          style={{
-            position: 'absolute',
-            top: 90,
-            left: 10,
-            zIndex: 1000,
-            background: 'rgba(0,0,0,0.7)',
-            color: '#fff',
-            padding: '10px 14px',
-            borderRadius: 8,
-            fontFamily: 'monospace',
-            fontSize: 12,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-            pointerEvents: 'all',
-            maxHeight: '85vh',
-            overflowY: 'auto',
-          }}
-        >
+        <div style={{ ...panelStyle, top: 90, left: 10, width: 220 }}>
           <button
             onClick={copyCssToClipboard}
-            style={{
-              padding: '8px 12px',
-              background: '#4a9eff',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 4,
-              cursor: 'pointer',
-              fontFamily: 'monospace',
-              fontWeight: 'bold',
-            }}
+            style={{ ...btnBase, background: '#4a9eff' }}
           >
             Copy CSS
           </button>
           <button
             onClick={savePreset}
-            style={{
-              padding: '8px 12px',
-              background: '#4a9e4a',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 4,
-              cursor: 'pointer',
-              fontFamily: 'monospace',
-              fontWeight: 'bold',
-            }}
+            style={{ ...btnBase, background: '#4a9e4a' }}
           >
             Save Preset
           </button>
 
           {presets.length > 0 && (
             <>
-              <hr
-                style={{
-                  width: '100%',
-                  border: 'none',
-                  borderTop: '1px solid rgba(255,255,255,0.2)',
-                }}
-              />
+              <HR />
               <strong>Presets</strong>
               {presets.map((preset, i) => (
                 <div key={i} style={{ display: 'flex', gap: 8 }}>
                   <button
                     onClick={() => loadPreset(preset)}
                     style={{
+                      ...btnBase,
                       flex: 1,
-                      padding: '6px 10px',
                       background: '#555',
-                      color: '#fff',
-                      border: 'none',
-                      borderRadius: 4,
-                      cursor: 'pointer',
-                      fontFamily: 'monospace',
+                      fontWeight: 'normal',
                     }}
                   >
                     {preset.name}
@@ -519,13 +598,9 @@ export const LIGHTING_CONFIG = {
                   <button
                     onClick={() => deletePreset(i)}
                     style={{
-                      padding: '6px 10px',
+                      ...btnBase,
                       background: '#a44',
-                      color: '#fff',
-                      border: 'none',
-                      borderRadius: 4,
-                      cursor: 'pointer',
-                      fontFamily: 'monospace',
+                      fontWeight: 'normal',
                     }}
                   >
                     ✕
@@ -535,13 +610,9 @@ export const LIGHTING_CONFIG = {
             </>
           )}
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
+          {/* Mask */}
           <label>
             <input
               type="checkbox"
@@ -554,48 +625,22 @@ export const LIGHTING_CONFIG = {
           {maskEnabled && (
             <>
               <label>
-                diameter {maskDiameter}%
-                <input
-                  type="range"
-                  min={10}
-                  max={100}
-                  value={maskDiameter}
-                  onChange={(e) => setMaskDiameter(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                diameter {maskDiameter}vh{' '}
+                {slider(10, 150, 1, maskDiameter, setMaskDiameter)}
               </label>
               <label>
-                start {maskStart}%
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={maskStart}
-                  onChange={(e) => setMaskStart(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                solid end {maskStart}%{' '}
+                {slider(0, 100, 1, maskStart, setMaskStart)}
               </label>
               <label>
-                feather {maskEnd}%
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={maskEnd}
-                  onChange={(e) => setMaskEnd(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                feather {maskEnd}% {slider(0, 100, 1, maskEnd, setMaskEnd)}
               </label>
             </>
           )}
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
+          {/* Bokeh 1 */}
           <label>
             <input
               type="checkbox"
@@ -608,93 +653,45 @@ export const LIGHTING_CONFIG = {
           {bokeh1Enabled && (
             <>
               <label>
-                size {backdropSize1}
-                <input
-                  type="range"
-                  min={10}
-                  max={200}
-                  value={backdropSize1}
-                  onChange={(e) => setBackdropSize1(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                size {backdropSize1}{' '}
+                {slider(10, 200, 1, backdropSize1, setBackdropSize1)}
               </label>
               <label>
-                blur {backdropBlur1}px
-                <input
-                  type="range"
-                  min={0}
-                  max={200}
-                  value={backdropBlur1}
-                  onChange={(e) => setBackdropBlur1(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                blur {backdropBlur1}px{' '}
+                {slider(0, 200, 1, backdropBlur1, setBackdropBlur1)}
               </label>
               <label>
-                opacity {backdropOpacity1.toFixed(2)}
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.05}
-                  value={backdropOpacity1}
-                  onChange={(e) => setBackdropOpacity1(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                opacity {backdropOpacity1.toFixed(2)}{' '}
+                {slider(0, 1, 0.05, backdropOpacity1, setBackdropOpacity1)}
               </label>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                color 1
-                <input
-                  type="color"
-                  value={backdropColor1_1}
-                  onChange={(e) => setBackdropColor1_1(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(backdropColor1_1)}
-                </code>
-              </label>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                color 2
-                <input
-                  type="color"
-                  value={backdropColor1_2}
-                  onChange={(e) => setBackdropColor1_2(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(backdropColor1_2)}
-                </code>
+              {colorRow('color 1', backdropColor1_1, setBackdropColor1_1)}
+              {colorRow('color 2', backdropColor1_2, setBackdropColor1_2)}
+              <label>
+                grad start {backdropGradientStart1}%{' '}
+                {slider(
+                  0,
+                  100,
+                  1,
+                  backdropGradientStart1,
+                  setBackdropGradientStart1,
+                )}
               </label>
               <label>
-                gradient start {backdropGradientStart1}%
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={backdropGradientStart1}
-                  onChange={(e) => setBackdropGradientStart1(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                gradient end {backdropGradientEnd1}%
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={backdropGradientEnd1}
-                  onChange={(e) => setBackdropGradientEnd1(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                grad end {backdropGradientEnd1}%{' '}
+                {slider(
+                  0,
+                  100,
+                  1,
+                  backdropGradientEnd1,
+                  setBackdropGradientEnd1,
+                )}
               </label>
             </>
           )}
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
+          {/* Bokeh 2 */}
           <label>
             <input
               type="checkbox"
@@ -707,93 +704,45 @@ export const LIGHTING_CONFIG = {
           {bokeh2Enabled && (
             <>
               <label>
-                size {backdropSize2}
-                <input
-                  type="range"
-                  min={10}
-                  max={200}
-                  value={backdropSize2}
-                  onChange={(e) => setBackdropSize2(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                size {backdropSize2}{' '}
+                {slider(10, 200, 1, backdropSize2, setBackdropSize2)}
               </label>
               <label>
-                blur {backdropBlur2}px
-                <input
-                  type="range"
-                  min={0}
-                  max={200}
-                  value={backdropBlur2}
-                  onChange={(e) => setBackdropBlur2(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                blur {backdropBlur2}px{' '}
+                {slider(0, 200, 1, backdropBlur2, setBackdropBlur2)}
               </label>
               <label>
-                opacity {backdropOpacity2.toFixed(2)}
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.05}
-                  value={backdropOpacity2}
-                  onChange={(e) => setBackdropOpacity2(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                opacity {backdropOpacity2.toFixed(2)}{' '}
+                {slider(0, 1, 0.05, backdropOpacity2, setBackdropOpacity2)}
               </label>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                color 1
-                <input
-                  type="color"
-                  value={backdropColor2_1}
-                  onChange={(e) => setBackdropColor2_1(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(backdropColor2_1)}
-                </code>
-              </label>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                color 2
-                <input
-                  type="color"
-                  value={backdropColor2_2}
-                  onChange={(e) => setBackdropColor2_2(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(backdropColor2_2)}
-                </code>
+              {colorRow('color 1', backdropColor2_1, setBackdropColor2_1)}
+              {colorRow('color 2', backdropColor2_2, setBackdropColor2_2)}
+              <label>
+                grad start {backdropGradientStart2}%{' '}
+                {slider(
+                  0,
+                  100,
+                  1,
+                  backdropGradientStart2,
+                  setBackdropGradientStart2,
+                )}
               </label>
               <label>
-                gradient start {backdropGradientStart2}%
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={backdropGradientStart2}
-                  onChange={(e) => setBackdropGradientStart2(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                gradient end {backdropGradientEnd2}%
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={backdropGradientEnd2}
-                  onChange={(e) => setBackdropGradientEnd2(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                grad end {backdropGradientEnd2}%{' '}
+                {slider(
+                  0,
+                  100,
+                  1,
+                  backdropGradientEnd2,
+                  setBackdropGradientEnd2,
+                )}
               </label>
             </>
           )}
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
+          {/* Bottom Fade */}
           <label>
             <input
               type="checkbox"
@@ -805,114 +754,58 @@ export const LIGHTING_CONFIG = {
           </label>
           {linearGradientEnabled && (
             <>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                color
-                <input
-                  type="color"
-                  value={linearGradientColor}
-                  onChange={(e) => setLinearGradientColor(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(linearGradientColor)}
-                </code>
+              {colorRow('color', linearGradientColor, setLinearGradientColor)}
+              <label>
+                height {linearGradientHeight}%{' '}
+                {slider(
+                  0,
+                  100,
+                  1,
+                  linearGradientHeight,
+                  setLinearGradientHeight,
+                )}
               </label>
               <label>
-                height {linearGradientHeight}%
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={linearGradientHeight}
-                  onChange={(e) => setLinearGradientHeight(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                opacity {linearGradientOpacity.toFixed(2)}
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.05}
-                  value={linearGradientOpacity}
-                  onChange={(e) => setLinearGradientOpacity(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                opacity {linearGradientOpacity.toFixed(2)}{' '}
+                {slider(
+                  0,
+                  1,
+                  0.05,
+                  linearGradientOpacity,
+                  setLinearGradientOpacity,
+                )}
               </label>
             </>
           )}
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
           <button
-            onClick={removeAll}
-            style={{
-              padding: '8px 12px',
-              background: '#a44',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 4,
-              cursor: 'pointer',
-              fontFamily: 'monospace',
-              fontWeight: 'bold',
-            }}
+            onClick={removeAllEffects}
+            style={{ ...btnBase, background: '#a44' }}
           >
             Remove All Effects
           </button>
         </div>
       )}
 
+      {/* ── Lighting panel ─────────────────────────────────────────────── */}
       {lightingPanelVisible && (
-        <div
-          style={{
-            position: 'absolute',
-            top: 90,
-            right: 10,
-            zIndex: 1000,
-            background: 'rgba(0,0,0,0.7)',
-            color: '#fff',
-            padding: '10px 14px',
-            borderRadius: 8,
-            fontFamily: 'monospace',
-            fontSize: 12,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-            pointerEvents: 'all',
-            maxHeight: '85vh',
-            overflowY: 'auto',
-            width: 220,
-          }}
-        >
+        <div style={{ ...panelStyle, top: 90, right: 10, width: 230 }}>
           <strong>Lighting Controls</strong>
+          <p style={{ margin: 0, fontSize: 10, opacity: 0.6, lineHeight: 1.4 }}>
+            Tweak here → Copy Config → paste into sceneConstants.ts
+          </p>
           <button
             onClick={copyLightingToClipboard}
-            style={{
-              padding: '8px 12px',
-              background: '#4a9eff',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 4,
-              cursor: 'pointer',
-              fontFamily: 'monospace',
-              fontWeight: 'bold',
-            }}
+            style={{ ...btnBase, background: '#4a9eff' }}
           >
             Copy Lighting Config
           </button>
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
+          {/* Ambient */}
           <label>
             <input
               type="checkbox"
@@ -925,45 +818,22 @@ export const LIGHTING_CONFIG = {
           {ambientLightEnabled && (
             <>
               <label>
-                intensity {ambientLightIntensity.toFixed(1)}
-                <input
-                  type="range"
-                  min={0}
-                  max={5}
-                  step={0.1}
-                  value={ambientLightIntensity}
-                  onChange={(e) => setAmbientLightIntensity(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                intensity {ambientLightIntensity.toFixed(1)}{' '}
+                {slider(
+                  0,
+                  10,
+                  0.1,
+                  ambientLightIntensity,
+                  setAmbientLightIntensity,
+                )}
               </label>
-              <label
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  flexWrap: 'wrap',
-                }}
-              >
-                color
-                <input
-                  type="color"
-                  value={ambientLightColor}
-                  onChange={(e) => setAmbientLightColor(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(ambientLightColor)}
-                </code>
-              </label>
+              {colorRow('color', ambientLightColor, setAmbientLightColor)}
             </>
           )}
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
+          {/* Directional */}
           <label>
             <input
               type="checkbox"
@@ -976,101 +846,30 @@ export const LIGHTING_CONFIG = {
           {directionalLightEnabled && (
             <>
               <label>
-                intensity {directionalLightIntensity.toFixed(1)}
-                <input
-                  type="range"
-                  min={0}
-                  max={5}
-                  step={0.1}
-                  value={directionalLightIntensity}
-                  onChange={(e) =>
-                    setDirectionalLightIntensity(+e.target.value)
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                intensity {directionalLightIntensity.toFixed(1)}{' '}
+                {slider(
+                  0,
+                  10,
+                  0.1,
+                  directionalLightIntensity,
+                  setDirectionalLightIntensity,
+                )}
               </label>
-              <label
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  flexWrap: 'wrap',
-                }}
-              >
-                color
-                <input
-                  type="color"
-                  value={directionalLightColor}
-                  onChange={(e) => setDirectionalLightColor(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(directionalLightColor)}
-                </code>
-              </label>
-              <label>
-                X {directionalLightPosition[0].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={directionalLightPosition[0]}
-                  onChange={(e) =>
-                    setDirectionalLightPosition([
-                      +e.target.value,
-                      directionalLightPosition[1],
-                      directionalLightPosition[2],
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                Y {directionalLightPosition[1].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={directionalLightPosition[1]}
-                  onChange={(e) =>
-                    setDirectionalLightPosition([
-                      directionalLightPosition[0],
-                      +e.target.value,
-                      directionalLightPosition[2],
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                Z {directionalLightPosition[2].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={directionalLightPosition[2]}
-                  onChange={(e) =>
-                    setDirectionalLightPosition([
-                      directionalLightPosition[0],
-                      directionalLightPosition[1],
-                      +e.target.value,
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
+              {colorRow(
+                'color',
+                directionalLightColor,
+                setDirectionalLightColor,
+              )}
+              {xyzSliders(
+                directionalLightPosition,
+                setDirectionalLightPosition,
+              )}
             </>
           )}
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
+          {/* Spot */}
           <label>
             <input
               type="checkbox"
@@ -1083,123 +882,25 @@ export const LIGHTING_CONFIG = {
           {spotLightEnabled && (
             <>
               <label>
-                intensity {spotLightIntensity.toFixed(1)}
-                <input
-                  type="range"
-                  min={0}
-                  max={20}
-                  step={0.1}
-                  value={spotLightIntensity}
-                  onChange={(e) => setSpotLightIntensity(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                intensity {spotLightIntensity.toFixed(1)}{' '}
+                {slider(0, 20, 0.1, spotLightIntensity, setSpotLightIntensity)}
               </label>
-              <label
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  flexWrap: 'wrap',
-                }}
-              >
-                color
-                <input
-                  type="color"
-                  value={spotLightColor}
-                  onChange={(e) => setSpotLightColor(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(spotLightColor)}
-                </code>
+              {colorRow('color', spotLightColor, setSpotLightColor)}
+              <label>
+                angle {spotLightAngle.toFixed(2)}{' '}
+                {slider(0.01, 1.57, 0.01, spotLightAngle, setSpotLightAngle)}
               </label>
               <label>
-                angle {spotLightAngle.toFixed(2)}
-                <input
-                  type="range"
-                  min={0.1}
-                  max={1.57}
-                  step={0.01}
-                  value={spotLightAngle}
-                  onChange={(e) => setSpotLightAngle(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                penumbra {spotLightPenumbra.toFixed(2)}{' '}
+                {slider(0, 1, 0.01, spotLightPenumbra, setSpotLightPenumbra)}
               </label>
-              <label>
-                penumbra {spotLightPenumbra.toFixed(2)}
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  value={spotLightPenumbra}
-                  onChange={(e) => setSpotLightPenumbra(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                X {spotLightPosition[0].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={spotLightPosition[0]}
-                  onChange={(e) =>
-                    setSpotLightPosition([
-                      +e.target.value,
-                      spotLightPosition[1],
-                      spotLightPosition[2],
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                Y {spotLightPosition[1].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={spotLightPosition[1]}
-                  onChange={(e) =>
-                    setSpotLightPosition([
-                      spotLightPosition[0],
-                      +e.target.value,
-                      spotLightPosition[2],
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                Z {spotLightPosition[2].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={spotLightPosition[2]}
-                  onChange={(e) =>
-                    setSpotLightPosition([
-                      spotLightPosition[0],
-                      spotLightPosition[1],
-                      +e.target.value,
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
+              {xyzSliders(spotLightPosition, setSpotLightPosition)}
             </>
           )}
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
+          {/* Point */}
           <label>
             <input
               type="checkbox"
@@ -1212,123 +913,31 @@ export const LIGHTING_CONFIG = {
           {pointLightEnabled && (
             <>
               <label>
-                intensity {pointLightIntensity.toFixed(1)}
-                <input
-                  type="range"
-                  min={0}
-                  max={20}
-                  step={0.1}
-                  value={pointLightIntensity}
-                  onChange={(e) => setPointLightIntensity(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                intensity {pointLightIntensity.toFixed(1)}{' '}
+                {slider(
+                  0,
+                  20,
+                  0.1,
+                  pointLightIntensity,
+                  setPointLightIntensity,
+                )}
               </label>
-              <label
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  flexWrap: 'wrap',
-                }}
-              >
-                color
-                <input
-                  type="color"
-                  value={pointLightColor}
-                  onChange={(e) => setPointLightColor(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(pointLightColor)}
-                </code>
+              {colorRow('color', pointLightColor, setPointLightColor)}
+              <label>
+                distance {pointLightDistance.toFixed(1)}{' '}
+                {slider(0, 10, 0.1, pointLightDistance, setPointLightDistance)}
               </label>
               <label>
-                distance {pointLightDistance.toFixed(1)}
-                <input
-                  type="range"
-                  min={0}
-                  max={10}
-                  step={0.1}
-                  value={pointLightDistance}
-                  onChange={(e) => setPointLightDistance(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                decay {pointLightDecay.toFixed(1)}{' '}
+                {slider(0, 3, 0.1, pointLightDecay, setPointLightDecay)}
               </label>
-              <label>
-                decay {pointLightDecay.toFixed(1)}
-                <input
-                  type="range"
-                  min={0}
-                  max={3}
-                  step={0.1}
-                  value={pointLightDecay}
-                  onChange={(e) => setPointLightDecay(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                X {pointLightPosition[0].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={pointLightPosition[0]}
-                  onChange={(e) =>
-                    setPointLightPosition([
-                      +e.target.value,
-                      pointLightPosition[1],
-                      pointLightPosition[2],
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                Y {pointLightPosition[1].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={pointLightPosition[1]}
-                  onChange={(e) =>
-                    setPointLightPosition([
-                      pointLightPosition[0],
-                      +e.target.value,
-                      pointLightPosition[2],
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                Z {pointLightPosition[2].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={pointLightPosition[2]}
-                  onChange={(e) =>
-                    setPointLightPosition([
-                      pointLightPosition[0],
-                      pointLightPosition[1],
-                      +e.target.value,
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
+              {xyzSliders(pointLightPosition, setPointLightPosition)}
             </>
           )}
 
-          <hr
-            style={{
-              width: '100%',
-              border: 'none',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          <HR />
+
+          {/* Cyclo */}
           <label>
             <input
               type="checkbox"
@@ -1341,104 +950,29 @@ export const LIGHTING_CONFIG = {
           {cycloLightEnabled && (
             <>
               <label>
-                intensity {cycloLightIntensity.toFixed(1)}
-                <input
-                  type="range"
-                  min={0}
-                  max={10}
-                  step={0.1}
-                  value={cycloLightIntensity}
-                  onChange={(e) => setCycloLightIntensity(+e.target.value)}
-                  style={{ width: 120, marginLeft: 8 }}
-                />
+                intensity {cycloLightIntensity.toFixed(1)}{' '}
+                {slider(
+                  0,
+                  10,
+                  0.1,
+                  cycloLightIntensity,
+                  setCycloLightIntensity,
+                )}
               </label>
-              <label
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  flexWrap: 'wrap',
-                }}
-              >
-                color
-                <input
-                  type="color"
-                  value={cycloLightColor}
-                  onChange={(e) => setCycloLightColor(e.target.value)}
-                />
-                <code style={{ fontSize: 10 }}>
-                  {hexToRgba(cycloLightColor)}
-                </code>
-              </label>
-              <label>
-                X {cycloLightPosition[0].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={cycloLightPosition[0]}
-                  onChange={(e) =>
-                    setCycloLightPosition([
-                      +e.target.value,
-                      cycloLightPosition[1],
-                      cycloLightPosition[2],
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                Y {cycloLightPosition[1].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={cycloLightPosition[1]}
-                  onChange={(e) =>
-                    setCycloLightPosition([
-                      cycloLightPosition[0],
-                      +e.target.value,
-                      cycloLightPosition[2],
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
-              <label>
-                Z {cycloLightPosition[2].toFixed(1)}
-                <input
-                  type="range"
-                  min={-5}
-                  max={5}
-                  step={0.1}
-                  value={cycloLightPosition[2]}
-                  onChange={(e) =>
-                    setCycloLightPosition([
-                      cycloLightPosition[0],
-                      cycloLightPosition[1],
-                      +e.target.value,
-                    ])
-                  }
-                  style={{ width: 120, marginLeft: 8 }}
-                />
-              </label>
+              {colorRow('color', cycloLightColor, setCycloLightColor)}
+              {xyzSliders(cycloLightPosition, setCycloLightPosition)}
             </>
           )}
         </div>
       )}
 
+      {/* ── Scene ──────────────────────────────────────────────────────── */}
       <div
         className="model__special-fx"
         style={{ position: 'relative', height: '100%', width: '100%' }}
       >
-        {bokeh1Enabled && (
-          <div className="bokeh-1" style={backdropBokehStyle1} />
-        )}
-        {bokeh2Enabled && (
-          <div className="bokeh-2" style={backdropBokehStyle2} />
-        )}
+        {bokeh1Enabled && <div className="bokeh-1" style={bokeh1Style} />}
+        {bokeh2Enabled && <div className="bokeh-2" style={bokeh2Style} />}
         {linearGradientEnabled && (
           <div className="linear-gradient" style={linearGradientStyle} />
         )}
@@ -1463,8 +997,8 @@ export const LIGHTING_CONFIG = {
             <Canvas
               camera={{ position: [0, 0, 0.4], fov: 50 }}
               gl={{
-                toneMapping: THREE.ACESFilmicToneMapping,
-                toneMappingExposure: TONE_MAPPING_EXPOSURE,
+                toneMapping: THREE.LinearToneMapping,
+                toneMappingExposure: 1.0,
                 alpha: true,
               }}
             >

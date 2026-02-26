@@ -1,43 +1,46 @@
 /* eslint-disable */
 // @ts-nocheck
 
-// apps/web/src/components/model/SceneContent.tsx
-
 'use client';
 
-import { OrbitControls } from '@react-three/drei';
+import * as C from '@/components/model/sceneConstants';
+import { Environment, OrbitControls } from '@react-three/drei';
 import { Suspense, useEffect, useRef } from 'react';
 
 import SceneModel from './SceneModel';
 
+const LC = C.LIGHTING_CONFIG;
+
 export default function SceneContent({
-  helpersVisible,
-  orbitEnabled,
-  isPaused,
+  wireframe = false,
+  helpersVisible = false,
+  orbitEnabled = false,
+  isPaused = false,
   onPlayClick,
-  ambientLightEnabled,
-  ambientLightIntensity,
-  ambientLightColor,
-  directionalLightEnabled,
-  directionalLightIntensity,
-  directionalLightColor,
-  directionalLightPosition,
-  spotLightEnabled,
-  spotLightIntensity,
-  spotLightColor,
-  spotLightPosition,
-  spotLightAngle,
-  spotLightPenumbra,
-  pointLightEnabled,
-  pointLightIntensity,
-  pointLightColor,
-  pointLightPosition,
-  pointLightDistance,
-  pointLightDecay,
-  cycloLightEnabled,
-  cycloLightIntensity,
-  cycloLightColor,
-  cycloLightPosition,
+  // All lighting props fall back to sceneConstants values
+  ambientLightEnabled = LC.ambientLight.enabled,
+  ambientLightIntensity = LC.ambientLight.intensity,
+  ambientLightColor = LC.ambientLight.color,
+  directionalLightEnabled = LC.directionalLight.enabled,
+  directionalLightIntensity = LC.directionalLight.intensity,
+  directionalLightColor = LC.directionalLight.color,
+  directionalLightPosition = LC.directionalLight.position,
+  spotLightEnabled = LC.spotLight.enabled,
+  spotLightIntensity = LC.spotLight.intensity,
+  spotLightColor = LC.spotLight.color,
+  spotLightPosition = LC.spotLight.position,
+  spotLightAngle = LC.spotLight.angle,
+  spotLightPenumbra = LC.spotLight.penumbra,
+  pointLightEnabled = LC.pointLight.enabled,
+  pointLightIntensity = LC.pointLight.intensity,
+  pointLightColor = LC.pointLight.color,
+  pointLightPosition = LC.pointLight.position,
+  pointLightDistance = LC.pointLight.distance,
+  pointLightDecay = LC.pointLight.decay,
+  cycloLightEnabled = LC.cycloLight.enabled,
+  cycloLightIntensity = LC.cycloLight.intensity,
+  cycloLightColor = LC.cycloLight.color,
+  cycloLightPosition = LC.cycloLight.position,
 }) {
   const spotLightRef = useRef();
   const spotLightTargetRef = useRef();
@@ -163,11 +166,12 @@ export default function SceneContent({
 
       <Suspense fallback={null}>
         <SceneModel
-          url="/model/model-v7-modified-v3.glb"
+          url="/model/model-v7-modified-v6.glb"
           isPaused={isPaused}
           onPlayClick={onPlayClick}
         />
       </Suspense>
+
       <OrbitControls
         enabled={orbitEnabled}
         enableDamping

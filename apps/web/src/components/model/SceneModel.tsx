@@ -1,14 +1,13 @@
 /* eslint-disable */
 // @ts-nocheck
 
-// apps/web/src/components/model/SceneModel.tsx
-
 'use client';
 
-import { useGLTF, useVideoTexture } from '@react-three/drei';
+import { useGLTF, useTexture, useVideoTexture } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry';
 
 import * as C from './sceneConstants';
 import ScenePlayButton from './ScenePlayButton';
@@ -25,32 +24,113 @@ const {
   PUPIL_COLOR,
   PUPIL_Z_POSITION,
   PUPIL_SCALE,
+  PUPIL_CONVEXITY,
   ENABLE_IRIS_ROTATION,
   IRIS_ROTATION_SPEED,
   IRIS_ROTATION_SPEED_ON_MOVE,
   IRIS_SPEED_LERP,
   IRIS_SATURATION,
   IRIS_CONTRAST,
+  IRIS_EDGE_FADE_START,
+  IRIS_EDGE_FADE_END,
+  IRIS_EDGE_COLOR_R,
+  IRIS_EDGE_COLOR_G,
+  IRIS_EDGE_COLOR_B,
   ENABLE_CONSOLE_LOGS,
+  SCLERA_INNER_FADE_START,
+  SCLERA_INNER_FADE_END,
+  EYE_LIGHTS,
 } = C;
 
 const log = (...args) => {
   if (ENABLE_CONSOLE_LOGS) console.log(...args);
 };
 
-export default function SceneModel({ url, isPaused, onPlayClick }) {
+// ─── Procedural catchlight texture ───────────────────────────────────────────
+function makeCatchlightTexture(size = 128): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  const cx = size / 2;
+  const cy = size / 2;
+  const r = size / 2;
+
+  const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+  gradient.addColorStop(0.0, 'rgba(255,255,255,1.0)');
+  gradient.addColorStop(0.3, 'rgba(255,255,255,0.8)');
+  gradient.addColorStop(0.7, 'rgba(255,255,255,0.2)');
+  gradient.addColorStop(1.0, 'rgba(255,255,255,0.0)');
+
+  ctx.clearRect(0, 0, size, size);
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, r, r * 0.75, -Math.PI / 6, 0, Math.PI * 2);
+  ctx.fill();
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.needsUpdate = true;
+  return texture;
+}
+
+// ─── EyeLight via DecalGeometry ───────────────────────────────────────────────
+// To use a PNG: set png: '/textures/your-file.png' in EYE_LIGHTS in sceneConstants.ts
+// PNG should be white blob on transparent background (RGBA)
+function EyeLight({ config, proceduralTexture, corneaMesh }) {
+  const pngTexture = config.png ? useTexture(config.png) : null;
+  const texture = pngTexture ?? proceduralTexture;
+
+  const decalMesh = useMemo(() => {
+    if (!corneaMesh) return null;
+
+    const position = new THREE.Vector3(...config.position);
+    const orientation = new THREE.Euler(
+      Math.atan2(config.position[1], config.position[2]),
+      Math.atan2(-config.position[0], config.position[2]),
+      0,
+    );
+    const size = new THREE.Vector3(config.size[0], config.size[1], 0.1);
+
+    const geometry = new DecalGeometry(corneaMesh, position, orientation, size);
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true,
+      opacity: config.opacity,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+    });
+
+    return new THREE.Mesh(geometry, material);
+  }, [corneaMesh, texture]);
+
+  if (!decalMesh) return null;
+  return <primitive object={decalMesh} renderOrder={999} />;
+}
+
+// ─── SceneModel ───────────────────────────────────────────────────────────────
+export default function SceneModel({
+  url,
+  isPaused,
+  onPlayClick,
+  wireframe = false,
+}) {
   const gltf = useGLTF(url);
   const { camera } = useThree();
 
-  const videoTexture = useVideoTexture('/video/Hammer_EyeballReel_1x1.mp4', {
-    loop: true,
-    muted: true,
-    start: true,
-  });
-
+  const videoTexture = useVideoTexture(
+    '/video/Hammer_EyeballReel_1x1_gradient_2.mp4',
+    {
+      loop: true,
+      muted: true,
+      start: true,
+    },
+  );
   videoTexture.flipY = false;
 
   const [isPlaying, setIsPlaying] = useState(true);
+  const [sceneReady, setSceneReady] = useState(false);
+
   const handleTogglePlay = () => {
     const video = videoTexture?.image;
     if (!video) return;
@@ -59,6 +139,7 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
   };
 
   const groupRef = useRef();
+  const corneaGroupRef = useRef();
   const targetRotation = useRef({ x: 0, y: 0 });
   const currentRotation = useRef({ x: 0, y: 0 });
   const currentPupilRotation = useRef({ x: 0, y: 0 });
@@ -66,49 +147,55 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
   const idleFrames = useRef(0);
   const pupilMeshRef = useRef(null);
   const irisMeshRef = useRef(null);
+  const corneaMeshRef = useRef(null);
   const currentIrisSpeed = useRef(IRIS_ROTATION_SPEED);
   const irisRotationAccumulator = useRef(0);
   const lastTime = useRef(0);
 
   const MAX_ROTATION_RAD = THREE.MathUtils.degToRad(MAX_ROTATION);
+  const catchlightTexture = useMemo(() => makeCatchlightTexture(128), []);
 
-  gltf.scene.traverse((child) => {
-    if (child.isLight) {
-      log('LIGHT FOUND:', child.type, child);
-      child.visible = false;
-    }
+  // ─── Scene setup ──────────────────────────────────────────────────────────
+  useEffect(() => {
+    gltf.scene.traverse((child) => {
+      if (child.isLight) child.visible = false;
+      if (!child.isMesh) return;
 
-    if (child.isMesh) {
-      log('Mesh name:', child.name);
-      log('Material type:', child.material.type);
-      log('Material:', child.material);
-      log('---');
-    }
-
-    if (child.isMesh) {
       if (child.name === 'Cornea_Mesh_2') {
+        corneaMeshRef.current = child;
         child.visible = SHOW_CORNEA;
+        child.material.roughness = 0.0;
+        child.material.metalness = 0.1;
+        child.material.clearcoat = 1.0;
+        child.material.clearcoatRoughness = 1;
+        child.material.ior = 1.376;
+        child.material.specularIntensity = 2.0;
+        child.material.specularColor = new THREE.Color('#ffffff');
+        child.material.envMapIntensity = 1.5;
+        child.material.needsUpdate = true;
       }
 
       if (child.name === 'Iris_Mesh') {
         irisMeshRef.current = child;
         child.visible = SHOW_IRIS;
-        child.scale.set(1.008, 1.008, 1.0);
-        child.material.roughness = 0.9;
+        child.scale.set(1, 1, 1);
+        // child.scale.set(1.008, 1.008, 1.0);
+        child.material.roughness = 1;
         child.material.metalness = 0.0;
-
+        child.material.envMapIntensity = 0;
         child.material.onBeforeCompile = (shader) => {
           shader.fragmentShader = shader.fragmentShader.replace(
             '#include <map_fragment>',
             `
             #include <map_fragment>
-
             #ifdef USE_MAP
+              // Saturation
               float saturation = ${IRIS_SATURATION.toFixed(2)};
               vec3 luminance = vec3(0.299, 0.587, 0.114);
               float gray = dot(diffuseColor.rgb, luminance);
               diffuseColor.rgb = mix(vec3(gray), diffuseColor.rgb, saturation);
 
+              // Contrast
               float contrast = ${IRIS_CONTRAST.toFixed(2)};
               diffuseColor.rgb = (diffuseColor.rgb - 0.5) * contrast + 0.5;
               diffuseColor.rgb = clamp(diffuseColor.rgb, 0.0, 1.0);
@@ -116,32 +203,127 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
             `,
           );
         };
-
         child.material.needsUpdate = true;
       }
 
       if (child.name === 'Pupil_Mesh_2' && videoTexture) {
         child.visible = SHOW_PUPIL;
-
         if (ENABLE_VIDEO_PUPIL) {
           child.material.map = videoTexture;
         } else {
           child.material.map = null;
           child.material.color = PUPIL_COLOR;
         }
-        child.material.needsUpdate = true;
 
+        // ─── Edge gradient on pupil ──────────────────────────────
+        child.material.onBeforeCompile = (shader) => {
+          shader.fragmentShader = shader.fragmentShader.replace(
+            '#include <map_fragment>',
+            `
+            #include <map_fragment>
+            #ifdef USE_MAP
+              vec2 centered = vMapUv - vec2(0.5);
+              float edgeDist = length(centered) * 2.0;
+              float edgeFade = 1.0 - smoothstep(${IRIS_EDGE_FADE_START.toFixed(2)}, ${IRIS_EDGE_FADE_END.toFixed(2)}, edgeDist);
+              diffuseColor.rgb = mix(
+                vec3(${IRIS_EDGE_COLOR_R.toFixed(2)}, ${IRIS_EDGE_COLOR_G.toFixed(2)}, ${IRIS_EDGE_COLOR_B.toFixed(2)}),
+                diffuseColor.rgb,
+                edgeFade
+              );
+            #endif
+            `,
+          );
+        };
+
+        child.material.needsUpdate = true;
         pupilMeshRef.current = child;
         child.position.z = PUPIL_Z_POSITION;
         child.scale.set(PUPIL_SCALE, PUPIL_SCALE, PUPIL_SCALE);
+
+        // ─── Convexity ────────────────────────────────────────────
+        if (PUPIL_CONVEXITY > 0) {
+          const pos = child.geometry.attributes.position;
+          const center = new THREE.Vector3();
+
+          for (let i = 0; i < pos.count; i++) {
+            center.x += pos.getX(i);
+            center.y += pos.getY(i);
+          }
+          center.x /= pos.count;
+          center.y /= pos.count;
+
+          let maxDist = 0;
+          for (let i = 0; i < pos.count; i++) {
+            const dx = pos.getX(i) - center.x;
+            const dy = pos.getY(i) - center.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist > maxDist) maxDist = dist;
+          }
+
+          for (let i = 0; i < pos.count; i++) {
+            const dx = pos.getX(i) - center.x;
+            const dy = pos.getY(i) - center.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const normalized = 1 - dist / maxDist;
+            const bulge = normalized * normalized * PUPIL_CONVEXITY;
+            pos.setZ(i, pos.getZ(i) + bulge);
+          }
+
+          pos.needsUpdate = true;
+          child.geometry.computeVertexNormals();
+        }
       }
 
       if (child.name === 'Sclera_Mesh_2') {
         child.visible = SHOW_SCLERA;
+        child.material.envMapIntensity = 0;
       }
-    }
+
+      if (child.name === 'Sclera_Mesh_2') {
+        child.visible = SHOW_SCLERA;
+        child.material.envMapIntensity = 0;
+        child.material.onBeforeCompile = (shader) => {
+          shader.fragmentShader = shader.fragmentShader.replace(
+            '#include <map_fragment>',
+            `
+      #include <map_fragment>
+      #ifdef USE_MAP
+        vec2 scleraCentered = vMapUv - vec2(0.5);
+        float scleraDist = length(scleraCentered);
+        float scleraFade = smoothstep(${SCLERA_INNER_FADE_START.toFixed(2)}, ${SCLERA_INNER_FADE_END.toFixed(2)}, scleraDist);
+        diffuseColor.rgb *= scleraFade;
+      #endif
+      `,
+          );
+        };
+        child.material.needsUpdate = true;
+      }
+
+      if (child.name === 'Sclera_Mesh_2') {
+        const uvs = child.geometry.attributes.uv;
+        let minDist = Infinity;
+        let maxDist = 0;
+        for (let i = 0; i < uvs.count; i++) {
+          const u = uvs.getX(i) - 0.5;
+          const v = uvs.getY(i) - 0.5;
+          const dist = Math.sqrt(u * u + v * v);
+          if (dist < minDist) minDist = dist;
+          if (dist > maxDist) maxDist = dist;
+        }
+        console.log('Sclera UV dist range:', minDist, maxDist);
+      }
+    });
+
+    setSceneReady(true);
+  }, [gltf]);
+
+  // ─── Wireframe ────────────────────────────────────────────────────────────
+  gltf.scene.traverse((child) => {
+    if (!child.isMesh) return;
+    child.material.wireframe = wireframe;
   });
 
+  // ─── Frame loop ───────────────────────────────────────────────────────────
   useFrame((state) => {
     if (isPaused) return;
 
@@ -161,23 +343,19 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
       targetRotation.current.x = -state.pointer.y * MAX_ROTATION_RAD;
     } else {
       idleFrames.current++;
-
       if (idleFrames.current > 60) {
         const time = Date.now() * 0.001;
         const driftX = Math.sin(time * 0.7) * MAX_ROTATION_RAD * 0.3;
         const driftY = Math.cos(time * 0.5) * MAX_ROTATION_RAD * 0.3;
-
         targetRotation.current.x += (driftX - targetRotation.current.x) * 0.01;
         targetRotation.current.y += (driftY - targetRotation.current.y) * 0.01;
-
-        const maxRad = MAX_ROTATION_RAD;
         targetRotation.current.x = Math.max(
-          -maxRad,
-          Math.min(maxRad, targetRotation.current.x),
+          -MAX_ROTATION_RAD,
+          Math.min(MAX_ROTATION_RAD, targetRotation.current.x),
         );
         targetRotation.current.y = Math.max(
-          -maxRad,
-          Math.min(maxRad, targetRotation.current.y),
+          -MAX_ROTATION_RAD,
+          Math.min(MAX_ROTATION_RAD, targetRotation.current.y),
         );
       }
     }
@@ -190,6 +368,11 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
     if (groupRef.current) {
       groupRef.current.rotation.x = currentRotation.current.x;
       groupRef.current.rotation.y = currentRotation.current.y;
+    }
+
+    if (corneaGroupRef.current) {
+      corneaGroupRef.current.rotation.x = currentRotation.current.x * 0.115;
+      corneaGroupRef.current.rotation.y = currentRotation.current.y * 0.115;
     }
 
     if (ENABLE_IRIS_ROTATION && irisMeshRef.current && deltaTime > 0) {
@@ -205,12 +388,10 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
     if (pupilMeshRef.current) {
       const targetPupilX = currentRotation.current.x * PARALLAX_FACTOR;
       const targetPupilY = currentRotation.current.y * PARALLAX_FACTOR;
-
       currentPupilRotation.current.x +=
         (targetPupilX - currentPupilRotation.current.x) * LERP_SPEED;
       currentPupilRotation.current.y +=
         (targetPupilY - currentPupilRotation.current.y) * LERP_SPEED;
-
       pupilMeshRef.current.rotation.x = currentPupilRotation.current.x;
       pupilMeshRef.current.rotation.y = currentPupilRotation.current.y;
     }
@@ -220,6 +401,17 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
     <group ref={groupRef}>
       <primitive object={gltf.scene} />
       <ScenePlayButton onClick={() => onPlayClick?.()} isPlaying={isPlaying} />
+      <group ref={corneaGroupRef}>
+        {sceneReady &&
+          EYE_LIGHTS.map((config) => (
+            <EyeLight
+              key={config.id}
+              config={config}
+              proceduralTexture={catchlightTexture}
+              corneaMesh={corneaMeshRef.current}
+            />
+          ))}
+      </group>
     </group>
   );
 }

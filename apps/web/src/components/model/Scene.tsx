@@ -45,6 +45,7 @@ export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
       >
         <Canvas
           camera={{ position: [0, 0, 0.4], fov: 50 }}
+          environmentrotation={[0, Math.PI * 1.2, 0]}
           gl={{
             toneMapping: THREE.ACESFilmicToneMapping,
             toneMappingExposure: TONE_MAPPING_EXPOSURE,
