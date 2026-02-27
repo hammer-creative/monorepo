@@ -7,9 +7,7 @@ export function Impressum() {
     <>
       <div className="impressum">
         <p className="impressum-left text">Los Angeles | London</p>
-        <p className="impressum-right text">
-          ©{currentYear} Hammer Creative Ltd
-        </p>
+        <p className="impressum-right text">©{currentYear} Hammer Creative</p>
       </div>
     </>
   );
