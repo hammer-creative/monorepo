@@ -207,6 +207,8 @@ export default function SceneModel({
         child.material.stencilFunc = THREE.AlwaysStencilFunc; // always write
         child.material.stencilZPass = THREE.ReplaceStencilOp; // replace stencil where drawn
 
+        child.material.map = corneaInsertTexture;
+
         child.material.needsUpdate = true;
       }
 
@@ -309,12 +311,13 @@ export default function SceneModel({
         }
       }
 
-      if (child.name === 'Sclera_Mesh_2') {
+      if (child.name === 'Sclera_Mesh') {
         child.visible = SHOW_SCLERA;
         child.material.envMapIntensity = 0;
+        // child.material.map = corneaInsertTexture;
       }
 
-      if (child.name === 'Sclera_Mesh_2') {
+      if (child.name === 'Sclera_Mesh') {
         child.visible = SHOW_SCLERA;
         child.material.envMapIntensity = 0;
         child.material.onBeforeCompile = (shader) => {
@@ -333,20 +336,30 @@ export default function SceneModel({
         };
         child.material.needsUpdate = true;
       }
+    });
 
-      if (child.name === 'Sclera_Mesh_2') {
-        const uvs = child.geometry.attributes.uv;
-        let minDist = Infinity;
-        let maxDist = 0;
+    gltf.scene.traverse((child) => {
+      if (!child.isMesh) return;
+      const uvs = child.geometry.attributes.uv;
+      let uvRange = 'no UVs';
+      if (uvs) {
+        let minU = Infinity,
+          maxU = -Infinity,
+          minV = Infinity,
+          maxV = -Infinity;
         for (let i = 0; i < uvs.count; i++) {
-          const u = uvs.getX(i) - 0.5;
-          const v = uvs.getY(i) - 0.5;
-          const dist = Math.sqrt(u * u + v * v);
-          if (dist < minDist) minDist = dist;
-          if (dist > maxDist) maxDist = dist;
+          const u = uvs.getX(i),
+            v = uvs.getY(i);
+          if (u < minU) minU = u;
+          if (u > maxU) maxU = u;
+          if (v < minV) minV = v;
+          if (v > maxV) maxV = v;
         }
-        console.log('Sclera UV dist range:', minDist, maxDist);
+        uvRange = `U ${minU.toFixed(3)}→${maxU.toFixed(3)} V ${minV.toFixed(3)}→${maxV.toFixed(3)}`;
       }
+      console.log(
+        `${child.name} | mat: ${child.material.uuid.slice(0, 8)} | map: ${child.material.map?.uuid.slice(0, 8) ?? 'none'} | UV: ${uvRange}`,
+      );
     });
 
     setSceneReady(true);
@@ -437,7 +450,7 @@ export default function SceneModel({
       <primitive object={gltf.scene} />
       <ScenePlayButton onClick={() => onPlayClick?.()} isPlaying={isPlaying} />
 
-      {corneaInsertTexture && <CorneaInsert texture={corneaInsertTexture} />}
+      {/* {corneaInsertTexture && <CorneaInsert texture={corneaInsertTexture} />} */}
 
       <group ref={corneaGroupRef}>
         X
