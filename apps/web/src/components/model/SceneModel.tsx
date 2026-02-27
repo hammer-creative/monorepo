@@ -256,8 +256,6 @@ export default function SceneModel({
           child.material.color = PUPIL_COLOR;
         }
 
-        child.material.map = corneaInsertTexture;
-
         // ─── Edge gradient on pupil ──────────────────────────────
         child.material.onBeforeCompile = (shader) => {
           shader.fragmentShader = shader.fragmentShader.replace(
