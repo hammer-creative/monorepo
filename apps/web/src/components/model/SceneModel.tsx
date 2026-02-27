@@ -119,7 +119,7 @@ export default function SceneModel({
   const { camera } = useThree();
 
   const videoTexture = useVideoTexture(
-    '/video/Hammer_EyeballReel_1x1_gradient_2.mp4',
+    '/video/Hammer_EyeballReel_1x1_gradient.mp4',
     {
       loop: true,
       muted: true,
@@ -161,7 +161,7 @@ export default function SceneModel({
       if (child.isLight) child.visible = false;
       if (!child.isMesh) return;
 
-      if (child.name === 'Cornea_Mesh_2') {
+      if (child.name === 'Cornea_Mesh') {
         corneaMeshRef.current = child;
         child.visible = SHOW_CORNEA;
         child.material.roughness = 0.0;
@@ -206,7 +206,7 @@ export default function SceneModel({
         child.material.needsUpdate = true;
       }
 
-      if (child.name === 'Pupil_Mesh_2' && videoTexture) {
+      if (child.name === 'Pupil_Mesh' && videoTexture) {
         child.visible = SHOW_PUPIL;
         if (ENABLE_VIDEO_PUPIL) {
           child.material.map = videoTexture;

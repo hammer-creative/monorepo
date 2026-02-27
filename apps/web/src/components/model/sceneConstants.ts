@@ -16,9 +16,9 @@ export const PARALLAX_FACTOR = 0.2;
 // ==========================================
 // MESH VISIBILITY
 // ==========================================
-export const SHOW_CORNEA = false;
+export const SHOW_CORNEA = true;
 export const SHOW_IRIS = true;
-export const SHOW_PUPIL = false;
+export const SHOW_PUPIL = true;
 export const SHOW_SCLERA = true;
 export const SCLERA_SCALE = 1.0;
 
