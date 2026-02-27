@@ -152,5 +152,5 @@ export const SCLERA_INNER_FADE_START = 0; // inner hole edge
 export const SCLERA_INNER_FADE_END = 0; // fades to normal above this
 
 export const CORNEA_INSERT_PNG = '/model/textures/brown_photostudio_02_1k.png';
-export const CORNEA_INSERT_Z = 0.11;
-export const CORNEA_INSERT_SIZE = 0.11;
+export const CORNEA_INSERT_Z = 0.15;
+export const CORNEA_INSERT_SIZE = 0.05;

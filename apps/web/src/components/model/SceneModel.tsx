@@ -40,6 +40,9 @@ const {
   SCLERA_INNER_FADE_START,
   SCLERA_INNER_FADE_END,
   EYE_LIGHTS,
+  CORNEA_INSERT_PNG,
+  CORNEA_INSERT_Z,
+  CORNEA_INSERT_SIZE,
 } = C;
 
 const log = (...args) => {
@@ -108,6 +111,28 @@ function EyeLight({ config, proceduralTexture, corneaMesh }) {
   return <primitive object={decalMesh} renderOrder={999} />;
 }
 
+function CorneaInsert({ texture }) {
+  return (
+    <mesh
+      position={[0, 0, CORNEA_INSERT_Z]}
+      renderOrder={2} // render after cornea
+    >
+      <circleGeometry args={[CORNEA_INSERT_SIZE, 64]} />
+      <meshBasicMaterial
+        map={texture}
+        transparent
+        depthWrite={false}
+        stencilWrite={true} // enable stencil test
+        stencilRef={1} // match cornea mesh
+        stencilFunc={THREE.EqualStencilFunc} // only draw where cornea wrote
+        stencilFail={THREE.KeepStencilOp}
+        stencilZFail={THREE.KeepStencilOp}
+        stencilZPass={THREE.KeepStencilOp}
+      />
+    </mesh>
+  );
+}
+
 // ─── SceneModel ───────────────────────────────────────────────────────────────
 export default function SceneModel({
   url,
@@ -117,6 +142,10 @@ export default function SceneModel({
 }) {
   const gltf = useGLTF(url);
   const { camera } = useThree();
+
+  const corneaInsertTexture = CORNEA_INSERT_PNG
+    ? useTexture(CORNEA_INSERT_PNG)
+    : null;
 
   const videoTexture = useVideoTexture(
     '/video/Hammer_EyeballReel_1x1_gradient.mp4',
@@ -172,6 +201,12 @@ export default function SceneModel({
         child.material.specularIntensity = 2.0;
         child.material.specularColor = new THREE.Color('#ffffff');
         child.material.envMapIntensity = 1.5;
+
+        child.material.stencilWrite = true; // enable stencil
+        child.material.stencilRef = 1; // reference value
+        child.material.stencilFunc = THREE.AlwaysStencilFunc; // always write
+        child.material.stencilZPass = THREE.ReplaceStencilOp; // replace stencil where drawn
+
         child.material.needsUpdate = true;
       }
 
@@ -401,7 +436,11 @@ export default function SceneModel({
     <group ref={groupRef}>
       <primitive object={gltf.scene} />
       <ScenePlayButton onClick={() => onPlayClick?.()} isPlaying={isPlaying} />
+
+      {corneaInsertTexture && <CorneaInsert texture={corneaInsertTexture} />}
+
       <group ref={corneaGroupRef}>
+        X
         {sceneReady &&
           EYE_LIGHTS.map((config) => (
             <EyeLight
