@@ -9,6 +9,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry';
 
+import { VIDEO_SOURCE } from './sceneConstants';
 import * as C from './sceneConstants';
 import ScenePlayButton from './ScenePlayButton';
 
@@ -151,14 +152,11 @@ export default function SceneModel({
     ? useTexture(CORNEA_INSERT_PNG)
     : null;
 
-  const videoTexture = useVideoTexture(
-    '/video/Hammer_EyeballReel_1x1_gradient.mp4',
-    {
-      loop: true,
-      muted: true,
-      start: true,
-    },
-  );
+  const videoTexture = useVideoTexture(`/video/${VIDEO_SOURCE}`, {
+    loop: true,
+    muted: true,
+    start: true,
+  });
   videoTexture.flipY = false;
 
   const [isPlaying, setIsPlaying] = useState(true);
@@ -194,7 +192,7 @@ export default function SceneModel({
       if (child.isLight) child.visible = false;
       if (!child.isMesh) return;
 
-      if (child.name === 'Cornea_Mesh') {
+      if (child.name === 'Cornea_V5') {
         corneaMeshRef.current = child;
         child.visible = SHOW_CORNEA;
         child.material.roughness = 0.0;
@@ -211,9 +209,11 @@ export default function SceneModel({
         child.material.stencilFunc = THREE.AlwaysStencilFunc; // always write
         child.material.stencilZPass = THREE.ReplaceStencilOp; // replace stencil where drawn
 
-        child.material.map = corneaInsertTexture;
-
-        child.material.needsUpdate = true;
+        // if (corneaInsertTexture) {
+        //   corneaInsertTexture.wrapS = THREE.ClampToEdgeWrapping;
+        //   corneaInsertTexture.wrapT = THREE.ClampToEdgeWrapping;
+        //   corneaInsertTexture.needsUpdate = true;
+        // }
       }
 
       if (child.name === 'Iris_Mesh') {
@@ -247,7 +247,7 @@ export default function SceneModel({
         child.material.needsUpdate = true;
       }
 
-      if (child.name === 'Pupil_Mesh' && videoTexture) {
+      if (child.name === 'Pupil_V5' && videoTexture) {
         child.visible = SHOW_PUPIL;
         if (ENABLE_VIDEO_PUPIL) {
           child.material.map = videoTexture;
@@ -315,13 +315,12 @@ export default function SceneModel({
         }
       }
 
-      if (child.name === 'Sclera_Mesh') {
+      if (child.name === 'Sclera_V5') {
         child.visible = SHOW_SCLERA;
         child.material.envMapIntensity = 0;
-        // child.material.map = corneaInsertTexture;
       }
 
-      if (child.name === 'Sclera_Mesh') {
+      if (child.name === 'Sclera_V5') {
         child.visible = SHOW_SCLERA;
         child.material.envMapIntensity = 0;
         child.material.onBeforeCompile = (shader) => {
@@ -341,6 +340,8 @@ export default function SceneModel({
         child.material.needsUpdate = true;
       }
     });
+
+    setSceneReady(true);
 
     gltf.scene.traverse((child) => {
       if (!child.isMesh) return;
@@ -362,11 +363,19 @@ export default function SceneModel({
         uvRange = `U ${minU.toFixed(3)}→${maxU.toFixed(3)} V ${minV.toFixed(3)}→${maxV.toFixed(3)}`;
       }
       console.log(
-        `${child.name} | mat: ${child.material.uuid.slice(0, 8)} | map: ${child.material.map?.uuid.slice(0, 8) ?? 'none'} | UV: ${uvRange}`,
+        [
+          `MESH: ${child.name}`,
+          `type: ${child.material.type}`,
+          `mat: ${child.material.name || '(unnamed)'}`,
+          `mat uuid: ${child.material.uuid.slice(0, 8)}`,
+          `map: ${child.material.map?.uuid.slice(0, 8) ?? 'none'}`,
+          `uv2: ${child.geometry.attributes.uv1 ? 'yes' : 'no'}`,
+          `UV: ${uvRange}`,
+          `verts: ${child.geometry.attributes.position.count}`,
+          `visible: ${child.visible}`,
+        ].join(' | '),
       );
     });
-
-    setSceneReady(true);
   }, [gltf]);
 
   // ─── Wireframe ────────────────────────────────────────────────────────────
@@ -456,11 +465,8 @@ export default function SceneModel({
       <primitive object={gltf.scene} />
       <ScenePlayButton onClick={() => onPlayClick?.()} isPlaying={isPlaying} />
 
-      {/* {corneaInsertTexture && <CorneaInsert texture={corneaInsertTexture} />} */}
-
       <group ref={corneaGroupRef}>
-        X
-        {sceneReady &&
+        {/* {sceneReady &&
           EYE_LIGHTS.map((config) => (
             <EyeLight
               key={config.id}
@@ -468,7 +474,7 @@ export default function SceneModel({
               proceduralTexture={catchlightTexture}
               corneaMesh={corneaMeshRef.current}
             />
-          ))}
+          ))} */}
       </group>
     </group>
   );

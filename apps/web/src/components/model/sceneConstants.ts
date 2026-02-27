@@ -1,5 +1,12 @@
 import * as THREE from 'three';
 
+export const GLB_SOURCE = 'Lv_Eyeball_V5A_NewUV.glb';
+export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_EXR_V2.mp4';
+
+// export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
+
+export const ENVIRONMENT_MAP_SOURCE = 'studio_kontrast_04_4k.exr';
+
 // ==========================================
 // DEBUG
 // ==========================================

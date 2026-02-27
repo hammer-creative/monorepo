@@ -7,6 +7,7 @@ import * as C from '@/components/model/sceneConstants';
 import { Environment, OrbitControls } from '@react-three/drei';
 import { Suspense, useEffect, useRef } from 'react';
 
+import { ENVIRONMENT_MAP_SOURCE, GLB_SOURCE } from './sceneConstants';
 import SceneModel from './SceneModel';
 
 const LC = C.LIGHTING_CONFIG;
@@ -50,6 +51,8 @@ export default function SceneContent({
       spotLightRef.current.target = spotLightTargetRef.current;
     }
   }, []);
+
+  console.log(GLB_SOURCE);
 
   return (
     <>
@@ -165,8 +168,14 @@ export default function SceneContent({
       )}
 
       <Suspense fallback={null}>
+        <Environment
+          files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
+          background={false}
+          environmentRotation={[0.5, Math.PI, 0.5]}
+        />
+
         <SceneModel
-          url="/model/model-v8.glb"
+          url={`/model/${GLB_SOURCE}`}
           isPaused={isPaused}
           onPlayClick={onPlayClick}
         />

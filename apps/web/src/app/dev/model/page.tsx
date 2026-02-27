@@ -392,8 +392,8 @@ export const LIGHTING_CONFIG = {
     ? {
         maskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
         WebkitMaskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
-        maskSize: `${maskDiameter}vh ${maskDiameter}vh`,
-        WebkitMaskSize: `${maskDiameter}vh ${maskDiameter}vh`,
+        maskSize: '100% 100%',
+        WebkitMaskSize: '100% 100%',
         maskPosition: 'center',
         WebkitMaskPosition: 'center',
         maskRepeat: 'no-repeat',
