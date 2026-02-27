@@ -2,12 +2,12 @@
 'use client';
 
 import {
-  LongArrow,
+  // LongArrow,
   SanityImageHero,
   TextBlock,
   Title,
 } from '@/components/common';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
+// import { useMediaQuery } from '@/hooks/useMediaQuery';
 import type { ServicesPageHeroModule as ServicesPageHeroModuleType } from '@/types/sanity.generated';
 
 /**
@@ -30,12 +30,12 @@ function isValidServicesPageHeroModule(
  */
 export function ServicesPageHeroModule({
   data,
-  onScrollTrigger,
+  // onScrollTrigger,
 }: {
   data: ServicesPageHeroModuleType | null;
   onScrollTrigger?: () => void;
 }) {
-  const isWide = useMediaQuery('(min-width: 50em)');
+  // const isWide = useMediaQuery('(min-width: 50em)');
 
   const bem = 'hero-card';
 
@@ -52,23 +52,23 @@ export function ServicesPageHeroModule({
   /**
    * Smooth scroll to content start and trigger animations
    */
-  const handleScrollClick = () => {
-    const target = document.getElementById('content-start');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      onScrollTrigger?.();
-    }
-  };
+  // const handleScrollClick = () => {
+  //   const target = document.getElementById('content-start');
+  //   if (target) {
+  //     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  //     onScrollTrigger?.();
+  //   }
+  // };
 
-  const scrollButton = (
-    <button
-      onClick={handleScrollClick}
-      className={`${bem}__scroll-trigger`}
-      aria-label="Scroll to content"
-    >
-      <LongArrow direction="down" />
-    </button>
-  );
+  // const scrollButton = (
+  //   <button
+  //     onClick={handleScrollClick}
+  //     className={`${bem}__scroll-trigger`}
+  //     aria-label="Scroll to content"
+  //   >
+  //     <LongArrow direction="down" />
+  //   </button>
+  // );
 
   return (
     <div className={`${bem}__image-wrapper`}>
@@ -83,7 +83,7 @@ export function ServicesPageHeroModule({
       )}
 
       {/* Wide viewport: button over image */}
-      {isWide && scrollButton}
+      {/* {isWide && scrollButton} */}
 
       {/* Content wrapper for narrow viewport grouping */}
       <div className="content-wrapper">

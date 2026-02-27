@@ -5,7 +5,7 @@ import { ClientIcons } from '@/components/common/ClientIcons';
 import { ServicesListModule } from '@/components/modules/ServicesList/';
 import type { ServicesPageCardModule as ServicesPageCardModuleType } from '@/types/sanity.generated';
 
-const bem = 'services-card';
+const bem = 'services-page-card';
 
 /**
  * Props for `ServicesPageCardModule`.
@@ -63,13 +63,13 @@ export function ServicesPageCardModule({
     <div className={`${bem}__services`}>
       <ServicesListModule
         services={services as unknown[]}
-        className={`${bem}__services-list`}
+        className={`services-list`}
       />
     </div>
   );
 
   return (
-    <div className={bem}>
+    <>
       {imageContent}
 
       {showClientIcons && (
@@ -81,10 +81,10 @@ export function ServicesPageCardModule({
       <div className={`${bem}__content`}>
         {headerContent}
         <div className={`${bem}__wide`}>{servicesContent}</div>
+        {!showClientIcons && (
+          <div className={`${bem}__narrow`}>{servicesContent}</div>
+        )}
       </div>
-      {!showClientIcons && (
-        <div className={`${bem}__narrow`}>{servicesContent}</div>
-      )}
-    </div>
+    </>
   );
 }

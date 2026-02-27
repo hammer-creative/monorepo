@@ -155,6 +155,7 @@
 /* ScrollTo button: Services page hero-module */
 [data-page='/services'] .hero-card__title-wrapper {
   display: flex;
+  padding-bottom: var(--space-fluid-10-20);
 }
 
 /* Responsive layout: Services page hero-module */
@@ -169,10 +170,27 @@
 
 /* Typography: Services page hero-module */
 [data-page='/services'] .hero-card__title {
-  @mixin title-primary;
+  @mixin title-primary var(--font-serif), uppercase;
+}
+
+[data-page='/services'] .services__hero .hero-card__text {
+  @mixin body-xs;
 }
 
 [data-page='/services'] .hero-card__text {
-  @mixin body-sm;
+  @mixin body-xs;
   line-height: var(--line-height-default);
+}
+
+/* Responsive typography: Services page hero-module */
+@media screen and (min-width: 50em) {
+  [data-page='/services'] {
+  }
+
+  [data-page='/services'] .header .title-container button {
+    flex: 1;
+  }
+}
+[data-page='/services'] .services__hero .hero-card__text p {
+  width: 35ch;
 }

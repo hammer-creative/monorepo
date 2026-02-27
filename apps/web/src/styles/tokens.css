@@ -49,6 +49,7 @@
   --aspect-ratio-half-width: 5 / 7;
   --aspect-ratio-impact: 7 / 5;
   --aspect-ratio-teaser-card: 69 / 40;
+  --aspect-ratio-services-card: 8 / 3;
   --breakpoint-wide: var(--viewport-wide);
 
   /* VIEWPORTS */
@@ -280,7 +281,7 @@
   ); /* 40px → 20px */
 
   --font-size-footer-menu-fluid: 12px;
-  --font-size-menu-mobile-fluid: clamp(50px, 12vw, 140px);
+  --font-size-menu-mobile-fluid: clamp(50px, 12vw, 110px);
   --font-size-menu-reverse-fluid: clamp(40px, calc(56px - 1vw), 56px);
 
   --font-size-xs-fluid: clamp(

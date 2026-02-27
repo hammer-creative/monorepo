@@ -1,7 +1,7 @@
 /* apps/web/src/stylesl/label.css */
 
 /* BASE STYLE */
-.hero-card__details .label--small-caps {
+.label--small-caps {
   @mixin small-caps uppercase, var(--color-hyperbeam);
   letter-spacing: var(--letter-spacing-loose);
   padding-bottom: 3px;

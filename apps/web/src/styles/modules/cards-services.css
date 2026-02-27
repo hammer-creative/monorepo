@@ -1,140 +1,105 @@
 /* Services Cards */
-.services-card-module .services-card {
-  position: relative;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding-inline: var(--space-fluid-20-40);
-  margin-bottom: var(--space-fluid-20-40);
-}
 
-.services-card-module .services-card .content {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.services-card-module .services-card .content .header {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding-inline-start: var(--space-fluid-20-40);
-}
-
-.services-card-module .services-card .narrow {
-  flex: 1;
-}
-
-.services-card-module .services-card .services {
-  background: $color-nightshade;
-}
-
-.services-card-module .services-card .services-list {
-  padding: var(--space-fluid-20-40);
-}
-
-/* Services page overrides */
-[data-page='/services'] .services-card-module .services-card .image {
-  aspect-ratio: 1 / 1;
-}
-
-[data-page='/services'] .services-card-module .services-card .content .wide {
-  display: none;
-}
-
-@media screen and (min-width: 50em) {
-  /* Overriding default positioning */
-  .services-card-module .services-card {
-    position: relative;
+/* SHOW HIDE (TODO: there's a better way to do this in JSX) */
+[data-page='/services'] {
+  .services-page-card__narrow {
+    display: block;
   }
-
-  [data-page='/services'] .services-card-module .services-card {
-    .narrow {
-      display: none;
-    }
-    .content .wide {
-      display: block;
-    }
-  }
-
-  [data-page='/services'] .services-card-module .services-card .content {
-    position: absolute;
-    inset: 0;
-    margin: var(--space-fluid-20-40);
-  }
-
-  [data-page='/services'] .services-card-module .services-card .content {
-    display: flex;
-    flex-direction: row;
-  }
-
-  [data-page='/services'] .services-card-module .services-card .content > * {
-    flex: 1 0 33%;
-  }
-
-  [data-page='/services']
-    .services-card-module
-    .services-card
-    .content
-    .header {
-    align-self: end;
-    position: relative;
-  }
-
-  .services-card-module .services-card .services {
-    background: none;
-  }
-
-  [data-page='/services'] .services-card-module .services-card .image {
-    aspect-ratio: 1 / 1;
+  .services-page-card__wide {
+    display: none;
   }
 
   @media screen and (min-width: 50em) {
-    [data-page='/services'] .services-card-module .services-card .image {
-      aspect-ratio: 94 / 35;
+    .services-page-card__narrow {
+      display: none;
+    }
+    .services-page-card__wide {
+      display: block;
     }
   }
-
-  [data-page='/services'] .services-card-module .services-card .services-list {
-    padding: 0;
-  }
-
-  /* [data-page='/services'] .services-card-module .services-card .content {
-    position: absolute;
-  } */
 }
 
-/* Chyron card */
-[data-page='/services'] .chyron-card {
-  padding-block-start: var(--space-fluid-20-40);
-  padding-block-end: var(--space-fluid-20-60);
+/* SERVICES CARDS: Spacing  */
+.services-page .rubric--services,
+.services-page .rubric--clients {
+  padding-block: var(--card-frame-2);
+  padding-inline-start: var(--card-frame-1);
 }
 
-[data-page='/services'] .chyron-card .header {
-  padding-inline: var(--space-fluid-20-40);
+.services-page-card__content {
+  padding: var(--card-frame-1);
 }
 
-[data-page='/services'] .chyron-card .title {
-  margin-bottom: var(--space-fluid-20-40);
+.services-page-card__title {
+  margin-block-end: var(--flow-space-1);
 }
 
-[data-page='/services'] .chyron-card .subtitle {
-  padding-inline: var(--space-fluid-20-40);
-  margin-block-end: var(--space-fluid-40-80);
+.services-page .rubric--services {
+  background: var(--color-sandstorm);
 }
 
-[data-page='/services'] .chyron {
-  margin-block: var(--space-fluid-20-40);
+.services-page-card {
+  background: var(--color-nightshade);
 }
 
-[data-page='/services'] .chyron > * {
-  margin-block: var(--space-fluid-20-40);
+.services-page-card .image {
+  position: relative;
+  @mixin aspect-ratio-services-card;
+}
+
+/* SERVICES + CHYRON CARDS: Typpography  */
+.services-page-card__content h2.services-page-card__title {
+  @mixin title-primary var(--font-serif), uppercase;
+}
+
+.services-page h2.rubric--services,
+.services-page h2.rubric--clients {
+  @mixin title-primary;
+}
+
+.services-page__chyron .services-page-card__text {
+  @mixin body-sm;
+}
+
+.services-page__chyron .services-page-card__text p {
+  width: 30ch;
+}
+
+/* CHYRON: spacing */
+
+.services-page__chyron .services-page-card__content {
+  padding-block: var(--flow-space-2);
+}
+
+.services-page__chyron .services-page-card__header {
+  padding-inline: var(--flow-space-2);
+}
+
+.rfm-marquee-container:not(:last-child) {
+  padding-bottom: var(--flow-space-2);
 }
 
 @media screen and (min-width: 50em) {
-  [data-page='/services'] .chyron-card .subtitle {
+  .services-page__chyron .rubric--clients {
     text-align: center;
-    padding-inline: var(--space-fluid-20-40);
-    margin-block-end: var(--space-fluid-40-80);
+  }
+  .services-page__chyron .services-page-card__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .services-page__chyron .title {
+    white-space: initial;
+    margin: 0 auto var(--flow-space-1) auto;
+  }
+  .services-page__chyron .services-page-card__text {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .services-page__chyron .services-page-card__text p {
+    max-width: 40ch;
+    width: 100%;
   }
 }

@@ -1,6 +1,6 @@
 // apps/web/src/app/services/page.tsx
 
-import { LongArrow, Title } from '@/components/common';
+import { LongArrow, Rubric } from '@/components/common';
 import {
   ServicesPageCardModule,
   ServicesPageHeroModule,
@@ -14,7 +14,7 @@ import {
   resolveModuleColors,
 } from '@/lib/sanity';
 
-const bem = 'services';
+const bem = 'services-page';
 
 export const metadata = buildMetadata('Services');
 
@@ -45,7 +45,7 @@ export default async function ServicesPage() {
   const chyronCard = cards.at(-1);
 
   return (
-    <>
+    <div className={`${bem}`}>
       {hero && (
         <section
           className={`module ${bem}__hero`}
@@ -58,15 +58,13 @@ export default async function ServicesPage() {
         </section>
       )}
 
-      <div id="content-start" className={`${bem}__heading`}>
-        <Title as="div">Services</Title>
-      </div>
+      <Rubric text="Services" />
 
       <div className={`${bem}__cards`}>
         {regularCards.map((card) => (
           <section
             key={card._key}
-            className={`module ${bem}__card`}
+            className={`module ${bem}-card`}
             style={
               {
                 '--module-bg': card.backgroundColor?.hex,
@@ -90,7 +88,7 @@ export default async function ServicesPage() {
             } as React.CSSProperties
           }
         >
-          <Title as="div">Clients</Title>
+          <Rubric text="Clients" />
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <ServicesPageCardModule data={chyronCard as any} showClientIcons />
         </section>
@@ -98,15 +96,13 @@ export default async function ServicesPage() {
 
       {allCaseStudies.length > 0 && (
         <section className={`module ${bem}__case-studies`}>
-          <Title as="h2" variant="tertiary">
-            Case Studies
-          </Title>
+          <Rubric text="Case Studies" variant="tertiary" />
           <LongArrow direction="right" href="/work" />
           <CaseStudyCarousel
             data={{ _type: 'caseStudyCarousel', caseStudies: allCaseStudies }}
           />
         </section>
       )}
-    </>
+    </div>
   );
 }

@@ -72,6 +72,10 @@
   padding: var(--card-frame-0);
 }
 
+.swiper .case-study__card .case-study__details {
+  justify-content: flex-end;
+}
+
 /* Typography: colors and hover transition */
 .case-study__card .case-study__title {
   @mixin case-study-title var(--font-sans), initial;

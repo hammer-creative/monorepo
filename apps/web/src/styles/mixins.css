@@ -46,6 +46,15 @@
   }
 }
 
+/* Services card (banner) */
+@define-mixin aspect-ratio-services-card {
+  aspect-ratio: var(--aspect-ratio-square);
+
+  @media screen and (min-width: 50em) {
+    aspect-ratio: var(--aspect-ratio-services-card);
+  }
+}
+
 /* Impact card */
 @define-mixin aspect-ratio-impact {
   aspect-ratio: 32 / 1;
