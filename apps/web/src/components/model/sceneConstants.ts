@@ -25,7 +25,7 @@ export const SCLERA_SCALE = 1.0;
 // ==========================================
 // VIDEO PUPIL PARAMETERS
 // ==========================================
-export const ENABLE_VIDEO_PUPIL = true;
+export const ENABLE_VIDEO_PUPIL = false;
 export const PUPIL_COLOR = new THREE.Color(0x000000);
 export const PUPIL_Z_POSITION = 0;
 export const PUPIL_SCALE = 1;
@@ -150,3 +150,7 @@ export const IRIS_ROUGHNESS = 1.0;
 
 export const SCLERA_INNER_FADE_START = 0; // inner hole edge
 export const SCLERA_INNER_FADE_END = 0; // fades to normal above this
+
+export const CORNEA_INSERT_PNG = '/model/textures/brown_photostudio_02_1k.png';
+export const CORNEA_INSERT_Z = 0.11;
+export const CORNEA_INSERT_SIZE = 0.11;
