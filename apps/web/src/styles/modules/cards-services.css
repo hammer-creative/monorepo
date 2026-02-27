@@ -2,6 +2,9 @@
 
 /* SHOW HIDE (TODO: there's a better way to do this in JSX) */
 [data-page='/services'] {
+  main {
+    background: var(--color-sandstorm);
+  }
   .services-page-card__narrow {
     display: block;
   }
@@ -26,8 +29,13 @@
   padding-inline-start: var(--card-frame-1);
 }
 
+.services-page .services-page__case-studies-header {
+  padding-block: var(--card-frame-2);
+  padding-inline: var(--card-frame-1);
+}
+
 .services-page-card__content {
-  padding: var(--card-frame-1);
+  padding: var(--card-frame-2);
 }
 
 .services-page-card__title {
@@ -39,7 +47,7 @@
 }
 
 .services-page-card {
-  background: var(--color-nightshade);
+  /* background: var(--color-nightshade); */
 }
 
 .services-page-card .image {
@@ -47,14 +55,54 @@
   @mixin aspect-ratio-services-card;
 }
 
-/* SERVICES + CHYRON CARDS: Typpography  */
+@media screen and (min-width: 50em) {
+  .services-page-card {
+    position: relative;
+    padding-inline: var(--flow-space-1);
+    padding-block-end: var(--flow-space-1);
+    background: var(--color-sandstorm);
+  }
+
+  .services-page-card .services-page-card__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .services-page-card .services-page-card__content > * {
+    flex: 1;
+  }
+
+  .services-page-card__header {
+    align-self: flex-end;
+  }
+
+  .services-page-card__wide {
+    align-self: flex-start;
+  }
+
+  .services-page-card__title {
+    margin-block-end: initial;
+  }
+
+  .services-page-card__services {
+    margin-block-start: var(--flow-space-1);
+  }
+}
+
+/* SERVICES + CHYRON CARDS: Typography  */
 .services-page-card__content h2.services-page-card__title {
   @mixin title-primary var(--font-serif), uppercase;
 }
 
+.services-page h2.rubric--case-studies,
 .services-page h2.rubric--services,
 .services-page h2.rubric--clients {
-  @mixin title-primary;
+  @mixin title-secondary;
 }
 
 .services-page__chyron .services-page-card__text {
@@ -63,6 +111,12 @@
 
 .services-page__chyron .services-page-card__text p {
   width: 30ch;
+}
+
+@media screen and (min-width: 50em) {
+  .services-page__hero .hero-card__text p {
+    width: 35ch;
+  }
 }
 
 /* CHYRON: spacing */
@@ -102,4 +156,10 @@
     max-width: 40ch;
     width: 100%;
   }
+}
+
+.services-page__case-studies-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

@@ -58,7 +58,7 @@ export const TONE_MAPPING_EXPOSURE = 1.0;
 // ==========================================
 export const PLAY_BUTTON_Z = 0.14;
 export const PLAY_BUTTON_SCALE = 0.01;
-export const PLAY_BUTTON_COLOR = '#D4A843';
+export const PLAY_BUTTON_COLOR = '#FFCC98';
 
 // ==========================================
 // EYE LIGHTS (CATCHLIGHTS)

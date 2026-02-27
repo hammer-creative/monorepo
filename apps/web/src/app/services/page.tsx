@@ -96,8 +96,10 @@ export default async function ServicesPage() {
 
       {allCaseStudies.length > 0 && (
         <section className={`module ${bem}__case-studies`}>
-          <Rubric text="Case Studies" variant="tertiary" />
-          <LongArrow direction="right" href="/work" />
+          <div className={`module ${bem}__case-studies-header`}>
+            <Rubric text="Case Studies" variant="tertiary" />
+            <LongArrow direction="right" href="/work" />
+          </div>
           <CaseStudyCarousel
             data={{ _type: 'caseStudyCarousel', caseStudies: allCaseStudies }}
           />
