@@ -1,12 +1,10 @@
 // apps/web/src/app/work/page.tsx
 
-import { CaseStudyCardModule, Rubric } from '@/components/modules';
+import { Rubric } from '@/components/common';
+import { CaseStudyCardModule } from '@/components/modules';
 import { buildMetadata } from '@/config/metadata';
 import { client, getWorkPage, resolveModuleColors } from '@/lib/sanity';
-import type {
-  CaseStudyCardModule as CaseStudyCardModuleType,
-  TextModule as TextModuleType,
-} from '@/types/sanity.generated';
+import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 
 // TODO: do we need BEM for this?
@@ -16,7 +14,7 @@ const moduleComponents = {
   caseStudyCardModule: CaseStudyCardModule,
 } as const;
 
-type ModuleData = CaseStudyCardModuleType | TextModuleType;
+type ModuleData = CaseStudyCardModuleType;
 
 export const metadata = buildMetadata('Work');
 
