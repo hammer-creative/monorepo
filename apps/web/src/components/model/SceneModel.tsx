@@ -43,6 +43,10 @@ const {
   CORNEA_INSERT_PNG,
   CORNEA_INSERT_Z,
   CORNEA_INSERT_SIZE,
+  EYE_LERP_SPEED,
+  INERTIA_FACTOR,
+  DRIFT_SPEED,
+  DRIFT_AMPLITUDE,
 } = C;
 
 const log = (...args) => {
@@ -252,7 +256,7 @@ export default function SceneModel({
           child.material.color = PUPIL_COLOR;
         }
 
-        // child.material.map = corneaInsertTexture;
+        child.material.map = corneaInsertTexture;
 
         // ─── Edge gradient on pupil ──────────────────────────────
         child.material.onBeforeCompile = (shader) => {
@@ -392,37 +396,39 @@ export default function SceneModel({
       targetRotation.current.y = state.pointer.x * MAX_ROTATION_RAD;
       targetRotation.current.x = -state.pointer.y * MAX_ROTATION_RAD;
     } else {
-      idleFrames.current++;
-      if (idleFrames.current > 60) {
-        const time = Date.now() * 0.001;
-        const driftX = Math.sin(time * 0.7) * MAX_ROTATION_RAD * 0.3;
-        const driftY = Math.cos(time * 0.5) * MAX_ROTATION_RAD * 0.3;
-        targetRotation.current.x += (driftX - targetRotation.current.x) * 0.01;
-        targetRotation.current.y += (driftY - targetRotation.current.y) * 0.01;
-        targetRotation.current.x = Math.max(
-          -MAX_ROTATION_RAD,
-          Math.min(MAX_ROTATION_RAD, targetRotation.current.x),
-        );
-        targetRotation.current.y = Math.max(
-          -MAX_ROTATION_RAD,
-          Math.min(MAX_ROTATION_RAD, targetRotation.current.y),
-        );
-      }
+      const time = state.clock.elapsedTime;
+      const driftX =
+        Math.sin(time * 0.41) *
+        Math.sin(time * 0.17) *
+        MAX_ROTATION_RAD *
+        DRIFT_AMPLITUDE;
+      const driftY =
+        Math.sin(time * 0.37) *
+        Math.sin(time * 0.23) *
+        MAX_ROTATION_RAD *
+        DRIFT_AMPLITUDE;
+      targetRotation.current.x +=
+        (driftX - targetRotation.current.x) * DRIFT_SPEED;
+      targetRotation.current.y +=
+        (driftY - targetRotation.current.y) * DRIFT_SPEED;
     }
-
     currentRotation.current.x +=
-      (targetRotation.current.x - currentRotation.current.x) * LERP_SPEED;
+      (targetRotation.current.x - currentRotation.current.x) * EYE_LERP_SPEED;
     currentRotation.current.y +=
-      (targetRotation.current.y - currentRotation.current.y) * LERP_SPEED;
+      (targetRotation.current.y - currentRotation.current.y) * EYE_LERP_SPEED;
 
     if (groupRef.current) {
-      groupRef.current.rotation.x = currentRotation.current.x;
-      groupRef.current.rotation.y = currentRotation.current.y;
+      groupRef.current.rotation.x +=
+        (currentRotation.current.x - groupRef.current.rotation.x) *
+        INERTIA_FACTOR;
+      groupRef.current.rotation.y +=
+        (currentRotation.current.y - groupRef.current.rotation.y) *
+        INERTIA_FACTOR;
     }
 
     if (corneaGroupRef.current) {
-      corneaGroupRef.current.rotation.x = currentRotation.current.x * 0.115;
-      corneaGroupRef.current.rotation.y = currentRotation.current.y * 0.115;
+      corneaGroupRef.current.rotation.x = groupRef.current.rotation.x * 0.115;
+      corneaGroupRef.current.rotation.y = groupRef.current.rotation.y * 0.115;
     }
 
     if (ENABLE_IRIS_ROTATION && irisMeshRef.current && deltaTime > 0) {
