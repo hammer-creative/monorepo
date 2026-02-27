@@ -68,9 +68,9 @@ export const EYE_LIGHTS = [
     size: [0.055, 0.04] as [number, number],
     opacity: 0.75,
     parallaxStrength: 0.08,
-    skewStrength: 0.3,
+    skewStrength: 1,
     stretchStrength: 0.5,
-    png: null as string | null,
+    png: '/model/textures/flare.png',
   },
   {
     id: 'secondary',
