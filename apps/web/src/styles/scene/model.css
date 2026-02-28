@@ -57,14 +57,14 @@
 
 .eye-shadow {
   position: absolute;
-  width: 50%;
-  height: 15%;
-  bottom: 1%;
+  width: 80vh;
+  height: 15vh;
+  bottom: 1vh;
   left: 50%;
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse,
-    rgba(20, 21, 21, 0.6) 0%,
+    rgba(20, 21, 21, 0.7) 0%,
     transparent 60%
   );
   filter: blur(12px);
