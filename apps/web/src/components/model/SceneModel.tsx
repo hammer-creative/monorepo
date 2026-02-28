@@ -192,6 +192,10 @@ export default function SceneModel({
       if (child.isLight) child.visible = false;
       if (!child.isMesh) return;
 
+      if (child.isLight) child.visible = false;
+      if (!child.isMesh) return;
+      child.receiveShadow = true;
+
       if (child.name === 'Cornea_V5') {
         corneaMeshRef.current = child;
         child.visible = SHOW_CORNEA;
@@ -342,6 +346,12 @@ export default function SceneModel({
     });
 
     setSceneReady(true);
+
+    gltf.scene.traverse((child) => {
+      if (!child.isMesh) return;
+      const box = new THREE.Box3().setFromObject(child);
+      console.log(child.name, 'bbox:', box.min, box.max);
+    });
 
     gltf.scene.traverse((child) => {
       if (!child.isMesh) return;

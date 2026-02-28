@@ -159,10 +159,15 @@
   }
 }
 /* No animated border for carousel cards */
-.case-study-carousel-module .case-study__card {
-  transition: box-shadow 0.3s ease;
+.swiper .case-study__card::before {
+  display: none;
 }
 
-.case-study-carousel-module .case-study__card:hover {
-  box-shadow: inset 0 0 0 3px $color-aircutter;
+.swiper .case-study__card {
+  border: 3px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.swiper .case-study__card:hover {
+  border-color: var(--color-aircutter);
 }

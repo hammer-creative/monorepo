@@ -3,47 +3,13 @@
 /* eslint-disable */
 // @ts-nocheck
 import { TONE_MAPPING_EXPOSURE } from '@/components/model/sceneConstants';
+import * as C from '@/components/model/sceneConstants';
 import SceneContent from '@/components/model/SceneContent';
 import { Canvas } from '@react-three/fiber';
 import { useState } from 'react';
 import * as THREE from 'three';
 
-// ─── Lighting defaults ───────────────────────────────────────────────────────
-// NOT imported from sceneConstants. These are the panel's own starting point.
-// Workflow: tweak sliders → "Copy Lighting Config" → paste into sceneConstants.
-// sceneConstants is the exported snapshot, not the source of truth.
-
-const LIGHTING_DEFAULTS = {
-  ambientLight: { enabled: true, intensity: 5, color: '#a9b7bd' },
-  directionalLight: {
-    enabled: true,
-    intensity: 5,
-    color: '#dbe1e1',
-    position: [5, 5, 5],
-  },
-  spotLight: {
-    enabled: false,
-    intensity: 5,
-    color: '#ffffff',
-    position: [0, 5, 3],
-    angle: 0.3,
-    penumbra: 0.5,
-  },
-  pointLight: {
-    enabled: false,
-    intensity: 5,
-    color: '#ffffff',
-    position: [2, 2, 2],
-    distance: 10,
-    decay: 2,
-  },
-  cycloLight: {
-    enabled: false,
-    intensity: 2,
-    color: '#ffffff',
-    position: [0, -3, 0],
-  },
-};
+const LC = C.LIGHTING_CONFIG;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const hexToRgba = (hex) => {
@@ -119,79 +85,69 @@ export default function ModelDevPage() {
   const [presets, setPresets] = useState([]);
   const [presetCounter, setPresetCounter] = useState(1);
 
-  // ── Lighting — initialized from LIGHTING_DEFAULTS, not sceneConstants ─────
+  // ── Lighting — initialized from LC, not sceneConstants ─────
   const [ambientLightEnabled, setAmbientLightEnabled] = useState(
-    LIGHTING_DEFAULTS.ambientLight.enabled,
+    LC.ambientLight.enabled,
   );
   const [ambientLightIntensity, setAmbientLightIntensity] = useState(
-    LIGHTING_DEFAULTS.ambientLight.intensity,
+    LC.ambientLight.intensity,
   );
   const [ambientLightColor, setAmbientLightColor] = useState(
-    LIGHTING_DEFAULTS.ambientLight.color,
+    LC.ambientLight.color,
   );
 
   const [directionalLightEnabled, setDirectionalLightEnabled] = useState(
-    LIGHTING_DEFAULTS.directionalLight.enabled,
+    LC.directionalLight.enabled,
   );
   const [directionalLightIntensity, setDirectionalLightIntensity] = useState(
-    LIGHTING_DEFAULTS.directionalLight.intensity,
+    LC.directionalLight.intensity,
   );
   const [directionalLightColor, setDirectionalLightColor] = useState(
-    LIGHTING_DEFAULTS.directionalLight.color,
+    LC.directionalLight.color,
   );
   const [directionalLightPosition, setDirectionalLightPosition] = useState(
-    LIGHTING_DEFAULTS.directionalLight.position,
+    LC.directionalLight.position,
   );
 
   const [spotLightEnabled, setSpotLightEnabled] = useState(
-    LIGHTING_DEFAULTS.spotLight.enabled,
+    LC.spotLight.enabled,
   );
   const [spotLightIntensity, setSpotLightIntensity] = useState(
-    LIGHTING_DEFAULTS.spotLight.intensity,
+    LC.spotLight.intensity,
   );
-  const [spotLightColor, setSpotLightColor] = useState(
-    LIGHTING_DEFAULTS.spotLight.color,
-  );
+  const [spotLightColor, setSpotLightColor] = useState(LC.spotLight.color);
   const [spotLightPosition, setSpotLightPosition] = useState(
-    LIGHTING_DEFAULTS.spotLight.position,
+    LC.spotLight.position,
   );
-  const [spotLightAngle, setSpotLightAngle] = useState(
-    LIGHTING_DEFAULTS.spotLight.angle,
-  );
+  const [spotLightAngle, setSpotLightAngle] = useState(LC.spotLight.angle);
   const [spotLightPenumbra, setSpotLightPenumbra] = useState(
-    LIGHTING_DEFAULTS.spotLight.penumbra,
+    LC.spotLight.penumbra,
   );
 
   const [pointLightEnabled, setPointLightEnabled] = useState(
-    LIGHTING_DEFAULTS.pointLight.enabled,
+    LC.pointLight.enabled,
   );
   const [pointLightIntensity, setPointLightIntensity] = useState(
-    LIGHTING_DEFAULTS.pointLight.intensity,
+    LC.pointLight.intensity,
   );
-  const [pointLightColor, setPointLightColor] = useState(
-    LIGHTING_DEFAULTS.pointLight.color,
-  );
+  const [pointLightColor, setPointLightColor] = useState(LC.pointLight.color);
   const [pointLightPosition, setPointLightPosition] = useState(
-    LIGHTING_DEFAULTS.pointLight.position,
+    LC.pointLight.position,
   );
   const [pointLightDistance, setPointLightDistance] = useState(
-    LIGHTING_DEFAULTS.pointLight.distance,
+    LC.pointLight.distance,
   );
-  const [pointLightDecay, setPointLightDecay] = useState(
-    LIGHTING_DEFAULTS.pointLight.decay,
-  );
+  const [pointLightDecay, setPointLightDecay] = useState(LC.pointLight.decay);
 
   const [cycloLightEnabled, setCycloLightEnabled] = useState(
-    LIGHTING_DEFAULTS.cycloLight.enabled,
+    LC.cycloLight.enabled,
   );
   const [cycloLightIntensity, setCycloLightIntensity] = useState(
-    LIGHTING_DEFAULTS.cycloLight.intensity,
+    LC.cycloLight.intensity,
   );
-  const [cycloLightColor, setCycloLightColor] = useState(
-    LIGHTING_DEFAULTS.cycloLight.color,
-  );
+  const [cycloLightColor, setCycloLightColor] = useState(LC.cycloLight.color);
   const [cycloLightPosition, setCycloLightPosition] = useState(
-    LIGHTING_DEFAULTS.cycloLight.position,
+    LC.cycloLight.position,
   );
 
   // ── Actions ───────────────────────────────────────────────────────────────
@@ -276,18 +232,18 @@ export default function ModelDevPage() {
 
     if (maskEnabled) {
       parts.push(
-        `/* Mask */
-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
--webkit-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
-mask-size: ${maskDiameter}vh ${maskDiameter}vh;
--webkit-mask-size: ${maskDiameter}vh ${maskDiameter}vh;
-mask-position: center;
--webkit-mask-position: center;
-mask-repeat: no-repeat;
--webkit-mask-repeat: no-repeat;`,
+        `.model {
+  mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
+  mask-size: ${maskDiameter}vh ${maskDiameter}vh;
+  -webkit-mask-size: ${maskDiameter}vh ${maskDiameter}vh;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}`,
       );
     }
-
     if (bokeh1Enabled) {
       parts.push(
         `.bokeh-1 {
@@ -302,7 +258,6 @@ mask-repeat: no-repeat;
   opacity: ${backdropOpacity1};
   filter: blur(${backdropBlur1}px);
   pointer-events: none;
-  z-index: 1;
 }`,
       );
     }
@@ -321,7 +276,6 @@ mask-repeat: no-repeat;
   opacity: ${backdropOpacity2};
   filter: blur(${backdropBlur2}px);
   pointer-events: none;
-  z-index: 2;
 }`,
       );
     }
@@ -337,7 +291,6 @@ mask-repeat: no-repeat;
   background: linear-gradient(to top, ${linearGradientColor}, transparent);
   opacity: ${linearGradientOpacity};
   pointer-events: none;
-  z-index: 3;
 }`,
       );
     }
@@ -392,8 +345,8 @@ export const LIGHTING_CONFIG = {
     ? {
         maskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
         WebkitMaskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
-        maskSize: '100% 100%',
-        WebkitMaskSize: '100% 100%',
+        maskSize: `${maskDiameter}vh ${maskDiameter}vh`,
+        WebkitMaskSize: `${maskDiameter}vh ${maskDiameter}vh`,
         maskPosition: 'center',
         WebkitMaskPosition: 'center',
         maskRepeat: 'no-repeat',
@@ -413,7 +366,6 @@ export const LIGHTING_CONFIG = {
     opacity: backdropOpacity1,
     filter: `blur(${backdropBlur1}px)`,
     pointerEvents: 'none',
-    zIndex: 1,
   };
 
   const bokeh2Style = {
@@ -428,7 +380,6 @@ export const LIGHTING_CONFIG = {
     opacity: backdropOpacity2,
     filter: `blur(${backdropBlur2}px)`,
     pointerEvents: 'none',
-    zIndex: 2,
   };
 
   const linearGradientStyle = {
@@ -440,7 +391,6 @@ export const LIGHTING_CONFIG = {
     background: `linear-gradient(to top, ${linearGradientColor}, transparent)`,
     opacity: linearGradientOpacity,
     pointerEvents: 'none',
-    zIndex: 3,
   };
 
   // ── Panel shared styles ───────────────────────────────────────────────────
@@ -625,7 +575,7 @@ export const LIGHTING_CONFIG = {
           {maskEnabled && (
             <>
               <label>
-                diameter {maskDiameter}vh{' '}
+                diameter {maskDiameter}vh/w{' '}
                 {slider(10, 150, 1, maskDiameter, setMaskDiameter)}
               </label>
               <label>
@@ -971,68 +921,56 @@ export const LIGHTING_CONFIG = {
         className="model__special-fx"
         style={{ position: 'relative', height: '100%', width: '100%' }}
       >
-        {bokeh1Enabled && <div className="bokeh-1" style={bokeh1Style} />}
-        {bokeh2Enabled && <div className="bokeh-2" style={bokeh2Style} />}
-        {linearGradientEnabled && (
-          <div className="linear-gradient" style={linearGradientStyle} />
-        )}
-
+        <div className="bokeh-1" style={bokeh1Style} />
+        <div className="bokeh-2" style={bokeh2Style} />
+        <div className="linear-gradient" style={linearGradientStyle} />
         <div
+          className="model"
           style={{
+            ...maskStyle,
             position: 'relative',
-            width: '100vh',
-            height: '100vh',
-            margin: '0 auto',
+            height: '100%',
+            width: '100%',
           }}
         >
-          <div
-            className="model"
-            style={{
-              ...maskStyle,
-              position: 'relative',
-              height: '100%',
-              width: '100%',
+          <Canvas
+            camera={{ position: [0, 0, 0.4], fov: 50 }}
+            gl={{
+              toneMapping: THREE.LinearToneMapping,
+              toneMappingExposure: 1.0,
+              alpha: true,
             }}
           >
-            <Canvas
-              camera={{ position: [0, 0, 0.4], fov: 50 }}
-              gl={{
-                toneMapping: THREE.LinearToneMapping,
-                toneMappingExposure: 1.0,
-                alpha: true,
-              }}
-            >
-              <SceneContent
-                helpersVisible={helpersVisible}
-                orbitEnabled={helpersVisible}
-                isPaused={isPaused}
-                onPlayClick={undefined}
-                ambientLightEnabled={ambientLightEnabled}
-                ambientLightIntensity={ambientLightIntensity}
-                ambientLightColor={ambientLightColor}
-                directionalLightEnabled={directionalLightEnabled}
-                directionalLightIntensity={directionalLightIntensity}
-                directionalLightColor={directionalLightColor}
-                directionalLightPosition={directionalLightPosition}
-                spotLightEnabled={spotLightEnabled}
-                spotLightIntensity={spotLightIntensity}
-                spotLightColor={spotLightColor}
-                spotLightPosition={spotLightPosition}
-                spotLightAngle={spotLightAngle}
-                spotLightPenumbra={spotLightPenumbra}
-                pointLightEnabled={pointLightEnabled}
-                pointLightIntensity={pointLightIntensity}
-                pointLightColor={pointLightColor}
-                pointLightPosition={pointLightPosition}
-                pointLightDistance={pointLightDistance}
-                pointLightDecay={pointLightDecay}
-                cycloLightEnabled={cycloLightEnabled}
-                cycloLightIntensity={cycloLightIntensity}
-                cycloLightColor={cycloLightColor}
-                cycloLightPosition={cycloLightPosition}
-              />
-            </Canvas>
-          </div>
+            <SceneContent
+              helpersVisible={helpersVisible}
+              orbitEnabled={helpersVisible}
+              isPaused={isPaused}
+              onPlayClick={undefined}
+              ambientLightEnabled={ambientLightEnabled}
+              ambientLightIntensity={ambientLightIntensity}
+              ambientLightColor={ambientLightColor}
+              directionalLightEnabled={directionalLightEnabled}
+              directionalLightIntensity={directionalLightIntensity}
+              directionalLightColor={directionalLightColor}
+              directionalLightPosition={directionalLightPosition}
+              spotLightEnabled={spotLightEnabled}
+              spotLightIntensity={spotLightIntensity}
+              spotLightColor={spotLightColor}
+              spotLightPosition={spotLightPosition}
+              spotLightAngle={spotLightAngle}
+              spotLightPenumbra={spotLightPenumbra}
+              pointLightEnabled={pointLightEnabled}
+              pointLightIntensity={pointLightIntensity}
+              pointLightColor={pointLightColor}
+              pointLightPosition={pointLightPosition}
+              pointLightDistance={pointLightDistance}
+              pointLightDecay={pointLightDecay}
+              cycloLightEnabled={cycloLightEnabled}
+              cycloLightIntensity={cycloLightIntensity}
+              cycloLightColor={cycloLightColor}
+              cycloLightPosition={cycloLightPosition}
+            />
+          </Canvas>
         </div>
       </div>
     </div>

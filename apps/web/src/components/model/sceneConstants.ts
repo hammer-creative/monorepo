@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export const GLB_SOURCE = 'Lv_Eyeball_V5A_NewUV.glb';
+export const GLB_SOURCE = 'Lv_EyeballExport_V5C_NewUV.glb';
 export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_EXR_V2.mp4';
 
 // export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
@@ -102,45 +102,6 @@ export const EYE_LIGHTS = [
 ];
 
 // ==========================================
-// LIGHTING CONFIG — paste from dev panel to update
-// ==========================================
-export const LIGHTING_CONFIG = {
-  ambientLight: {
-    enabled: true,
-    intensity: 5,
-    color: '#a9b7bd',
-  },
-  directionalLight: {
-    enabled: true,
-    intensity: 5,
-    color: '#dbe1e1',
-    position: [0, 0, 0],
-  },
-  spotLight: {
-    enabled: false,
-    intensity: 0,
-    color: '#000000',
-    position: [0, 0, 0],
-    angle: 0,
-    penumbra: 0,
-  },
-  pointLight: {
-    enabled: false,
-    intensity: 0,
-    color: '#000000',
-    position: [0, 0, 0],
-    distance: 0,
-    decay: 0,
-  },
-  cycloLight: {
-    enabled: false,
-    intensity: 0,
-    color: '#000000',
-    position: [0, 0, 0],
-  },
-};
-
-// ==========================================
 // IRIS EDGE GRADIENT
 // ==========================================
 
@@ -166,3 +127,40 @@ export const EYE_LERP_SPEED = 0.08; // how fast eye follows mouse
 export const INERTIA_FACTOR = 0.12; // how fast group rotation catches up (lower = more lag)
 export const DRIFT_SPEED = 0.008; // how fast target drifts when idle
 export const DRIFT_AMPLITUDE = 0.7; // how wide the drift wanders (0-1 multiplier of MAX_ROTATION)
+
+// LIGHTING_CONFIG — paste into sceneConstants.ts
+export const LIGHTING_CONFIG = {
+  ambientLight: {
+    enabled: true,
+    intensity: 1,
+    color: '#b9c3df',
+  },
+  directionalLight: {
+    enabled: true,
+    intensity: 2.9,
+    color: '#e8f7f8',
+    position: [-0.1, 2.5, 1.8],
+  },
+  spotLight: {
+    enabled: false,
+    intensity: 5,
+    color: '#ffffff',
+    position: [0, 5, 3],
+    angle: 0.3,
+    penumbra: 0.5,
+  },
+  pointLight: {
+    enabled: false,
+    intensity: 5,
+    color: '#ffffff',
+    position: [2, 2, 2],
+    distance: 10,
+    decay: 2,
+  },
+  cycloLight: {
+    enabled: false,
+    intensity: 2,
+    color: '#ffffff',
+    position: [0, -3, 0],
+  },
+};

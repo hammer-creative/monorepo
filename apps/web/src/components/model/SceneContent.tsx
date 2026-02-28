@@ -18,7 +18,6 @@ export default function SceneContent({
   orbitEnabled = false,
   isPaused = false,
   onPlayClick,
-  // All lighting props fall back to sceneConstants values
   ambientLightEnabled = LC.ambientLight.enabled,
   ambientLightIntensity = LC.ambientLight.intensity,
   ambientLightColor = LC.ambientLight.color,
@@ -52,8 +51,6 @@ export default function SceneContent({
     }
   }, []);
 
-  console.log(GLB_SOURCE);
-
   return (
     <>
       {helpersVisible && (
@@ -76,6 +73,14 @@ export default function SceneContent({
             position={directionalLightPosition}
             intensity={directionalLightIntensity}
             color={directionalLightColor}
+            shadow-mapSize-width={1024}
+            shadow-mapSize-height={1024}
+            shadow-camera-near={0.01}
+            shadow-camera-far={10}
+            shadow-camera-left={-0.5}
+            shadow-camera-right={0.5}
+            shadow-camera-top={0.5}
+            shadow-camera-bottom={-0.5}
           />
           {helpersVisible && (
             <mesh position={directionalLightPosition}>
@@ -179,6 +184,15 @@ export default function SceneContent({
           isPaused={isPaused}
           onPlayClick={onPlayClick}
         />
+
+        <mesh
+          rotation={[-Math.PI / 2, 0, 0]}
+          position={[0, -0.16, 0]}
+          receiveShadow
+        >
+          <planeGeometry args={[2, 2]} />
+          <shadowMaterial transparent opacity={0.4} />
+        </mesh>
       </Suspense>
 
       <OrbitControls
