@@ -54,3 +54,19 @@
   opacity: 0.45;
   pointer-events: none;
 }
+
+.eye-shadow {
+  position: absolute;
+  width: 50%;
+  height: 15%;
+  bottom: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse,
+    rgba(20, 21, 21, 0.6) 0%,
+    transparent 60%
+  );
+  filter: blur(12px);
+  pointer-events: none;
+}

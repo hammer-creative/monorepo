@@ -194,30 +194,20 @@ export default function SceneModel({
 
       if (child.isLight) child.visible = false;
       if (!child.isMesh) return;
+      child.castShadow = true;
       child.receiveShadow = true;
 
       if (child.name === 'Cornea_V5') {
         corneaMeshRef.current = child;
         child.visible = SHOW_CORNEA;
-        child.material.roughness = 0.0;
-        child.material.metalness = 0.1;
-        child.material.clearcoat = 1.0;
-        child.material.clearcoatRoughness = 1;
-        child.material.ior = 1.376;
-        child.material.specularIntensity = 2.0;
-        child.material.specularColor = new THREE.Color('#ffffff');
-        child.material.envMapIntensity = 1.5;
-
-        child.material.stencilWrite = true; // enable stencil
-        child.material.stencilRef = 1; // reference value
-        child.material.stencilFunc = THREE.AlwaysStencilFunc; // always write
-        child.material.stencilZPass = THREE.ReplaceStencilOp; // replace stencil where drawn
-
-        // if (corneaInsertTexture) {
-        //   corneaInsertTexture.wrapS = THREE.ClampToEdgeWrapping;
-        //   corneaInsertTexture.wrapT = THREE.ClampToEdgeWrapping;
-        //   corneaInsertTexture.needsUpdate = true;
-        // }
+        child.material = new THREE.MeshBasicMaterial({
+          transparent: true,
+          opacity: 0,
+          stencilWrite: true,
+          stencilRef: 1,
+          stencilFunc: THREE.AlwaysStencilFunc,
+          stencilZPass: THREE.ReplaceStencilOp,
+        });
       }
 
       if (child.name === 'Iris_Mesh') {
@@ -254,10 +244,14 @@ export default function SceneModel({
       if (child.name === 'Pupil_V5' && videoTexture) {
         child.visible = SHOW_PUPIL;
         if (ENABLE_VIDEO_PUPIL) {
-          child.material.map = videoTexture;
+          child.material = new THREE.MeshBasicMaterial({
+            map: videoTexture,
+            transparent: false,
+          });
         } else {
-          child.material.map = null;
-          child.material.color = PUPIL_COLOR;
+          child.material = new THREE.MeshBasicMaterial({
+            color: PUPIL_COLOR,
+          });
         }
 
         // ─── Edge gradient on pupil ──────────────────────────────

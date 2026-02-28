@@ -39,6 +39,7 @@ export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
       <div className="bokeh-1" />
       <div className="bokeh-2" />
       <div className="linear-gradient" />
+      <div className="eye-shadow" />
       <div
         className="model"
         style={{ position: 'relative', height: '100%', width: '100%' }}

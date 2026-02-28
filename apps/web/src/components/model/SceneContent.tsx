@@ -185,14 +185,14 @@ export default function SceneContent({
           onPlayClick={onPlayClick}
         />
 
-        <mesh
+        {/* <mesh
           rotation={[-Math.PI / 2, 0, 0]}
-          position={[0, -0.16, 0]}
+          position={[0, -0.15, 0]}
           receiveShadow
         >
-          <planeGeometry args={[2, 2]} />
-          <shadowMaterial transparent opacity={0.4} />
-        </mesh>
+          <planeGeometry args={[0.5, 0.5]} />
+          <meshBasicMaterial color="#000000" />
+        </mesh> */}
       </Suspense>
 
       <OrbitControls
