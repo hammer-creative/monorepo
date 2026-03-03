@@ -1,8 +1,9 @@
 // apps/web/src/components/Navigation/Footer.tsx
+import { Copyright } from '@/components/common';
 import { ExtendedLink } from '@/components/common/ExtendedLink';
 import { LinkList } from '@/components/common/LinkList';
 import { Wordmark } from '@/components/common/Wordmark';
-import { Addresses, Copyright, UtilitiesMenu } from '@/components/navigation';
+import { Addresses, UtilitiesMenu } from '@/components/navigation';
 import { type NavigationData } from '@/types/navigation';
 
 interface FooterProps {

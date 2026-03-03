@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
-export const GLB_SOURCE = 'Lv_EyeballExport_V5C_NewUV.glb';
-export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_EXR_V2.mp4';
+export const GLB_SOURCE = 'model-v7-modified-v6.glb';
+// export const GLB_SOURCE = 'Lv_EyeballExport_V5C_NewUV.glb';
+export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
 
 // export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
 
@@ -105,7 +106,7 @@ export const EYE_LIGHTS = [
 // IRIS EDGE GRADIENT
 // ==========================================
 
-export const IRIS_EDGE_FADE_START = 0.75;
+export const IRIS_EDGE_FADE_START = 0.7;
 export const IRIS_EDGE_FADE_END = 1;
 export const IRIS_EDGE_COLOR_R = 0; // edge color RGB 0–1
 export const IRIS_EDGE_COLOR_G = 0;

@@ -1,7 +1,7 @@
 // apps/web/src/components/modules/CaseStudyCard/CaseStudyCardModule.tsx
 'use client';
 
-import { Label, SanityImageTeaser, Title } from '@/components/common';
+import { ClientList, SanityImageTeaser, Title } from '@/components/common';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
 import type { CaseStudyTeaserItem } from '@/types/caseStudy';
 import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
@@ -31,12 +31,7 @@ function CaseStudyCardItem({ item }: { item: CaseStudyTeaserItem }) {
           <SanityImageTeaser image={teaserImage} className={`${bem}__image`} />
         )}
         <div className={`${bem}__details`}>
-          <Label
-            clients={clients}
-            tag="Client"
-            variant="client-label"
-            className={`${bem}__clients`}
-          />
+          <ClientList clients={clients!} />
           {title && (
             <Title as="h3" className={`${bem}__title`}>
               {title}

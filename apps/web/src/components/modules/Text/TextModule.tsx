@@ -13,42 +13,37 @@ const LAYOUT_CLASS_MAP: Record<Layout, string> = {
   homePage: 'home',
 } as const;
 
-/**
- * Type guard ensuring `data` is a valid `TextModule`.
- */
 function isValidTextModule(
   data: TextModuleType | null,
 ): data is TextModuleType {
   return data !== null;
 }
 
-/**
- * Renders a content block with a layout-driven modifier class. Layout
- * differences are handled via CSS using the modifier on the wrapper. Child
- * components receive BEM element classes from the parent for layout targeting.
- * All layout variants are driven by `LAYOUT_CLASS_MAP`.
- */
 export function TextModule({ data }: { data: TextModuleType | null }) {
   if (!isValidTextModule(data)) return null;
 
   const { title, body, layout, attribution, tag, clients } = data;
 
-  if (!layout || (!body && !attribution && !title)) return null;
+  if (!layout || (layout !== 'challenge' && !body && !attribution && !title))
+    return null;
 
   const layoutClass = LAYOUT_CLASS_MAP[layout] ?? '';
   const hasAttribution = attribution != null;
   const hasBody = body != null;
   const hasTag = tag != null;
-  const hasTitle = title != null && layout !== 'challenge';
+  const hasTitle = title != null;
   const hasClients = clients != null;
 
   return (
     <div className={`${bem} ${bem}--${layoutClass}`}>
-      {(hasTag || hasTitle) && (
+      {(hasTag || hasTitle) && layout !== 'challenge' && (
         <div className={`${bem}__headline`}>
-          {hasTag && <Label variant="small-caps">{tag}</Label>}
+          {hasTag && <Label className="small-caps">{tag}</Label>}
           {hasTitle && <Title className={`${bem}__title`}>{title}</Title>}
         </div>
+      )}
+      {layout === 'challenge' && (
+        <Label className="centered small-caps">Challenge</Label>
       )}
       {hasBody && <TextBlock body={body} className={`${bem}__text`} />}
       {hasAttribution && (
@@ -59,7 +54,6 @@ export function TextModule({ data }: { data: TextModuleType | null }) {
       {hasClients && (
         <Label
           clients={clients}
-          tag="Client"
           className={`${bem}__clients`}
           variant="small-caps"
         />

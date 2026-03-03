@@ -1,6 +1,8 @@
-vd/* apps/web/src/styles/modules/impact.css */
+/* apps/web/src/styles/modules/impact.css */
 
-/* Layout, imoact-module */
+@import '../mixins.css';
+
+/* Layout, impact-module */
 .impact-cards {
   display: flex;
   flex-direction: column;
@@ -10,151 +12,79 @@ vd/* apps/web/src/styles/modules/impact.css */
   flex: 1;
 }
 
-.impact-cards .image {
-  order: -1; /* float image to the top */
+.impact-cards .impact-card__item--image {
+  @mixin aspect-ratio-impact;
+  order: -1;
 }
 
-.impact-card__item .title,
-.impact-card__item .text {
-  padding-inline: var(--gutter-padding-0);
+.impact-cards .impact-card__item--text > * {
+  padding-inline: var(--flow-space-2);
 }
 
-.impact-card__text p {
+.impact-cards .impact-card__item--text > .title {
+  padding-block-start: var(--flow-space-2);
+  margin-block-end: var(--flow-space-1);
 }
 
-.impact-card__item .title {
-  @mixin title-tertiary;
-  padding-block-start: var(--gutter-padding-0);
-  max-width: 100%;
-  width: 100%;
-  min-height: 3em;
+.impact-cards .impact-card__item--text > .text {
+  padding-block-end: var(--space-fluid-80-120);
 }
 
-/* Layout, impact-module, responsive */
+.impact-cards > :not(.impact-card__item--image) {
+  min-height: 300px;
+}
+
+/* Responsive layout, impact-module */
 @media screen and (min-width: 50em) {
   .impact-cards {
     flex-direction: row;
   }
-
-  .impact-cards .image {
-    order: 2; /* image always displayed last */
-  }
-
-  .impact-card__item {
-    min-height: initial;
-  }
-
-  .impact-card__text {
-    padding-block-end: var(--space-fluid-100-160);
-  }
-
-  .impact-card__title {
-    margin-block-end: var(--space-20);
+  .impact-cards .impact-card__item--image {
+    order: 3;
   }
 }
 
-/* Borders, impact-module */
-.impact-card__item {
-  min-height: 300px;
-  border-bottom: 1px solid var(--color-medium-gray);
+/* Typography */
+.impact-cards .title {
+  @mixin title-tertiary;
 }
 
-/* Borders, impact-module, responsive */
-@media screen and (min-width: 50em) {
-  .impact-card__item:nth-child(2) {
-    border-left: 1px solid var(--color-medium-gray);
-    border-right: 1px solid var(--color-medium-gray);
-  }
-}
-
-/* Typography, impact-module */
-.impact-card__text p {
+.impact-cards .text {
   @mixin body-xs;
+  width: 45ch;
 }
 
-/* DELETE BELOW HERE */
-/* .impact-module .body {
-  padding-inline-end: 15vw;
+@media screen and (min-width: 50em) {
+  .impact-cards .title {
+    @mixin title-tertiary;
+    min-height: 4em;
+  }
+
+  .impact-cards .text {
+    width: 100%;
+  }
 }
 
-.impact-module .content {
-  display: flex;
-  flex-direction: column;
-}
-
-.impact-module .content.one-text .text-item {
-  order: 2;
-}
-
-.impact-module .content.one-text .image {
-  order: 1;
-}
-
-
-.impact-module .text-item {
-  padding-inline: var(--space-fluid-20-40);
-  padding-block-start: var(--space-fluid-20-40);
-  box-sizing: border-box;
-}
-
-.impact-module .one-text .text-item,
-.impact-module .two-texts .text-item,
-.impact-module .three-texts .text-item {
-  padding-block-end: var(--space-fluid-80-200);
-}
-
-.impact-module .two-texts .text-item,
-.impact-module .three-texts .text-item {
-  padding-inline-end: var(--space-fluid-40-80);
-}
-
-.impact-module .text-item:nth-child(2) {
+/* Borders */
+.impact-cards--three-text .impact-card__item:nth-child(2) {
   border-top: 1px solid var(--color-medium-gray);
   border-bottom: 1px solid var(--color-medium-gray);
 }
 
-
-.impact-module .image {
-  aspect-ratio: 16 / 9;
+.impact-cards--two-text-one-image .impact-card__item:nth-child(1) {
+  border-bottom: 1px solid var(--color-medium-gray);
 }
 
-
-@media (min-width: 50em) {
-
-  .impact-module .content {
-    flex-direction: row;
-  }
-
-  .impact-module .content.one-text .text-item {
-    order: initial;
-  }
-
-  .impact-module .content.one-text .image {
-    order: initial;
-  }
-
-  .impact-module .content.one-text .body {
-    padding-inline-end: 10vw;
-  }
-
-
-  .impact-module .content > * {
-    flex: 1;
-    box-sizing: border-box;
-  }
-
-  .impact-module .text-item:nth-child(2) {
+@media screen and (min-width: 50em) {
+  .impact-cards--three-text .impact-card__item:nth-child(2) {
     border-top: none;
+    border-right: 1px solid var(--color-medium-gray);
     border-bottom: none;
     border-left: 1px solid var(--color-medium-gray);
+  }
+
+  .impact-cards--two-text-one-image .impact-card__item:nth-child(1) {
     border-right: 1px solid var(--color-medium-gray);
+    border-bottom: none;
   }
-
-  .impact-module .body {
-    padding-inline-end: var(--space-20);
-  }
-
-  .impact-module .one-text .text-item {
-    padding-inline-end: initial;
-  }
-} */
+}

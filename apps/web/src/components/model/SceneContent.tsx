@@ -175,8 +175,8 @@ export default function SceneContent({
       <Suspense fallback={null}>
         <Environment
           files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
-          background={false}
-          environmentRotation={[0.5, Math.PI, 0.5]}
+          background={true}
+          environmentRotation={[0.5, Math.PI / 4, 0.5]}
         />
 
         <SceneModel

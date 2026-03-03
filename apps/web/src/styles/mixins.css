@@ -57,7 +57,7 @@
 
 /* Impact card */
 @define-mixin aspect-ratio-impact {
-  aspect-ratio: 32 / 1;
+  aspect-ratio: 1 / 1;
   @media screen and (min-width: 50em) {
     aspect-ratio: 1 / 1;
   }
@@ -85,7 +85,7 @@
 @define-mixin body-xs {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
-  font-size: var(--font-size--2);
+  font-size: var(--font-size--3);
   line-height: var(--line-height-0);
   letter-spacing: var(--letter-spacing-default);
 }
@@ -138,7 +138,7 @@
 @define-mixin title-tertiary {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: var(--font-size-1);
+  font-size: var(--font-size-0);
   line-height: var(--line-height-3);
   letter-spacing: var(--letter-spacing-tight);
 }

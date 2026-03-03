@@ -24,8 +24,8 @@
 .case-study__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-fluid-10-20);
-  padding-inline: var(--card-frame-0);
+  /* gap: var(--space-fluid-10-20); */
+  /* padding-inline: var(--card-frame-0); */
 }
 
 @media (min-width: 50em) {
@@ -43,10 +43,10 @@
   background-clip: padding-box, border-box;
 }
 
-.case-study__card a {
+/* .case-study__card a {
   display: block;
   position: relative;
-}
+} */
 
 /* Typography: page header */
 [data-page='/work'] section:first-of-type .text-card__label {
@@ -60,7 +60,7 @@
   margin-block-end: var(--card-frame-0);
 }
 
-/* Typography: title and client names overlaid on image */
+/* Layout, title and client names overlaid on image */
 .case-study__card .case-study__details {
   position: absolute;
   top: 0;
@@ -76,25 +76,33 @@
   justify-content: flex-end;
 }
 
-/* Typography: colors and hover transition */
+/* Typography, colors and hover transition */
 .case-study__card .case-study__title {
   @mixin case-study-title var(--font-sans), initial;
   font-family: var(--font-sans);
   width: 15ch;
 }
 
-.case-study__card .case-study__title,
-.case-study__card .client-names__names {
+.case-study__card .case-study__details > * {
   color: var(--color-hyperbeam);
   transition: color var(--ease-card);
 }
 
-.case-study__card a:hover .case-study__title,
-.case-study__card a:hover .client-names__names {
-  color: var(--color-aircutter);
+/* No animated border for carousel cards */
+.swiper .case-study__card::before {
+  display: none;
 }
 
-/* Fx: Subtle zoom on hover */
+.swiper .case-study__card {
+  border: 3px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.swiper .case-study__card:hover {
+  border-color: var(--color-aircutter);
+}
+
+/* Fx, Subtle zoom on hover */
 .case-study__card .image > * {
   transition: transform 1s ease;
   transform-origin: center;
@@ -104,7 +112,7 @@
   transform: scale(1.05) !important;
 }
 
-/* Fx: Animated gradient border, fades in on hover */
+/* Fx, Animated gradient border, fades in on hover */
 .case-study__card::before {
   content: '';
   position: absolute;
@@ -157,17 +165,4 @@
   100% {
     background-position: 200% 0%;
   }
-}
-/* No animated border for carousel cards */
-.swiper .case-study__card::before {
-  display: none;
-}
-
-.swiper .case-study__card {
-  border: 3px solid transparent;
-  transition: border-color 0.3s ease;
-}
-
-.swiper .case-study__card:hover {
-  border-color: var(--color-aircutter);
 }

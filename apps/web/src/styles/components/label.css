@@ -1,13 +1,12 @@
 /* apps/web/src/stylesl/label.css */
 
-/* BASE STYLE */
-.label--small-caps {
-  @mixin small-caps uppercase, var(--color-hyperbeam);
+/* Base style */
+.label {
+  @mixin small-caps uppercase, inherit;
   letter-spacing: var(--letter-spacing-loose);
-  padding-bottom: 3px;
 }
 
-/* MODULE OVERRIDES */
+/* Module overrides */
 .hero-card__clients .label--tag {
   @mixin small-caps uppercase, var(--color-hyperbeam);
   letter-spacing: var(--letter-spacing-loose);

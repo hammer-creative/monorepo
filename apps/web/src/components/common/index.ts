@@ -3,6 +3,8 @@
 export * from './Arrow';
 export * from './ExtendedLink';
 export { ClientIcons } from './ClientIcons';
+export { ClientList } from './ClientList';
+export { Copyright } from './Copyright';
 export { Label } from './Label';
 export { LinkList } from './LinkList';
 export { PortableTextRenderer } from './PortableTextRenderer';

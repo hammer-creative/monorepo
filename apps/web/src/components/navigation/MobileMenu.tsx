@@ -1,8 +1,9 @@
 'use client';
 
+import { Copyright } from '@/components/common';
 import { LinkList } from '@/components/common/LinkList';
 import { Wordmark } from '@/components/common/Wordmark';
-import { Addresses, Copyright, UtilitiesMenu } from '@/components/navigation';
+import { Addresses, UtilitiesMenu } from '@/components/navigation';
 import { RadixMenu } from '@/components/navigation/RadixMenu';
 import { useNavigation } from '@/contexts/NavigationContext';
 import type { NavigationData } from '@/types/navigation';

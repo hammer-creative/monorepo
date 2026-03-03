@@ -1,13 +1,13 @@
 // apps/web/src/components/common/Impressum.tsx
 
-export function Impressum() {
-  const currentYear = new Date().getFullYear();
+import { Copyright } from '@/components/common';
 
+export function Impressum() {
   return (
     <>
       <div className="impressum">
         <p className="impressum-left text">Los Angeles | London</p>
-        <p className="impressum-right text">©{currentYear} Hammer Creative</p>
+        <Copyright className="copyright impressum-right text" />
       </div>
     </>
   );

@@ -64,7 +64,7 @@ function ListRenderer({
 
   return (
     <div className={className ?? bem}>
-      <Label variant="small-caps">{heading}</Label>
+      <Label className={`${bem}__heading`}>{heading}</Label>
       <ul className={`${bem}__list`}>
         {validItems.map((item: ListItem) => (
           <li className={`${bem}__item`} key={item._id}>

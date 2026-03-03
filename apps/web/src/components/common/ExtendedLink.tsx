@@ -1,8 +1,7 @@
-// apps/web/src/components/common/ExtendedLink.tsx
-
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 interface ExtendedLinkProps {
@@ -11,7 +10,7 @@ interface ExtendedLinkProps {
   className?: string;
   onClick?: (href: string, e: React.MouseEvent) => void;
   preventNavigation?: boolean;
-  arrowComponent?: ReactNode; // Pass in any arrow component
+  arrowComponent?: ReactNode;
   children: ReactNode;
 }
 
@@ -19,32 +18,33 @@ export function ExtendedLink({
   href,
   email,
   className,
-
   onClick,
   preventNavigation = false,
   arrowComponent,
   children,
 }: ExtendedLinkProps) {
-  // Check if URL is external (http/https) or mailto
+  const pathname = usePathname();
+
   const isExternal = (url?: string) => {
     if (!url) return false;
     return url.startsWith('http') || url.startsWith('mailto:');
   };
 
-  // Handle all link clicks
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (preventNavigation) {
-      e.preventDefault();
-    }
-    if (onClick && href) {
-      onClick(href, e);
-    }
+  const isActive = (url?: string) => {
+    if (!url || isExternal(url)) return false;
+    return url === '/' ? pathname === '/' : pathname.startsWith(url);
   };
 
-  // Combine base "link" class with any additional classes
-  const combinedClassName = ['link', className].filter(Boolean).join(' ');
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (preventNavigation) e.preventDefault();
+    if (onClick && href) onClick(href, e);
+  };
 
-  // Wrap children with arrow component if provided
+  const active = isActive(href);
+  const combinedClassName = ['link', active ? 'is-active' : '', className]
+    .filter(Boolean)
+    .join(' ');
+
   const content = arrowComponent ? (
     <>
       {children}
@@ -54,7 +54,6 @@ export function ExtendedLink({
     children
   );
 
-  // EMAIL: Render as mailto link
   if (email) {
     const mailtoHref = `mailto:${email}`;
     return (
@@ -68,7 +67,6 @@ export function ExtendedLink({
     );
   }
 
-  // NO HREF: Render as button (for onClick-only links)
   if (!href) {
     return (
       <button
@@ -81,7 +79,6 @@ export function ExtendedLink({
     );
   }
 
-  // EXTERNAL: Regular <a> tag with security attributes
   if (isExternal(href)) {
     return (
       <a
@@ -96,24 +93,31 @@ export function ExtendedLink({
     );
   }
 
-  // INTERNAL + preventNavigation: Regular <a> tag (no Next.js Link)
   if (preventNavigation) {
     return (
-      <a href={href} className={combinedClassName} onClick={handleClick}>
+      <a
+        href={href}
+        className={combinedClassName}
+        onClick={handleClick}
+        aria-current={active ? 'page' : undefined}
+      >
         {content}
       </a>
     );
   }
 
-  // INTERNAL (default): Use Next.js Link for client-side navigation
   return (
-    <Link href={href} className={combinedClassName} onClick={handleClick}>
+    <Link
+      href={href}
+      className={combinedClassName}
+      onClick={handleClick}
+      aria-current={active ? 'page' : undefined}
+    >
       {content}
     </Link>
   );
 }
 
-// ServerLink at the end
 interface ServerLinkProps {
   href: string;
   className?: string;

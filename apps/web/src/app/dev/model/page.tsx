@@ -41,21 +41,17 @@ const btnBase = {
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function ModelDevPage() {
+  const [envRotation, setEnvRotation] = useState([0.5, Math.PI / 4, 0.5]);
   const [helpersVisible, setHelpersVisible] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [panelVisible, setPanelVisible] = useState(true);
   const [lightingPanelVisible, setLightingPanelVisible] = useState(false);
 
-  // ── Mask ─────────────────────────────────────────────────────────────────
-  // Defaults match production PostCSS:
-  //   mask-image: radial-gradient(circle at 50% 50%, black 42%, transparent 63%)
-  //   mask-size: 97vh 97vh
   const [maskEnabled, setMaskEnabled] = useState(false);
   const [maskStart, setMaskStart] = useState(42);
   const [maskEnd, setMaskEnd] = useState(63);
   const [maskDiameter, setMaskDiameter] = useState(97);
 
-  // ── Bokeh 1 ───────────────────────────────────────────────────────────────
   const [bokeh1Enabled, setBokeh1Enabled] = useState(false);
   const [backdropSize1, setBackdropSize1] = useState(100);
   const [backdropBlur1, setBackdropBlur1] = useState(0);
@@ -65,7 +61,6 @@ export default function ModelDevPage() {
   const [backdropGradientStart1, setBackdropGradientStart1] = useState(0);
   const [backdropGradientEnd1, setBackdropGradientEnd1] = useState(100);
 
-  // ── Bokeh 2 ───────────────────────────────────────────────────────────────
   const [bokeh2Enabled, setBokeh2Enabled] = useState(false);
   const [backdropSize2, setBackdropSize2] = useState(100);
   const [backdropBlur2, setBackdropBlur2] = useState(0);
@@ -75,17 +70,14 @@ export default function ModelDevPage() {
   const [backdropGradientStart2, setBackdropGradientStart2] = useState(0);
   const [backdropGradientEnd2, setBackdropGradientEnd2] = useState(100);
 
-  // ── Bottom Fade ───────────────────────────────────────────────────────────
   const [linearGradientEnabled, setLinearGradientEnabled] = useState(false);
   const [linearGradientColor, setLinearGradientColor] = useState('#000000');
   const [linearGradientOpacity, setLinearGradientOpacity] = useState(0);
   const [linearGradientHeight, setLinearGradientHeight] = useState(30);
 
-  // ── Presets ───────────────────────────────────────────────────────────────
   const [presets, setPresets] = useState([]);
   const [presetCounter, setPresetCounter] = useState(1);
 
-  // ── Lighting — initialized from LC, not sceneConstants ─────
   const [ambientLightEnabled, setAmbientLightEnabled] = useState(
     LC.ambientLight.enabled,
   );
@@ -150,7 +142,6 @@ export default function ModelDevPage() {
     LC.cycloLight.position,
   );
 
-  // ── Actions ───────────────────────────────────────────────────────────────
   const removeAllEffects = () => {
     setMaskEnabled(false);
     setBokeh1Enabled(false);
@@ -229,10 +220,8 @@ export default function ModelDevPage() {
 
   const copyCssToClipboard = () => {
     const parts: string[] = [];
-
     if (maskEnabled) {
-      parts.push(
-        `.model {
+      parts.push(`.model {
   mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
   -webkit-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
   mask-size: ${maskDiameter}vh ${maskDiameter}vh;
@@ -241,12 +230,10 @@ export default function ModelDevPage() {
   -webkit-mask-position: center;
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
-}`,
-      );
+}`);
     }
     if (bokeh1Enabled) {
-      parts.push(
-        `.bokeh-1 {
+      parts.push(`.bokeh-1 {
   position: absolute;
   width: min(${backdropSize1}vw, ${backdropSize1}vh);
   height: min(${backdropSize1}vw, ${backdropSize1}vh);
@@ -258,13 +245,10 @@ export default function ModelDevPage() {
   opacity: ${backdropOpacity1};
   filter: blur(${backdropBlur1}px);
   pointer-events: none;
-}`,
-      );
+}`);
     }
-
     if (bokeh2Enabled) {
-      parts.push(
-        `.bokeh-2 {
+      parts.push(`.bokeh-2 {
   position: absolute;
   width: min(${backdropSize2}vw, ${backdropSize2}vh);
   height: min(${backdropSize2}vw, ${backdropSize2}vh);
@@ -276,13 +260,10 @@ export default function ModelDevPage() {
   opacity: ${backdropOpacity2};
   filter: blur(${backdropBlur2}px);
   pointer-events: none;
-}`,
-      );
+}`);
     }
-
     if (linearGradientEnabled) {
-      parts.push(
-        `.linear-gradient {
+      parts.push(`.linear-gradient {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -291,10 +272,8 @@ export default function ModelDevPage() {
   background: linear-gradient(to top, ${linearGradientColor}, transparent);
   opacity: ${linearGradientOpacity};
   pointer-events: none;
-}`,
-      );
+}`);
     }
-
     navigator.clipboard.writeText(parts.join('\n\n'));
     alert('CSS copied to clipboard!');
   };
@@ -335,12 +314,13 @@ export const LIGHTING_CONFIG = {
     color: '${cycloLightColor}',
     position: [${cycloLightPosition.join(', ')}],
   },
-};`;
+};
+
+// Environment rotation: [${envRotation.map((v) => v.toFixed(4)).join(', ')}]`;
     navigator.clipboard.writeText(config);
     alert('Lighting config copied to clipboard!');
   };
 
-  // ── Derived styles ────────────────────────────────────────────────────────
   const maskStyle = maskEnabled
     ? {
         maskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
@@ -393,7 +373,6 @@ export const LIGHTING_CONFIG = {
     pointerEvents: 'none',
   };
 
-  // ── Panel shared styles ───────────────────────────────────────────────────
   const panelStyle = {
     position: 'absolute',
     zIndex: 1000,
@@ -410,14 +389,6 @@ export const LIGHTING_CONFIG = {
     maxHeight: '85vh',
     overflowY: 'auto',
   };
-
-  const sliderLabel = (label: string) => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: 6,
-    flexWrap: 'wrap',
-    minWidth: 0,
-  });
 
   const slider = (min, max, step, value, onChange) => (
     <input
@@ -454,8 +425,8 @@ export const LIGHTING_CONFIG = {
     <>
       {['X', 'Y', 'Z'].map((axis, i) => (
         <label key={axis}>
-          {axis} {pos[i].toFixed(1)}
-          {slider(-range, range, 0.1, pos[i], (v) => {
+          {axis} {pos[i].toFixed(2)}
+          {slider(-range, range, 0.01, pos[i], (v) => {
             const next = [...pos];
             next[i] = v;
             setPos(next);
@@ -465,10 +436,8 @@ export const LIGHTING_CONFIG = {
     </>
   );
 
-  // ─────────────────────────────────────────────────────────────────────────
   return (
     <div style={{ position: 'relative', height: '100vh', width: '100vw' }}>
-      {/* ── Top-bar buttons ────────────────────────────────────────────── */}
       <button
         onClick={() => setPanelVisible((v) => !v)}
         style={{
@@ -512,7 +481,7 @@ export const LIGHTING_CONFIG = {
         Helpers: {helpersVisible ? 'ON' : 'OFF'}
       </button>
 
-      {/* ── Effects panel ──────────────────────────────────────────────── */}
+      {/* ── Effects panel ── */}
       {panelVisible && (
         <div style={{ ...panelStyle, top: 90, left: 10, width: 220 }}>
           <button
@@ -562,7 +531,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Mask */}
           <label>
             <input
               type="checkbox"
@@ -590,7 +558,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Bokeh 1 */}
           <label>
             <input
               type="checkbox"
@@ -641,7 +608,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Bokeh 2 */}
           <label>
             <input
               type="checkbox"
@@ -692,7 +658,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Bottom Fade */}
           <label>
             <input
               type="checkbox"
@@ -739,7 +704,7 @@ export const LIGHTING_CONFIG = {
         </div>
       )}
 
-      {/* ── Lighting panel ─────────────────────────────────────────────── */}
+      {/* ── Lighting panel ── */}
       {lightingPanelVisible && (
         <div style={{ ...panelStyle, top: 90, right: 10, width: 230 }}>
           <strong>Lighting Controls</strong>
@@ -755,7 +720,21 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Ambient */}
+          {/* Environment Rotation */}
+          <strong>Environment Rotation</strong>
+          {['X', 'Y', 'Z'].map((axis, i) => (
+            <label key={axis}>
+              {axis} {envRotation[i].toFixed(2)}
+              {slider(-Math.PI, Math.PI, 0.01, envRotation[i], (v) => {
+                const next = [...envRotation];
+                next[i] = v;
+                setEnvRotation(next);
+              })}
+            </label>
+          ))}
+
+          <HR />
+
           <label>
             <input
               type="checkbox"
@@ -783,7 +762,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Directional */}
           <label>
             <input
               type="checkbox"
@@ -819,7 +797,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Spot */}
           <label>
             <input
               type="checkbox"
@@ -850,7 +827,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Point */}
           <label>
             <input
               type="checkbox"
@@ -887,7 +863,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Cyclo */}
           <label>
             <input
               type="checkbox"
@@ -916,7 +891,7 @@ export const LIGHTING_CONFIG = {
         </div>
       )}
 
-      {/* ── Scene ──────────────────────────────────────────────────────── */}
+      {/* ── Scene ── */}
       <div
         className="model__special-fx"
         style={{ position: 'relative', height: '100%', width: '100%' }}
@@ -926,51 +901,59 @@ export const LIGHTING_CONFIG = {
         <div className="linear-gradient" style={linearGradientStyle} />
         <div
           className="model"
-          style={{
-            ...maskStyle,
-            position: 'relative',
-            height: '100%',
-            width: '100%',
-          }}
+          style={{ position: 'relative', height: '100%', width: '100%' }}
         >
-          <Canvas
-            camera={{ position: [0, 0, 0.4], fov: 50 }}
-            gl={{
-              toneMapping: THREE.LinearToneMapping,
-              toneMappingExposure: 1.0,
-              alpha: true,
+          <div
+            style={{
+              position: 'absolute',
+              width: '100vh',
+              height: '100vh',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              ...maskStyle,
             }}
           >
-            <SceneContent
-              helpersVisible={helpersVisible}
-              orbitEnabled={helpersVisible}
-              isPaused={isPaused}
-              onPlayClick={undefined}
-              ambientLightEnabled={ambientLightEnabled}
-              ambientLightIntensity={ambientLightIntensity}
-              ambientLightColor={ambientLightColor}
-              directionalLightEnabled={directionalLightEnabled}
-              directionalLightIntensity={directionalLightIntensity}
-              directionalLightColor={directionalLightColor}
-              directionalLightPosition={directionalLightPosition}
-              spotLightEnabled={spotLightEnabled}
-              spotLightIntensity={spotLightIntensity}
-              spotLightColor={spotLightColor}
-              spotLightPosition={spotLightPosition}
-              spotLightAngle={spotLightAngle}
-              spotLightPenumbra={spotLightPenumbra}
-              pointLightEnabled={pointLightEnabled}
-              pointLightIntensity={pointLightIntensity}
-              pointLightColor={pointLightColor}
-              pointLightPosition={pointLightPosition}
-              pointLightDistance={pointLightDistance}
-              pointLightDecay={pointLightDecay}
-              cycloLightEnabled={cycloLightEnabled}
-              cycloLightIntensity={cycloLightIntensity}
-              cycloLightColor={cycloLightColor}
-              cycloLightPosition={cycloLightPosition}
-            />
-          </Canvas>
+            <Canvas
+              camera={{ position: [0, 0, 0.4], fov: 50 }}
+              gl={{
+                toneMapping: THREE.LinearToneMapping,
+                toneMappingExposure: 1.0,
+                alpha: true,
+              }}
+            >
+              <SceneContent
+                envRotation={envRotation}
+                helpersVisible={helpersVisible}
+                orbitEnabled={helpersVisible}
+                isPaused={isPaused}
+                onPlayClick={undefined}
+                ambientLightEnabled={ambientLightEnabled}
+                ambientLightIntensity={ambientLightIntensity}
+                ambientLightColor={ambientLightColor}
+                directionalLightEnabled={directionalLightEnabled}
+                directionalLightIntensity={directionalLightIntensity}
+                directionalLightColor={directionalLightColor}
+                directionalLightPosition={directionalLightPosition}
+                spotLightEnabled={spotLightEnabled}
+                spotLightIntensity={spotLightIntensity}
+                spotLightColor={spotLightColor}
+                spotLightPosition={spotLightPosition}
+                spotLightAngle={spotLightAngle}
+                spotLightPenumbra={spotLightPenumbra}
+                pointLightEnabled={pointLightEnabled}
+                pointLightIntensity={pointLightIntensity}
+                pointLightColor={pointLightColor}
+                pointLightPosition={pointLightPosition}
+                pointLightDistance={pointLightDistance}
+                pointLightDecay={pointLightDecay}
+                cycloLightEnabled={cycloLightEnabled}
+                cycloLightIntensity={cycloLightIntensity}
+                cycloLightColor={cycloLightColor}
+                cycloLightPosition={cycloLightPosition}
+              />
+            </Canvas>
+          </div>
         </div>
       </div>
     </div>

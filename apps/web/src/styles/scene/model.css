@@ -15,7 +15,7 @@
   z-index: 10;
 }
 
-.model {
+/* .model {
   mask-image: radial-gradient(circle at 50% 50%, black 59%, transparent 64%);
   -webkit-mask-image: radial-gradient(
     circle at 50% 50%,
@@ -69,4 +69,4 @@
   );
   filter: blur(12px);
   pointer-events: none;
-}
+} */

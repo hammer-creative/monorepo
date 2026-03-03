@@ -82,8 +82,6 @@ function makeCatchlightTexture(size = 128): THREE.CanvasTexture {
 }
 
 // ─── EyeLight via DecalGeometry ───────────────────────────────────────────────
-// To use a PNG: set png: '/textures/your-file.png' in EYE_LIGHTS in sceneConstants.ts
-// PNG should be white blob on transparent background (RGBA)
 function EyeLight({ config, proceduralTexture, corneaMesh }) {
   const pngTexture = config.png ? useTexture(config.png) : null;
   const texture = pngTexture ?? proceduralTexture;
@@ -118,18 +116,15 @@ function EyeLight({ config, proceduralTexture, corneaMesh }) {
 
 function CorneaInsert({ texture }) {
   return (
-    <mesh
-      position={[0, 0, CORNEA_INSERT_Z]}
-      renderOrder={2} // render after cornea
-    >
+    <mesh position={[0, 0, CORNEA_INSERT_Z]} renderOrder={2}>
       <circleGeometry args={[CORNEA_INSERT_SIZE, 64]} />
       <meshBasicMaterial
         map={texture}
         transparent
         depthWrite={false}
-        stencilWrite={true} // enable stencil test
-        stencilRef={1} // match cornea mesh
-        stencilFunc={THREE.EqualStencilFunc} // only draw where cornea wrote
+        stencilWrite={true}
+        stencilRef={1}
+        stencilFunc={THREE.EqualStencilFunc}
         stencilFail={THREE.KeepStencilOp}
         stencilZFail={THREE.KeepStencilOp}
         stencilZPass={THREE.KeepStencilOp}
@@ -139,12 +134,7 @@ function CorneaInsert({ texture }) {
 }
 
 // ─── SceneModel ───────────────────────────────────────────────────────────────
-export default function SceneModel({
-  url,
-  isPaused,
-  onPlayClick,
-  wireframe = false,
-}) {
+export default function SceneModel({ url, isPaused, onPlayClick }) {
   const gltf = useGLTF(url);
   const { camera } = useThree();
 
@@ -192,12 +182,10 @@ export default function SceneModel({
       if (child.isLight) child.visible = false;
       if (!child.isMesh) return;
 
-      if (child.isLight) child.visible = false;
-      if (!child.isMesh) return;
       child.castShadow = true;
       child.receiveShadow = true;
 
-      if (child.name === 'Cornea_V5') {
+      if (child.name === 'Cornea_Mesh_2') {
         corneaMeshRef.current = child;
         child.visible = SHOW_CORNEA;
         child.material = new THREE.MeshBasicMaterial({
@@ -214,7 +202,7 @@ export default function SceneModel({
         irisMeshRef.current = child;
         child.visible = SHOW_IRIS;
         child.scale.set(1, 1, 1);
-        // child.scale.set(1.008, 1.008, 1.0);
+        child.material = child.material.clone();
         child.material.roughness = 1;
         child.material.metalness = 0.0;
         child.material.envMapIntensity = 0;
@@ -224,13 +212,11 @@ export default function SceneModel({
             `
             #include <map_fragment>
             #ifdef USE_MAP
-              // Saturation
               float saturation = ${IRIS_SATURATION.toFixed(2)};
               vec3 luminance = vec3(0.299, 0.587, 0.114);
               float gray = dot(diffuseColor.rgb, luminance);
               diffuseColor.rgb = mix(vec3(gray), diffuseColor.rgb, saturation);
 
-              // Contrast
               float contrast = ${IRIS_CONTRAST.toFixed(2)};
               diffuseColor.rgb = (diffuseColor.rgb - 0.5) * contrast + 0.5;
               diffuseColor.rgb = clamp(diffuseColor.rgb, 0.0, 1.0);
@@ -241,7 +227,7 @@ export default function SceneModel({
         child.material.needsUpdate = true;
       }
 
-      if (child.name === 'Pupil_V5' && videoTexture) {
+      if (child.name === 'Pupil_Mesh_2' && videoTexture) {
         child.visible = SHOW_PUPIL;
         if (ENABLE_VIDEO_PUPIL) {
           child.material = new THREE.MeshBasicMaterial({
@@ -254,7 +240,6 @@ export default function SceneModel({
           });
         }
 
-        // ─── Edge gradient on pupil ──────────────────────────────
         child.material.onBeforeCompile = (shader) => {
           shader.fragmentShader = shader.fragmentShader.replace(
             '#include <map_fragment>',
@@ -277,9 +262,8 @@ export default function SceneModel({
         child.material.needsUpdate = true;
         pupilMeshRef.current = child;
         child.position.z = PUPIL_Z_POSITION;
-        child.scale.set(PUPIL_SCALE, PUPIL_SCALE, PUPIL_SCALE);
+        child.scale.set(1.07, 1.07, 1);
 
-        // ─── Convexity ────────────────────────────────────────────
         if (PUPIL_CONVEXITY > 0) {
           const pos = child.geometry.attributes.position;
           const center = new THREE.Vector3();
@@ -313,14 +297,12 @@ export default function SceneModel({
         }
       }
 
-      if (child.name === 'Sclera_V5') {
+      if (child.name === 'Sclera_Mesh_2') {
         child.visible = SHOW_SCLERA;
-        child.material.envMapIntensity = 0;
-      }
-
-      if (child.name === 'Sclera_V5') {
-        child.visible = SHOW_SCLERA;
-        child.material.envMapIntensity = 0;
+        child.material = child.material.clone();
+        child.material.roughness = 0.1;
+        child.material.metalness = 0.0;
+        child.material.envMapIntensity = 1.0;
         child.material.onBeforeCompile = (shader) => {
           shader.fragmentShader = shader.fragmentShader.replace(
             '#include <map_fragment>',
@@ -382,12 +364,6 @@ export default function SceneModel({
     });
   }, [gltf]);
 
-  // ─── Wireframe ────────────────────────────────────────────────────────────
-  gltf.scene.traverse((child) => {
-    if (!child.isMesh) return;
-    child.material.wireframe = wireframe;
-  });
-
   // ─── Frame loop ───────────────────────────────────────────────────────────
   useFrame((state) => {
     if (isPaused) return;
@@ -423,6 +399,7 @@ export default function SceneModel({
       targetRotation.current.y +=
         (driftY - targetRotation.current.y) * DRIFT_SPEED;
     }
+
     currentRotation.current.x +=
       (targetRotation.current.x - currentRotation.current.x) * EYE_LERP_SPEED;
     currentRotation.current.y +=
