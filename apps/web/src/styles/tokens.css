@@ -46,7 +46,7 @@
   /* ASPECT RATIOS */
   --aspect-ratio-square: 1 / 1;
   --aspect-ratio-full-width: 16 / 9;
-  --aspect-ratio-half-width: 5 / 7;
+  --aspect-ratio-half-width: 7 / 5;
   --aspect-ratio-impact: 7 / 5;
   --aspect-ratio-teaser-card: 69 / 40;
   --aspect-ratio-services-card: 8 / 3;
@@ -334,24 +334,25 @@
   --gutter-padding-1: var(--space-fluid-10-120);
   --gutter-padding-2: var(--space-fluid-10-200);
 
-  /* --font-size--3: clamp(13px, calc(0.8125rem + ((1vw - 3.2px) * 0.2875)), 16px); */
-
   --font-size--4: clamp(
-    12px,
-    calc(12px + ((15 - 12) * ((100vw - 320px) / (1920 - 320)))),
-    15px
+    11.73px,
+    calc(11.73px + ((14.6625 - 11.73) * ((100vw - 320px) / (1920 - 320)))),
+    14.6625px
   );
   --font-size--2: clamp(17px, calc(1rem + ((1vw - 3.2px) * 0.2875)), 20.7px);
   --font-size--1: clamp(16px, calc(1rem + ((1vw - 3.2px) * 0.4375)), 27px);
   /* stays smaller longer, still hits 27px at 1920px */
   --font-size-0: clamp(16px, calc(1rem + ((1vw - 3.2px) * 1.25)), 36px);
   /* (36 - 16) / 16 = 1.25 */
-  --font-size-1: clamp(18px, calc(1.125rem + ((1vw - 3.2px) * 1.375)), 40px);
-  /* (40 - 18) / 16 = 1.375 */
+  --font-size-1: clamp(
+    16px,
+    calc(16px + (14px * ((100vw - 320px) / 960px))),
+    30px
+  );
   --font-size-2: clamp(24px, calc(1.5rem + ((1vw - 3.2px) * 1.5)), 48px);
   /* (48 - 24) / 16 = 1.5 */
   --font-size-3--long: clamp(32px, calc(2rem + ((1vw - 3.2px) * 0.7)), 43.2px);
-  --font-size-3: clamp(40px, calc(2.5rem + ((1vw - 3.2px) * 1.25)), 54px);
+  --font-size-3: clamp(20px, calc(1.25rem + ((1vw - 3.2px) * 3.125)), 50px);
   /* (54 - 40) / 16 = 0.875 */
 
   --font-size-4: clamp(30px, calc(1.875rem + ((1vw - 3.2px) * 3.125)), 80px);
@@ -376,6 +377,18 @@
   --line-height-1: clamp(1.1em, calc(1.5em - ((1vw - 3.2px) * 0.025)), 1.5em);
   --line-height-2: clamp(1em, calc(1.4em - ((1vw - 3.2px) * 0.025)), 1.4em);
 
+  --line-height-fluid-2-to-1: clamp(
+    1,
+    calc(2 - 1 * ((100vw - 320px) / 960px)),
+    2
+  );
+
+  --line-height-fluid-2-to-1-5: clamp(
+    1.5,
+    calc(2 - 0.5 * ((100vw - 320px) / 960px)),
+    2
+  );
+
   --line-height-fluid-footer-menu: clamp(
     1.4em,
     calc(1.4em + ((1.5 - 1.4) * ((100vw - 320px) / (1920 - 320)))),
@@ -384,6 +397,6 @@
 
   --letter-spacing-default: 0.02em;
   --letter-spacing-tight: -0.03em;
-  --letter-spacing-loose: 0.13em;
+  --letter-spacing-loose: 0.1em;
   --letter-spacing-extra-loose: 0.15em;
 }

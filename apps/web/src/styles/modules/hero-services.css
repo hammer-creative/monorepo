@@ -1,0 +1,61 @@
+/* apps/web/src/styles/modules/hero-services.css */
+
+/* SERVICES PAGE HERO MODULE */
+
+/* Layout: Services page */
+
+[data-page='/services'] .hero-card__image-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+[data-page='/services'] .hero-card__image--hero {
+  flex: 1;
+}
+
+[data-page='/services'] .content-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: var(--card-frame-1);
+}
+
+/* ScrollTo button: Services page */
+
+[data-page='/services'] .hero-card__title-wrapper {
+  display: flex;
+  padding-bottom: var(--space-fluid-10-20);
+}
+
+/* Typography: Services page */
+
+[data-page='/services'] .hero-card__title {
+  @mixin title-primary var(--font-serif), uppercase;
+}
+
+[data-page='/services'] .hero-card__text {
+  @mixin body-xs;
+  line-height: var(--line-height-default);
+}
+
+[data-page='/services'] .services__hero .hero-card__text {
+  @mixin body-xs;
+}
+
+[data-page='/services'] .services__hero .hero-card__text p {
+  width: 35ch;
+}
+
+/* Responsive layout: Services page */
+
+@media screen and (min-width: 50em) {
+  [data-page='/services'] .header .title-container button {
+    flex: 1;
+  }
+}
+
+svg {
+  font-size: 0.8em;
+}

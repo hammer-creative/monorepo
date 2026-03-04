@@ -3,7 +3,6 @@
 
 import {
   ClientList,
-  Label,
   LongArrow,
   SanityImageHero,
   TextBlock,

@@ -2,10 +2,39 @@
 
 @import '../mixins.css';
 
+/*  Base layout, all carousels */
+.swiper-wrapper {
+  /* transition-timing-function: linear !important; */
+}
+
+.swiper-slide .image {
+  aspect-ratio: var(--aspect-ratio-square);
+}
+
+.swiper .case-study__card .case-study__details {
+  justify-content: flex-end;
+}
+
+.swiper .case-study__card::before {
+  display: none;
+}
+
+/* Layout, carousel module */
+.carousel-module {
+  padding: var(--flow-space-0);
+}
+
+.swiper-wrapper {
+  gap: var(--space-fluid-10-20);
+}
+
+/* Layout, case study card carousel */
 .case-study-carousel-module {
+  padding-inline: var(--flow-space-0);
   background: $color-sandstorm;
 }
 
+/* Header, case study card carousel */
 .case-study-carousel-module .header {
   display: flex;
   justify-content: space-between;
@@ -14,33 +43,11 @@
   padding-inline: var(--space-fluid-20-40);
 }
 
+/* Button, case study card carousel */
 .case-study-carousel-module .header svg {
   width: 45px;
   height: auto;
   color: $color-hyperbeam;
   margin-top: 0.5em;
   transition: color var(--ease-fast);
-}
-
-.case-study-carousel-module .header svg:hover {
-  color: $color-aircutter;
-}
-
-.swiper-wrapper {
-  transition-timing-function: linear !important;
-  margin: 0 auto;
-}
-
-.swiper-slide .image {
-  aspect-ratio: 1 / 1;
-}
-
-.case-study-carousel-module .swiper-slide .meta .title {
-  white-space: pre-line;
-  /* padding-inline: var(--space-fluid-10-20);
-  padding-block: var(--space-fluid-10-20); */
-}
-
-.case-study-carousel-module > .title.tertiary {
-  padding-left: var(--space-fluid-20-40);
 }

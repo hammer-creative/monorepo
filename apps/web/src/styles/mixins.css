@@ -30,7 +30,7 @@
 
 /* Half-width */
 @define-mixin aspect-ratio-half-width {
-  aspect-ratio: var(--aspect-ratio-square);
+  aspect-ratio: var(--aspect-ratio-half-width);
 
   @media screen and (min-width: 50em) {
     aspect-ratio: var(--aspect-ratio-half-width);
@@ -86,26 +86,22 @@
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
   font-size: var(--font-size--3);
-  line-height: var(--line-height-0);
-  letter-spacing: var(--letter-spacing-default);
 }
 
-/* Body, small */
+/* Body, small: primarily used for body copy on text-image amd impact module cards */
 @define-mixin body-sm {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
   font-size: var(--font-size--1);
-  line-height: var(--line-height-0);
-  letter-spacing: initial;
+  line-height: var(--line-height-fluid-2-to-1-5);
 }
 
-/* Body, medium  */
+/* Body, medium: primarily used for body copy on text module cards  */
 @define-mixin body-md {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
   font-size: var(--font-size-0);
-  line-height: var(--line-height-0);
-  letter-spacing: var(--letter-spacing-);
+  line-height: var(--line-height-fluid-2-to-1);
 }
 
 /* Body, large  */
@@ -113,15 +109,14 @@
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
   font-size: var(--font-size-2);
-  line-height: 1.1em;
-  letter-spacing: var(--letter-spacing-tight);
+  line-height: 1;
 }
 
 @define-mixin title-primary $font-family, $text-transform {
   font-family: $font-family;
   font-weight: 400;
   font-size: var(--font-size-3);
-  line-height: var(--line-height-tight);
+  line-height: 1;
   letter-spacing: var(--letter-spacing-tight);
   text-transform: $text-transform;
 }
@@ -130,26 +125,21 @@
   font-family: $font-family;
   font-weight: 400;
   font-size: var(--font-size-2);
-  line-height: var(--line-height-tight);
-  letter-spacing: var(--letter-spacing-tight);
   text-transform: $text-transform;
 }
 
 @define-mixin title-tertiary {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: var(--font-size-0);
-  line-height: var(--line-height-3);
-  letter-spacing: var(--letter-spacing-tight);
+  font-size: var(--font-size-2);
 }
 
-@define-mixin small-caps $text-transform, $color {
+@define-mixin small-caps $color {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
-  font-size: var(--font-size--3);
-  line-height: var(--line-height-default);
-  letter-spacing: var(--letter-spacing-tight);
-  text-transform: $text-transform;
+  font-size: var(--font-size--4);
+  line-height: var(--line-height-medium);
+  text-transform: uppercase;
   color: $color;
 }
 
@@ -167,7 +157,7 @@
 @define-mixin case-study-title $font-family, $text-transform {
   font-family: $font-family;
   font-weight: 400;
-  font-size: var(--font-size-4);
+  font-size: var(--font-size-2);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
   text-transform: $text-transform;

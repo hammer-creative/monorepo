@@ -2,22 +2,14 @@
 
 /* Base style */
 .label {
-  @mixin small-caps uppercase, inherit;
+  @mixin small-caps;
   letter-spacing: var(--letter-spacing-loose);
 }
 
-/* Module overrides */
-.hero-card__clients .label--tag {
-  @mixin small-caps uppercase, var(--color-hyperbeam);
-  letter-spacing: var(--letter-spacing-loose);
-  padding-bottom: 3px;
+.hero-card__lists .label {
+  color: var(--color-hyperbeam);
 }
 
-.hero-card__clients .label--client-names {
-  font-size: var(--font-size--1);
-}
-
-.services-list .label,
-.hero-card__clients .label--tag {
-  margin-bottom: 3px;
+.case-study .hero-card__lists .label {
+  margin-block-end: 5px;
 }

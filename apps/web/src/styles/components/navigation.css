@@ -17,7 +17,7 @@ footer {
 
 footer .footer-content {
   grid-template-rows: auto auto auto;
-  padding-block: var(--space-fluid-20-40);
+  padding-block: var(--space-fluid-20-80);
 }
 
 footer .footer-content .menu-primary {

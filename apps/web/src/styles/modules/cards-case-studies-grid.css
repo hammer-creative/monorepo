@@ -1,6 +1,8 @@
+/* apps/web/src/styles/modules/cards-case-studies-grid.css */
+
 /* apps/web/src/styles/modules/cards-case-studies.css */
 
-/* Layout: page header */
+/* Page header */
 [data-page='/work'] section:first-of-type {
   padding-block-start: var(--space-fluid-80-120);
   padding-inline: var(--card-frame-0);
@@ -20,35 +22,6 @@
   }
 }
 
-/* Grid: single column mobile, two columns above 50em */
-.case-study__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  /* gap: var(--space-fluid-10-20); */
-  /* padding-inline: var(--card-frame-0); */
-}
-
-@media (min-width: 50em) {
-  .case-study__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Layout: Case study cards */
-.case-study__card {
-  position: relative;
-  /* Transparent border reserved for gradient border animation */
-  border: 3px solid transparent;
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-}
-
-/* .case-study__card a {
-  display: block;
-  position: relative;
-} */
-
-/* Typography: page header */
 [data-page='/work'] section:first-of-type .text-card__label {
   @mixin small-caps initial;
   color: var(--color-sandstorm);
@@ -60,27 +33,28 @@
   margin-block-end: var(--card-frame-0);
 }
 
-/* Layout, title and client names overlaid on image */
-.case-study__card .case-study__details {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: var(--card-frame-0);
+/* Grid */
+.case-study__grid {
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
-.swiper .case-study__card .case-study__details {
-  justify-content: flex-end;
+@media (min-width: 50em) {
+  .case-study__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-/* Typography, colors and hover transition */
-.case-study__card .case-study__title {
+/* Cards */
+.case-study__grid .case-study__card {
+  position: relative;
+  border: 3px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.case-study__grid .case-study__title {
   @mixin case-study-title var(--font-sans), initial;
-  font-family: var(--font-sans);
-  width: 15ch;
 }
 
 .case-study__card .case-study__details > * {
@@ -88,32 +62,8 @@
   transition: color var(--ease-card);
 }
 
-/* No animated border for carousel cards */
-.swiper .case-study__card::before {
-  display: none;
-}
-
-.swiper .case-study__card {
-  border: 3px solid transparent;
-  transition: border-color 0.3s ease;
-}
-
-.swiper .case-study__card:hover {
-  border-color: var(--color-aircutter);
-}
-
-/* Fx, Subtle zoom on hover */
-.case-study__card .image > * {
-  transition: transform 1s ease;
-  transform-origin: center;
-}
-
-.case-study__card:hover .image > * {
-  transform: scale(1.05) !important;
-}
-
-/* Fx, Animated gradient border, fades in on hover */
-.case-study__card::before {
+/* Animated gradient border */
+.case-study__grid .case-study__card::before {
   content: '';
   position: absolute;
   inset: -3px;
@@ -153,7 +103,7 @@
   pointer-events: none;
 }
 
-.case-study__card:hover::before {
+.case-study__grid .case-study__card:hover::before {
   opacity: 1;
   animation: gradient-border-shift 2s linear infinite;
 }
