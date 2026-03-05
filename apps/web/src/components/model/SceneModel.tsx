@@ -503,7 +503,7 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
   });
 
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef} scale={1.035}>
       <primitive object={gltf.scene} />
       <ScenePlayButton onClick={() => onPlayClick?.()} isPlaying={isPlaying} />
 

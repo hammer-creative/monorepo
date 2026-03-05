@@ -50,7 +50,7 @@ export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
           gl={{
             toneMapping: THREE.ACESFilmicToneMapping,
             toneMappingExposure: TONE_MAPPING_EXPOSURE,
-            alpha: true,
+            alpha: false,
           }}
         >
           <SceneContent
