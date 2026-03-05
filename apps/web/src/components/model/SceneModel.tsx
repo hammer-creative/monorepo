@@ -200,7 +200,7 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
           transmission: 1.0,
           // opacity: 0.3,
           depthWrite: false,
-          thickness: 0.005,
+          // thickness: 0.005,
         });
       }
 
