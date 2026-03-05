@@ -4,7 +4,7 @@
 
 /*  Base layout, all carousels */
 .swiper-wrapper {
-  /* transition-timing-function: linear !important; */
+  transition-timing-function: linear !important;
 }
 
 .swiper-slide .image {
@@ -25,7 +25,7 @@
 }
 
 .swiper-wrapper {
-  gap: var(--space-fluid-10-20);
+  /* gap: var(--space-fluid-10-20); */
 }
 
 /* Layout, case study card carousel */

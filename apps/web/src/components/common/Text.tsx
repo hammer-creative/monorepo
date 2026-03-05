@@ -1,27 +1,31 @@
+// apps/web/src/components/common/Text.tsx
+
 import type { ReactNode } from 'react';
 
-interface RubricProps {
+interface TextProps {
   children?: ReactNode;
   text?: string;
-  variant?: 'primary' | 'secondary' | 'tertiary';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'tagline';
   as?: 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' | 'p';
   className?: string;
 }
 
-export function Rubric({
+const headings = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
+
+export function Text({
   children,
   text,
   variant,
-  as: Component = 'h2',
+  as: Component = 'div',
   className,
-}: RubricProps) {
+}: TextProps) {
   const content = children ?? text;
   if (!content) return null;
 
   const classes = [
-    'rubric',
-    variant && `rubric--${variant}`,
-    text && `rubric--${text.toLowerCase().replace(/\s+/g, '-')}`,
+    headings.has(Component) && 'title',
+    'text',
+    variant && `text--${variant}`,
     className,
   ]
     .filter(Boolean)

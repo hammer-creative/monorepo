@@ -161,6 +161,7 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
 
   const groupRef = useRef();
   const corneaGroupRef = useRef();
+  const scleraMeshRef = useRef(null);
   const targetRotation = useRef({ x: 0, y: 0 });
   const currentRotation = useRef({ x: 0, y: 0 });
   const currentPupilRotation = useRef({ x: 0, y: 0 });
@@ -178,6 +179,7 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
 
   // ─── Scene setup ──────────────────────────────────────────────────────────
   useEffect(() => {
+    // ── Material setup ──────────────────────────────────────────────────────
     gltf.scene.traverse((child) => {
       if (child.isLight) child.visible = false;
       if (!child.isMesh) return;
@@ -185,16 +187,20 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
       child.castShadow = true;
       child.receiveShadow = true;
 
-      if (child.name === 'Cornea_Mesh_2') {
+      if (child.name === 'Cornea_V5') {
         corneaMeshRef.current = child;
         child.visible = SHOW_CORNEA;
-        child.material = new THREE.MeshBasicMaterial({
+        child.material = new THREE.MeshPhysicalMaterial({
           transparent: true,
-          opacity: 0,
-          stencilWrite: true,
-          stencilRef: 1,
-          stencilFunc: THREE.AlwaysStencilFunc,
-          stencilZPass: THREE.ReplaceStencilOp,
+          roughness: 0,
+          metalness: 0,
+          clearcoat: 0,
+          clearcoatRoughness: 0,
+          // color: 0xff0000,
+          transmission: 1.0,
+          // opacity: 0.3,
+          depthWrite: false,
+          thickness: 0.005,
         });
       }
 
@@ -227,9 +233,9 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
         child.material.needsUpdate = true;
       }
 
-      if (child.name === 'Pupil_Mesh_2' && videoTexture) {
+      if (child.name === 'Pupil_V5') {
         child.visible = SHOW_PUPIL;
-        if (ENABLE_VIDEO_PUPIL) {
+        if (ENABLE_VIDEO_PUPIL && videoTexture) {
           child.material = new THREE.MeshBasicMaterial({
             map: videoTexture,
             transparent: false,
@@ -262,7 +268,7 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
         child.material.needsUpdate = true;
         pupilMeshRef.current = child;
         child.position.z = PUPIL_Z_POSITION;
-        child.scale.set(1.07, 1.07, 1);
+        child.scale.set(1.2, 1.2, 1);
 
         if (PUPIL_CONVEXITY > 0) {
           const pos = child.geometry.attributes.position;
@@ -297,7 +303,12 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
         }
       }
 
-      if (child.name === 'Sclera_Mesh_2') {
+      if (child.name === 'ComtactLens_V6') {
+        child.material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+      }
+
+      if (child.name === 'Sclera_V5') {
+        scleraMeshRef.current = child;
         child.visible = SHOW_SCLERA;
         child.material = child.material.clone();
         child.material.roughness = 0.1;
@@ -323,14 +334,26 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
 
     setSceneReady(true);
 
+    // ── Single consolidated debug pass ──────────────────────────────────────
+    console.log('=== SCENE REPORT ===');
+
+    // Scene graph
+    console.log('--- Scene Graph ---');
+    gltf.scene.traverse((child) => {
+      console.log(
+        child.type,
+        '|',
+        child.name,
+        '|',
+        child.material?.name ?? 'no mat',
+      );
+    });
+
+    // Mesh details
+    console.log('--- Mesh Details ---');
     gltf.scene.traverse((child) => {
       if (!child.isMesh) return;
       const box = new THREE.Box3().setFromObject(child);
-      console.log(child.name, 'bbox:', box.min, box.max);
-    });
-
-    gltf.scene.traverse((child) => {
-      if (!child.isMesh) return;
       const uvs = child.geometry.attributes.uv;
       let uvRange = 'no UVs';
       if (uvs) {
@@ -351,17 +374,55 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
       console.log(
         [
           `MESH: ${child.name}`,
-          `type: ${child.material.type}`,
           `mat: ${child.material.name || '(unnamed)'}`,
-          `mat uuid: ${child.material.uuid.slice(0, 8)}`,
+          `type: ${child.material.type}`,
           `map: ${child.material.map?.uuid.slice(0, 8) ?? 'none'}`,
-          `uv2: ${child.geometry.attributes.uv1 ? 'yes' : 'no'}`,
           `UV: ${uvRange}`,
           `verts: ${child.geometry.attributes.position.count}`,
+          `bbox z: ${box.min.z.toFixed(4)}→${box.max.z.toFixed(4)}`,
           `visible: ${child.visible}`,
         ].join(' | '),
       );
     });
+
+    // Cornea vs sclera analysis
+    if (corneaMeshRef.current && scleraMeshRef.current) {
+      const corneaBox = new THREE.Box3().setFromObject(corneaMeshRef.current);
+      const scleraBox = new THREE.Box3().setFromObject(scleraMeshRef.current);
+      const corneaSize = new THREE.Vector3();
+      corneaBox.getSize(corneaSize);
+      console.log('--- Cornea Analysis ---');
+      console.log(
+        'cornea z range:',
+        corneaBox.min.z.toFixed(4),
+        '→',
+        corneaBox.max.z.toFixed(4),
+      );
+      console.log(
+        'sclera z range:',
+        scleraBox.min.z.toFixed(4),
+        '→',
+        scleraBox.max.z.toFixed(4),
+      );
+      console.log(
+        'cornea is full sphere (z symmetric):',
+        Math.abs(corneaBox.min.z + corneaBox.max.z) < 0.01,
+      );
+      console.log(
+        'cornea wraps entire model:',
+        corneaBox.min.z < scleraBox.min.z && corneaBox.max.z > scleraBox.max.z,
+      );
+      console.log(
+        'cornea extends behind sclera by:',
+        (scleraBox.min.z - corneaBox.min.z).toFixed(4),
+      );
+      console.log(
+        'cornea extends in front of sclera by:',
+        (corneaBox.max.z - scleraBox.max.z).toFixed(4),
+      );
+    }
+
+    console.log('===================');
   }, [gltf]);
 
   // ─── Frame loop ───────────────────────────────────────────────────────────

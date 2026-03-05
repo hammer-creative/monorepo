@@ -1,56 +1,26 @@
 /* apps/web/src/styles/modules/cards-case-studies-grid.css */
 
-/* apps/web/src/styles/modules/cards-case-studies.css */
-
-/* Page header */
-[data-page='/work'] section:first-of-type {
-  padding-block-start: var(--space-fluid-80-120);
-  padding-inline: var(--card-frame-0);
-}
-
-[data-page='/work'] section:first-of-type .text-card {
-  padding-inline-start: var(--card-frame-0);
-}
-
-[data-page='/work'] section:last-of-type {
-  padding-block-end: var(--space-fluid-80-120);
-}
-
-@media (min-width: 50em) {
-  [data-page='/work'] section:first-of-type .text-card {
-    padding-inline-start: var(--space-fluid-60-120);
-  }
-}
-
-[data-page='/work'] section:first-of-type .text-card__label {
-  @mixin small-caps initial;
-  color: var(--color-sandstorm);
-}
-
-[data-page='/work'] section:first-of-type .text-card__title {
-  @mixin title-primary var(--font-sans);
-  color: var(--color-sandstorm);
-  margin-block-end: var(--card-frame-0);
-}
-
-/* Grid */
+/* Layout, grid base */
 .case-study__grid {
   display: grid;
   grid-template-columns: 1fr;
+  padding-inline: var(--flow-space-0);
 }
 
 @media (min-width: 50em) {
   .case-study__grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--flow-space-0);
   }
+}
+
+/* Layout, grid base, /work page */
+[data-page='/work'] .case-study__grid {
 }
 
 /* Cards */
 .case-study__grid .case-study__card {
   position: relative;
-  border: 3px solid transparent;
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
 }
 
 .case-study__grid .case-study__title {

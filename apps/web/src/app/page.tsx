@@ -1,8 +1,12 @@
 // apps/web/src/app/page.tsx
 
-import { ClientIcons, ExtendedLink, LinkArrowSmall } from '@/components/common';
+import {
+  ClientIcons,
+  ExtendedLink,
+  LinkArrowSmall,
+  Text,
+} from '@/components/common';
 import { Impressum } from '@/components/common/Impressum';
-import { Tagline } from '@/components/common/Tagline';
 import { WordmarkSVG } from '@/components/common/Wordmark';
 import { MarqueeScene } from '@/components/marquee/MarqueeScene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
@@ -103,7 +107,7 @@ export default async function HomePage() {
         <div className={`${bem}__masthead`}>
           <div className={`${bem}__wordmark`}>
             <WordmarkSVG />
-            <Tagline />
+            <Text as="div" variant="tagline" text="The Gaming Agency" />
           </div>
           <Impressum />
         </div>

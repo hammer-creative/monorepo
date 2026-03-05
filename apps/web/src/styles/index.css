@@ -25,6 +25,7 @@
 @import './components/marquee.css';
 @import './components/navigation.css';
 @import './components/title';
+@import './components/text';
 @import './components/text-block';
 @import './components/table';
 

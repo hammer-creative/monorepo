@@ -85,7 +85,7 @@
 @define-mixin body-xs {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);
-  font-size: var(--font-size--3);
+  font-size: var(--font-size--4);
 }
 
 /* Body, small: primarily used for body copy on text-image amd impact module cards */

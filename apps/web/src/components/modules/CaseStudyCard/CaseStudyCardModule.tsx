@@ -65,7 +65,7 @@ function isValidCaseStudyCardModule(
 export function CaseStudyCardModule({
   data,
 }: {
-  data: CaseStudyCardModuleType | null;
+  œdata: CaseStudyCardModuleType | null;
 }) {
   const [isDesktop, setIsDesktop] = useState(false);
 

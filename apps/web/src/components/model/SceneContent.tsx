@@ -41,6 +41,7 @@ export default function SceneContent({
   cycloLightIntensity = LC.cycloLight.intensity,
   cycloLightColor = LC.cycloLight.color,
   cycloLightPosition = LC.cycloLight.position,
+  envRotation = [0.5, Math.PI / 4, 0.5],
 }) {
   const spotLightRef = useRef();
   const spotLightTargetRef = useRef();
@@ -173,10 +174,16 @@ export default function SceneContent({
       )}
 
       <Suspense fallback={null}>
+        {/* <Environment
+          files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
+          background={false}
+          environmentRotation={[0.4, 2.1, 2]}
+        /> */}
+
         <Environment
           files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
-          background={true}
-          environmentRotation={[0.5, Math.PI / 4, 0.5]}
+          background={false}
+          environmentRotation={[-2.7316, -0.5316, 2.5884]}
         />
 
         <SceneModel

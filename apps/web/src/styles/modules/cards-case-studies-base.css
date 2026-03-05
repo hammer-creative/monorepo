@@ -22,7 +22,7 @@
 }
 
 .case-study__card:hover .image > * {
-  transform: scale(1.1) !important;
+  transform: scale(1.05) !important;
 }
 
 /* Typography, colors and hover transition */
@@ -61,7 +61,7 @@
 }
 
 .case-study__card:hover .image > * {
-  transform: scale(1.1) !important;
+  transform: scale(1.05) !important;
 }
 
 /* Typography, colors and hover transition */

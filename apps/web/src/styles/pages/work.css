@@ -1,6 +1,16 @@
 /* apps/web/src/styles/page/work.css */
 
-[data-page='/work'] .layout-wrapper {
-  margin-block-start: var(--space-fluid-60-120);
-  padding-inline: var(--space-fluid-10-20);
+[data-page='/work'] .work-page__heading {
+  padding-block-start: var(--flow-space-5);
+  padding-block-end: var(--flow-space-1);
+  padding-inline-start: var(--space-fluid-10-160);
+}
+
+.work-page__heading {
+}
+
+@media (min-width: 50em) {
+  .work-page__heading section:first-of-type .text-card {
+    padding-inline-start: var(--space-fluid-60-120);
+  }
 }

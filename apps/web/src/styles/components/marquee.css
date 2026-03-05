@@ -41,39 +41,40 @@
   color: var(--color-nightshade);
 }
 
-.home__wordmark .tagline {
+.home__wordmark .text--tagline {
   text-align: center;
 }
 
 .home__masthead .impressum,
-.home__masthead .tagline {
+.home__masthead .text--tagline {
   color: var(--color-hyperbeam);
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  font-size: var(--font-size--3);
+  font-size: var(--font-size--4);
   line-height: 1;
 }
 
 .home__masthead .impressum p {
   text-align: center;
+  @mixin body-xs;
 }
 
-.home__masthead .tagline {
-  margin-block-end: var(--space-fluid-100-200);
+.home__masthead .text--tagline {
+  margin-block-end: var(--space-fluid-60-100);
 }
 
 .home__masthead .impressum-left {
   margin-block-end: var(--space-fluid-20-40);
 }
 
-@media (min-width: 70em) {
+@media (min-width: 40em) {
   .home__wordmark {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
 
-  .home__masthead .tagline {
+  .home__masthead .text--tagline {
     margin-block-end: initial;
   }
 
@@ -86,14 +87,13 @@
   }
 
   .home__masthead .impressum,
-  .home__masthead .tagline {
+  .home__masthead .text--tagline {
     color: var(--color-nightshade);
   }
 
   .home__masthead .impressum {
     display: flex;
     justify-content: space-between;
-    padding: var(--space-fluid-10-20);
     margin-block: initial;
   }
 }

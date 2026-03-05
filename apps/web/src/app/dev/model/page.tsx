@@ -421,7 +421,7 @@ export const LIGHTING_CONFIG = {
     </label>
   );
 
-  const xyzSliders = (pos, setPos, range = 5) => (
+  const xyzSliders = (pos, setPos, range = 20) => (
     <>
       {['X', 'Y', 'Z'].map((axis, i) => (
         <label key={axis}>
@@ -621,11 +621,11 @@ export const LIGHTING_CONFIG = {
             <>
               <label>
                 size {backdropSize2}{' '}
-                {slider(10, 200, 1, backdropSize2, setBackdropSize2)}
+                {slider(10, 500, 1, backdropSize2, setBackdropSize2)}
               </label>
               <label>
                 blur {backdropBlur2}px{' '}
-                {slider(0, 200, 1, backdropBlur2, setBackdropBlur2)}
+                {slider(0, 500, 1, backdropBlur2, setBackdropBlur2)}
               </label>
               <label>
                 opacity {backdropOpacity2.toFixed(2)}{' '}
@@ -637,7 +637,7 @@ export const LIGHTING_CONFIG = {
                 grad start {backdropGradientStart2}%{' '}
                 {slider(
                   0,
-                  100,
+                  200,
                   1,
                   backdropGradientStart2,
                   setBackdropGradientStart2,
@@ -647,7 +647,7 @@ export const LIGHTING_CONFIG = {
                 grad end {backdropGradientEnd2}%{' '}
                 {slider(
                   0,
-                  100,
+                  200,
                   1,
                   backdropGradientEnd2,
                   setBackdropGradientEnd2,

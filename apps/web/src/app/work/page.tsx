@@ -1,6 +1,6 @@
 // apps/web/src/app/work/page.tsx
 
-import { Rubric } from '@/components/common';
+import { Text } from '@/components/common';
 import { CaseStudyCardModule } from '@/components/modules';
 import { buildMetadata } from '@/config/metadata';
 import { client, getWorkPage, resolveModuleColors } from '@/lib/sanity';
@@ -34,7 +34,12 @@ export default async function WorkPage() {
   return (
     <>
       <div className={`${bem}__heading`}>
-        <Rubric text="Work" />
+        <Text
+          as="div"
+          variant="tagline"
+          text="Building from first spawn to new game+"
+        />
+        <Text as="h1" variant="primary" text="Our Work" />
       </div>
       {resolvedModules.map((mod) => {
         const Component =
@@ -60,6 +65,7 @@ export default async function WorkPage() {
             <Component data={mod as ModuleData} />
           </section>
         );
+        å;
       })}
     </>
   );

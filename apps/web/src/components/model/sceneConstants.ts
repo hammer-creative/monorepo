@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 
-export const GLB_SOURCE = 'model-v7-modified-v6.glb';
+export const GLB_SOURCE = 'Lv_Eyeball_V5A_NewUV.glb';
 // export const GLB_SOURCE = 'Lv_EyeballExport_V5C_NewUV.glb';
 export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
 
 // export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
 
-export const ENVIRONMENT_MAP_SOURCE = 'studio_kontrast_04_4k.exr';
+export const ENVIRONMENT_MAP_SOURCE = 'studio_kontrast_04_4k-rev1.exr';
 
 // ==========================================
 // DEBUG
@@ -26,14 +26,14 @@ export const PARALLAX_FACTOR = 0.2;
 // ==========================================
 export const SHOW_CORNEA = true;
 export const SHOW_IRIS = true;
-export const SHOW_PUPIL = false;
-export const SHOW_SCLERA = false;
+export const SHOW_PUPIL = true;
+export const SHOW_SCLERA = true;
 export const SCLERA_SCALE = 1.0;
 
 // ==========================================
 // VIDEO PUPIL PARAMETERS
 // ==========================================
-export const ENABLE_VIDEO_PUPIL = false;
+export const ENABLE_VIDEO_PUPIL = true;
 export const PUPIL_COLOR = new THREE.Color(0x000000);
 export const PUPIL_Z_POSITION = 0;
 export const PUPIL_SCALE = 1;
@@ -130,11 +130,12 @@ export const DRIFT_SPEED = 0.008; // how fast target drifts when idle
 export const DRIFT_AMPLITUDE = 0.7; // how wide the drift wanders (0-1 multiplier of MAX_ROTATION)
 
 // LIGHTING_CONFIG — paste into sceneConstants.ts
+// LIGHTING_CONFIG — paste into sceneConstants.ts
 export const LIGHTING_CONFIG = {
   ambientLight: {
     enabled: true,
     intensity: 1,
-    color: '#b9c3df',
+    color: '#69a8b0',
   },
   directionalLight: {
     enabled: true,
@@ -165,3 +166,5 @@ export const LIGHTING_CONFIG = {
     position: [0, -3, 0],
   },
 };
+
+// Environment rotation: [-2.7316, -0.5316, 2.5884]

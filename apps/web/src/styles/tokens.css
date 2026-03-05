@@ -355,8 +355,8 @@
   --font-size-3: clamp(20px, calc(1.25rem + ((1vw - 3.2px) * 3.125)), 50px);
   /* (54 - 40) / 16 = 0.875 */
 
-  --font-size-4: clamp(30px, calc(1.875rem + ((1vw - 3.2px) * 3.125)), 80px);
-  /* (80 - 30) / 16 = 3.125 */
+  --font-size-4: clamp(40px, calc(2.5rem + ((1vw - 3.2px) * 2.083)), 60px);
+  /* (60 - 40) / 16 / (960 / 1280) = 2.083 */
 
   /* TODO: refactor line-heights */
   --line-height-very-tight: 0.9;
