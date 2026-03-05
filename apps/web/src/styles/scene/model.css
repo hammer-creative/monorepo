@@ -22,8 +22,8 @@
     black 47%,
     transparent 68%
   );
-  mask-size: 100.4vh 100.4vh;
-  -webkit-mask-size: 100.4vh 100.4vh;
+  mask-size: 94vh 94vh;
+  -webkit-mask-size: 94vh 94vh;
   mask-position: center;
   -webkit-mask-position: center;
   mask-repeat: no-repeat;
@@ -63,13 +63,13 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60%;
-  background: linear-gradient(to top, #274040, transparent);
+  height: 57%;
+  background: linear-gradient(to top, #778888, transparent);
   opacity: 0.5;
   pointer-events: none;
 }
 
-/* .eye-shadow {
+.eye-shadow {
   position: absolute;
   width: 100vh;
   height: 5vh;
@@ -83,4 +83,4 @@
   );
   filter: blur(12px);
   pointer-events: none;
-} */
+}
