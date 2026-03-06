@@ -6,7 +6,7 @@ export const VIDEO_SOURCE = 'Eyeball_1x1_Vignette_Darker_5mbps.mp4';
 
 // export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
 
-export const ENVIRONMENT_MAP_SOURCE = 'studio_kontrast_04_4k-rev1.exr';
+export const ENVIRONMENT_MAP_SOURCE = 'studio_kontrast_04_4k-rev2.exr';
 
 // ==========================================
 // DEBUG
