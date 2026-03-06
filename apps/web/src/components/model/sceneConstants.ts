@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export const GLB_SOURCE = 'Lv_Eyeball_V5A_NewUV.glb';
 // export const GLB_SOURCE = 'Lv_EyeballExport_V5C_NewUV.glb';
-export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
+export const VIDEO_SOURCE = 'Eyeball_1x1_vignette_5mbps_v1.mp4';
 
 // export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
 
