@@ -1,6 +1,6 @@
 // apps/web/src/app/services/page.tsx
 
-import { LongArrow, Rubric } from '@/components/common';
+import { LongArrow } from '@/components/common';
 import {
   ServicesPageCardModule,
   ServicesPageHeroModule,
@@ -58,7 +58,7 @@ export default async function ServicesPage() {
         </section>
       )}
 
-      <Rubric text="Services" />
+      {/* <Rubric text="Services" /> */}
 
       <div className={`${bem}__cards`}>
         {regularCards.map((card) => (
@@ -88,7 +88,7 @@ export default async function ServicesPage() {
             } as React.CSSProperties
           }
         >
-          <Rubric text="Clients" />
+          {/* <Rubric text="Clients" /> */}
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <ServicesPageCardModule data={chyronCard as any} showClientIcons />
         </section>
@@ -97,7 +97,7 @@ export default async function ServicesPage() {
       {allCaseStudies.length > 0 && (
         <section className={`module ${bem}__case-studies`}>
           <div className={`module ${bem}__case-studies-header`}>
-            <Rubric text="Case Studies" variant="tertiary" />
+            {/* <Rubric text="Case Studies" variant="tertiary" /> */}
             <LongArrow direction="right" href="/work" />
           </div>
           <CaseStudyCarousel

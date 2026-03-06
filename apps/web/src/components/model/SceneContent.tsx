@@ -174,16 +174,17 @@ export default function SceneContent({
       )}
 
       <Suspense fallback={null}>
-        {/* <Environment
-          files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
-          background={false}
-          environmentRotation={[0.4, 2.1, 2]}
-        /> */}
-
         <Environment
           files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
           background={false}
-          environmentRotation={[-2.7316, -0.5316, 2.5884]}
+          environmentRotation={[0.4, 2.1, 2]} // <-- use these coordinates for production
+        />
+
+        <Environment
+          files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
+          background={true}
+          // environmentRotation={envRotation}
+          // environmentRotation={[-2.7316, -0.5316, 2.5884]}
         />
 
         <SceneModel
