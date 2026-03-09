@@ -23,32 +23,6 @@
 }
 
 /* SERVICES CARDS: Spacing  */
-.services-page .rubric--services,
-.services-page .rubric--clients {
-  padding-block: var(--card-frame-2);
-  padding-inline-start: var(--card-frame-1);
-}
-
-.services-page .services-page__case-studies-header {
-  padding-block: var(--card-frame-2);
-  padding-inline: var(--card-frame-1);
-}
-
-.services-page-card__content {
-  padding: var(--card-frame-2);
-}
-
-.services-page-card__title {
-  margin-block-end: var(--flow-space-1);
-}
-
-.services-page .rubric--services {
-  background: var(--color-sandstorm);
-}
-
-.services-page-card {
-  /* background: var(--color-nightshade); */
-}
 
 .services-page-card .image {
   position: relative;

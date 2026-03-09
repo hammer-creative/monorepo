@@ -1,6 +1,6 @@
 // apps/web/src/app/services/page.tsx
 
-import { LongArrow } from '@/components/common';
+import { LongArrow, Text } from '@/components/common';
 import {
   ServicesPageCardModule,
   ServicesPageHeroModule,
@@ -58,7 +58,7 @@ export default async function ServicesPage() {
         </section>
       )}
 
-      {/* <Rubric text="Services" /> */}
+      <Text as="h1" variant="primary" text="Services" />
 
       <div className={`${bem}__cards`}>
         {regularCards.map((card) => (
@@ -97,7 +97,7 @@ export default async function ServicesPage() {
       {allCaseStudies.length > 0 && (
         <section className={`module ${bem}__case-studies`}>
           <div className={`module ${bem}__case-studies-header`}>
-            {/* <Rubric text="Case Studies" variant="tertiary" /> */}
+            <Text as="h1" variant="primary" text="Case Studies" />
             <LongArrow direction="right" href="/work" />
           </div>
           <CaseStudyCarousel
