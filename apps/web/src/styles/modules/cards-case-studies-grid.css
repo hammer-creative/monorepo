@@ -6,6 +6,7 @@
   grid-template-columns: 1fr;
   padding-inline: var(--space-fluid-gutter-sm);
   gap: var(--space-fluid-gutter-sm);
+  display: none;
 }
 
 @media (min-width: 50em) {
@@ -15,8 +16,6 @@
 }
 
 /* Layout, grid base, /work page */
-[data-page='/work'] .case-study__grid {
-}
 
 /* Cards */
 .case-study__grid .case-study__card {

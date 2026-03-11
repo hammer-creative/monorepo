@@ -5,10 +5,16 @@
   align-items: center;
   justify-content: space-between;
   padding-inline: var(--space-fluid-gutter-lg);
-  padding-block: var(--space-fluid-20-60);
+  padding-block-start: var(--space-fluid-40-100);
+  padding-block-end: var(--space-fluid-40-60);
+}
+
+.services-page .subheader {
+  align-items: flex-end;
 }
 
 .case-study .subheader {
+  align-items: center;
   font-size: var(
     --font-size-2
   ); /* needed to align cta link arrow sizing, i.e. 1em */

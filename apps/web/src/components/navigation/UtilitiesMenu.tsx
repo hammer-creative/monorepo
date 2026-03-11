@@ -16,7 +16,11 @@ const utilityLinks = [
   },
 ];
 
-export function UtilitiesMenu() {
+interface UtilitiesMenuProps {
+  onLinkClick?: (href: string, e: React.MouseEvent) => void;
+}
+
+export function UtilitiesMenu({ onLinkClick }: UtilitiesMenuProps) {
   return (
     <>
       {utilityLinks.map((link) => (
@@ -25,6 +29,8 @@ export function UtilitiesMenu() {
           href={link.href}
           email={link.email}
           className={link.className}
+          onClick={onLinkClick}
+          preventNavigation={!!onLinkClick}
         >
           {link.label}
         </ExtendedLink>

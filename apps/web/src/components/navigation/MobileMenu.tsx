@@ -376,7 +376,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
             <Addresses items={navigationData.addresses} />
           </div>
           <div ref={utilitiesRef} className="menu-secondary utilities">
-            <UtilitiesMenu />
+            <UtilitiesMenu onLinkClick={handleLinkClick} />
           </div>
           <div ref={socialRef} className="menu-secondary social">
             <LinkList items={navigationData.social} />

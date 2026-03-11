@@ -91,6 +91,7 @@ export default async function ServicesPage() {
             } as React.CSSProperties
           }
         >
+          <Text as="h3" variant="tertiary" text="Clients" />
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <ServicesPageCardModule data={chyronCard as any} showClientIcons />
         </section>

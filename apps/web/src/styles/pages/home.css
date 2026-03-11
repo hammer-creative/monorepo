@@ -7,6 +7,33 @@
   display: flex;
   flex-direction: column;
   padding-block-start: var(--space-fluid-40-80);
+  padding-block-end: var(--space-fluid-60-240);
+}
+
+.home__modules .case-study__grid {
+  padding-block-end: var(--space-20);
+}
+
+/* View all work link */
+.home__modules .case-study-card-module,
+.home__modules .client-icons-module {
+  margin-block-end: var(--space-fluid-60-120);
+}
+
+/* Chyron */
+.home__modules .client-icons-module > :first-child {
+  margin-block-end: var(--space-fluid-20-40);
+  @media screen and (min-width: 50em) {
+    margin-block-end: initial;
+  }
+}
+
+.home__modules .case-study-card-module > .label {
+  padding-inline: var(--space-fluid-gutter-sm);
+  display: block;
+  @media screen and (min-width: 50em) {
+    text-align: right;
+  }
 }
 
 .home__modules .text-module {
@@ -20,11 +47,13 @@
   }
 }
 
-[data-page='/'] [data-module-index='0'] .text-card__text {
-  width: 90%;
-
+/* We are fans... */
+[data-page='/'] [data-module-index='0'] .text-card__text,
+[data-page='/'] [data-module-index='4'] .text-card__text {
+  padding-inline-end: var(--space-20);
   @media screen and (min-width: 50em) {
-    width: 870px;
+    max-width: 900px;
+    padding-inline-end: initial;
   }
 }
 
@@ -45,20 +74,16 @@
   }
 }
 
+/* Our work */
 [data-page='/'] [data-module-index='2'] {
-  margin-block-end: var(--space-fluid-20-60);
-}
-
-@media (min-width: 50em) {
-  [data-page='/'] [data-module-index='3'] .label {
-    text-align: right;
-  }
+  margin-block-end: var(--space-fluid-20-40);
 }
 
 /* Typography */
 
 [data-page='/'] [data-module-index='0'] .text-card__text p,
-[data-page='/'] [data-module-index='2'] h2.title {
+[data-page='/'] [data-module-index='2'] h2.title,
+[data-page='/'] [data-module-index='4'] .text-card__text p {
   font-family: var(--font-sans);
   font-size: var(--font-size-home-text-lg);
   line-height: 1;

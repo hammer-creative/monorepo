@@ -24,6 +24,14 @@
 
 /* SERVICES CARDS: Spacing  */
 
+.services-page-card {
+  padding-inline: var(--space-20);
+}
+
+.services-page-card {
+  padding-block-end: var(--space-20);
+}
+
 .services-page-card .image {
   @mixin aspect-ratio-services-card;
 }
@@ -34,7 +42,7 @@
 }
 
 .services-page-card .services-list__heading {
-  margin-block-end: var(--space-5);
+  margin-block-end: var(--space-10);
 }
 
 .services-page-card .services-page-card__title {
@@ -86,6 +94,11 @@
 /* SERVICES + CHYRON CARDS: Typography  */
 .services-page-card__content h2.services-page-card__title {
   @mixin title-secondary var(--font-serif), uppercase;
+  letter-spacing: -0.04em;
+}
+
+.services-page__chyron h2.title {
+  padding-inline: var(--space-fluid-10-20);
 }
 
 .services-page__chyron .services-page-card__title {
@@ -104,11 +117,12 @@
 /* CHYRON: spacing */
 
 .services-page__chyron {
-  padding-block: var(--flow-space-2);
+  padding-block-start: var(--space-fluid-60-80);
+  padding-block-end: var(--space-fluid-60-80);
 }
 
 .services-page__chyron .services-page-card__content {
-  padding-block-start: var(--flow-space-1);
+  margin-block-start: var(--space-fluid-40-100);
 }
 
 .services-page__chyron .services-page-card__header {
@@ -116,9 +130,6 @@
 }
 
 @media screen and (min-width: 50em) {
-  .services-page__chyron .rubric--clients {
-    text-align: center;
-  }
   .services-page__chyron .services-page-card__header {
     display: flex;
     flex-direction: column;
@@ -127,7 +138,8 @@
 
   .services-page__chyron .title {
     white-space: initial;
-    margin: 0 auto var(--flow-space-0) auto;
+    margin-block-end: var(--space-fluid-20-40);
+    margin-inline: auto;
   }
   .services-page__chyron .services-page-card__text {
     text-align: center;
@@ -140,8 +152,27 @@
   }
 }
 
-.services-page__case-studies-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.services-page .services-page__chyron > .title {
+  @mixin subheader;
+  padding-inline: var(--space-fluid-gutter-sm);
+  margin-bottom: var(--space-60);
+
+  @media screen and (min-width: 50em) {
+    text-align: center;
+  }
+}
+
+.services-page-card__chyron > .rfm-marquee-container {
+  margin-block-end: var(--space-fluid-20-40);
+  @media screen and (min-width: 50em) {
+    margin-block-end: initial;
+  }
+}
+
+.services-page .case-study-caroursel-module .subheader {
+  font-size: var(--font-size-2);
+}
+
+.services-page .case-study-carousel-module .subheader svg {
+  font-size: 2em;
 }
