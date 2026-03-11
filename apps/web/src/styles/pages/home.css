@@ -1,125 +1,95 @@
 /* apps/web/src/styles/home.css */
-/* @import './mixins.css'; */
 
-/* Layout, homepage, model positioning and masthead z-indices */
+/* Layout */
 
 .home__modules {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-fluid-20-40);
-  padding-block: var(--space-fluid-20-100);
-  padding-inline: var(--space-fluid-20-40);
+  padding-block-start: var(--space-fluid-40-80);
 }
 
-/* Module 0: We are fans and experts... */
+.home__modules .text-module {
+  padding-inline: var(--space-fluid-20-160);
+}
 
-/* Module 1: View our services... */
+[data-page='/'] [data-module-index='0'] {
+  margin-block-end: var(--space-fluid-20-40);
+  @media screen and (min-width: 50em) {
+    margin-block-end: var(--space-100);
+  }
+}
+
+[data-page='/'] [data-module-index='0'] .text-card__text {
+  width: 90%;
+
+  @media screen and (min-width: 50em) {
+    width: 870px;
+  }
+}
+
+[data-page='/'] [data-module-index='1'] {
+  margin-block-end: var(--space-fluid-40-80);
+
+  @media screen and (min-width: 50em) {
+    margin-left: auto;
+  }
+}
+
 [data-page='/'] [data-module-index='1'] .text-card__text {
-  margin-bottom: var(--card-frame-1);
+  margin-block-end: var(--space-fluid-10-20);
+  width: 75vw;
+  @media screen and (min-width: 50em) {
+    width: 320px;
+    margin-block-end: var(--space-60);
+  }
+}
+
+[data-page='/'] [data-module-index='2'] {
+  margin-block-end: var(--space-fluid-20-60);
+}
+
+@media (min-width: 50em) {
+  [data-page='/'] [data-module-index='3'] .label {
+    text-align: right;
+  }
 }
 
 /* Typography */
 
-/* Module 0: We are fans and experts... */
-[data-page='/'] [data-module-index='0'] .text-card__text p {
-  @mixin body-lg;
+[data-page='/'] [data-module-index='0'] .text-card__text p,
+[data-page='/'] [data-module-index='2'] h2.title {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-home-text-lg);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-weight: 500;
 }
 
-/* Module 1: View our services... */
 [data-page='/'] [data-module-index='1'] .text-card__text p {
   @mixin body-xs;
   line-height: 2;
 }
 
-/* Module 2: Our work... */
+[data-page='/'] [data-module-index='2'] .label.small-caps {
+  font-family: var(--font-sans);
+  font-weight: 100;
+  color: var(--color-sandstorm);
+}
+
 [data-page='/'] [data-module-index='2'] .label {
   @mixin body-xs;
-  line-height: 2;
 }
 
-[data-page='/'] [data-module-index='2'] .title {
-  @mixin title-secondary;
-  font-family: var(--font-sans); /* override */
-  text-transform: initial;
-}
-
-/* Module 3: Case study grid */
-[data-page='/'] [data-module-index='3'] {
-  margin-block-end: var(--space-fluid-20-80);
-}
-
-[data-page='/'] [data-module-index='3'] .case-study-grid {
-  margin-block-end: var(--space-fluid-10-20);
-}
-
-/* Module 4: Hammer is always in the trenches... */
-[data-page='/'] [data-module-index='4'] .text-card__text p {
-  @mixin body-lg;
-}
-
-/* Client Icons Module */
-[data-page='/'] .client-icons-module {
-  margin-block-end: var(--space-fluid-20-80);
-}
-
-@media (min-width: 50em) {
-  /* Module 0 */
-  [data-page='/'] [data-module-index='0'] {
-    max-width: 70em;
-    padding-inline-start: var(--space-fluid-40-80);
-    padding-block-end: var(--space-fluid-20-40);
-  }
-
-  /* Module 1: View our services... */
-  [data-page='/'] [data-module-index='1'] {
-    position: relative;
-    max-width: 40em;
-    margin-left: 50%;
-    padding-left: var(--space-fluid-10-20);
-  }
-
-  [data-page='/'] [data-module-index='1'] .text-card--home {
-    max-width: 30em;
-    margin-block-end: var(--space-fluid-20-40);
-  }
-
-  [data-page='/'] [data-module-index='3'] .label {
-    display: block;
-  }
-
-  /* Module 4 */
-  [data-page='/'] [data-module-index='4'] .text-card--home {
-    max-width: 70em;
-    padding-inline-start: var(--space-fluid-40-80);
-    padding-inline-end: var(--space-fluid-80-160);
-    padding-block-end: var(--space-fluid-60-120);
-  }
-
-  /* Client Icons Module */
-  [data-page='/'] .client-icons-module {
-    margin-block-end: var(--space-fluid-20-40);
-  }
-}
-
-@media screen and (min-width: 50em) {
-  [data-page='/'] [data-module-index='3'] {
-    .label {
-      text-align: right;
-    }
-  }
-}
-
-/* TODO: this is pointless */
 [data-page='/'] [data-module-index='1'],
 [data-page='/'] [data-module-index='3'] {
   .label {
-    font-size: var(--font-size-sm-fluid);
-    line-height: var(--line-height-very-loose);
+    font-family: var(--font-serif);
     color: $color-hyperbeam;
     letter-spacing: var(--letter-spacing-extra-loose);
     text-transform: uppercase;
   }
+
   a {
     transition: color 0.3s ease-out;
 

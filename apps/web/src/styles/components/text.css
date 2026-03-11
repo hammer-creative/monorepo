@@ -8,9 +8,6 @@
   color: var(--color-sandstorm);
 }
 
-.work-page__heading .text--tagline {
-}
-
 .work-page__heading .title {
   font-size: var(--font-size-4);
   letter-spacing: -0.04em;

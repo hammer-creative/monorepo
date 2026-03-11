@@ -19,7 +19,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: var(--card-frame-1);
+  padding: var(--space-fluid-gutter-lg);
 }
 
 /* ScrollTo button: Services page */
@@ -44,18 +44,12 @@
   @mixin body-xs;
 }
 
-[data-page='/services'] .services__hero .hero-card__text p {
-  width: 35ch;
+.services-page__hero .hero-card__text p {
+  @mixin body-sm;
 }
-
-/* Responsive layout: Services page */
 
 @media screen and (min-width: 50em) {
-  [data-page='/services'] .header .title-container button {
-    flex: 1;
+  .services-page__hero .hero-card__text p {
+    width: 30ch;
   }
-}
-
-svg {
-  font-size: 0.8em;
 }

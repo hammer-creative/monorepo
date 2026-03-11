@@ -11,6 +11,7 @@ export const client = createClient({
   apiVersion,
   useCdn: false,
   token: process.env.SANITY_API_PREVIEW_TOKEN,
+  perspective: 'published',
   stega: {
     studioUrl:
       process.env.NODE_ENV === 'production'

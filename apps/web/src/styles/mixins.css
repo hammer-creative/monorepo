@@ -134,6 +134,13 @@
   font-size: var(--font-size-2);
 }
 
+@define-mixin subheader {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--font-size-2);
+  letter-spacing: -0.04em;
+}
+
 @define-mixin small-caps $color {
   font-family: var(--font-sans);
   font-weight: var(--font-weight-default);

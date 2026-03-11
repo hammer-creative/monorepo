@@ -56,7 +56,7 @@ export function CarouselBase({
         speed={10000}
         loop={true}
         slidesPerView={1}
-        spaceBetween={20}
+        spaceBetween={15}
         autoplay={{
           delay: 0,
           reverseDirection,

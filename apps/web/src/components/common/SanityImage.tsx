@@ -71,9 +71,18 @@ export function SanityImage({
 }: SanityImageProps) {
   if (!image?.asset) return null;
 
-  const src = image.hotspot
-    ? urlFor(image).fit('crop').crop('focalpoint').url()
-    : urlFor(image).fit('crop').url();
+  // AFTER
+  const src = (() => {
+    const base = image.hotspot
+      ? urlFor(image).crop('focalpoint')
+      : urlFor(image);
+
+    if (width && height) {
+      return base.fit('crop').width(width).height(height).url();
+    }
+
+    return base.url();
+  })();
 
   const objectPosition = image.hotspot
     ? `${image.hotspot.x * 100}% ${image.hotspot.y * 100}%`

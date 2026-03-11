@@ -310,18 +310,6 @@
     14px
   );
 
-  --font-size-subtitle-fluid: 42px;
-
-  --font-weight-light: 100;
-  --font-weight-default: 500;
-  --font-weight-heavy: 900;
-
-  --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6);
-
-  --card-frame-0: var(--space-fluid-10-20);
-  --card-frame-1: var(--space-fluid-20-40);
-  --card-frame-2: var(--space-fluid-20-80);
-
   --flow-space-0: var(--space-fluid-10-20);
   --flow-space-1: var(--space-fluid-20-40);
   --flow-space-2: var(--space-fluid-40-60);
@@ -329,10 +317,9 @@
   --flow-space-4: var(--space-fluid-60-120);
   --flow-space-5: var(--space-fluid-80-160);
 
-  --gutter-margin-0: var(--space-fluid-20-40);
-  --gutter-padding-0: var(--space-fluid-20-40);
-  --gutter-padding-1: var(--space-fluid-10-120);
-  --gutter-padding-2: var(--space-fluid-10-200);
+  --space-fluid-gutter-sm: var(--space-fluid-10-20);
+  --space-fluid-gutter-md: var(--space-fluid-20-40);
+  --space-fluid-gutter-lg: var(--space-fluid-20-80);
 
   --font-size--4: clamp(
     11.73px,
@@ -351,12 +338,18 @@
   );
   --font-size-2: clamp(24px, calc(1.5rem + ((1vw - 3.2px) * 1.5)), 48px);
   /* (48 - 24) / 16 = 1.5 */
-  --font-size-3--long: clamp(32px, calc(2rem + ((1vw - 3.2px) * 0.7)), 43.2px);
-  --font-size-3: clamp(20px, calc(1.25rem + ((1vw - 3.2px) * 3.125)), 50px);
-  /* (54 - 40) / 16 = 0.875 */
-
+  --font-size-3--long: clamp(18px, 2.8vw, 38px);
+  /* --font-size-3--long: clamp(32px, calc(2rem + ((1vw - 3.2px) * 1.125)), 80px); */
+  /* (80 - 20) / 12 = 5.0 */
+  --font-size-3: clamp(20px, calc(1.25rem + ((1vw - 3.2px) * 5)), 80px);
   --font-size-4: clamp(40px, calc(2.5rem + ((1vw - 3.2px) * 2.083)), 60px);
   /* (60 - 40) / 16 / (960 / 1280) = 2.083 */
+  --font-size-home-text-lg: clamp(
+    40px,
+    calc(2.5rem + ((1vw - 3.2px) * 2.5)),
+    64px
+  );
+  /* (64 - 40) / 16 / (960 / 1280) = 2.5 */
 
   /* TODO: refactor line-heights */
   --line-height-very-tight: 0.9;

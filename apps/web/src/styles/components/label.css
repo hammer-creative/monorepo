@@ -6,7 +6,8 @@
   letter-spacing: var(--letter-spacing-loose);
 }
 
-.hero-card__lists .label {
+.hero-card__lists .label,
+.services-list__heading {
   color: var(--color-hyperbeam);
 }
 

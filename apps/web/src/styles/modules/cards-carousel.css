@@ -33,21 +33,3 @@
   padding-inline: var(--flow-space-0);
   background: $color-sandstorm;
 }
-
-/* Header, case study card carousel */
-.case-study-carousel-module .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-block: var(--space-fluid-20-40);
-  padding-inline: var(--space-fluid-20-40);
-}
-
-/* Button, case study card carousel */
-.case-study-carousel-module .header svg {
-  width: 45px;
-  height: auto;
-  color: $color-hyperbeam;
-  margin-top: 0.5em;
-  transition: color var(--ease-fast);
-}

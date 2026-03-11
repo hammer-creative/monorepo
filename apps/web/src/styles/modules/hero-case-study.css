@@ -35,9 +35,9 @@
   line-height: 1;
 }
 
-@media (min-width: 50em) and (max-width: 80em) {
+@media (min-width: 20em) and (max-width: 130em) {
   .case-study .hero-card__title[data-length='long'] {
-    font-size: clamp(20px, 3.5cqw, 50px);
+    font-size: var(--font-size-3--long) !important;
   }
 }
 

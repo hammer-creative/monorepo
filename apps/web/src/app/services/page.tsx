@@ -13,6 +13,7 @@ import {
   getServicesPage,
   resolveModuleColors,
 } from '@/lib/sanity';
+import Link from 'next/link';
 
 const bem = 'services-page';
 
@@ -58,7 +59,9 @@ export default async function ServicesPage() {
         </section>
       )}
 
-      <Text as="h1" variant="primary" text="Services" />
+      <div className="subheader">
+        <Text as="h2" variant="tertiary" text="Services" />
+      </div>
 
       <div className={`${bem}__cards`}>
         {regularCards.map((card) => (
@@ -88,18 +91,17 @@ export default async function ServicesPage() {
             } as React.CSSProperties
           }
         >
-          {/* <Rubric text="Clients" /> */}
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <ServicesPageCardModule data={chyronCard as any} showClientIcons />
         </section>
       )}
 
       {allCaseStudies.length > 0 && (
-        <section className={`module ${bem}__case-studies`}>
-          <div className={`module ${bem}__case-studies-header`}>
-            <Text as="h1" variant="primary" text="Case Studies" />
-            <LongArrow direction="right" href="/work" />
-          </div>
+        <section className={`module case-study-carousel-module`}>
+          <Link href="/work" className="subheader">
+            <Text as="h3" variant="tertiary" text="Case Studies" />
+            <LongArrow className="cta-link" direction="right" />
+          </Link>
           <CaseStudyCarousel
             data={{ _type: 'caseStudyCarousel', caseStudies: allCaseStudies }}
           />

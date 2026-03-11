@@ -16,7 +16,7 @@
 
 .text-card--challenge .text-card__text,
 .text-card--testimonial .text-card__text {
-  padding-inline: var(--card-frame-1);
+  padding-inline: var(--flow-space-1);
 }
 
 /* Layout, text-module, left-right aligned headline and editorial copy */

@@ -16,7 +16,6 @@ const builder = imageUrlBuilder(imageClient);
 export function urlFor(source: SanityImageSource) {
   const imageBuilder = builder.image(source);
 
-  // Check if source contains a PNG reference
   let isPng = false;
 
   if (typeof source === 'object' && source !== null && 'asset' in source) {
@@ -31,8 +30,6 @@ export function urlFor(source: SanityImageSource) {
     }
   }
 
-  // For PNGs, return without any format parameter
-  // For other formats, use auto format optimization
   if (isPng) {
     return imageBuilder;
   }

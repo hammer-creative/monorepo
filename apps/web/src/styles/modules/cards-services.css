@@ -25,15 +25,27 @@
 /* SERVICES CARDS: Spacing  */
 
 .services-page-card .image {
-  position: relative;
   @mixin aspect-ratio-services-card;
+}
+
+.services-page-card .services-page-card__content {
+  background: var(--color-nightshade);
+  padding: var(--space-fluid-20-80);
+}
+
+.services-page-card .services-list__heading {
+  margin-block-end: var(--space-5);
+}
+
+.services-page-card .services-page-card__title {
+  margin-block-end: var(--space-fluid-20-40);
 }
 
 @media screen and (min-width: 50em) {
   .services-page-card {
     position: relative;
-    padding-inline: var(--flow-space-1);
-    padding-block-end: var(--flow-space-1);
+    padding-inline: var(--space-fluid-gutter-sm);
+    padding-block-end: var(--space-fluid-10-20);
     background: var(--color-sandstorm);
   }
 
@@ -45,38 +57,39 @@
     width: 100%;
     height: 100%;
     justify-content: space-between;
+    background: none;
+    padding-inline: var(--flow-space-2);
+    padding-block-end: var(--flow-space-2);
   }
 
   .services-page-card .services-page-card__content > * {
     flex: 1;
   }
 
-  .services-page-card__header {
+  .services-page-card .services-page-card__header {
     align-self: flex-end;
   }
 
-  .services-page-card__wide {
+  .services-page-card .services-page-card__wide {
     align-self: flex-start;
   }
 
-  .services-page-card__title {
+  .services-page-card .services-page-card__title {
     margin-block-end: initial;
   }
 
-  .services-page-card__services {
-    margin-block-start: var(--flow-space-1);
+  .services-page-card .services-page-card__services {
+    /* margin-block-start: var(--flow-space-1); */
   }
 }
 
 /* SERVICES + CHYRON CARDS: Typography  */
 .services-page-card__content h2.services-page-card__title {
-  @mixin title-primary var(--font-serif), uppercase;
+  @mixin title-secondary var(--font-serif), uppercase;
 }
 
-.services-page h2.rubric--case-studies,
-.services-page h2.rubric--services,
-.services-page h2.rubric--clients {
-  @mixin title-secondary;
+.services-page__chyron .services-page-card__title {
+  margin-block-end: var(--space-10);
 }
 
 .services-page__chyron .services-page-card__text {
@@ -85,26 +98,21 @@
 
 .services-page__chyron .services-page-card__text p {
   width: 30ch;
-}
-
-@media screen and (min-width: 50em) {
-  .services-page__hero .hero-card__text p {
-    width: 35ch;
-  }
+  line-height: 1.5;
 }
 
 /* CHYRON: spacing */
 
-.services-page__chyron .services-page-card__content {
+.services-page__chyron {
   padding-block: var(--flow-space-2);
 }
 
-.services-page__chyron .services-page-card__header {
-  padding-inline: var(--flow-space-2);
+.services-page__chyron .services-page-card__content {
+  padding-block-start: var(--flow-space-1);
 }
 
-.rfm-marquee-container:not(:last-child) {
-  padding-bottom: var(--flow-space-2);
+.services-page__chyron .services-page-card__header {
+  padding-inline: var(--space-fluid-gutter-lg);
 }
 
 @media screen and (min-width: 50em) {
@@ -119,7 +127,7 @@
 
   .services-page__chyron .title {
     white-space: initial;
-    margin: 0 auto var(--flow-space-1) auto;
+    margin: 0 auto var(--flow-space-0) auto;
   }
   .services-page__chyron .services-page-card__text {
     text-align: center;

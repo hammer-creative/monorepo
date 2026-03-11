@@ -24,6 +24,8 @@ function CaseStudyCardItem({ item }: { item: CaseStudyTeaserItem }) {
 
   if (!title && !teaserImage) return null;
 
+  console.log(item);
+
   return (
     <div className={`${bem}__card`}>
       <Link href={`/work/${slug}`}>

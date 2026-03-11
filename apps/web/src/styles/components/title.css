@@ -1,6 +1,5 @@
 /* apps/web/src/styles/components/title.css */
 
-
 /* Base */
 .title {
   white-space: pre-line;
@@ -93,12 +92,6 @@
 }
 
 /* Page-specific overrides – Homepage – Text Module, promo */
-[data-page='/'] .layout-wrapper h2 {
-  /* TODO: change to title.secondary? */
-  font-size: var(--font-size-3);
-  line-height: var(--line-height-tight);
-  letter-spacing: -0.04em;
-}
 
 /* Page specific overrides */
 .case-study-carousel-module > .title.tertiary {

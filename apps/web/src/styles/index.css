@@ -28,6 +28,7 @@
 @import './components/text';
 @import './components/text-block';
 @import './components/table';
+@import './components/subheader';
 
 /* SCENE */
 @import './scene/model';

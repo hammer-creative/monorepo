@@ -1,6 +1,6 @@
 // apps/web/src/app/work/[slug]/page.tsx
 
-import { LongArrow, Title } from '@/components/common';
+import { LongArrow, Text } from '@/components/common';
 import {
   CarouselModule,
   HeroModule,
@@ -29,6 +29,7 @@ import type {
 } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 // Union type for all possible module data types
@@ -171,10 +172,10 @@ export default async function CaseStudyPage({
       {/* Related case studies carousel */}
       {otherCaseStudies.length > 0 && (
         <section className="module case-study-carousel-module">
-          <div className="header">
-            <Title as="h3">Case Studies</Title>
-            <LongArrow direction="right" href="/work" />
-          </div>
+          <Link href="/work" className="subheader">
+            <Text as="h3" variant="tertiary" text="Case Studies" />
+            <LongArrow className="cta-link" direction="right" />
+          </Link>
 
           <CaseStudyCarousel
             data={{

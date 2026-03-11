@@ -11,7 +11,7 @@ header {
 /* Base headroom styles */
 .headroom {
   position: relative;
-  padding: var(--card-frame-1);
+  padding: var(--flow-space-1);
   width: 100%;
 }
 

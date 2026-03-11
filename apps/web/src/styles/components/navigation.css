@@ -11,13 +11,13 @@ footer {
   display: grid;
   grid-template-rows: 1fr auto auto auto;
   height: 100%;
-  padding-inline: var(--card-frame-1);
+  padding-inline: var(--flow-space-1);
   row-gap: var(--space-fluid-40-80);
 }
 
 footer .footer-content {
   grid-template-rows: auto auto auto;
-  padding-block: var(--space-fluid-20-80);
+  padding-block: var(--space-fluid-20-40);
 }
 
 footer .footer-content .menu-primary {
@@ -129,7 +129,7 @@ footer .footer-content .addresses {
 }
 
 footer .menu-primary li {
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 .menu-primary li a {
@@ -243,7 +243,7 @@ footer .menu-secondary .link:hover {
 }
 
 .mobile-menu.is-open .footer-content {
-  padding-block-end: var(--card-frame-1);
+  padding-block-end: var(--flow-space-1);
 }
 
 .mobile-menu.is-open .menu-secondary a {

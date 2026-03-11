@@ -115,7 +115,7 @@ export default async function HomePage() {
           <MarqueeScene />
         </div>
       </div>
-      {/* <div className={`${bem}__modules`}>
+      <div className={`${bem}__modules`}>
         {resolvedModules.flatMap((mod, index) => {
           const Component =
             moduleComponents[mod._type as keyof typeof moduleComponents];
@@ -129,7 +129,7 @@ export default async function HomePage() {
 
           const content = (
             <>
-              @ts-expect-error - Dynamic module rendering
+              {/* @ts-expect-error - Dynamic module rendering */}
               <Component data={mod as ModuleData} />
               {links.map((link, i) => (
                 <ExtendedLink
@@ -181,7 +181,7 @@ export default async function HomePage() {
 
           return sections;
         })}
-      </div> */}
+      </div>
     </>
   );
 }
