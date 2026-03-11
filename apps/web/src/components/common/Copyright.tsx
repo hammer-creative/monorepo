@@ -9,7 +9,7 @@ export function Copyright({ className }: CopyrightProps) {
   return (
     <p className={className ?? 'text'}>
       &copy;
-      <span style={{ marginLeft: '1ch' }}>Hammer Creative {currentYear}</span>
+      <span style={{ marginLeft: '1ch' }}>{currentYear} Hammer Creative</span>
     </p>
   );
 }

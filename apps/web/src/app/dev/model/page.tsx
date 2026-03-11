@@ -1,7 +1,8 @@
-'use client';
-
 /* eslint-disable */
 // @ts-nocheck
+
+'use client';
+
 import { TONE_MAPPING_EXPOSURE } from '@/components/model/sceneConstants';
 import * as C from '@/components/model/sceneConstants';
 import SceneContent from '@/components/model/SceneContent';

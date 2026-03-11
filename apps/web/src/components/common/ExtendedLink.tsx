@@ -31,7 +31,7 @@ export function ExtendedLink({
   };
 
   const isActive = (url?: string) => {
-    if (!url || isExternal(url)) return false;
+    if (!url || !pathname || isExternal(url)) return false;
     return url === '/' ? pathname === '/' : pathname.startsWith(url);
   };
 

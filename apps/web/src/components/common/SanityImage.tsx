@@ -15,6 +15,7 @@ interface SanityImageProps {
   fill?: boolean;
   sizes?: string;
   priority?: boolean;
+  loading?: 'lazy' | 'eager';
   className?: string;
   variant?:
     | 'hero'
@@ -33,26 +34,6 @@ interface SanityImageProps {
   onError?: () => void;
 }
 
-/**
- * SanityImage renders a Next.js Image component with Sanity image data.
- * Handles hotspot/focal point cropping, fill vs fixed dimensions, and BEM class output.
- * Variant classes are composed with className for BEM element targeting from parent modules.
- *
- * @param image - Sanity image object with optional hotspot data
- * @param width - Fixed width (use with height for fixed dimensions)
- * @param height - Fixed height (use with width for fixed dimensions)
- * @param fill - Fill parent container (default: false)
- * @param sizes - Responsive sizes attribute for the img element
- * @param priority - Preload the image (default: false)
- * @param className - BEM element class from parent (e.g. text-image-card__image)
- * @param variant - Style variant drives the BEM modifier class
- * @param objectFit - CSS object-fit value (default: cover)
- * @param quality - Image quality 1-100 (default: 90)
- * @param placeholder - Placeholder style while loading (default: empty)
- * @param blurDataURL - Base64 blur placeholder image
- * @param onLoad - Callback when image loads
- * @param onError - Callback when image errors
- */
 export function SanityImage({
   image,
   width,
@@ -60,6 +41,7 @@ export function SanityImage({
   fill = false,
   sizes = '100vw',
   priority = false,
+  loading,
   className,
   variant,
   objectFit = 'cover',
@@ -71,7 +53,6 @@ export function SanityImage({
 }: SanityImageProps) {
   if (!image?.asset) return null;
 
-  // AFTER
   const src = (() => {
     const base = image.hotspot
       ? urlFor(image).crop('focalpoint')
@@ -84,9 +65,10 @@ export function SanityImage({
     return base.url();
   })();
 
-  const objectPosition = image.hotspot
-    ? `${image.hotspot.x * 100}% ${image.hotspot.y * 100}%`
-    : 'center';
+  const objectPosition =
+    image.hotspot?.x != null && image.hotspot?.y != null
+      ? `${image.hotspot.x * 100}% ${image.hotspot.y * 100}%`
+      : 'center';
 
   const useFill = fill && !width && !height;
 
@@ -95,6 +77,7 @@ export function SanityImage({
     alt: image.alt ?? '',
     sizes,
     priority,
+    ...(!priority && { loading }),
     quality,
     placeholder,
     blurDataURL,
@@ -121,9 +104,6 @@ export function SanityImage({
   return <div className={classes}>{img}</div>;
 }
 
-/**
- * Hero image — full viewport width, high priority, maximum quality.
- */
 export const SanityImageHero = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => (
@@ -137,9 +117,6 @@ export const SanityImageHero = (
   />
 );
 
-/**
- * Full width image — spans full viewport width.
- */
 export const SanityImageFullWidth = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => (
@@ -152,14 +129,12 @@ export const SanityImageFullWidth = (
   />
 );
 
-/**
- * Home page teaser card image.
- */
 export const SanityImageTeaser = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => (
   <SanityImage
     fill
+    loading="lazy"
     sizes="(max-width: 640px) 100vw, 1280px"
     quality={90}
     variant="teaser"
@@ -167,9 +142,6 @@ export const SanityImageTeaser = (
   />
 );
 
-/**
- * Video poster image — used as a poster image in front of video playback and video controls.
- */
 export const SanityImageVideoPoster = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => (
@@ -183,16 +155,11 @@ export const SanityImageVideoPoster = (
   />
 );
 
-/**
- * Carousel image — responsive sizes optimized for multi-item carousels.
- */
 export const SanityImageCarousel = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => (
   <SanityImage
     fill
-    priority
-    loading="eager"
     sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
     quality={85}
     objectFit="cover"
@@ -201,9 +168,6 @@ export const SanityImageCarousel = (
   />
 );
 
-/**
- * Half width image — 100vw on mobile, 50vw on wider viewports.
- */
 export const SanityImageHalfWidth = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => (
@@ -217,9 +181,6 @@ export const SanityImageHalfWidth = (
   />
 );
 
-/**
- * Impact image — large format editorial image.
- */
 export const SanityImpactImage = (
   props: Partial<SanityImageProps> & { image: SanityImageType | null },
 ) => (

@@ -61,11 +61,9 @@ export default async function WorkPage() {
               } as React.CSSProperties
             }
           >
-            {/* @ts-expect-error - Dynamic module rendering */}
             <Component data={mod as ModuleData} />
           </section>
         );
-        å;
       })}
     </>
   );

@@ -22,7 +22,9 @@ function isValidTextModule(
 export function TextModule({ data }: { data: TextModuleType | null }) {
   if (!isValidTextModule(data)) return null;
 
-  const { title, body, layout, attribution, tag, clients } = data;
+  // const { title, body, layout, attribution, tag, clients } = data;
+
+  const { title, body, layout, attribution, tag } = data;
 
   if (!layout || (layout !== 'challenge' && !body && !attribution && !title))
     return null;
@@ -32,7 +34,7 @@ export function TextModule({ data }: { data: TextModuleType | null }) {
   const hasBody = body != null;
   const hasTag = tag != null;
   const hasTitle = title != null;
-  const hasClients = clients != null;
+  // const hasClients = clients != null;
 
   return (
     <div className={`${bem} ${bem}--${layoutClass}`}>
@@ -46,18 +48,8 @@ export function TextModule({ data }: { data: TextModuleType | null }) {
         <Label className="centered small-caps">Challenge</Label>
       )}
       {hasBody && <TextBlock body={body} className={`${bem}__text`} />}
-      {hasAttribution && (
-        <Label className={`${bem}`} variant="small-caps">
-          {attribution}
-        </Label>
-      )}
-      {hasClients && (
-        <Label
-          clients={clients}
-          className={`${bem}__clients`}
-          variant="small-caps"
-        />
-      )}
+      {hasAttribution && <Label className={`${bem}`}>{attribution}</Label>}
+      {/* {hasClients && <Label clients={clients} className={`${bem}__clients`} />} */}
     </div>
   );
 }
