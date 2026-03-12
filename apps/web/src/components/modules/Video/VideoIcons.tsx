@@ -23,18 +23,30 @@ export function PauseIcon() {
     </svg>
   );
 }
-
 export function CloseIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24">
-      <path
-        fill="currentColor"
-        d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L12 13.41l-4.89 4.88-1.41-1.41L10.59 12 4.3 5.71 5.71 4.3 12 10.59l6.29-6.3z"
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <line
+        x1="4"
+        y1="4"
+        x2="20"
+        y2="20"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
+      <line
+        x1="20"
+        y1="4"
+        x2="4"
+        y2="20"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
       />
     </svg>
   );
 }
-
 export function VolumeOnIcon() {
   return (
     <svg

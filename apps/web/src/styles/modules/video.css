@@ -215,6 +215,10 @@ html:has(.video-modal) {
   color: $color-aircutter;
 }
 
+.video-modal-content button {
+  border: none;
+}
+
 /* VIDEO CONTROLS - SIZING */
 .video-modal-content .video-modal-pause,
 .video-modal-content .video-modal-play,
@@ -303,4 +307,8 @@ html:has(.video-modal) {
   background-color: $color-hyperbeam;
   transition: width 0.1s ease;
   pointer-events: none;
+}
+
+.video-modal-content button:focus:not(:focus-visible) {
+  outline: none;
 }
