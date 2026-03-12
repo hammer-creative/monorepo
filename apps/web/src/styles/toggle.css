@@ -4,13 +4,19 @@
 .menu-toggle {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   padding: 0;
   cursor: pointer;
   background: none;
   border: none;
   font-family: var(--font-serif);
   text-transform: uppercase;
+  gap: 0.5ch;
+}
+
+@media screen and (min-width: 50em) {
+  .menu-toggle {
+    gap: 1ch;
+  }
 }
 
 .menu-toggle span {
@@ -18,13 +24,13 @@
 }
 
 .menu-toggle svg {
-  width: 0.6em;
+  width: 0.5em;
   height: auto;
 }
 
 /* Toggle dot */
 .menu-toggle-dot {
-  width: 1.5ch;
+  width: 1ch;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -78,7 +84,7 @@
 }
 
 .menu-toggle.is-open:hover .menu-toggle-text {
-  color: var(--color-hyperbeam);
+  color: var(--color-sandstorm);
 }
 
 .menu-toggle .menu-toggle-text {
@@ -95,4 +101,10 @@
 [data-page='/'] .menu-toggle:not(.is-open):hover .menu-toggle-dot svg,
 [data-page='/'] .menu-toggle:not(.is-open):hover .menu-toggle-text {
   color: var(--color-vinewhip);
+}
+
+@media screen and (min-width: 50em) {
+  .menu-toggle.is-open:hover .menu-toggle-text {
+    color: var(--color-hyperbeam);
+  }
 }
