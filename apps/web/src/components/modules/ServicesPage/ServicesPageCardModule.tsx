@@ -27,14 +27,6 @@ function isValidServicesPageCardModule(
 
 /**
  * Renders a services page card with responsive layout.
- *
- * Narrow: image and header stacked, services below.
- * Wide: image, header, and services all within content.
- *
- * @remarks
- * Services content is duplicated in the DOM with CSS show/hide to avoid CLS
- * from client-side media queries. TODO: evaluate container queries or SSR
- * alternatives if duplicate DOM becomes a concern.
  */
 export function ServicesPageCardModule({
   data,
@@ -44,34 +36,8 @@ export function ServicesPageCardModule({
 
   const { title, body, image, services } = data;
 
-  const imageContent = image && (
-    <SanityImageFullWidth image={image} fill className={`${bem}__image`} />
-  );
-
-  const headerContent = (
-    <div className={`${bem}__header`}>
-      {title && (
-        <Title as="h2" className={`${bem}__title`}>
-          {title}
-        </Title>
-      )}
-      {body && <TextBlock body={body} className={`${bem}__text`} />}
-    </div>
-  );
-
-  const servicesContent = services && !showClientIcons && (
-    <div className={`${bem}__services`}>
-      <ServicesListModule
-        services={services as unknown[]}
-        className={`services-list`}
-      />
-    </div>
-  );
-
   return (
     <>
-      {imageContent}
-
       {showClientIcons && (
         <div className={`${bem}__chyron`}>
           <ClientIcons chyron />
@@ -79,11 +45,27 @@ export function ServicesPageCardModule({
       )}
 
       <div className={`${bem}__content`}>
-        {headerContent}
-        <div className={`${bem}__wide`}>{servicesContent}</div>
-        {!showClientIcons && (
-          <div className={`${bem}__narrow`}>{servicesContent}</div>
-        )}
+        <div className={`${bem}__header`}>
+          <SanityImageFullWidth
+            image={image}
+            fill
+            className={`${bem}__image`}
+          />
+          {title && (
+            <Title as="h2" className={`${bem}__title`}>
+              {title}
+            </Title>
+          )}
+          {body && <TextBlock body={body} className={`${bem}__text`} />}
+          {services && !showClientIcons && (
+            <div className={`${bem}__services`}>
+              <ServicesListModule
+                services={services as unknown[]}
+                className="services-list"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

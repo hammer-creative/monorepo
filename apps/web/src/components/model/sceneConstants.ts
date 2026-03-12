@@ -1,9 +1,12 @@
 import * as THREE from 'three';
 
 export const GLB_SOURCE = 'model.glb';
+// export const GLB_SOURCE = 'Lv_EyeballExport_V5C_NewUV.glb';
 export const VIDEO_SOURCE = 'reel.mp4';
 
-export const ENVIRONMENT_MAP_SOURCE = 'environment.exr';
+// export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
+
+export const ENVIRONMENT_MAP_SOURCE = 'studio_kontrast_04_4k-rev2.exr';
 
 // ==========================================
 // DEBUG
@@ -116,6 +119,10 @@ export const IRIS_ROUGHNESS = 1.0;
 
 export const SCLERA_INNER_FADE_START = 0; // inner hole edge
 export const SCLERA_INNER_FADE_END = 0; // fades to normal above this
+
+export const CORNEA_INSERT_PNG = '/model/textures/brown_photostudio_02_1k.png';
+export const CORNEA_INSERT_Z = 0.15;
+export const CORNEA_INSERT_SIZE = 0.05;
 
 export const EYE_LERP_SPEED = 0.08; // how fast eye follows mouse
 export const INERTIA_FACTOR = 0.12; // how fast group rotation catches up (lower = more lag)

@@ -1,34 +1,15 @@
 /* Services Cards */
 
-/* SHOW HIDE (TODO: there's a better way to do this in JSX) */
 [data-page='/services'] {
   main {
     background: var(--color-sandstorm);
   }
-  .services-page-card__narrow {
-    display: block;
-  }
-  .services-page-card__wide {
-    display: none;
-  }
-
-  @media screen and (min-width: 50em) {
-    .services-page-card__narrow {
-      display: none;
-    }
-    .services-page-card__wide {
-      display: block;
-    }
-  }
 }
 
-/* SERVICES CARDS: Spacing  */
+/* SERVICES CARDS: Spacing */
 
 .services-page-card {
   padding-inline: var(--space-20);
-}
-
-.services-page-card {
   padding-block-end: var(--space-20);
 }
 
@@ -85,13 +66,10 @@
   .services-page-card .services-page-card__title {
     margin-block-end: initial;
   }
-
-  .services-page-card .services-page-card__services {
-    /* margin-block-start: var(--flow-space-1); */
-  }
 }
 
-/* SERVICES + CHYRON CARDS: Typography  */
+/* SERVICES + CHYRON CARDS: Typography */
+
 .services-page-card__content h2.services-page-card__title {
   @mixin title-secondary var(--font-serif), uppercase;
   letter-spacing: -0.04em;
@@ -114,7 +92,7 @@
   line-height: 1.5;
 }
 
-/* CHYRON: spacing */
+/* CHYRON: Spacing */
 
 .services-page__chyron {
   padding-block-start: var(--space-fluid-60-80);
@@ -141,6 +119,7 @@
     margin-block-end: var(--space-fluid-20-40);
     margin-inline: auto;
   }
+
   .services-page__chyron .services-page-card__text {
     text-align: center;
     margin: 0 auto;
@@ -164,6 +143,7 @@
 
 .services-page-card__chyron > .rfm-marquee-container {
   margin-block-end: var(--space-fluid-20-40);
+
   @media screen and (min-width: 50em) {
     margin-block-end: initial;
   }
