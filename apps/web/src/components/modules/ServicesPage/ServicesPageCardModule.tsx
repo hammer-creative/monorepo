@@ -39,34 +39,47 @@ export function ServicesPageCardModule({
   return (
     <>
       {showClientIcons && (
-        <div className={`${bem}__chyron`}>
+        <>
           <ClientIcons chyron />
-        </div>
-      )}
-
-      <div className={`${bem}__content`}>
-        <div className={`${bem}__header`}>
-          <SanityImageFullWidth
-            image={image}
-            fill
-            className={`${bem}__image`}
-          />
           {title && (
             <Title as="h2" className={`${bem}__title`}>
               {title}
             </Title>
           )}
           {body && <TextBlock body={body} className={`${bem}__text`} />}
-          {services && !showClientIcons && (
-            <div className={`${bem}__services`}>
-              <ServicesListModule
-                services={services as unknown[]}
-                className="services-list"
-              />
-            </div>
-          )}
+        </>
+      )}
+      {!showClientIcons && (
+        <div className={`${bem}__content`}>
+          <div className={`${bem}__image-container`}>
+            <SanityImageFullWidth
+              image={image}
+              fill
+              className={`${bem}__image`}
+            />
+            {title && (
+              <Title as="h2" className={`${bem}__title title--wide`}>
+                {title}
+              </Title>
+            )}
+          </div>
+          <div className={`${bem}__header`}>
+            {title && (
+              <Title as="h2" className={`${bem}__title title--narrow`}>
+                {title}
+              </Title>
+            )}
+            {services && (
+              <div className={`${bem}__services`}>
+                <ServicesListModule
+                  services={services as unknown[]}
+                  className="services-list"
+                />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

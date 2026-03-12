@@ -49,7 +49,7 @@
   --aspect-ratio-half-width: 7 / 5;
   --aspect-ratio-impact: 7 / 5;
   --aspect-ratio-teaser-card: 69 / 40;
-  --aspect-ratio-services-card: 8 / 3;
+  --aspect-ratio-services-card: 17 / 9;
   --breakpoint-wide: var(--viewport-wide);
 
   /* VIEWPORTS */

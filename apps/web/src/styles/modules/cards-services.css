@@ -1,12 +1,14 @@
 /* Services Cards */
 
+/* Page */
+
 [data-page='/services'] {
   main {
     background: var(--color-sandstorm);
   }
 }
 
-/* SERVICES CARDS: Spacing */
+/* Services card: spacing */
 
 .services-page-card {
   padding-inline: var(--space-20);
@@ -19,7 +21,11 @@
 
 .services-page-card .services-page-card__content {
   background: var(--color-nightshade);
-  padding: var(--space-fluid-20-80);
+}
+
+.services-page-card .services-page-card__header {
+  padding-inline: var(--space-fluid-20-40);
+  padding-block: var(--space-fluid-20-80);
 }
 
 .services-page-card .services-list__heading {
@@ -31,60 +37,95 @@
 }
 
 @media screen and (min-width: 50em) {
-  .services-page-card {
-    position: relative;
-    padding-inline: var(--space-fluid-gutter-sm);
-    padding-block-end: var(--space-fluid-10-20);
-    background: var(--color-sandstorm);
-  }
-
   .services-page-card .services-page-card__content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: space-between;
-    background: none;
-    padding-inline: var(--flow-space-2);
-    padding-block-end: var(--flow-space-2);
   }
 
-  .services-page-card .services-page-card__content > * {
-    flex: 1;
+  .services-page-card .services-page-card__content > :first-child {
+    flex: 55%;
   }
 
-  .services-page-card .services-page-card__header {
-    align-self: flex-end;
+  .services-page-card .services-page-card__content > :nth-child(2) {
+    flex: 45%;
   }
+}
 
-  .services-page-card .services-page-card__wide {
-    align-self: flex-start;
+/* Services card: show/hide title by viewport */
+
+.services-page-card__content .title--wide {
+  display: none;
+}
+
+@media screen and (min-width: 50em) {
+  .services-page-card__content .title--narrow {
+    display: none;
   }
 
   .services-page-card .services-page-card__title {
     margin-block-end: initial;
   }
+
+  .services-page-card__image-container {
+    position: relative;
+  }
+
+  .services-page-card__image-container .title--wide {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: var(--space-fluid-10-20);
+  }
+
+  .services-page-card .services-page-card__header {
+    padding: var(--space-fluid-20-40);
+  }
 }
 
-/* SERVICES + CHYRON CARDS: Typography */
+/* Services card: typography */
 
-.services-page-card__content h2.services-page-card__title {
+.services-page-card__content h2.title {
   @mixin title-secondary var(--font-serif), uppercase;
   letter-spacing: -0.04em;
 }
 
-.services-page__chyron h2.title {
-  padding-inline: var(--space-fluid-10-20);
+/* Chyron: typography */
+
+.services-page__chyron > .text--tertiary {
+  @mixin subheader;
 }
 
-.services-page__chyron .services-page-card__title {
-  margin-block-end: var(--space-10);
+.services-page__chyron > :not(.rfm-marquee-container) {
+  padding-inline: var(--space-fluid-20-40);
+
+  @media screen and (min-width: 50em) {
+    padding-inline: initial;
+  }
+}
+
+@media screen and (min-width: 50em) {
+  .services-page__chyron h3 {
+    padding-block-end: var(--space-fluid-20-40);
+  }
+  .services-page__chyron .rfm-marquee-container {
+    padding-block-end: var(--space-fluid-40-60);
+  }
+  .services-page__chyron .services-page-card__title {
+    padding-block-end: var(--space-fluid-20-40);
+  }
+}
+
+.services-page__chyron h2.title {
+  @mixin title-secondary var(--font-serif), uppercase;
+  letter-spacing: -0.04em;
 }
 
 .services-page__chyron .services-page-card__text {
   @mixin body-sm;
+  @media screen and (min-width: 50em) {
+    text-align: center;
+    margin: 0 auto;
+  }
 }
 
 .services-page__chyron .services-page-card__text p {
@@ -92,62 +133,53 @@
   line-height: 1.5;
 }
 
-/* CHYRON: Spacing */
+/* Chyron: spacing */
 
 .services-page__chyron {
   padding-block-start: var(--space-fluid-60-80);
   padding-block-end: var(--space-fluid-60-80);
 }
 
-.services-page__chyron .services-page-card__content {
-  margin-block-start: var(--space-fluid-40-100);
+.services-page__chyron > h3.title {
+  margin-block-end: var(--space-fluid-40-80);
 }
 
-.services-page__chyron .services-page-card__header {
-  padding-inline: var(--space-fluid-gutter-lg);
+.services-page__chyron > .services-page-card__title {
+  margin-block-end: var(--space-10);
 }
 
 @media screen and (min-width: 50em) {
-  .services-page__chyron .services-page-card__header {
+  .services-page__chyron {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
-
-  .services-page__chyron .title {
-    white-space: initial;
-    margin-block-end: var(--space-fluid-20-40);
-    margin-inline: auto;
-  }
-
-  .services-page__chyron .services-page-card__text {
-    text-align: center;
-    margin: 0 auto;
-  }
-
-  .services-page__chyron .services-page-card__text p {
-    max-width: 40ch;
-    width: 100%;
-  }
 }
 
 .services-page .services-page__chyron > .title {
-  @mixin subheader;
-  padding-inline: var(--space-fluid-gutter-sm);
-  margin-bottom: var(--space-60);
-
   @media screen and (min-width: 50em) {
-    text-align: center;
+    margin: 0 auto;
+    white-space: initial;
   }
 }
 
-.services-page-card__chyron > .rfm-marquee-container {
+.services-page__chyron .rfm-marquee-container:first-of-type {
+  padding-block-end: var(--space-fluid-20-40);
+
+  @media screen and (min-width: 50em) {
+    margin-block-end: initial;
+  }
+}
+
+.services-page__chyron .rfm-marquee-container:nth-child(3) {
   margin-block-end: var(--space-fluid-20-40);
 
   @media screen and (min-width: 50em) {
     margin-block-end: initial;
   }
 }
+
+/* Misc */
 
 .services-page .case-study-caroursel-module .subheader {
   font-size: var(--font-size-2);
