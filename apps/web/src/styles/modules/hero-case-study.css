@@ -46,13 +46,13 @@
 }
 
 .case-study .hero-card__details {
-  padding-block-start: var(--flow-space-1);
-  padding-block-end: var(--flow-space-2);
-  padding-inline-start: var(--flow-space-1);
+  padding-block-start: var(--space-fluid-20-60);
+  padding-block-end: var(--space-fluid-40-60);
+  padding-inline-start: var(--space-fluid-20-40);
 }
 
 .case-study .hero-card__summary > * {
-  padding-block-end: var(--flow-space-1);
+  padding-block-end: var(--space-fluid-40-60);
 }
 
 .case-study .hero-card__text {
@@ -107,8 +107,7 @@
   }
 
   .case-study .hero-card__title {
-    padding-inline: var(--flow-space-1);
-    padding-block: var(--flow-space-1);
+    padding: var(--space-fluid-20-40);
   }
 
   .case-study .hero-card__lists {

@@ -10,8 +10,8 @@
 .text-card--challenge,
 .text-card--testimonial {
   align-items: center;
-  padding-block: var(--flow-space-4);
-  gap: var(--flow-space-1);
+  padding-block: var(--space-fluid-60-120);
+  gap: var(--space-20);
 }
 
 .text-card--challenge .text-card__text,
@@ -21,17 +21,16 @@
 
 /* Layout, text-module, left-right aligned headline and editorial copy */
 .text-card--has-headline {
-  padding-inline: var(--flow-space-2);
-  padding-block-start: var(--flow-space-3);
-  padding-block-end: var(--flow-space-4);
+  padding-inline: var(--space-fluid-20-80);
+  padding-block: var(--space-fluid-40-80);
 }
 
 .text-card--has-headline .text-card__headline > * {
-  margin-bottom: var(--flow-space-1);
+  margin-bottom: var(--space-fluid-20-40);
 }
 
 .text-card--has-headline .text-card__text p {
-  padding-inline-end: var(--flow-space-0);
+  padding-inline-end: var(--space-fluid-20-60);
 }
 
 .text-card--challenge .text-card__label {
@@ -62,10 +61,12 @@
   }
 
   .text-card--has-headline .text-card__title {
-    margin-top: auto;
+    margin-block-start: auto;
+    margin-block-end: 4px;
     margin-inline-end: var(
       --gutter-margin-0
     ); /* pseudo-gap to keep title from encroaching on editorial copy */
+    padding-inline-end: var(--space-fluid-20-40);
   }
   .text-card--has-headline .text-card__label {
     margin-top: 5px; /* nudge label down a bit to align with editorial copy ascenders */

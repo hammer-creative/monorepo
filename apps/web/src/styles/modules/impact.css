@@ -22,8 +22,8 @@
 }
 
 .impact-cards .impact-card__item--text > .title {
-  padding-block-start: var(--flow-space-2);
-  margin-block-end: var(--flow-space-1);
+  padding-block-start: var(--space-fluid-40-60);
+  margin-block-end: var(--space-fluid-20-40);
 }
 
 .impact-cards .impact-card__item--text > .text {
@@ -72,7 +72,6 @@
 @media screen and (min-width: 50em) {
   .impact-cards .title {
     @mixin title-tertiary;
-    min-height: 4em;
   }
 
   .impact-cards .text {

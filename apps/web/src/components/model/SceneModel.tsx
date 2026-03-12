@@ -41,9 +41,6 @@ const {
   SCLERA_INNER_FADE_START,
   SCLERA_INNER_FADE_END,
   EYE_LIGHTS,
-  CORNEA_INSERT_PNG,
-  CORNEA_INSERT_Z,
-  CORNEA_INSERT_SIZE,
   EYE_LERP_SPEED,
   INERTIA_FACTOR,
   DRIFT_SPEED,
@@ -114,33 +111,10 @@ function EyeLight({ config, proceduralTexture, corneaMesh }) {
   return <primitive object={decalMesh} renderOrder={999} />;
 }
 
-function CorneaInsert({ texture }) {
-  return (
-    <mesh position={[0, 0, CORNEA_INSERT_Z]} renderOrder={2}>
-      <circleGeometry args={[CORNEA_INSERT_SIZE, 64]} />
-      <meshBasicMaterial
-        map={texture}
-        transparent
-        depthWrite={false}
-        stencilWrite={true}
-        stencilRef={1}
-        stencilFunc={THREE.EqualStencilFunc}
-        stencilFail={THREE.KeepStencilOp}
-        stencilZFail={THREE.KeepStencilOp}
-        stencilZPass={THREE.KeepStencilOp}
-      />
-    </mesh>
-  );
-}
-
 // ─── SceneModel ───────────────────────────────────────────────────────────────
 export default function SceneModel({ url, isPaused, onPlayClick }) {
   const gltf = useGLTF(url);
   const { camera } = useThree();
-
-  const corneaInsertTexture = CORNEA_INSERT_PNG
-    ? useTexture(CORNEA_INSERT_PNG)
-    : null;
 
   const videoTexture = useVideoTexture(`/video/${VIDEO_SOURCE}`, {
     loop: true,
@@ -196,11 +170,8 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
           metalness: 0,
           clearcoat: 0,
           clearcoatRoughness: 0,
-          // color: 0xff0000,
           transmission: 1.0,
-          // opacity: 0.3,
           depthWrite: false,
-          // thickness: 0.005,
         });
       }
 
@@ -334,95 +305,94 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
 
     setSceneReady(true);
 
-    // ── Single consolidated debug pass ──────────────────────────────────────
-    console.log('=== SCENE REPORT ===');
+    if (ENABLE_CONSOLE_LOGS) {
+      console.log('=== SCENE REPORT ===');
 
-    // Scene graph
-    console.log('--- Scene Graph ---');
-    gltf.scene.traverse((child) => {
-      console.log(
-        child.type,
-        '|',
-        child.name,
-        '|',
-        child.material?.name ?? 'no mat',
-      );
-    });
+      console.log('--- Scene Graph ---');
+      gltf.scene.traverse((child) => {
+        console.log(
+          child.type,
+          '|',
+          child.name,
+          '|',
+          child.material?.name ?? 'no mat',
+        );
+      });
 
-    // Mesh details
-    console.log('--- Mesh Details ---');
-    gltf.scene.traverse((child) => {
-      if (!child.isMesh) return;
-      const box = new THREE.Box3().setFromObject(child);
-      const uvs = child.geometry.attributes.uv;
-      let uvRange = 'no UVs';
-      if (uvs) {
-        let minU = Infinity,
-          maxU = -Infinity,
-          minV = Infinity,
-          maxV = -Infinity;
-        for (let i = 0; i < uvs.count; i++) {
-          const u = uvs.getX(i),
-            v = uvs.getY(i);
-          if (u < minU) minU = u;
-          if (u > maxU) maxU = u;
-          if (v < minV) minV = v;
-          if (v > maxV) maxV = v;
+      console.log('--- Mesh Details ---');
+      gltf.scene.traverse((child) => {
+        if (!child.isMesh) return;
+        const box = new THREE.Box3().setFromObject(child);
+        const uvs = child.geometry.attributes.uv;
+        let uvRange = 'no UVs';
+        if (uvs) {
+          let minU = Infinity,
+            maxU = -Infinity,
+            minV = Infinity,
+            maxV = -Infinity;
+          for (let i = 0; i < uvs.count; i++) {
+            const u = uvs.getX(i),
+              v = uvs.getY(i);
+            if (u < minU) minU = u;
+            if (u > maxU) maxU = u;
+            if (v < minV) minV = v;
+            if (v > maxV) maxV = v;
+          }
+          uvRange = `U ${minU.toFixed(3)}→${maxU.toFixed(3)} V ${minV.toFixed(3)}→${maxV.toFixed(3)}`;
         }
-        uvRange = `U ${minU.toFixed(3)}→${maxU.toFixed(3)} V ${minV.toFixed(3)}→${maxV.toFixed(3)}`;
+        console.log(
+          [
+            `MESH: ${child.name}`,
+            `mat: ${child.material.name || '(unnamed)'}`,
+            `type: ${child.material.type}`,
+            `map: ${child.material.map?.uuid.slice(0, 8) ?? 'none'}`,
+            `UV: ${uvRange}`,
+            `verts: ${child.geometry.attributes.position.count}`,
+            `bbox z: ${box.min.z.toFixed(4)}→${box.max.z.toFixed(4)}`,
+            `visible: ${child.visible}`,
+          ].join(' | '),
+        );
+      });
+
+      if (corneaMeshRef.current && scleraMeshRef.current) {
+        const corneaBox = new THREE.Box3().setFromObject(corneaMeshRef.current);
+        const scleraBox = new THREE.Box3().setFromObject(scleraMeshRef.current);
+        const corneaSize = new THREE.Vector3();
+        corneaBox.getSize(corneaSize);
+        console.log('--- Cornea Analysis ---');
+        console.log(
+          'cornea z range:',
+          corneaBox.min.z.toFixed(4),
+          '→',
+          corneaBox.max.z.toFixed(4),
+        );
+        console.log(
+          'sclera z range:',
+          scleraBox.min.z.toFixed(4),
+          '→',
+          scleraBox.max.z.toFixed(4),
+        );
+        console.log(
+          'cornea is full sphere (z symmetric):',
+          Math.abs(corneaBox.min.z + corneaBox.max.z) < 0.01,
+        );
+        console.log(
+          'cornea wraps entire model:',
+          corneaBox.min.z < scleraBox.min.z &&
+            corneaBox.max.z > scleraBox.max.z,
+        );
+        console.log(
+          'cornea extends behind sclera by:',
+          (scleraBox.min.z - corneaBox.min.z).toFixed(4),
+        );
+        console.log(
+          'cornea extends in front of sclera by:',
+          (corneaBox.max.z - scleraBox.max.z).toFixed(4),
+        );
       }
-      console.log(
-        [
-          `MESH: ${child.name}`,
-          `mat: ${child.material.name || '(unnamed)'}`,
-          `type: ${child.material.type}`,
-          `map: ${child.material.map?.uuid.slice(0, 8) ?? 'none'}`,
-          `UV: ${uvRange}`,
-          `verts: ${child.geometry.attributes.position.count}`,
-          `bbox z: ${box.min.z.toFixed(4)}→${box.max.z.toFixed(4)}`,
-          `visible: ${child.visible}`,
-        ].join(' | '),
-      );
-    });
 
-    // Cornea vs sclera analysis
-    if (corneaMeshRef.current && scleraMeshRef.current) {
-      const corneaBox = new THREE.Box3().setFromObject(corneaMeshRef.current);
-      const scleraBox = new THREE.Box3().setFromObject(scleraMeshRef.current);
-      const corneaSize = new THREE.Vector3();
-      corneaBox.getSize(corneaSize);
-      console.log('--- Cornea Analysis ---');
-      console.log(
-        'cornea z range:',
-        corneaBox.min.z.toFixed(4),
-        '→',
-        corneaBox.max.z.toFixed(4),
-      );
-      console.log(
-        'sclera z range:',
-        scleraBox.min.z.toFixed(4),
-        '→',
-        scleraBox.max.z.toFixed(4),
-      );
-      console.log(
-        'cornea is full sphere (z symmetric):',
-        Math.abs(corneaBox.min.z + corneaBox.max.z) < 0.01,
-      );
-      console.log(
-        'cornea wraps entire model:',
-        corneaBox.min.z < scleraBox.min.z && corneaBox.max.z > scleraBox.max.z,
-      );
-      console.log(
-        'cornea extends behind sclera by:',
-        (scleraBox.min.z - corneaBox.min.z).toFixed(4),
-      );
-      console.log(
-        'cornea extends in front of sclera by:',
-        (corneaBox.max.z - scleraBox.max.z).toFixed(4),
-      );
+      console.log('===================');
     }
-
-    console.log('===================');
   }, [gltf]);
 
   // ─── Frame loop ───────────────────────────────────────────────────────────
@@ -455,10 +425,10 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
         Math.sin(time * 0.23) *
         MAX_ROTATION_RAD *
         DRIFT_AMPLITUDE;
-      targetRotation.current.x +=
-        (driftX - targetRotation.current.x) * DRIFT_SPEED;
-      targetRotation.current.y +=
-        (driftY - targetRotation.current.y) * DRIFT_SPEED;
+      targetRotation.current.x =
+        -lastPointer.current.y * MAX_ROTATION_RAD + driftX;
+      targetRotation.current.y =
+        lastPointer.current.x * MAX_ROTATION_RAD + driftY;
     }
 
     currentRotation.current.x +=
@@ -506,18 +476,6 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
     <group ref={groupRef} scale={1.035}>
       <primitive object={gltf.scene} />
       <ScenePlayButton onClick={() => onPlayClick?.()} isPlaying={isPlaying} />
-
-      <group ref={corneaGroupRef}>
-        {/* {sceneReady &&
-          EYE_LIGHTS.map((config) => (
-            <EyeLight
-              key={config.id}
-              config={config}
-              proceduralTexture={catchlightTexture}
-              corneaMesh={corneaMeshRef.current}
-            />
-          ))} */}
-      </group>
     </group>
   );
 }

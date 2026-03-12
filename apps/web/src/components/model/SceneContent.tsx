@@ -4,11 +4,13 @@
 'use client';
 
 import * as C from '@/components/model/sceneConstants';
-import { Environment, OrbitControls } from '@react-three/drei';
+import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import { Suspense, useEffect, useRef } from 'react';
 
 import { ENVIRONMENT_MAP_SOURCE, GLB_SOURCE } from './sceneConstants';
 import SceneModel from './SceneModel';
+
+useGLTF.preload(`/model/${GLB_SOURCE}`);
 
 const LC = C.LIGHTING_CONFIG;
 
@@ -183,8 +185,6 @@ export default function SceneContent({
         <Environment
           files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
           background={true}
-          // environmentRotation={envRotation}
-          // environmentRotation={[-2.7316, -0.5316, 2.5884]}
         />
 
         <SceneModel
@@ -192,15 +192,6 @@ export default function SceneContent({
           isPaused={isPaused}
           onPlayClick={onPlayClick}
         />
-
-        {/* <mesh
-          rotation={[-Math.PI / 2, 0, 0]}
-          position={[0, -0.15, 0]}
-          receiveShadow
-        >
-          <planeGeometry args={[0.5, 0.5]} />
-          <meshBasicMaterial color="#000000" />
-        </mesh> */}
       </Suspense>
 
       <OrbitControls
