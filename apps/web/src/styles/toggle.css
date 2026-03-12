@@ -94,13 +94,13 @@
 /* Homepage toggle */
 [data-page='/'] .menu-toggle:not(.is-open) .menu-toggle-dot svg,
 [data-page='/'] .menu-toggle:not(.is-open) .menu-toggle-text {
-  color: var(--color-hyperbeam);
+  color: var(--color-vinewhip);
 }
 
 /* Homepage toggle, hover */
 [data-page='/'] .menu-toggle:not(.is-open):hover .menu-toggle-dot svg,
 [data-page='/'] .menu-toggle:not(.is-open):hover .menu-toggle-text {
-  color: var(--color-vinewhip);
+  color: var(--color-hyperbeam);
 }
 
 @media screen and (min-width: 50em) {
