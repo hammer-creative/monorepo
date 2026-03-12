@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-inline: var(--space-fluid-gutter-lg);
+  padding-inline: var(--space-fluid-20-40);
   padding-block-start: var(--space-fluid-40-100);
   padding-block-end: var(--space-fluid-40-60);
 }
@@ -36,7 +36,4 @@
 .subheader:hover h3.title,
 .subheader:hover .cta-link {
   color: var(--color-aircutter);
-}
-
-.case-study .subheader {
 }

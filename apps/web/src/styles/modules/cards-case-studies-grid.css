@@ -70,7 +70,7 @@
 }
 
 /* Animated gradient border */
-.case-study__grid a::before {
+.case-study__card a::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -111,7 +111,7 @@
   z-index: 1;
 }
 
-.case-study__grid a:hover::before {
+.case-study__card a:hover::before {
   opacity: 1;
   animation: gradient-border-shift 2s linear infinite;
 }
@@ -123,4 +123,8 @@
   100% {
     background-position: 200% 0%;
   }
+}
+
+.case-study__card a:hover * {
+  color: var(--color-aircutter);
 }
