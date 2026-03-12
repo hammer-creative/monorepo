@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  gap: var(--space-40);
 }
 
 .client-icons-loading {

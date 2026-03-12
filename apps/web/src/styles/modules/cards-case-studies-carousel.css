@@ -1,0 +1,5 @@
+/* apps/web/src/styles/modules/cards-case-studies-carousel.css */
+
+.case-study-carousel-module .case-study__title {
+  @mixin case-study-title var(--font-serif), uppercase;
+}

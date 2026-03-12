@@ -1,22 +1,27 @@
 /* apps/web/src/stylesl/list.css */
 
-.hero-card__lists {
-}
-
+/* Base layout */
 .services-list li {
-  font-size: var(--font-size--1);
-  line-height: var(--line-height-medium);
+  font-size: var(--font-size--3);
+  line-height: 1.5;
   list-style: disc;
 }
 
 .services-list ul {
-  padding-left: 1.5ch;
   columns: 1;
+  margin-inline-start: 1.5ch;
 }
 
 @media screen and (min-width: 50em) {
   .services-card .services-list ul {
     columns: 2;
-    gap: 3ch;
+    gap: 10ch;
+  }
+}
+
+@media screen and (min-width: 50em) {
+  .services-page .services-list li {
+    font-size: var(--font-size--4);
+    line-height: 1.7;
   }
 }

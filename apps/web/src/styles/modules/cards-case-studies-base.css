@@ -1,0 +1,59 @@
+/* apps/web/src/styles/modules/cards-case-studies.css */
+
+/* Layout, title and client names overlaid on image */
+/* apps/web/src/styles/modules/cards-case-studies.css */
+
+/* Layout, title and client names overlaid on image */
+.case-study__card .case-study__details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: var(--space-fluid-10-20);
+}
+
+/* Base, Subtle zoom on hover */
+.case-study__card .image > * {
+  transition: transform 1s ease;
+  transform-origin: center;
+}
+
+.case-study__card:hover .image > * {
+  transform: scale(1.05) !important;
+}
+
+/* Typography, colors and hover transition */
+.case-study__card .case-study__title {
+  font-family: var(--font-serif);
+}
+
+.case-study-carousel-module .case-study__title {
+  @mixin case-study-title var(--font-serif), uppercase;
+}
+
+.case-study__card .case-study__details > * {
+  color: var(--color-hyperbeam);
+  transition: color var(--ease-card);
+}
+
+.case-study-carousel-module .case-study__title {
+  @mixin case-study-title var(--font-serif), uppercase;
+}
+
+/* Base, Subtle zoom on hover */
+.case-study__card .image > * {
+  transition: transform 1s ease;
+  transform-origin: center;
+}
+
+.case-study__card:hover .image > * {
+  transform: scale(1.05) !important;
+}
+
+/* Typography, colors and hover transition */
+.case-study__card .case-study__title {
+  font-family: var(--font-serif);
+}

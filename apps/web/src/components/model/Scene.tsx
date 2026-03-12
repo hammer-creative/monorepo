@@ -39,17 +39,18 @@ export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
       <div className="bokeh-1" />
       <div className="bokeh-2" />
       <div className="linear-gradient" />
+      <div className="eye-shadow" />
       <div
         className="model"
         style={{ position: 'relative', height: '100%', width: '100%' }}
       >
         <Canvas
           camera={{ position: [0, 0, 0.4], fov: 50 }}
-          environmentrotation={[0, Math.PI * 1.2, 0]}
+          environmentrotation={[-2.7316, -0.5316, 2.5884]}
           gl={{
             toneMapping: THREE.ACESFilmicToneMapping,
             toneMappingExposure: TONE_MAPPING_EXPOSURE,
-            alpha: true,
+            alpha: false,
           }}
         >
           <SceneContent

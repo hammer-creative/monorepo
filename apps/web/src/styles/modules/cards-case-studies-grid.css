@@ -1,0 +1,130 @@
+/* apps/web/src/styles/modules/cards-case-studies-grid.css */
+
+/* Layout, grid base */
+.case-study__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding-inline: var(--space-fluid-gutter-sm);
+  gap: var(--space-fluid-gutter-sm);
+  display: none;
+}
+
+@media (min-width: 50em) {
+  .case-study__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Layout, grid base, /work page */
+
+/* Cards */
+.case-study__grid .case-study__card {
+  position: relative;
+}
+
+.case-study__grid .case-study__title {
+  @mixin case-study-title var(--font-sans), initial;
+}
+
+.case-study__card .case-study__details > * {
+  color: var(--color-hyperbeam);
+  transition: color var(--ease-card);
+}
+
+/* Animated gradient border */
+/* apps/web/src/styles/modules/cards-case-studies-grid.css */
+
+/* Layout, grid base */
+.case-study__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding-inline: var(--space-fluid-gutter-sm);
+  gap: var(--space-fluid-gutter-sm);
+}
+
+@media (min-width: 50em) {
+  .case-study__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Layout, grid base, /work page */
+
+/* Cards */
+.case-study__grid .case-study__card {
+  position: relative;
+}
+
+.case-study__grid .case-study__card > a {
+  display: block;
+  position: relative;
+}
+
+.case-study__grid .case-study__title {
+  @mixin case-study-title var(--font-sans), initial;
+}
+
+.case-study__card .case-study__details > * {
+  color: var(--color-hyperbeam);
+  transition: color var(--ease-card);
+}
+
+/* Animated gradient border */
+.case-study__card a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #c7d3d3,
+    #cfd8d4,
+    #d8ddd0,
+    #e0e3cb,
+    #e8e8c7,
+    #f0edc0,
+    #f8f2b8,
+    #fff7b0,
+    #ffeeaa,
+    #ffe4a0,
+    #ffcc98,
+    #ffe4a0,
+    #ffeeaa,
+    #fff7b0,
+    #f8f2b8,
+    #f0edc0,
+    #e8e8c7,
+    #e0e3cb,
+    #d8ddd0,
+    #cfd8d4,
+    #c7d3d3
+  );
+  background-size: 200% 100%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.case-study__card a:hover::before {
+  opacity: 1;
+  animation: gradient-border-shift 2s linear infinite;
+}
+
+@keyframes gradient-border-shift {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+.case-study__card a:hover * {
+  color: var(--color-aircutter);
+}

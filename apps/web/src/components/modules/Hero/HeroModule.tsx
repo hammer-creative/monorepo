@@ -2,7 +2,7 @@
 'use client';
 
 import {
-  Label,
+  ClientList,
   LongArrow,
   SanityImageHero,
   TextBlock,
@@ -127,12 +127,9 @@ export function HeroModule({
                   <TextBlock body={body} className={`${bem}__text`} />
                 )}
                 {hasClients && (
-                  <Label
-                    clients={clients}
-                    tag="Client"
-                    className={`${bem}__clients`}
-                    variant="client-names"
-                  />
+                  <div className={`${bem}__clients`}>
+                    <ClientList clients={clients!} tag="Client" />
+                  </div>
                 )}
               </div>
             )}

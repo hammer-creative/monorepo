@@ -10,13 +10,17 @@ const utilityLinks = [
   },
   {
     id: 'privacy',
-    href: 'https://termly.io',
+    href: 'https://app.termly.io/policy-viewer/policy.html?policyUUID=ce93ccb0-f05a-489e-911c-e3eb4709c1cf',
     label: 'Privacy Policy',
     className: 'privacy',
   },
 ];
 
-export function UtilitiesMenu() {
+interface UtilitiesMenuProps {
+  onLinkClick?: (href: string, e: React.MouseEvent) => void;
+}
+
+export function UtilitiesMenu({ onLinkClick }: UtilitiesMenuProps) {
   return (
     <>
       {utilityLinks.map((link) => (
@@ -25,6 +29,8 @@ export function UtilitiesMenu() {
           href={link.href}
           email={link.email}
           className={link.className}
+          onClick={onLinkClick}
+          preventNavigation={!!onLinkClick}
         >
           {link.label}
         </ExtendedLink>

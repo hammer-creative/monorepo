@@ -1,14 +1,14 @@
 /* apps/web/src/styles/components/button.css */
 
-.hero-card__scroll-trigger {
+/* .hero-card__scroll-trigger {
   background: none;
   border: none;
   cursor: pointer;
 }
 
 .hero-card__scroll-trigger svg {
-  width: calc(var(--font-size-4) * 0.7);
-  height: calc(var(--font-size-4) * 0.7);
+  width: 1em;
+  height: 1em;
   margin-top: 8px;
   line-height: 1;
   color: $color-hyperbeam;
@@ -25,4 +25,4 @@
 
 .hero-card__scroll-trigger:hover svg {
   color: $color-aircutter;
-}
+} */

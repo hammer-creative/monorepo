@@ -76,15 +76,15 @@ mux-player {
   /* TODO: remove */
   /* @mixin single-video-border; */
   /* border: 5px solid red; */
-  padding: var(--card-frame-0);
+  padding: var(--flow-space-0);
 }
 
 /* TODO: get rid of this */
 .video-module .multi-video {
   display: flex;
   flex-direction: column;
-  gap: var(--card-frame-0);
-  padding: var(--card-frame-0);
+  gap: var(--flow-space-0);
+  padding: var(--flow-space-0);
 }
 
 @media screen and (min-width: 50em) {
@@ -177,7 +177,7 @@ mux-player {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: calc(100vw - (var(--card-frame-2) * 2));
+  width: calc(100vw - (var(--space-fluid-20-80) * 2));
   background: #000;
   overflow: visible;
   border: none;
@@ -213,6 +213,10 @@ html:has(.video-modal) {
 .video-modal-content .video-modal-volume:hover,
 .video-modal-content .video-modal-volume:active {
   color: $color-aircutter;
+}
+
+.video-modal-content button {
+  border: none;
 }
 
 /* VIDEO CONTROLS - SIZING */
@@ -303,4 +307,8 @@ html:has(.video-modal) {
   background-color: $color-hyperbeam;
   transition: width 0.1s ease;
   pointer-events: none;
+}
+
+.video-modal-content button:focus:not(:focus-visible) {
+  outline: none;
 }

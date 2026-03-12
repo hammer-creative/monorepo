@@ -1,0 +1,39 @@
+/* apps/web/src/styles/components/subheader.css */
+
+.subheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--space-fluid-20-40);
+  padding-block-start: var(--space-fluid-40-100);
+  padding-block-end: var(--space-fluid-40-60);
+}
+
+.services-page .subheader {
+  align-items: flex-end;
+}
+
+.case-study .subheader {
+  align-items: center;
+  font-size: var(
+    --font-size-2
+  ); /* needed to align cta link arrow sizing, i.e. 1em */
+}
+
+.subheader h2.title,
+.subheader h3.title {
+  @mixin subheader;
+  transition: color var(--ease-menu-item);
+}
+
+.subheader .cta-link {
+  font-size: 1em; /* relative to subheader parent "font size" */
+  display: block;
+  color: var(--color-hyperbeam);
+  transition: color var(--ease-menu-item);
+}
+
+.subheader:hover h3.title,
+.subheader:hover .cta-link {
+  color: var(--color-aircutter);
+}

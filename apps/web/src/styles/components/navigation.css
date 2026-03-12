@@ -2,6 +2,7 @@
 
 /* apps/web/src/styles/components/navigation.css */
 
+/* Layout, footer base */
 footer {
   background: var(--color-sandstorm);
 }
@@ -10,18 +11,26 @@ footer {
   display: grid;
   grid-template-rows: 1fr auto auto auto;
   height: 100%;
-  padding-inline: var(--card-frame-1);
+  padding-inline: var(--space-fluid-20-60);
   row-gap: var(--space-fluid-20-60);
+}
+
+.mobile-menu.is-open .footer-content {
+  padding-block-start: var(--space-fluid-40-100);
+  padding-block-end: var(--space-fluid-20-60);
 }
 
 footer .footer-content {
   grid-template-rows: auto auto auto;
-  padding-block: var(--space-fluid-20-40);
+  padding-block-start: var(--space-60);
+  padding-block-end: var(--space-fluid-20-60);
 }
 
 footer .footer-content .menu-primary {
   align-self: start;
-  margin-block-end: var(--space-fluid-40-120);
+  @media screen and (min-width: 50em) {
+    margin-bottom: var(--space-40);
+  }
 }
 
 .footer-content > *:nth-child(n + 2) {
@@ -35,6 +44,19 @@ footer .footer-content .menu-primary {
   margin-bottom: var(--space-fluid-10-20);
 }
 
+.footer-content .addresses {
+  margin-bottom: var(--space-fluid-10-20);
+}
+
+.footer-content .social ul {
+  margin-bottom: var(--space-fluid-20-40);
+}
+
+.footer-content .social ul footer .footer-content .addresses {
+  @media screen (min-width: 50em) {
+    margin-top: var(--space-fluid-20-40);
+  }
+}
 .footer-content .utilities,
 .footer-content .social,
 .footer-content .social ul {
@@ -125,8 +147,19 @@ footer .footer-content .menu-primary {
   }
 }
 
-.menu-primary li {
-  line-height: var(--line-height-tight);
+/* Footer layout, primary menu */
+.menu-primary ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-fluid-40-20);
+}
+
+footer .menu-primary ul {
+  line-height: 0.7;
+}
+
+.mobile-menu .menu-primary ul {
+  line-height: 0.7;
 }
 
 .menu-primary li a {
@@ -159,6 +192,22 @@ footer .menu-secondary .link:hover {
   color: var(--color-hyperbeam);
 }
 
+/* Footer links, states */
+/* Default active */
+footer .menu-primary .link.is-active {
+  color: var(--color-hyperbeam);
+}
+
+/* Hover */
+footer .menu-primary .link:hover {
+  color: var(--color-hyperbeam);
+}
+
+/* When any link is hovered, change the active one */
+footer .menu-primary:has(.link:hover) .link.is-active {
+  color: var(--color-nightshade);
+}
+
 /* Mobile menu - primary menu */
 .mobile-menu.is-open .menu-primary li a {
   font-size: var(--font-size-menu-mobile-fluid);
@@ -187,7 +236,7 @@ footer .menu-secondary .link:hover {
     width: 0.75em;
     height: 0.75em;
     opacity: 0;
-    margin-top: 0.2em;
+    margin-top: 0.05em;
     color: var(--color-hyperbeam);
     margin-inline-start: 0.05em;
     transition:
@@ -232,16 +281,11 @@ footer .menu-secondary .link:hover {
 .menu-secondary .link,
 .menu-secondary .text {
   display: block;
-  font-size: var(--font-size-footer-menu-fluid);
-  line-height: var(--line-height-loose);
+  line-height: 2;
   letter-spacing: var(--letter-spacing-loose);
   text-transform: uppercase;
-  font-weight: 900;
   transition: color var(--ease-menu-item);
-}
-
-.mobile-menu.is-open .footer-content {
-  padding-block-end: var(--card-frame-1);
+  font-size: var(--font-size--4);
 }
 
 .mobile-menu.is-open .menu-secondary a {

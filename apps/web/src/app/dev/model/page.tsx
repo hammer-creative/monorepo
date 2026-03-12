@@ -1,49 +1,16 @@
-'use client';
-
 /* eslint-disable */
 // @ts-nocheck
+
+'use client';
+
 import { TONE_MAPPING_EXPOSURE } from '@/components/model/sceneConstants';
+import * as C from '@/components/model/sceneConstants';
 import SceneContent from '@/components/model/SceneContent';
 import { Canvas } from '@react-three/fiber';
 import { useState } from 'react';
 import * as THREE from 'three';
 
-// ─── Lighting defaults ───────────────────────────────────────────────────────
-// NOT imported from sceneConstants. These are the panel's own starting point.
-// Workflow: tweak sliders → "Copy Lighting Config" → paste into sceneConstants.
-// sceneConstants is the exported snapshot, not the source of truth.
-
-const LIGHTING_DEFAULTS = {
-  ambientLight: { enabled: true, intensity: 5, color: '#a9b7bd' },
-  directionalLight: {
-    enabled: true,
-    intensity: 5,
-    color: '#dbe1e1',
-    position: [5, 5, 5],
-  },
-  spotLight: {
-    enabled: false,
-    intensity: 5,
-    color: '#ffffff',
-    position: [0, 5, 3],
-    angle: 0.3,
-    penumbra: 0.5,
-  },
-  pointLight: {
-    enabled: false,
-    intensity: 5,
-    color: '#ffffff',
-    position: [2, 2, 2],
-    distance: 10,
-    decay: 2,
-  },
-  cycloLight: {
-    enabled: false,
-    intensity: 2,
-    color: '#ffffff',
-    position: [0, -3, 0],
-  },
-};
+const LC = C.LIGHTING_CONFIG;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const hexToRgba = (hex) => {
@@ -75,21 +42,17 @@ const btnBase = {
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function ModelDevPage() {
+  const [envRotation, setEnvRotation] = useState([0.5, Math.PI / 4, 0.5]);
   const [helpersVisible, setHelpersVisible] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [panelVisible, setPanelVisible] = useState(true);
   const [lightingPanelVisible, setLightingPanelVisible] = useState(false);
 
-  // ── Mask ─────────────────────────────────────────────────────────────────
-  // Defaults match production PostCSS:
-  //   mask-image: radial-gradient(circle at 50% 50%, black 42%, transparent 63%)
-  //   mask-size: 97vh 97vh
   const [maskEnabled, setMaskEnabled] = useState(false);
   const [maskStart, setMaskStart] = useState(42);
   const [maskEnd, setMaskEnd] = useState(63);
   const [maskDiameter, setMaskDiameter] = useState(97);
 
-  // ── Bokeh 1 ───────────────────────────────────────────────────────────────
   const [bokeh1Enabled, setBokeh1Enabled] = useState(false);
   const [backdropSize1, setBackdropSize1] = useState(100);
   const [backdropBlur1, setBackdropBlur1] = useState(0);
@@ -99,7 +62,6 @@ export default function ModelDevPage() {
   const [backdropGradientStart1, setBackdropGradientStart1] = useState(0);
   const [backdropGradientEnd1, setBackdropGradientEnd1] = useState(100);
 
-  // ── Bokeh 2 ───────────────────────────────────────────────────────────────
   const [bokeh2Enabled, setBokeh2Enabled] = useState(false);
   const [backdropSize2, setBackdropSize2] = useState(100);
   const [backdropBlur2, setBackdropBlur2] = useState(0);
@@ -109,92 +71,78 @@ export default function ModelDevPage() {
   const [backdropGradientStart2, setBackdropGradientStart2] = useState(0);
   const [backdropGradientEnd2, setBackdropGradientEnd2] = useState(100);
 
-  // ── Bottom Fade ───────────────────────────────────────────────────────────
   const [linearGradientEnabled, setLinearGradientEnabled] = useState(false);
   const [linearGradientColor, setLinearGradientColor] = useState('#000000');
   const [linearGradientOpacity, setLinearGradientOpacity] = useState(0);
   const [linearGradientHeight, setLinearGradientHeight] = useState(30);
 
-  // ── Presets ───────────────────────────────────────────────────────────────
   const [presets, setPresets] = useState([]);
   const [presetCounter, setPresetCounter] = useState(1);
 
-  // ── Lighting — initialized from LIGHTING_DEFAULTS, not sceneConstants ─────
   const [ambientLightEnabled, setAmbientLightEnabled] = useState(
-    LIGHTING_DEFAULTS.ambientLight.enabled,
+    LC.ambientLight.enabled,
   );
   const [ambientLightIntensity, setAmbientLightIntensity] = useState(
-    LIGHTING_DEFAULTS.ambientLight.intensity,
+    LC.ambientLight.intensity,
   );
   const [ambientLightColor, setAmbientLightColor] = useState(
-    LIGHTING_DEFAULTS.ambientLight.color,
+    LC.ambientLight.color,
   );
 
   const [directionalLightEnabled, setDirectionalLightEnabled] = useState(
-    LIGHTING_DEFAULTS.directionalLight.enabled,
+    LC.directionalLight.enabled,
   );
   const [directionalLightIntensity, setDirectionalLightIntensity] = useState(
-    LIGHTING_DEFAULTS.directionalLight.intensity,
+    LC.directionalLight.intensity,
   );
   const [directionalLightColor, setDirectionalLightColor] = useState(
-    LIGHTING_DEFAULTS.directionalLight.color,
+    LC.directionalLight.color,
   );
   const [directionalLightPosition, setDirectionalLightPosition] = useState(
-    LIGHTING_DEFAULTS.directionalLight.position,
+    LC.directionalLight.position,
   );
 
   const [spotLightEnabled, setSpotLightEnabled] = useState(
-    LIGHTING_DEFAULTS.spotLight.enabled,
+    LC.spotLight.enabled,
   );
   const [spotLightIntensity, setSpotLightIntensity] = useState(
-    LIGHTING_DEFAULTS.spotLight.intensity,
+    LC.spotLight.intensity,
   );
-  const [spotLightColor, setSpotLightColor] = useState(
-    LIGHTING_DEFAULTS.spotLight.color,
-  );
+  const [spotLightColor, setSpotLightColor] = useState(LC.spotLight.color);
   const [spotLightPosition, setSpotLightPosition] = useState(
-    LIGHTING_DEFAULTS.spotLight.position,
+    LC.spotLight.position,
   );
-  const [spotLightAngle, setSpotLightAngle] = useState(
-    LIGHTING_DEFAULTS.spotLight.angle,
-  );
+  const [spotLightAngle, setSpotLightAngle] = useState(LC.spotLight.angle);
   const [spotLightPenumbra, setSpotLightPenumbra] = useState(
-    LIGHTING_DEFAULTS.spotLight.penumbra,
+    LC.spotLight.penumbra,
   );
 
   const [pointLightEnabled, setPointLightEnabled] = useState(
-    LIGHTING_DEFAULTS.pointLight.enabled,
+    LC.pointLight.enabled,
   );
   const [pointLightIntensity, setPointLightIntensity] = useState(
-    LIGHTING_DEFAULTS.pointLight.intensity,
+    LC.pointLight.intensity,
   );
-  const [pointLightColor, setPointLightColor] = useState(
-    LIGHTING_DEFAULTS.pointLight.color,
-  );
+  const [pointLightColor, setPointLightColor] = useState(LC.pointLight.color);
   const [pointLightPosition, setPointLightPosition] = useState(
-    LIGHTING_DEFAULTS.pointLight.position,
+    LC.pointLight.position,
   );
   const [pointLightDistance, setPointLightDistance] = useState(
-    LIGHTING_DEFAULTS.pointLight.distance,
+    LC.pointLight.distance,
   );
-  const [pointLightDecay, setPointLightDecay] = useState(
-    LIGHTING_DEFAULTS.pointLight.decay,
-  );
+  const [pointLightDecay, setPointLightDecay] = useState(LC.pointLight.decay);
 
   const [cycloLightEnabled, setCycloLightEnabled] = useState(
-    LIGHTING_DEFAULTS.cycloLight.enabled,
+    LC.cycloLight.enabled,
   );
   const [cycloLightIntensity, setCycloLightIntensity] = useState(
-    LIGHTING_DEFAULTS.cycloLight.intensity,
+    LC.cycloLight.intensity,
   );
-  const [cycloLightColor, setCycloLightColor] = useState(
-    LIGHTING_DEFAULTS.cycloLight.color,
-  );
+  const [cycloLightColor, setCycloLightColor] = useState(LC.cycloLight.color);
   const [cycloLightPosition, setCycloLightPosition] = useState(
-    LIGHTING_DEFAULTS.cycloLight.position,
+    LC.cycloLight.position,
   );
 
-  // ── Actions ───────────────────────────────────────────────────────────────
   const removeAllEffects = () => {
     setMaskEnabled(false);
     setBokeh1Enabled(false);
@@ -273,24 +221,20 @@ export default function ModelDevPage() {
 
   const copyCssToClipboard = () => {
     const parts: string[] = [];
-
     if (maskEnabled) {
-      parts.push(
-        `/* Mask */
-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
--webkit-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
-mask-size: ${maskDiameter}vh ${maskDiameter}vh;
--webkit-mask-size: ${maskDiameter}vh ${maskDiameter}vh;
-mask-position: center;
--webkit-mask-position: center;
-mask-repeat: no-repeat;
--webkit-mask-repeat: no-repeat;`,
-      );
+      parts.push(`.model {
+  mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%);
+  mask-size: ${maskDiameter}vh ${maskDiameter}vh;
+  -webkit-mask-size: ${maskDiameter}vh ${maskDiameter}vh;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}`);
     }
-
     if (bokeh1Enabled) {
-      parts.push(
-        `.bokeh-1 {
+      parts.push(`.bokeh-1 {
   position: absolute;
   width: min(${backdropSize1}vw, ${backdropSize1}vh);
   height: min(${backdropSize1}vw, ${backdropSize1}vh);
@@ -302,14 +246,10 @@ mask-repeat: no-repeat;
   opacity: ${backdropOpacity1};
   filter: blur(${backdropBlur1}px);
   pointer-events: none;
-  z-index: 1;
-}`,
-      );
+}`);
     }
-
     if (bokeh2Enabled) {
-      parts.push(
-        `.bokeh-2 {
+      parts.push(`.bokeh-2 {
   position: absolute;
   width: min(${backdropSize2}vw, ${backdropSize2}vh);
   height: min(${backdropSize2}vw, ${backdropSize2}vh);
@@ -321,14 +261,10 @@ mask-repeat: no-repeat;
   opacity: ${backdropOpacity2};
   filter: blur(${backdropBlur2}px);
   pointer-events: none;
-  z-index: 2;
-}`,
-      );
+}`);
     }
-
     if (linearGradientEnabled) {
-      parts.push(
-        `.linear-gradient {
+      parts.push(`.linear-gradient {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -337,11 +273,8 @@ mask-repeat: no-repeat;
   background: linear-gradient(to top, ${linearGradientColor}, transparent);
   opacity: ${linearGradientOpacity};
   pointer-events: none;
-  z-index: 3;
-}`,
-      );
+}`);
     }
-
     navigator.clipboard.writeText(parts.join('\n\n'));
     alert('CSS copied to clipboard!');
   };
@@ -382,12 +315,13 @@ export const LIGHTING_CONFIG = {
     color: '${cycloLightColor}',
     position: [${cycloLightPosition.join(', ')}],
   },
-};`;
+};
+
+// Environment rotation: [${envRotation.map((v) => v.toFixed(4)).join(', ')}]`;
     navigator.clipboard.writeText(config);
     alert('Lighting config copied to clipboard!');
   };
 
-  // ── Derived styles ────────────────────────────────────────────────────────
   const maskStyle = maskEnabled
     ? {
         maskImage: `radial-gradient(circle at 50% 50%, black ${maskStart}%, transparent ${maskEnd}%)`,
@@ -413,7 +347,6 @@ export const LIGHTING_CONFIG = {
     opacity: backdropOpacity1,
     filter: `blur(${backdropBlur1}px)`,
     pointerEvents: 'none',
-    zIndex: 1,
   };
 
   const bokeh2Style = {
@@ -428,7 +361,6 @@ export const LIGHTING_CONFIG = {
     opacity: backdropOpacity2,
     filter: `blur(${backdropBlur2}px)`,
     pointerEvents: 'none',
-    zIndex: 2,
   };
 
   const linearGradientStyle = {
@@ -440,10 +372,8 @@ export const LIGHTING_CONFIG = {
     background: `linear-gradient(to top, ${linearGradientColor}, transparent)`,
     opacity: linearGradientOpacity,
     pointerEvents: 'none',
-    zIndex: 3,
   };
 
-  // ── Panel shared styles ───────────────────────────────────────────────────
   const panelStyle = {
     position: 'absolute',
     zIndex: 1000,
@@ -460,14 +390,6 @@ export const LIGHTING_CONFIG = {
     maxHeight: '85vh',
     overflowY: 'auto',
   };
-
-  const sliderLabel = (label: string) => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: 6,
-    flexWrap: 'wrap',
-    minWidth: 0,
-  });
 
   const slider = (min, max, step, value, onChange) => (
     <input
@@ -500,12 +422,12 @@ export const LIGHTING_CONFIG = {
     </label>
   );
 
-  const xyzSliders = (pos, setPos, range = 5) => (
+  const xyzSliders = (pos, setPos, range = 20) => (
     <>
       {['X', 'Y', 'Z'].map((axis, i) => (
         <label key={axis}>
-          {axis} {pos[i].toFixed(1)}
-          {slider(-range, range, 0.1, pos[i], (v) => {
+          {axis} {pos[i].toFixed(2)}
+          {slider(-range, range, 0.01, pos[i], (v) => {
             const next = [...pos];
             next[i] = v;
             setPos(next);
@@ -515,10 +437,8 @@ export const LIGHTING_CONFIG = {
     </>
   );
 
-  // ─────────────────────────────────────────────────────────────────────────
   return (
     <div style={{ position: 'relative', height: '100vh', width: '100vw' }}>
-      {/* ── Top-bar buttons ────────────────────────────────────────────── */}
       <button
         onClick={() => setPanelVisible((v) => !v)}
         style={{
@@ -562,7 +482,7 @@ export const LIGHTING_CONFIG = {
         Helpers: {helpersVisible ? 'ON' : 'OFF'}
       </button>
 
-      {/* ── Effects panel ──────────────────────────────────────────────── */}
+      {/* ── Effects panel ── */}
       {panelVisible && (
         <div style={{ ...panelStyle, top: 90, left: 10, width: 220 }}>
           <button
@@ -612,7 +532,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Mask */}
           <label>
             <input
               type="checkbox"
@@ -625,7 +544,7 @@ export const LIGHTING_CONFIG = {
           {maskEnabled && (
             <>
               <label>
-                diameter {maskDiameter}vh{' '}
+                diameter {maskDiameter}vh/w{' '}
                 {slider(10, 150, 1, maskDiameter, setMaskDiameter)}
               </label>
               <label>
@@ -640,7 +559,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Bokeh 1 */}
           <label>
             <input
               type="checkbox"
@@ -691,7 +609,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Bokeh 2 */}
           <label>
             <input
               type="checkbox"
@@ -705,11 +622,11 @@ export const LIGHTING_CONFIG = {
             <>
               <label>
                 size {backdropSize2}{' '}
-                {slider(10, 200, 1, backdropSize2, setBackdropSize2)}
+                {slider(10, 500, 1, backdropSize2, setBackdropSize2)}
               </label>
               <label>
                 blur {backdropBlur2}px{' '}
-                {slider(0, 200, 1, backdropBlur2, setBackdropBlur2)}
+                {slider(0, 500, 1, backdropBlur2, setBackdropBlur2)}
               </label>
               <label>
                 opacity {backdropOpacity2.toFixed(2)}{' '}
@@ -721,7 +638,7 @@ export const LIGHTING_CONFIG = {
                 grad start {backdropGradientStart2}%{' '}
                 {slider(
                   0,
-                  100,
+                  200,
                   1,
                   backdropGradientStart2,
                   setBackdropGradientStart2,
@@ -731,7 +648,7 @@ export const LIGHTING_CONFIG = {
                 grad end {backdropGradientEnd2}%{' '}
                 {slider(
                   0,
-                  100,
+                  200,
                   1,
                   backdropGradientEnd2,
                   setBackdropGradientEnd2,
@@ -742,7 +659,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Bottom Fade */}
           <label>
             <input
               type="checkbox"
@@ -789,7 +705,7 @@ export const LIGHTING_CONFIG = {
         </div>
       )}
 
-      {/* ── Lighting panel ─────────────────────────────────────────────── */}
+      {/* ── Lighting panel ── */}
       {lightingPanelVisible && (
         <div style={{ ...panelStyle, top: 90, right: 10, width: 230 }}>
           <strong>Lighting Controls</strong>
@@ -805,7 +721,21 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Ambient */}
+          {/* Environment Rotation */}
+          <strong>Environment Rotation</strong>
+          {['X', 'Y', 'Z'].map((axis, i) => (
+            <label key={axis}>
+              {axis} {envRotation[i].toFixed(2)}
+              {slider(-Math.PI, Math.PI, 0.01, envRotation[i], (v) => {
+                const next = [...envRotation];
+                next[i] = v;
+                setEnvRotation(next);
+              })}
+            </label>
+          ))}
+
+          <HR />
+
           <label>
             <input
               type="checkbox"
@@ -833,7 +763,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Directional */}
           <label>
             <input
               type="checkbox"
@@ -869,7 +798,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Spot */}
           <label>
             <input
               type="checkbox"
@@ -900,7 +828,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Point */}
           <label>
             <input
               type="checkbox"
@@ -937,7 +864,6 @@ export const LIGHTING_CONFIG = {
 
           <HR />
 
-          {/* Cyclo */}
           <label>
             <input
               type="checkbox"
@@ -966,32 +892,27 @@ export const LIGHTING_CONFIG = {
         </div>
       )}
 
-      {/* ── Scene ──────────────────────────────────────────────────────── */}
+      {/* ── Scene ── */}
       <div
         className="model__special-fx"
         style={{ position: 'relative', height: '100%', width: '100%' }}
       >
-        {bokeh1Enabled && <div className="bokeh-1" style={bokeh1Style} />}
-        {bokeh2Enabled && <div className="bokeh-2" style={bokeh2Style} />}
-        {linearGradientEnabled && (
-          <div className="linear-gradient" style={linearGradientStyle} />
-        )}
-
+        <div className="bokeh-1" style={bokeh1Style} />
+        <div className="bokeh-2" style={bokeh2Style} />
+        <div className="linear-gradient" style={linearGradientStyle} />
         <div
-          style={{
-            position: 'relative',
-            width: '100vh',
-            height: '100vh',
-            margin: '0 auto',
-          }}
+          className="model"
+          style={{ position: 'relative', height: '100%', width: '100%' }}
         >
           <div
-            className="model"
             style={{
+              position: 'absolute',
+              width: '100vh',
+              height: '100vh',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
               ...maskStyle,
-              position: 'relative',
-              height: '100%',
-              width: '100%',
             }}
           >
             <Canvas
@@ -1003,6 +924,7 @@ export const LIGHTING_CONFIG = {
               }}
             >
               <SceneContent
+                envRotation={envRotation}
                 helpersVisible={helpersVisible}
                 orbitEnabled={helpersVisible}
                 isPaused={isPaused}

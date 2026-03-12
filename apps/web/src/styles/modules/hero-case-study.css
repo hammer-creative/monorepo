@@ -1,0 +1,155 @@
+/* apps/web/src/styles/modules/hero-case-study.css */
+
+/* Layout, case study hero */
+
+.case-study .hero-module {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-study .hero-card__image-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  container-type: inline-size;
+}
+
+.case-study .hero-card__image--hero {
+  flex: 1;
+  min-height: 0;
+}
+
+.case-study .hero-card__title-wrapper {
+  /* include type size in layout selectors in order to align svg arrow with type size */
+  @mixin title-primary var(--font-serif), uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--flow-space-1);
+  padding-block: var(--flow-space-1);
+}
+
+.case-study .hero-card__title {
+  @mixin title-primary var(--font-serif), uppercase;
+  line-height: 1;
+}
+
+@media (min-width: 20em) and (max-width: 130em) {
+  .case-study .hero-card__title[data-length='long'] {
+    font-size: var(--font-size-3--long) !important;
+  }
+}
+
+.case-study .hero-card__scroll-trigger {
+  position: relative;
+}
+
+.case-study .hero-card__details {
+  padding-block-start: var(--space-fluid-20-60);
+  padding-block-end: var(--space-fluid-40-60);
+  padding-inline-start: var(--space-fluid-20-40);
+}
+
+.case-study .hero-card__summary > * {
+  padding-block-end: var(--space-fluid-40-60);
+}
+
+.case-study .hero-card__text {
+  @mixin body-lg;
+  padding-inline-end: var(--flow-space-3);
+}
+
+.case-study .client-list--names {
+  @mixin body-md;
+}
+
+/* Responsive layout: Case study */
+@media screen and (min-width: 50em) {
+  .hero-card__bar {
+    display: block;
+    padding-inline-start: var(--flow-space-1);
+  }
+
+  .case-study .hero-card__bar {
+    display: block;
+  }
+
+  .case-study .hero-card__scroll-trigger {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none;
+  }
+
+  .case-study .hero-card__title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: var(--module-bg);
+    width: 50%;
+  }
+
+  .case-study .hero-card__details {
+    display: flex;
+    /* justify-content: space-evenly; */
+  }
+
+  .case-study .hero-card__details > * {
+    flex: 1;
+  }
+
+  .case-study .hero-card__text {
+    margin-block: initial;
+  }
+
+  .case-study .hero-card__title {
+    padding: var(--space-fluid-20-40);
+  }
+
+  .case-study .hero-card__lists {
+    flex: 1;
+    justify-content: space-around;
+  }
+}
+
+/* Buttons & ornaments */
+
+.hero-card__bar {
+  display: none;
+  line-height: 0;
+}
+
+.hero-card__clients .label {
+  color: var(--color-hyperbeam);
+}
+
+/* Scroll trigger */
+
+.hero-card__scroll-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hero-card__scroll-trigger svg {
+  color: $color-hyperbeam;
+  transition: color 0.3s ease;
+}
+
+.hero-card__scroll-trigger:hover svg {
+  color: $color-aircutter;
+}
+
+/* Hero card lists layout */
+.case-study .hero-card__lists {
+  display: flex;
+  gap: var(--flow-space-2);
+}
+
+.case-study .hero-card__lists {
+  justify-content: flex-start;
+}

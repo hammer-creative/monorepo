@@ -1,5 +1,13 @@
 import * as THREE from 'three';
 
+export const GLB_SOURCE = 'model.glb';
+// export const GLB_SOURCE = 'Lv_EyeballExport_V5C_NewUV.glb';
+export const VIDEO_SOURCE = 'reel.mp4';
+
+// export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
+
+export const ENVIRONMENT_MAP_SOURCE = 'studio_kontrast_04_4k-rev2.exr';
+
 // ==========================================
 // DEBUG
 // ==========================================
@@ -51,7 +59,7 @@ export const TONE_MAPPING_EXPOSURE = 1.0;
 // ==========================================
 export const PLAY_BUTTON_Z = 0.14;
 export const PLAY_BUTTON_SCALE = 0.01;
-export const PLAY_BUTTON_COLOR = '#D4A843';
+export const PLAY_BUTTON_COLOR = '#FFCC98';
 
 // ==========================================
 // EYE LIGHTS (CATCHLIGHTS)
@@ -95,49 +103,10 @@ export const EYE_LIGHTS = [
 ];
 
 // ==========================================
-// LIGHTING CONFIG — paste from dev panel to update
-// ==========================================
-export const LIGHTING_CONFIG = {
-  ambientLight: {
-    enabled: true,
-    intensity: 5,
-    color: '#a9b7bd',
-  },
-  directionalLight: {
-    enabled: true,
-    intensity: 5,
-    color: '#dbe1e1',
-    position: [0, 0, 0],
-  },
-  spotLight: {
-    enabled: false,
-    intensity: 0,
-    color: '#000000',
-    position: [0, 0, 0],
-    angle: 0,
-    penumbra: 0,
-  },
-  pointLight: {
-    enabled: false,
-    intensity: 0,
-    color: '#000000',
-    position: [0, 0, 0],
-    distance: 0,
-    decay: 0,
-  },
-  cycloLight: {
-    enabled: false,
-    intensity: 0,
-    color: '#000000',
-    position: [0, 0, 0],
-  },
-};
-
-// ==========================================
 // IRIS EDGE GRADIENT
 // ==========================================
 
-export const IRIS_EDGE_FADE_START = 0.75;
+export const IRIS_EDGE_FADE_START = 0.7;
 export const IRIS_EDGE_FADE_END = 1;
 export const IRIS_EDGE_COLOR_R = 0; // edge color RGB 0–1
 export const IRIS_EDGE_COLOR_G = 0;
@@ -159,3 +128,43 @@ export const EYE_LERP_SPEED = 0.08; // how fast eye follows mouse
 export const INERTIA_FACTOR = 0.12; // how fast group rotation catches up (lower = more lag)
 export const DRIFT_SPEED = 0.008; // how fast target drifts when idle
 export const DRIFT_AMPLITUDE = 0.7; // how wide the drift wanders (0-1 multiplier of MAX_ROTATION)
+
+// LIGHTING_CONFIG — paste into sceneConstants.ts
+// LIGHTING_CONFIG — paste into sceneConstants.ts
+export const LIGHTING_CONFIG = {
+  ambientLight: {
+    enabled: true,
+    intensity: 1,
+    color: '#69a8b0',
+  },
+  directionalLight: {
+    enabled: true,
+    intensity: 2.9,
+    color: '#e8f7f8',
+    position: [-0.1, 2.5, 1.8],
+  },
+  spotLight: {
+    enabled: false,
+    intensity: 5,
+    color: '#ffffff',
+    position: [0, 5, 3],
+    angle: 0.3,
+    penumbra: 0.5,
+  },
+  pointLight: {
+    enabled: false,
+    intensity: 5,
+    color: '#ffffff',
+    position: [2, 2, 2],
+    distance: 10,
+    decay: 2,
+  },
+  cycloLight: {
+    enabled: false,
+    intensity: 2,
+    color: '#ffffff',
+    position: [0, -3, 0],
+  },
+};
+
+// Environment rotation: [-2.7316, -0.5316, 2.5884]

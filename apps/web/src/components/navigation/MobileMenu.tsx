@@ -1,8 +1,9 @@
 'use client';
 
+import { Copyright } from '@/components/common';
 import { LinkList } from '@/components/common/LinkList';
 import { Wordmark } from '@/components/common/Wordmark';
-import { Addresses, Copyright, UtilitiesMenu } from '@/components/navigation';
+import { Addresses, UtilitiesMenu } from '@/components/navigation';
 import { RadixMenu } from '@/components/navigation/RadixMenu';
 import { useNavigation } from '@/contexts/NavigationContext';
 import type { NavigationData } from '@/types/navigation';
@@ -21,14 +22,14 @@ const ANIMATION = {
       duration: 0.5,
       stagger: 0.05,
       ease: 'easeOut' as const,
-      y: { from: 50, to: 0 },
+      // y: { from: 50, to: 0 },
       opacity: { from: 0, to: 1 },
     },
     exit: {
       duration: 0.5,
       stagger: 0.03,
       ease: 'easeIn' as const,
-      y: { from: 0, to: 50 },
+      // y: { from: 0, to: 50 },
       opacity: { from: 1, to: 0 },
     },
   },
@@ -48,7 +49,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
   const primaryMenuMap = useRef<Map<string, HTMLElement>>(new Map());
   const wordmarkRef = useRef<HTMLDivElement>(null);
 
-  // Refs for secondary menu sections
   const addressesRef = useRef<HTMLDivElement>(null);
   const utilitiesRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
@@ -67,13 +67,9 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     }
   }, []);
 
-  /**
-   * OPEN: Overlay in → Items in
-   */
   const handleOpen = useCallback(async () => {
     if (!overlayRef.current) return;
 
-    // Get RadixMenu items + secondary sections
     const radixItems = Array.from(primaryMenuMap.current.values());
     const secondarySections = [
       addressesRef.current,
@@ -87,13 +83,11 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
       wordmarkRef.current,
     ].filter(Boolean) as HTMLElement[];
 
-    // Set initial states
     allItems.forEach((item) => {
       item.style.opacity = '0';
-      item.style.transform = `translateY(${ANIMATION.items.enter.y.from}px)`;
+      // item.style.transform = `translateY(${ANIMATION.items.enter.y.from}px)`;
     });
 
-    // Overlay in
     await animate(
       overlayRef.current,
       { scaleY: [0, 1] },
@@ -103,11 +97,10 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
       },
     );
 
-    // Items in
     await animate(
       allItems,
       {
-        y: [ANIMATION.items.enter.y.from, ANIMATION.items.enter.y.to],
+        // y: [ANIMATION.items.enter.y.from, ANIMATION.items.enter.y.to],
         opacity: [
           ANIMATION.items.enter.opacity.from,
           ANIMATION.items.enter.opacity.to,
@@ -121,9 +114,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     );
   }, [animate]);
 
-  /**
-   * Exit items only
-   */
   const exitItems = useCallback(
     async (clickedHref?: string | null) => {
       const radixItems = Array.from(primaryMenuMap.current.values());
@@ -134,7 +124,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
       ].filter(Boolean) as HTMLElement[];
 
       if (clickedHref) {
-        // Separate clicked RadixMenu item from non-clicked
         const nonClickedRadixItems = radixItems.filter(
           (item) => !item.hasAttribute('data-clicked'),
         );
@@ -142,7 +131,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           item.hasAttribute('data-clicked'),
         );
 
-        // Non-clicked RadixMenu items + ALL secondary sections exit together
         const nonClickedItems = [
           ...nonClickedRadixItems,
           ...secondarySections,
@@ -153,7 +141,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           await animate(
             nonClickedItems,
             {
-              y: [ANIMATION.items.exit.y.from, ANIMATION.items.exit.y.to],
+              // y: [ANIMATION.items.exit.y.from, ANIMATION.items.exit.y.to],
               opacity: [
                 ANIMATION.items.exit.opacity.from,
                 ANIMATION.items.exit.opacity.to,
@@ -167,12 +155,11 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           );
         }
 
-        // Clicked RadixMenu item exits last
         if (clickedItem) {
           await animate(
             clickedItem,
             {
-              y: [ANIMATION.items.exit.y.from, ANIMATION.items.exit.y.to],
+              // y: [ANIMATION.items.exit.y.from, ANIMATION.items.exit.y.to],
               opacity: [
                 ANIMATION.items.exit.opacity.from,
                 ANIMATION.items.exit.opacity.to,
@@ -185,7 +172,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           );
         }
       } else {
-        // No clicked item - everything exits together
         const allItems = [
           ...radixItems,
           ...secondarySections,
@@ -196,7 +182,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           await animate(
             allItems,
             {
-              y: [ANIMATION.items.exit.y.from, ANIMATION.items.exit.y.to],
+              // y: [ANIMATION.items.exit.y.from, ANIMATION.items.exit.y.to],
               opacity: [
                 ANIMATION.items.exit.opacity.from,
                 ANIMATION.items.exit.opacity.to,
@@ -214,9 +200,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     [animate],
   );
 
-  /**
-   * Exit overlay only
-   */
   const exitOverlay = useCallback(async () => {
     if (!overlayRef.current) return;
 
@@ -230,9 +213,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     );
   }, [animate]);
 
-  /**
-   * Watch isOpen changes - but ignore if navigating
-   */
   useEffect(() => {
     if (isNavigatingRef.current) return;
 
@@ -254,14 +234,10 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     }
   }, [isOpen, shouldRender, handleOpen, exitItems, exitOverlay]);
 
-  /**
-   * Link click - exit items, navigate (overlay stays), wait for route load
-   */
   const handleLinkClick = useCallback(
     async (href: string) => {
       if (isNavigatingRef.current) return;
 
-      // External links - open manually and close menu
       const isExternal = href.startsWith('http') || href.startsWith('//');
       const isMailto = href.startsWith('mailto:');
 
@@ -279,7 +255,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
         return;
       }
 
-      // Clicking current page - just close
       if (href === pathname) {
         closeMenu();
         return;
@@ -291,29 +266,19 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
       await new Promise((resolve) => setTimeout(resolve, 0));
 
-      // Exit items
       await exitItems(href);
 
-      // Navigate - overlay stays visible, route loads behind it
       router.push(href);
-
-      // Pathname effect will handle overlay exit when route is ready
     },
     [exitItems, router, pathname, closeMenu],
   );
 
-  /**
-   * Route change complete - exit overlay
-   */
   useEffect(() => {
     if (!isNavigatingRef.current || !targetPathnameRef.current) return;
 
     if (pathname === targetPathnameRef.current) {
       const finish = async () => {
-        // Exit overlay
         await exitOverlay();
-
-        // Cleanup
         setShouldRender(false);
         setClickedHref(null);
         closeMenu();
@@ -324,9 +289,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     }
   }, [pathname, exitOverlay, closeMenu]);
 
-  /**
-   * Escape key
-   */
   useEffect(() => {
     if (!isOpen) return;
 
@@ -375,7 +337,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
             <Addresses items={navigationData.addresses} />
           </div>
           <div ref={utilitiesRef} className="menu-secondary utilities">
-            <UtilitiesMenu />
+            <UtilitiesMenu onLinkClick={handleLinkClick} />
           </div>
           <div ref={socialRef} className="menu-secondary social">
             <LinkList items={navigationData.social} />

@@ -25,17 +25,22 @@
 @import './components/marquee.css';
 @import './components/navigation.css';
 @import './components/title';
+@import './components/text';
 @import './components/text-block';
 @import './components/table';
+@import './components/subheader';
 
 /* SCENE */
 @import './scene/model';
 
 /* SANITY MODULES */
-@import './modules/cards-case-studies.css';
+@import './modules/cards-case-studies-base.css';
+@import './modules/cards-case-studies-carousel.css';
+@import './modules/cards-case-studies-grid.css';
 @import './modules/cards-carousel.css';
 @import './modules/cards-services.css';
-@import './modules/hero.css';
+@import './modules/hero-case-study.css';
+@import './modules/hero-services.css';
 @import './modules/impact.css';
 @import './modules/single-image.css';
 @import './modules/text.css';

@@ -35,69 +35,11 @@ body {
   /* mb-3 mr-5p pt-4 text-lg-fluid ws-pre-line */
 }
 
-h3 {
-  /* font-weight: 100; */
-}
-
-h1,
-h2 {
-  /* text-transform: uppercase; */
-}
-
-h1 {
-  /* @mixin typography var(--font-serif), var(--font-size-fluid-headline);
-  line-height: var(--line-height-tight);
-  letter-spacing: -0.06em; */
-}
-
-h2 {
-  /* @mixin typography var(--font-serif), var(--font-size-fluid-subheadline);
-  line-height: var(--line-height-tight);
-  letter-spacing: var(--letter-spacing-tight); */
-  /* @mixin letter-spacing-responsive var(--letter-spacing-loose); */
-}
-
-h3 {
-  /* @mixin typography var(--font-sans), var(--font-size-fluid-impact-headline);
-  line-height: var(--line-height-default); */
-}
-
-h3 {
-  /* font-family: var(--font-sans); */
-}
-
 /* PARAGRAPHS & BLOCKS */
 p {
   hyphens: none;
   text-justify: inter-word;
 }
-
-/* p.large {
-  @mixin typography var(--font-sans), var(--font-size-fluid-lg);
-  line-height: var(--line-height-fluid-reverse);
-}
-
-p.medium {
-  @mixin typography var(--font-sans), var(--font-size-fluid-medium);
-  line-height: 1.2;
-}
-
-p.small,
-.client-name {
-  @mixin typography var(--font-sans), var(--font-size-fluid-small);
-} */
-
-/* ul li {
-  @mixin typography var(--font-sans), var(--font-size-fluid-xsmall);
-  line-height: var(--line-height-loose);
-} */
-
-/* .tag {
-  @mixin typography var(--font-sans), var(--font-size-fluid-extra-small);
-  letter-spacing: var(--letter-spacing-loose);
-  text-transform: uppercase;
-  line-height: 2;
-} */
 
 /* Blockquote override for case study pages */
 .case-study blockquote {

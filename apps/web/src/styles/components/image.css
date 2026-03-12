@@ -11,16 +11,8 @@
   z-index: var(--z-image);
 }
 
-/* Image, modules - carousel card */
-
-/* Image, modules - case study card */
-
-/* Image, modules - half-width */
-
-/* Image, modules - hero */
 .hero-card__image--hero {
   @mixin aspect-ratio-hero-image;
-  /* min-height: 100vh; */
 }
 
 .single-image-card__image--full-width {
@@ -34,13 +26,6 @@
 .impact-cards--one-text-one-image .impact-card__image--impact {
   @mixin aspect-ratio-impact;
 }
-
-/* Image, modules - full-width */
-.single-image-module .image {
-  /* @mixin aspect-ratio-full-width; */
-}
-
-/* Image, modules - text + image */
 
 .image--video-poster {
   aspect-ratio: 16 /9;

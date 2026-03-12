@@ -53,20 +53,18 @@ export function CarouselBase({
     <div ref={containerRef}>
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        speed={5000}
+        speed={10000}
         loop={true}
-        freeMode={true}
+        slidesPerView={1}
+        spaceBetween={15}
         autoplay={{
           delay: 0,
           reverseDirection,
+          disableOnInteraction: false,
         }}
         breakpoints={{
-          480: {
-            slidesPerView: 1,
-          },
-          768: {
-            slidesPerView: 3,
-          },
+          480: { slidesPerView: 1 },
+          768: { slidesPerView: 3 },
         }}
         modules={[Autoplay, Pagination]}
         className={`swiper-container ${className}`}

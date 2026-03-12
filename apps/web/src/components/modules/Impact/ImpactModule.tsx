@@ -57,7 +57,10 @@ export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
   return (
     <div className={`${bemContainer} ${bemContainer}--${layoutClass}`}>
       {textBlocks.map((block, i) => (
-        <div key={i} className={`${bemWrapper}__item`}>
+        <div
+          key={i}
+          className={`${bemWrapper}__item ${bemWrapper}__item--text`}
+        >
           {block.title && (
             <Title
               as="h3"
@@ -75,7 +78,7 @@ export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
       {hasImage && (
         <SanityImpactImage
           image={image}
-          className={`${bemWrapper}__item ${bemWrapper}__image`}
+          className={`${bemWrapper}__item ${bemWrapper}__item--image ${bemWrapper}__image`}
         />
       )}
     </div>

@@ -18,6 +18,19 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   crossOrigin: 'anonymous',
+  async headers() {
+    return [
+      {
+        source: '/model/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
   images: {
     loader: 'custom',
     loaderFile: './src/lib/sanity/imageLoader.ts',

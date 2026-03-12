@@ -1,8 +1,12 @@
 // apps/web/src/app/page.tsx
 
-import { ClientIcons, ExtendedLink, LinkArrowSmall } from '@/components/common';
+import {
+  ClientIcons,
+  ExtendedLink,
+  LinkArrowSmall,
+  Text,
+} from '@/components/common';
 import { Impressum } from '@/components/common/Impressum';
-import { Tagline } from '@/components/common/Tagline';
 import { WordmarkSVG } from '@/components/common/Wordmark';
 import { MarqueeScene } from '@/components/marquee/MarqueeScene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
@@ -21,6 +25,7 @@ import type {
 } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
 import { draftMode } from 'next/headers';
+import type { ReactElement } from 'react';
 
 import { homePageAnimations } from './page.animations';
 
@@ -33,39 +38,52 @@ const moduleComponents = {
 
 type ModuleData = CaseStudyCardModuleType | TextModuleType;
 
-/**
- * Describes a link injected after a specific module index in the home page
- * module list, rendered as an `ExtendedLink` with an arrow.
- */
-interface InjectedLink {
+interface InjectedContent {
   moduleIndex: number;
-  href: string;
-  label: string;
-  className?: string;
+  position: 'before' | 'after';
+  content: ReactElement | ReactElement[];
 }
 
-/**
- * Links injected after specific modules by index. Decoupled from CMS data so
- * editorial changes to module order require updating these indices.
- */
-const INJECTED_LINKS: InjectedLink[] = [
+const INJECTED_CONTENT: InjectedContent[] = [
   {
     moduleIndex: 1,
-    href: '/services',
-    label: 'View Our Services',
-    className: 'label',
+    position: 'after',
+    content: [
+      <ExtendedLink
+        key="link-1"
+        href="/services"
+        className="label"
+        arrowComponent={<LinkArrowSmall />}
+      >
+        View Our Services
+      </ExtendedLink>,
+    ],
   },
-  { moduleIndex: 3, href: '/work', label: 'View All Work', className: 'label' },
+  {
+    moduleIndex: 2,
+    position: 'before',
+    content: [<Text key="heading-3" as="h2" text="Our Work" />],
+  },
+  {
+    moduleIndex: 2,
+    position: 'after',
+    content: [
+      <ExtendedLink
+        key="link-2"
+        href="/work"
+        className="label"
+        arrowComponent={<LinkArrowSmall />}
+      >
+        View All Work
+      </ExtendedLink>,
+    ],
+  },
 ];
 
 export const metadata = buildMetadata('Home');
 
 export const revalidate = 60;
 
-/**
- * Fetches home page data from Sanity, switching to the draft client when Next
- * draft mode is active.
- */
 async function getHomePageData(): Promise<{ homePage: HomePageType | null }> {
   const draft = await draftMode();
   const sanityClient = draft.isEnabled ? draftClient : client;
@@ -73,10 +91,6 @@ async function getHomePageData(): Promise<{ homePage: HomePageType | null }> {
   return { homePage };
 }
 
-/**
- * Returns the scroll animation config for a given module type and position, or
- * `null` if the module should render without animation.
- */
 function getAnimateConfig(type: string, index: number) {
   if (type === 'textModule' && index === 0)
     return homePageAnimations.textModuleFirst;
@@ -85,17 +99,13 @@ function getAnimateConfig(type: string, index: number) {
   return null;
 }
 
-/**
- * Renders the home page. Modules are fetched from Sanity and rendered
- * dynamically via `moduleComponents`. A `ClientIcons` chyron is injected
- * before the final module, and `INJECTED_LINKS` are appended after their
- * respective modules by index.
- */
 export default async function HomePage() {
   const { homePage } = await getHomePageData();
   if (!homePage) return null;
 
   const resolvedModules = homePage.modules?.map(resolveModuleColors) ?? [];
+
+  console.log(resolvedModules);
 
   return (
     <>
@@ -103,7 +113,7 @@ export default async function HomePage() {
         <div className={`${bem}__masthead`}>
           <div className={`${bem}__wordmark`}>
             <WordmarkSVG />
-            <Tagline />
+            <Text as="div" variant="tagline" text="The Gaming Agency" />
           </div>
           <Impressum />
         </div>
@@ -120,23 +130,25 @@ export default async function HomePage() {
             return [];
           }
 
-          const links = INJECTED_LINKS.filter((l) => l.moduleIndex === index);
+          const injectedBefore = INJECTED_CONTENT.filter(
+            (item) => item.moduleIndex === index && item.position === 'before',
+          );
+          const injectedAfter = INJECTED_CONTENT.filter(
+            (item) => item.moduleIndex === index && item.position === 'after',
+          );
+
           const animateConfig = getAnimateConfig(mod._type, index);
 
           const content = (
             <>
+              {injectedBefore.flatMap((item) =>
+                Array.isArray(item.content) ? item.content : [item.content],
+              )}
               {/* @ts-expect-error - Dynamic module rendering */}
               <Component data={mod as ModuleData} />
-              {links.map((link, i) => (
-                <ExtendedLink
-                  key={i}
-                  href={link.href}
-                  className={link.className}
-                  arrowComponent={<LinkArrowSmall />}
-                >
-                  {link.label}
-                </ExtendedLink>
-              ))}
+              {injectedAfter.flatMap((item) =>
+                Array.isArray(item.content) ? item.content : [item.content],
+              )}
             </>
           );
 

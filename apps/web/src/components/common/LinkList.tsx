@@ -8,24 +8,21 @@ interface LinkItem {
   id: string;
   href?: string;
   label: string;
-  email?: string; // For obfuscated email addresses
-  className?: string; // Per-item className
+  email?: string;
+  className?: string;
 }
 
 interface LinkListProps {
   items: LinkItem[];
-  className?: string; // Applied to <ul> wrapper
-  itemClassName?: string; // Applied to <li> items
-  linkClassName?: string; // Applied to all links (in addition to item.className)
+  className?: string;
+  itemClassName?: string;
+  linkClassName?: string;
   onLinkClick?: (href: string, e: React.MouseEvent) => void;
-  ariaLabel?: string; // Accessibility label for <ul>
-  asList?: boolean; // If false, renders as fragment without <ul>/<li> wrappers
+  ariaLabel?: string;
+  asList?: boolean;
+  currentPathname?: string;
 }
 
-/**
- * LinkList component that renders a list of ExtendedLinks
- * Can render as a <ul> list (default) or as a fragment for inline usage
- */
 export function LinkList({
   items,
   className,
@@ -34,14 +31,25 @@ export function LinkList({
   onLinkClick,
   ariaLabel,
   asList = true,
+  currentPathname,
 }: LinkListProps) {
-  // Combine linkClassName prop with per-item className
+  const isActive = (href?: string) =>
+    !!href &&
+    (href === '/'
+      ? currentPathname === '/'
+      : (currentPathname?.startsWith(href) ?? false));
+
   const getLinkClassName = (item: LinkItem) => {
-    const classes = [linkClassName, item.className].filter(Boolean).join(' ');
+    const classes = [
+      linkClassName,
+      item.className,
+      isActive(item.href) ? 'is-active' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
     return classes || undefined;
   };
 
-  // Render as semantic list with <ul> and <li> wrappers
   if (asList) {
     return (
       <ul
@@ -52,12 +60,14 @@ export function LinkList({
           <li
             key={item.id}
             {...(itemClassName && { className: itemClassName })}
+            {...(isActive(item.href) && { 'data-active': true })}
           >
             <ExtendedLink
               href={item.href}
               email={item.email}
               className={getLinkClassName(item)}
               onClick={onLinkClick}
+              aria-current={isActive(item.href) ? 'page' : undefined}
             >
               {item.label}
             </ExtendedLink>
@@ -67,8 +77,6 @@ export function LinkList({
     );
   }
 
-  // Render as fragment (no wrapper) - useful for inline usage like footer utilities
-  // Fragment is needed to provide keys to React
   return (
     <>
       {items.map((item) => (
@@ -78,6 +86,7 @@ export function LinkList({
             email={item.email}
             className={getLinkClassName(item)}
             onClick={onLinkClick}
+            aria-current={isActive(item.href) ? 'page' : undefined}
           >
             {item.label}
           </ExtendedLink>

@@ -1,0 +1,10 @@
+/* apps/web/src/styles/components/text.css */
+
+/* Typography: /work page, title and tagline */
+.work-page__heading .title {
+  font-family: var(--font-sans);
+  font-weight: 100;
+  color: var(--color-sandstorm);
+  font-size: var(--font-size-4);
+  letter-spacing: -0.04em;
+}

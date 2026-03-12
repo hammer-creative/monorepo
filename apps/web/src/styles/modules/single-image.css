@@ -7,16 +7,14 @@
   /* border: 5px solid red; */
 }
 
-.single-image-module .wrapper {
-  .row.single-image {
-    position: relative;
-  }
+.single-image-module .single-image-card {
+  padding: var(--flow-space-0);
+}
 
-  @media screen and (min-width: 50rem) {
-    .row.single-image .image {
-      /* TODO: do we need this? */
-      /* height: 100vh;
+@media screen and (min-width: 50rem) {
+  .row.single-image .image {
+    /* TODO: do we need this? */
+    /* height: 100vh;
       width: 100%; */
-    }
   }
 }

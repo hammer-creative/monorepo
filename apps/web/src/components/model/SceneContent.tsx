@@ -4,10 +4,13 @@
 'use client';
 
 import * as C from '@/components/model/sceneConstants';
-import { Environment, OrbitControls } from '@react-three/drei';
+import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import { Suspense, useEffect, useRef } from 'react';
 
+import { ENVIRONMENT_MAP_SOURCE, GLB_SOURCE } from './sceneConstants';
 import SceneModel from './SceneModel';
+
+useGLTF.preload(`/model/${GLB_SOURCE}`);
 
 const LC = C.LIGHTING_CONFIG;
 
@@ -17,7 +20,6 @@ export default function SceneContent({
   orbitEnabled = false,
   isPaused = false,
   onPlayClick,
-  // All lighting props fall back to sceneConstants values
   ambientLightEnabled = LC.ambientLight.enabled,
   ambientLightIntensity = LC.ambientLight.intensity,
   ambientLightColor = LC.ambientLight.color,
@@ -41,6 +43,7 @@ export default function SceneContent({
   cycloLightIntensity = LC.cycloLight.intensity,
   cycloLightColor = LC.cycloLight.color,
   cycloLightPosition = LC.cycloLight.position,
+  envRotation = [0.5, Math.PI / 4, 0.5],
 }) {
   const spotLightRef = useRef();
   const spotLightTargetRef = useRef();
@@ -73,6 +76,14 @@ export default function SceneContent({
             position={directionalLightPosition}
             intensity={directionalLightIntensity}
             color={directionalLightColor}
+            shadow-mapSize-width={1024}
+            shadow-mapSize-height={1024}
+            shadow-camera-near={0.01}
+            shadow-camera-far={10}
+            shadow-camera-left={-0.5}
+            shadow-camera-right={0.5}
+            shadow-camera-top={0.5}
+            shadow-camera-bottom={-0.5}
           />
           {helpersVisible && (
             <mesh position={directionalLightPosition}>
@@ -165,8 +176,19 @@ export default function SceneContent({
       )}
 
       <Suspense fallback={null}>
+        <Environment
+          files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
+          background={false}
+          environmentRotation={[0.4, 2.1, 2]} // <-- use these coordinates for production
+        />
+
+        <Environment
+          files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
+          background={true}
+        />
+
         <SceneModel
-          url="/model/model-v8.glb"
+          url={`/model/${GLB_SOURCE}`}
           isPaused={isPaused}
           onPlayClick={onPlayClick}
         />
