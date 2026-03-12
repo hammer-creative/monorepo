@@ -15,7 +15,13 @@
   z-index: 10;
 }
 
+/* .model__special-fx {
+  background: transparent;
+}
+
 .model {
+  visibility: visible;
+
   mask-image: radial-gradient(circle at 50% 50%, black 47%, transparent 68%);
   -webkit-mask-image: radial-gradient(
     circle at 50% 50%,
@@ -28,9 +34,10 @@
   -webkit-mask-position: center;
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
-}
+  background: transparent;
+} */
 
-.bokeh-1 {
+/* .bokeh-1 {
   position: absolute;
   width: min(164vw, 164vh);
   height: min(164vw, 164vh);
@@ -56,9 +63,9 @@
   opacity: 0.5;
   filter: blur(498px);
   pointer-events: none;
-}
+} */
 
-.linear-gradient {
+/* .linear-gradient {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -67,9 +74,9 @@
   background: linear-gradient(to top, #778888, transparent);
   opacity: 0.5;
   pointer-events: none;
-}
+} */
 
-.eye-shadow {
+/* .eye-shadow {
   position: absolute;
   width: 100vh;
   height: 5vh;
@@ -83,4 +90,14 @@
   );
   filter: blur(12px);
   pointer-events: none;
+} */
+
+.bokeh-2 {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.model.is-ready ~ * .bokeh-2,
+.is-ready .bokeh-2 {
+  opacity: 0.5;
 }

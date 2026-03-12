@@ -14,7 +14,15 @@ import SceneContent from './SceneContent';
 
 const { TONE_MAPPING_EXPOSURE, LIGHTING_CONFIG: L, SHOW_HELPER_PANELS } = C;
 
-export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
+export default function Scene({
+  onPlayClick,
+  loadWatcher,
+  ready,
+}: {
+  onPlayClick?: () => void;
+  loadWatcher?: React.ReactNode;
+  ready?: boolean;
+}) {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
@@ -41,8 +49,13 @@ export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
       <div className="linear-gradient" />
       <div className="eye-shadow" />
       <div
-        className="model"
-        style={{ position: 'relative', height: '100%', width: '100%' }}
+        className={`model${ready ? ' is-ready' : ''}`}
+        style={{
+          position: 'relative',
+          height: '100%',
+          width: '100%',
+          opacity: ready ? 1 : 0,
+        }}
       >
         <Canvas
           camera={{ position: [0, 0, 0.4], fov: 50 }}
@@ -53,6 +66,7 @@ export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
             alpha: false,
           }}
         >
+          {loadWatcher}
           <SceneContent
             helpersVisible={SHOW_HELPER_PANELS}
             orbitEnabled={SHOW_HELPER_PANELS}
