@@ -40,7 +40,7 @@
 
 /* Toggle text */
 .menu-toggle-text {
-  font-size: var(--font-size-all-caps-fluid);
+  font-size: var(--font-size-toggle);
   width: 6ch;
   display: inline-block;
   text-align: left;

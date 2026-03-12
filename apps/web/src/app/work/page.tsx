@@ -34,11 +34,6 @@ export default async function WorkPage() {
   return (
     <>
       <div className={`${bem}__heading`}>
-        <Text
-          as="div"
-          variant="tagline"
-          text="Building from first spawn to new game+"
-        />
         <Text as="h1" variant="primary" text="Our Work" />
       </div>
       {resolvedModules.map((mod) => {

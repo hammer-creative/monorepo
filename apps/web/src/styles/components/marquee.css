@@ -41,20 +41,22 @@
   color: var(--color-nightshade);
 }
 
-.home__wordmark .text--tagline {
-  text-align: center;
-}
-
 .home__masthead .impressum,
 .home__masthead .text--tagline {
   color: var(--color-hyperbeam);
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  font-size: var(--font-size--4);
+
   line-height: 1;
 }
 
+.home__wordmark .text--tagline {
+  text-align: center;
+  font-size: var(--font-size--2);
+}
+
 .home__masthead .impressum p {
+  font-size: var(--font-size--4);
   text-align: center;
   @mixin body-xs;
 }
@@ -90,7 +92,7 @@
     width: 300px;
   }
 
-  .home__masthead .impressum,
+  .home__masthead .impressum p,
   .home__masthead .text--tagline {
     color: var(--color-nightshade);
   }

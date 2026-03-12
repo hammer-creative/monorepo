@@ -10,11 +10,38 @@
   padding-block-end: var(--space-fluid-60-240);
 }
 
+/* Layout, case study grid */
 .home__modules .case-study__grid {
   padding-block-end: var(--space-20);
 }
 
-/* View all work link */
+/* Layout, text modules */
+.home__modules .text-module,
+[data-page='/'] [data-module-index='2'] h2.title {
+  padding-inline: var(--space-fluid-20-160);
+}
+
+/* Our work */
+[data-page='/'] [data-module-index='2'] h2.title {
+  margin-block-end: var(--space-fluid-20-40);
+}
+
+/* We are fans and experts... */
+[data-page='/'] [data-module-index='0'] {
+  margin-block-end: var(--space-fluid-20-80);
+}
+
+/* We are fans and experts... */
+[data-page='/'] [data-module-index='0'] .text-card__text,
+[data-page='/'] [data-module-index='3'] .text-card__text {
+  padding-inline-end: var(--space-20);
+  @media screen and (min-width: 50em) {
+    max-width: 900px;
+    padding-inline-end: initial;
+  }
+}
+
+/* Hammer is in the trenches... */
 .home__modules .case-study-card-module,
 .home__modules .client-icons-module {
   margin-block-end: var(--space-fluid-60-120);
@@ -28,32 +55,12 @@
   }
 }
 
+/* View all work cta */
 .home__modules .case-study-card-module > .label {
   padding-inline: var(--space-fluid-gutter-sm);
   display: block;
   @media screen and (min-width: 50em) {
     text-align: right;
-  }
-}
-
-.home__modules .text-module {
-  padding-inline: var(--space-fluid-20-160);
-}
-
-[data-page='/'] [data-module-index='0'] {
-  margin-block-end: var(--space-fluid-20-40);
-  @media screen and (min-width: 50em) {
-    margin-block-end: var(--space-100);
-  }
-}
-
-/* We are fans... */
-[data-page='/'] [data-module-index='0'] .text-card__text,
-[data-page='/'] [data-module-index='4'] .text-card__text {
-  padding-inline-end: var(--space-20);
-  @media screen and (min-width: 50em) {
-    max-width: 900px;
-    padding-inline-end: initial;
   }
 }
 
@@ -70,25 +77,23 @@
   width: 75vw;
   @media screen and (min-width: 50em) {
     width: 320px;
-    margin-block-end: var(--space-60);
+    margin-block-end: var(--space-20);
   }
 }
 
-/* Our work */
-[data-page='/'] [data-module-index='2'] {
-  margin-block-end: var(--space-fluid-20-40);
-}
-
 /* Typography */
-
 [data-page='/'] [data-module-index='0'] .text-card__text p,
 [data-page='/'] [data-module-index='2'] h2.title,
-[data-page='/'] [data-module-index='4'] .text-card__text p {
+[data-page='/'] [data-module-index='3'] .text-card__text p {
   font-family: var(--font-sans);
   font-size: var(--font-size-home-text-lg);
   line-height: 1;
   letter-spacing: -0.05em;
   font-weight: 500;
+}
+
+[data-page='/'] [data-module-index='2'] h2.title {
+  color: var(--color-sandstorm);
 }
 
 [data-page='/'] [data-module-index='1'] .text-card__text p {
@@ -107,11 +112,11 @@
 }
 
 [data-page='/'] [data-module-index='1'],
-[data-page='/'] [data-module-index='3'] {
+[data-page='/'] [data-module-index='2'] {
   .label {
     font-family: var(--font-serif);
     color: $color-hyperbeam;
-    letter-spacing: var(--letter-spacing-extra-loose);
+    letter-spacing: 0.25em;
     text-transform: uppercase;
   }
 
@@ -125,7 +130,7 @@
     > svg {
       color: inherit;
       vertical-align: 0.15em;
-      margin-left: 0.3em;
+      margin-left: 0.75ch;
       width: 0.6em;
       height: auto;
     }

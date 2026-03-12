@@ -1,25 +1,10 @@
 /* apps/web/src/styles/components/text.css */
 
 /* Typography: /work page, title and tagline */
-.work-page__heading .text--tagline,
 .work-page__heading .title {
   font-family: var(--font-sans);
   font-weight: 100;
   color: var(--color-sandstorm);
-}
-
-.work-page__heading .text--tagline {
-  font-size: var(--font-size--2) !important;
-}
-
-.work-page__heading .title {
   font-size: var(--font-size-4);
   letter-spacing: -0.04em;
-}
-
-.text-card--home .label {
-  font-size: var(--font-size--2) !important;
-  letter-spacing: -0.04em;
-  color: var(--color-sandstorm);
-  text-transform: initial !important;
 }

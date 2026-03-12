@@ -286,6 +286,11 @@
 
   --font-size-menu-mobile-fluid: clamp(50px, 12vw, 110px);
   --font-size-menu-reverse-fluid: clamp(40px, calc(56px - 1vw), 56px);
+  --font-size-toggle: clamp(
+    10px,
+    calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
+    14px
+  );
 
   --font-size-xs-fluid: clamp(
     14px,
@@ -308,11 +313,6 @@
     32px
   );
   --font-size-xl-fluid: clamp(32px, calc(2rem + ((1vw - 3.2px) * 2.5)), 56px);
-  --font-size-all-caps-fluid: clamp(
-    10px,
-    calc(0.625rem + ((1vw - 3.2px) * 0.4167)),
-    14px
-  );
 
   --flow-space-0: var(--space-fluid-10-20);
   --flow-space-1: var(--space-fluid-20-40);
