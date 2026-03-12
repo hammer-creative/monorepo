@@ -7,7 +7,6 @@ import { useGLTF, useTexture, useVideoTexture } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry';
 
 import { VIDEO_SOURCE } from './sceneConstants';
 import * as C from './sceneConstants';
@@ -51,67 +50,7 @@ const log = (...args) => {
   if (ENABLE_CONSOLE_LOGS) console.log(...args);
 };
 
-// ─── Procedural catchlight texture ───────────────────────────────────────────
-function makeCatchlightTexture(size = 128): THREE.CanvasTexture {
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
-  const cx = size / 2;
-  const cy = size / 2;
-  const r = size / 2;
-
-  const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-  gradient.addColorStop(0.0, 'rgba(255,255,255,1.0)');
-  gradient.addColorStop(0.3, 'rgba(255,255,255,0.8)');
-  gradient.addColorStop(0.7, 'rgba(255,255,255,0.2)');
-  gradient.addColorStop(1.0, 'rgba(255,255,255,0.0)');
-
-  ctx.clearRect(0, 0, size, size);
-  ctx.fillStyle = gradient;
-  ctx.beginPath();
-  ctx.ellipse(cx, cy, r, r * 0.75, -Math.PI / 6, 0, Math.PI * 2);
-  ctx.fill();
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.needsUpdate = true;
-  return texture;
-}
-
-// ─── EyeLight via DecalGeometry ───────────────────────────────────────────────
-function EyeLight({ config, proceduralTexture, corneaMesh }) {
-  const pngTexture = config.png ? useTexture(config.png) : null;
-  const texture = pngTexture ?? proceduralTexture;
-
-  const decalMesh = useMemo(() => {
-    if (!corneaMesh) return null;
-
-    const position = new THREE.Vector3(...config.position);
-    const orientation = new THREE.Euler(
-      Math.atan2(config.position[1], config.position[2]),
-      Math.atan2(-config.position[0], config.position[2]),
-      0,
-    );
-    const size = new THREE.Vector3(config.size[0], config.size[1], 0.1);
-
-    const geometry = new DecalGeometry(corneaMesh, position, orientation, size);
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      opacity: config.opacity,
-      depthWrite: false,
-      polygonOffset: true,
-      polygonOffsetFactor: -1,
-    });
-
-    return new THREE.Mesh(geometry, material);
-  }, [corneaMesh, texture]);
-
-  if (!decalMesh) return null;
-  return <primitive object={decalMesh} renderOrder={999} />;
-}
-
-// ─── SceneModel ───────────────────────────────────────────────────────────────
+// ─── SceneModel ───
 export default function SceneModel({ url, isPaused, onPlayClick }) {
   const gltf = useGLTF(url);
   const { camera } = useThree();
@@ -149,11 +88,10 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
   const lastTime = useRef(0);
 
   const MAX_ROTATION_RAD = THREE.MathUtils.degToRad(MAX_ROTATION);
-  const catchlightTexture = useMemo(() => makeCatchlightTexture(128), []);
 
-  // ─── Scene setup ──────────────────────────────────────────────────────────
+  // ─── Scene setup ───
   useEffect(() => {
-    // ── Material setup ──────────────────────────────────────────────────────
+    // ── Material setup ───
     gltf.scene.traverse((child) => {
       if (child.isLight) child.visible = false;
       if (!child.isMesh) return;
@@ -395,7 +333,7 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
     }
   }, [gltf]);
 
-  // ─── Frame loop ───────────────────────────────────────────────────────────
+  // ─── Frame loop ───
   useFrame((state) => {
     if (isPaused) return;
 
