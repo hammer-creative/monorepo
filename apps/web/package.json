@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rm -rf .next node_modules",
     "dev": "next dev",
-    "dev:watch": "next dev",
+    "dev:watch": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
