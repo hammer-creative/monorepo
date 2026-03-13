@@ -12,9 +12,10 @@
 
 .home__marquee {
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
   height: 100vh;
   background: var(--color-aircutter);
+  pointer-events: none; /* Pass through for scroll */
 }
 
 .home__scene {
@@ -27,7 +28,7 @@
 .home__masthead {
   position: absolute;
   inset: 0;
-  pointer-events: none;
+  pointer-events: none; /* Pass through */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
