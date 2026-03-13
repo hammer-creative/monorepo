@@ -110,7 +110,6 @@ export default async function HomePage() {
   return (
     <>
       <div className={`${bem}__marquee`}>
-        <div className="home__scroll-layer"></div>
         <div className={`${bem}__masthead`}>
           <div className={`${bem}__wordmark`}>
             <WordmarkSVG />
