@@ -2,11 +2,7 @@
 
 /* apps/web/src/styles/components/navigation.css */
 
-/* Layout, footer base */
-footer {
-  background: var(--color-sandstorm);
-}
-
+/* Layout, base */
 .footer-content {
   display: grid;
   grid-template-rows: 1fr auto auto auto;
@@ -15,71 +11,23 @@ footer {
   row-gap: var(--space-fluid-20-60);
 }
 
-.mobile-menu.is-open .footer-content {
-  padding-block-start: var(--space-fluid-40-100);
-  padding-block-end: var(--space-fluid-20-60);
-}
-
-footer .footer-content {
-  grid-template-rows: auto auto auto;
-  padding-block-start: var(--space-60);
-  padding-block-end: var(--space-fluid-20-60);
-}
-
-footer .footer-content .menu-primary {
-  align-self: start;
-  @media screen and (min-width: 50em) {
-    margin-bottom: var(--space-40);
-  }
-}
-
 .footer-content > *:nth-child(n + 2) {
   align-self: end;
   justify-self: end;
   text-align: right;
 }
 
-.footer-content .addresses > *:first-child,
-.footer-content .social > *:first-child {
-  margin-bottom: var(--space-fluid-10-20);
+/* Layout, footer element */
+footer {
+  background: var(--color-sandstorm);
 }
 
-.footer-content .addresses {
-  margin-bottom: var(--space-fluid-10-20);
+footer .footer-content {
+  grid-template-rows: auto auto auto;
 }
 
-.footer-content .social ul {
-  margin-bottom: var(--space-fluid-20-40);
-}
-
-.footer-content .social ul footer .footer-content .addresses {
-  @media screen (min-width: 50em) {
-    margin-top: var(--space-fluid-20-40);
-  }
-}
-.footer-content .utilities,
-.footer-content .social,
-.footer-content .social ul {
-  display: flex;
-  flex-direction: column;
-}
-
-@media screen and (min-width: 40em) {
-  .footer-content .utilities,
-  .footer-content .social {
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .footer-content .social ul {
-    flex-direction: row;
-    gap: var(--space-fluid-10-20);
-  }
-
-  .footer-content .social > *:first-child {
-    margin-block-end: initial;
-  }
+footer .footer-content .menu-primary {
+  align-self: start;
 }
 
 @media screen and (min-width: 50em) {
@@ -114,6 +62,24 @@ footer .footer-content .menu-primary {
   .footer-content .social ul {
     flex-direction: row;
     gap: var(--space-fluid-10-20);
+  }
+}
+
+@media screen and (min-width: 40em) {
+  .footer-content .utilities,
+  .footer-content .social {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .footer-content .social ul {
+    flex-direction: row;
+    gap: var(--space-fluid-10-20);
+  }
+
+  .footer-content .social > *:first-child {
+    margin-block-end: initial;
   }
 }
 

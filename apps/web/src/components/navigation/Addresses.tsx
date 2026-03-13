@@ -10,9 +10,9 @@ export function Addresses({ items }: AddressesProps) {
     <>
       {items.map((item) => (
         <address key={item.id} className="address">
-          <div className="text">{item.label}</div>
+          {item.label && <div className="text">{item.label}</div>}
           {item.telephone && <div className="text">{item.telephone}</div>}
-          <div className="text">{item.line1}</div>
+          {item.line1 && <div className="text">{item.line1}</div>}
         </address>
       ))}
     </>

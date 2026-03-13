@@ -337,10 +337,15 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
             <Addresses items={navigationData.addresses} />
           </div>
           <div ref={utilitiesRef} className="menu-secondary utilities">
-            <UtilitiesMenu onLinkClick={handleLinkClick} />
+            <LinkList
+              items={navigationData.social}
+              onLinkClick={handleLinkClick}
+            />
           </div>
           <div ref={socialRef} className="menu-secondary social">
             <LinkList items={navigationData.social} />
+          </div>
+          <div className="menu-secondary copyright">
             <Copyright />
           </div>
         </div>
