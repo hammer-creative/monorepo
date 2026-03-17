@@ -11,7 +11,7 @@ header {
 /* Base headroom styles */
 .headroom {
   position: relative;
-  padding: var(--space-fluid-20-40);
+  padding: var(--space-fluid-20-60);
   width: 100%;
 }
 

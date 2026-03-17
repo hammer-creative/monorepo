@@ -283,9 +283,18 @@
     calc(2.5rem - ((1vw - 3.2px) * 1.25)),
     2.5rem
   ); /* 40px → 20px */
+  --space-fluid-60-20: clamp(
+    1.25rem,
+    calc(3.75rem - ((1vw - 3.2px) * 4.1667)),
+    3.75rem
+  ); /* 60px → 20px */
 
   --font-size-menu-mobile-fluid: clamp(50px, 12vw, 110px);
-  --font-size-menu-reverse-fluid: clamp(40px, calc(56px - 1vw), 56px);
+  --font-size-menu-reverse-fluid: clamp(
+    60px,
+    calc(70px - ((1vw - 3.2px) * 0.625)),
+    70px
+  );
   --font-size-toggle: clamp(
     10px,
     calc(0.625rem + ((1vw - 3.2px) * 0.4167)),

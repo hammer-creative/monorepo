@@ -6,15 +6,24 @@
 .footer-content {
   display: grid;
   grid-template-rows: 1fr auto auto auto;
-  height: 100%;
-  padding-inline: var(--space-fluid-20-60);
   row-gap: var(--space-fluid-20-60);
+  height: 100%;
 }
 
-.footer-content > *:nth-child(n + 2) {
+.footer-content .address:first-child {
+  margin-block-end: var(--space-20);
+}
+
+.footer-content .menu-secondary {
   align-self: end;
   justify-self: end;
   text-align: right;
+}
+
+.mobile-menu.is-open .footer-content {
+  padding-inline: var(--space-fluid-20-40);
+  padding-block-start: var(--space-fluid-20-40);
+  padding-block: var(--space-fluid-20-40);
 }
 
 /* Layout, footer element */
@@ -24,6 +33,9 @@ footer {
 
 footer .footer-content {
   grid-template-rows: auto auto auto;
+  padding-inline: var(--space-fluid-20-60);
+  padding-block-start: var(--space-60);
+  padding-block-end: var(--space-fluid-20-60);
 }
 
 footer .footer-content .menu-primary {
@@ -33,6 +45,30 @@ footer .footer-content .menu-primary {
 @media screen and (min-width: 50em) {
   footer .footer-content {
     grid-template-columns: 1fr 1fr;
+  }
+
+  footer .footer-content .menu-secondary {
+    align-self: initial;
+    justify-self: initial;
+  }
+
+  footer .footer-content .addresses {
+    margin-block-start: var(--space-40);
+  }
+
+  footer .footer-content .utilities ul,
+  footer .footer-content .social ul {
+    display: flex;
+    width: 100%;
+  }
+
+  footer .footer-content .utilities ul {
+    justify-content: space-between;
+  }
+
+  footer .footer-content .social ul {
+    justify-content: flex-start;
+    gap: var(--space-10);
   }
 
   footer .footer-content > *:nth-child(1) {
@@ -54,35 +90,17 @@ footer .footer-content .menu-primary {
   }
 
   footer .footer-content > *:nth-child(4) {
-    grid-column: 1 / -1;
+    grid-column: 1;
     grid-row: 3;
   }
 
-  .footer-content .utilities,
-  .footer-content .social ul {
-    flex-direction: row;
-    gap: var(--space-fluid-10-20);
+  footer .footer-content > *:nth-child(5) {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: end;
+    justify-self: end;
   }
 }
-
-@media screen and (min-width: 40em) {
-  .footer-content .utilities,
-  .footer-content .social {
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .footer-content .social ul {
-    flex-direction: row;
-    gap: var(--space-fluid-10-20);
-  }
-
-  .footer-content .social > *:first-child {
-    margin-block-end: initial;
-  }
-}
-
 /* Mobile menu - base */
 .mobile-menu {
   position: fixed;
@@ -117,15 +135,14 @@ footer .footer-content .menu-primary {
 .menu-primary ul {
   display: flex;
   flex-direction: column;
-  gap: var(--space-fluid-40-20);
 }
 
 footer .menu-primary ul {
-  line-height: 0.7;
+  line-height: 1.5;
 }
 
 .mobile-menu .menu-primary ul {
-  line-height: 0.7;
+  line-height: 1;
 }
 
 .menu-primary li a {
@@ -136,6 +153,7 @@ footer .menu-primary ul {
   text-transform: uppercase;
   transition: color var(--ease-menu-item);
   font-weight: 900;
+  letter-spacing: -0.04em;
 }
 
 /* Footer - primary menu colors */
@@ -256,4 +274,47 @@ footer .menu-primary:has(.link:hover) .link.is-active {
 
 .mobile-menu.is-open .menu-secondary a {
   pointer-events: auto;
+}
+@media screen and (min-width: 50em) {
+  .footer-content {
+    gap: 1px;
+  }
+  .mobile-menu.is-open .footer-content .addresses {
+    grid-column: 2;
+    grid-row: 2 / 5;
+    align-self: start;
+  }
+
+  .mobile-menu.is-open .footer-content .utilities {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .mobile-menu.is-open .footer-content .social {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .mobile-menu.is-open .footer-content .copyright {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .mobile-menu.is-open .footer-content .utilities,
+  .mobile-menu.is-open .footer-content .social,
+  .mobile-menu.is-open .footer-content .copyright {
+    justify-self: start;
+    text-align: left;
+  }
+  .mobile-menu.is-open .footer-content .copyright {
+    grid-column: 1;
+    grid-row: 4;
+    justify-self: start;
+    text-align: left;
+  }
+
+  .mobile-menu.is-open .menu-secondary.social ul {
+    display: flex;
+    gap: var(--space-10);
+  }
 }

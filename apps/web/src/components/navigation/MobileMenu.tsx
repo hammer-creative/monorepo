@@ -52,6 +52,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
   const addressesRef = useRef<HTMLDivElement>(null);
   const utilitiesRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
+  const copyrightRef = useRef<HTMLDivElement>(null);
 
   const [clickedHref, setClickedHref] = useState<string | null>(null);
   const [shouldRender, setShouldRender] = useState(false);
@@ -75,6 +76,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
       addressesRef.current,
       utilitiesRef.current,
       socialRef.current,
+      copyrightRef.current,
     ].filter(Boolean) as HTMLElement[];
 
     const allItems = [
@@ -121,6 +123,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
         addressesRef.current,
         utilitiesRef.current,
         socialRef.current,
+        copyrightRef.current,
       ].filter(Boolean) as HTMLElement[];
 
       if (clickedHref) {
@@ -338,14 +341,14 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           </div>
           <div ref={utilitiesRef} className="menu-secondary utilities">
             <LinkList
-              items={navigationData.social}
+              items={navigationData.utilities}
               onLinkClick={handleLinkClick}
             />
           </div>
           <div ref={socialRef} className="menu-secondary social">
             <LinkList items={navigationData.social} />
           </div>
-          <div className="menu-secondary copyright">
+          <div ref={copyrightRef} className="menu-secondary copyright">
             <Copyright />
           </div>
         </div>
