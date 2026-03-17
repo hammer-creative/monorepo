@@ -125,6 +125,7 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
 
   const [isPlaying, setIsPlaying] = useState(true);
   const [sceneReady, setSceneReady] = useState(false);
+  const [isInView, setIsInView] = useState(true);
 
   const handleTogglePlay = () => {
     const video = videoTexture?.image;
@@ -150,6 +151,36 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
 
   const MAX_ROTATION_RAD = THREE.MathUtils.degToRad(MAX_ROTATION);
   const catchlightTexture = useMemo(() => makeCatchlightTexture(128), []);
+
+  // ─── Intersection Observer for visibility ─────────────────────────────────
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+
+        const video = videoTexture?.image;
+        if (!video) return;
+
+        if (entry.isIntersecting) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    const modelElement = document.querySelector('.model');
+    if (modelElement) {
+      observer.observe(modelElement);
+    }
+
+    return () => {
+      if (modelElement) {
+        observer.unobserve(modelElement);
+      }
+    };
+  }, [videoTexture]);
 
   // ─── Scene setup ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -397,7 +428,12 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
 
   // ─── Frame loop ───────────────────────────────────────────────────────────
   useFrame((state) => {
-    if (isPaused) return;
+    if (isPaused || !isInView) return;
+
+    // Ignore invalid pointer values (can happen during mouse leave/enter)
+    if (Math.abs(state.pointer.x) > 1 || Math.abs(state.pointer.y) > 1) {
+      return;
+    }
 
     const currentTime = state.clock.elapsedTime;
     const deltaTime =
@@ -414,21 +450,40 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
       targetRotation.current.y = state.pointer.x * MAX_ROTATION_RAD;
       targetRotation.current.x = -state.pointer.y * MAX_ROTATION_RAD;
     } else {
-      const time = state.clock.elapsedTime;
-      const driftX =
-        Math.sin(time * 0.41) *
-        Math.sin(time * 0.17) *
-        MAX_ROTATION_RAD *
-        DRIFT_AMPLITUDE;
-      const driftY =
-        Math.sin(time * 0.37) *
-        Math.sin(time * 0.23) *
-        MAX_ROTATION_RAD *
-        DRIFT_AMPLITUDE;
-      targetRotation.current.x =
-        -lastPointer.current.y * MAX_ROTATION_RAD + driftX;
-      targetRotation.current.y =
-        lastPointer.current.x * MAX_ROTATION_RAD + driftY;
+      idleFrames.current++;
+
+      // Smoothly blend from tracking to drift
+      if (idleFrames.current > 60) {
+        const time = state.clock.elapsedTime;
+        const driftX =
+          Math.sin(time * 0.41) *
+          Math.sin(time * 0.17) *
+          MAX_ROTATION_RAD *
+          DRIFT_AMPLITUDE;
+        const driftY =
+          Math.sin(time * 0.37) *
+          Math.sin(time * 0.23) *
+          MAX_ROTATION_RAD *
+          DRIFT_AMPLITUDE;
+
+        // Blend factor: 0 = hold position, 1 = full drift
+        const blendFactor = Math.min((idleFrames.current - 60) / 60, 1);
+
+        targetRotation.current.x = THREE.MathUtils.lerp(
+          -lastPointer.current.y * MAX_ROTATION_RAD,
+          driftX,
+          blendFactor,
+        );
+        targetRotation.current.y = THREE.MathUtils.lerp(
+          lastPointer.current.x * MAX_ROTATION_RAD,
+          driftY,
+          blendFactor,
+        );
+      } else {
+        // Hold position when just stopped moving
+        targetRotation.current.x = -lastPointer.current.y * MAX_ROTATION_RAD;
+        targetRotation.current.y = lastPointer.current.x * MAX_ROTATION_RAD;
+      }
     }
 
     currentRotation.current.x +=

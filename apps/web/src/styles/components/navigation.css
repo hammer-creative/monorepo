@@ -21,7 +21,8 @@
   .footer-content .menu-primary {
     margin-bottom: var(--space-fluid-40-80);
   }
-  .footer-content .utilities {
+  .footer-content .utilities,
+  .footer-content .addresses {
     margin-bottom: var(--space-fluid-20-60);
   }
 }
@@ -138,7 +139,7 @@ footer .menu-secondary .link:hover {
 /* Mobile menu context: layout */
 .mobile-menu.is-open .footer-content {
   padding-inline: var(--space-fluid-20-40);
-  padding-block-start: 20px;
+  padding-block-start: 8px;
   padding-block-end: var(--space-fluid-20-40);
 }
 
@@ -332,7 +333,7 @@ footer .menu-secondary .link:hover {
     width: 0.5em;
     height: 0.5em;
     opacity: 0;
-    margin-top: 0.2em;
+    margin-top: 0.32em;
     color: var(--color-hyperbeam);
     margin-inline-start: 0.05em;
     transition:
