@@ -33,7 +33,7 @@ header {
 
 /* Instant out, delayed back in */
 .headroom:has(.menu-toggle.is-open) .wordmark {
-  transform: translateY(-300%);
+  transform: translateY(-500%);
   transition: transform 0.6s ease;
 }
 
