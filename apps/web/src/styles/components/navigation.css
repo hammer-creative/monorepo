@@ -275,7 +275,7 @@ footer .menu-primary:has(.link:hover) .link.is-active {
 .mobile-menu.is-open .menu-secondary a {
   pointer-events: auto;
 }
-@media screen and (min-width: 50em) {
+@media screen and (min-width: 40em) {
   .footer-content {
     gap: 1px;
   }
