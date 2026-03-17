@@ -3,7 +3,7 @@
 import { Copyright } from '@/components/common';
 import { LinkList } from '@/components/common/LinkList';
 import { Wordmark } from '@/components/common/Wordmark';
-import { Addresses, UtilitiesMenu } from '@/components/navigation';
+import { Addresses } from '@/components/navigation';
 import { RadixMenu } from '@/components/navigation/RadixMenu';
 import { useNavigation } from '@/contexts/NavigationContext';
 import type { NavigationData } from '@/types/navigation';
@@ -15,21 +15,20 @@ const ANIMATION = {
   overlay: {
     duration: 0.5,
     ease: 'easeOut' as const,
-    easeIn: 'easeIn' as const,
+    easeIn: 'easeInOut' as const,
+    easeInDuration: 0.65,
   },
   items: {
     enter: {
       duration: 0.5,
       stagger: 0.05,
       ease: 'easeOut' as const,
-      // y: { from: 50, to: 0 },
       opacity: { from: 0, to: 1 },
     },
     exit: {
       duration: 0.5,
       stagger: 0.03,
       ease: 'easeIn' as const,
-      // y: { from: 0, to: 50 },
       opacity: { from: 1, to: 0 },
     },
   },
@@ -56,6 +55,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
   const [clickedHref, setClickedHref] = useState<string | null>(null);
   const [shouldRender, setShouldRender] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(false);
 
   const isNavigatingRef = useRef(false);
   const targetPathnameRef = useRef<string | null>(null);
@@ -87,22 +87,20 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
     allItems.forEach((item) => {
       item.style.opacity = '0';
-      // item.style.transform = `translateY(${ANIMATION.items.enter.y.from}px)`;
     });
 
-    await animate(
-      overlayRef.current,
-      { scaleY: [0, 1] },
+    await overlayRef.current.animate(
+      { transform: ['scaleY(0)', 'scaleY(1)'] },
       {
-        duration: ANIMATION.overlay.duration,
-        ease: ANIMATION.overlay.ease,
+        duration: ANIMATION.overlay.duration * 1000,
+        easing: 'ease-out',
+        fill: 'forwards',
       },
-    );
+    ).finished;
 
     await animate(
       allItems,
       {
-        // y: [ANIMATION.items.enter.y.from, ANIMATION.items.enter.y.to],
         opacity: [
           ANIMATION.items.enter.opacity.from,
           ANIMATION.items.enter.opacity.to,
@@ -144,7 +142,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           await animate(
             nonClickedItems,
             {
-              // y: [ANIMATION.items.exit.y.from, ANIMATION.items.exit.y.to],
               opacity: [
                 ANIMATION.items.exit.opacity.from,
                 ANIMATION.items.exit.opacity.to,
@@ -162,7 +159,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           await animate(
             clickedItem,
             {
-              // y: [ANIMATION.items.exit.y.from, ANIMATION.items.exit.y.to],
               opacity: [
                 ANIMATION.items.exit.opacity.from,
                 ANIMATION.items.exit.opacity.to,
@@ -185,7 +181,6 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           await animate(
             allItems,
             {
-              // y: [ANIMATION.items.exit.y.from, ANIMATION.items.exit.y.to],
               opacity: [
                 ANIMATION.items.exit.opacity.from,
                 ANIMATION.items.exit.opacity.to,
@@ -206,20 +201,21 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
   const exitOverlay = useCallback(async () => {
     if (!overlayRef.current) return;
 
-    await animate(
-      overlayRef.current,
-      { scaleY: [1, 0] },
+    await overlayRef.current.animate(
+      { transform: ['scaleY(1)', 'scaleY(0)'] },
       {
-        duration: ANIMATION.overlay.duration,
-        ease: ANIMATION.overlay.easeIn,
+        duration: ANIMATION.overlay.easeInDuration * 1000,
+        easing: 'ease-in-out',
+        fill: 'forwards',
       },
-    );
-  }, [animate]);
+    ).finished;
+  }, []);
 
   useEffect(() => {
     if (isNavigatingRef.current) return;
 
     if (isOpen && !shouldRender) {
+      setOverlayVisible(true);
       setShouldRender(true);
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -230,6 +226,8 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
       const closeSequence = async () => {
         await exitItems();
         await exitOverlay();
+        setOverlayVisible(false);
+        await new Promise((r) => setTimeout(r, 50));
         setShouldRender(false);
         setClickedHref(null);
       };
@@ -246,6 +244,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
       if (isMailto) {
         window.location.href = href;
+        setOverlayVisible(false);
         setShouldRender(false);
         closeMenu();
         return;
@@ -253,6 +252,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
       if (isExternal) {
         window.open(href, '_blank', 'noopener,noreferrer');
+        setOverlayVisible(false);
         setShouldRender(false);
         closeMenu();
         return;
@@ -282,6 +282,8 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     if (pathname === targetPathnameRef.current) {
       const finish = async () => {
         await exitOverlay();
+        setOverlayVisible(false);
+        await new Promise((r) => setTimeout(r, 50));
         setShouldRender(false);
         setClickedHref(null);
         closeMenu();
@@ -305,61 +307,65 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [isOpen, closeMenu]);
 
-  if (!shouldRender) return null;
+  if (!shouldRender && !overlayVisible) return null;
 
   return (
     <>
-      <div
-        ref={overlayRef}
-        className="menu-overlay"
-        onClick={() => closeMenu()}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            closeMenu();
-          }
-        }}
-        role="button"
-        tabIndex={0}
-        aria-label="Close menu"
-        style={{ transformOrigin: 'top' }}
-      />
+      {overlayVisible && (
+        <div
+          ref={overlayRef}
+          className="menu-overlay"
+          onClick={() => closeMenu()}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              closeMenu();
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          aria-label="Close menu"
+          style={{ transformOrigin: 'top', transform: 'scaleY(0)' }}
+        />
+      )}
 
-      <div ref={scope} className="mobile-menu is-open">
-        <div className="footer-content">
-          <RadixMenu
-            items={navigationData.main}
-            className="menu-primary"
-            onLinkClick={handleLinkClick}
-            clickedHref={clickedHref}
-            setItemRef={setItemRef}
-            showArrow
-          />
-
-          <div ref={addressesRef} className="menu-secondary addresses">
-            <Addresses items={navigationData.addresses} />
-          </div>
-          <div ref={utilitiesRef} className="menu-secondary utilities">
-            <LinkList
-              items={navigationData.utilities}
+      {shouldRender && (
+        <div ref={scope} className="mobile-menu is-open">
+          <div className="footer-content">
+            <RadixMenu
+              items={navigationData.main}
+              className="menu-primary"
               onLinkClick={handleLinkClick}
+              clickedHref={clickedHref}
+              setItemRef={setItemRef}
+              showArrow
+            />
+
+            <div ref={addressesRef} className="menu-secondary addresses">
+              <Addresses items={navigationData.addresses} />
+            </div>
+            <div ref={utilitiesRef} className="menu-secondary utilities">
+              <LinkList
+                items={navigationData.utilities}
+                onLinkClick={handleLinkClick}
+              />
+            </div>
+            <div ref={socialRef} className="menu-secondary social">
+              <LinkList items={navigationData.social} />
+            </div>
+            <div ref={copyrightRef} className="menu-secondary copyright">
+              <Copyright />
+            </div>
+          </div>
+
+          <div ref={wordmarkRef} className="wordmark">
+            <Wordmark
+              text={navigationData.wordmark.text}
+              href={navigationData.wordmark.href}
             />
           </div>
-          <div ref={socialRef} className="menu-secondary social">
-            <LinkList items={navigationData.social} />
-          </div>
-          <div ref={copyrightRef} className="menu-secondary copyright">
-            <Copyright />
-          </div>
         </div>
-
-        <div ref={wordmarkRef} className="wordmark">
-          <Wordmark
-            text={navigationData.wordmark.text}
-            href={navigationData.wordmark.href}
-          />
-        </div>
-      </div>
+      )}
     </>
   );
 }

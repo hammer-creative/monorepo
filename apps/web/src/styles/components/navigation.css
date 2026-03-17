@@ -137,12 +137,14 @@ footer .footer-content .menu-primary {
   flex-direction: column;
 }
 
-footer .menu-primary ul {
+footer .menu-primary li {
   line-height: 1.5;
+  display: block;
 }
 
-.mobile-menu .menu-primary ul {
+.mobile-menu .menu-primary li {
   line-height: 1;
+  display: block;
 }
 
 .menu-primary li a {
@@ -217,10 +219,10 @@ footer .menu-primary:has(.link:hover) .link.is-active {
 
   .mobile-menu.is-open .menu-primary li a svg {
     display: block;
-    width: 0.75em;
-    height: 0.75em;
+    width: 0.5em;
+    height: 0.5em;
     opacity: 0;
-    margin-top: 0.05em;
+    margin-top: 0.2em;
     color: var(--color-hyperbeam);
     margin-inline-start: 0.05em;
     transition:
@@ -231,7 +233,7 @@ footer .menu-primary:has(.link:hover) .link.is-active {
 
   .mobile-menu.is-open .menu-primary li a:hover svg {
     opacity: 1;
-    margin-inline-start: 0.15em;
+    margin-inline-start: 0.25ch;
   }
 }
 
