@@ -2,6 +2,14 @@
 
 /* @import './mixins.css'; */
 
+/* .home__scroll-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  pointer-events: auto;
+  touch-action: pan-y;
+} */
+
 .home__marquee {
   position: relative;
   overflow: hidden;
