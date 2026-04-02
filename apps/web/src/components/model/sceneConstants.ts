@@ -18,7 +18,7 @@ export const ENABLE_CONSOLE_LOGS = false;
 // TUNABLE PARAMETERS
 // ==========================================
 export const MAX_ROTATION = 8;
-export const LERP_SPEED = 0.2;
+export const LERP_SPEED = 0.4;
 export const PARALLAX_FACTOR = 0.2;
 
 // ==========================================
@@ -62,47 +62,6 @@ export const PLAY_BUTTON_SCALE = 0.01;
 export const PLAY_BUTTON_COLOR = '#FFCC98';
 
 // ==========================================
-// EYE LIGHTS (CATCHLIGHTS)
-// Pixar-style painted highlights on cornea.
-// Set png: '/path/to/file.png' to use a hand-painted texture instead of procedural.
-// parallaxStrength — how far the light slides as eye rotates
-// skewStrength     — how much it tilts on Y rotation
-// stretchStrength  — how much it stretches horizontally on Y rotation
-// ==========================================
-export const EYE_LIGHTS = [
-  {
-    id: 'main',
-    position: [-0.035, 0.032, 0.148] as [number, number, number],
-    size: [0.055, 0.04] as [number, number],
-    opacity: 0.75,
-    parallaxStrength: 0.08,
-    skewStrength: 1,
-    stretchStrength: 0.5,
-    png: '/model/textures/flare.png',
-  },
-  {
-    id: 'secondary',
-    position: [0.04, 0.025, 0.148] as [number, number, number],
-    size: [0.03, 0.022] as [number, number],
-    opacity: 0.45,
-    parallaxStrength: 0.05,
-    skewStrength: 0.2,
-    stretchStrength: 0.3,
-    png: null as string | null,
-  },
-  {
-    id: 'tertiary',
-    position: [-0.01, -0.02, 0.148] as [number, number, number],
-    size: [0.02, 0.015] as [number, number],
-    opacity: 0.25,
-    parallaxStrength: 0.03,
-    skewStrength: 0.15,
-    stretchStrength: 0.2,
-    png: null as string | null,
-  },
-];
-
-// ==========================================
 // IRIS EDGE GRADIENT
 // ==========================================
 
@@ -124,8 +83,8 @@ export const CORNEA_INSERT_PNG = '/model/textures/brown_photostudio_02_1k.png';
 export const CORNEA_INSERT_Z = 0.15;
 export const CORNEA_INSERT_SIZE = 0.05;
 
-export const EYE_LERP_SPEED = 0.08; // how fast eye follows mouse
-export const INERTIA_FACTOR = 0.12; // how fast group rotation catches up (lower = more lag)
+export const EYE_LERP_SPEED = 0.1; // how fast eye follows mouse
+export const INERTIA_FACTOR = 0.15; // how fast group rotation catches up (lower = more lag)
 export const DRIFT_SPEED = 0.008; // how fast target drifts when idle
 export const DRIFT_AMPLITUDE = 0.7; // how wide the drift wanders (0-1 multiplier of MAX_ROTATION)
 

@@ -4,6 +4,7 @@ export interface MenuItem {
   id: string;
   label: string;
   href: string;
+  className?: string;
 }
 
 export interface Address {
@@ -18,10 +19,11 @@ export interface NavigationData {
     text: string;
     href: string;
   };
-  main: MenuItem[];
-  legal: MenuItem[];
-  social: MenuItem[];
   addresses: Address[];
+  legal: MenuItem[];
+  main: MenuItem[];
+  social: MenuItem[];
+  utilities: MenuItem[];
 }
 
 export interface NavigationContextState {

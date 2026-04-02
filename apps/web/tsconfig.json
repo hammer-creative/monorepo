@@ -34,7 +34,8 @@
     "next-env.d.ts",
     "next-seo.config.ts",
     "src/**/*",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "robots.ts",
   ],
   "exclude": [
     "node_modules"

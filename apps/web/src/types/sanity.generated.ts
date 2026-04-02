@@ -989,6 +989,11 @@ export type MuxTrack = {
   max_frame_rate?: number;
   duration?: number;
   max_height?: number;
+  language_code?: string;
+  name?: string;
+  status?: string;
+  text_source?: string;
+  text_type?: string;
 };
 
 export type SanityImagePaletteSwatch = {

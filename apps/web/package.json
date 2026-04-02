@@ -67,9 +67,6 @@
     "postcss-nested": "^7.0.2",
     "postcss-preset-env": "^10.4.0",
     "postcss-simple-vars": "^7.0.1",
-    "stylelint": "^16.25.0",
-    "stylelint-config-standard": "^39.0.1",
-    "stylelint-order": "^7.0.0",
     "typescript": "^5"
   },
   "lint-staged": {

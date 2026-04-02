@@ -105,8 +105,6 @@ export default async function HomePage() {
 
   const resolvedModules = homePage.modules?.map(resolveModuleColors) ?? [];
 
-  console.log(resolvedModules);
-
   return (
     <>
       <div className={`${bem}__marquee`}>

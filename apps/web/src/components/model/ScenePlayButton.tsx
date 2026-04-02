@@ -33,6 +33,11 @@ export default function ScenePlayButton({
     return geo;
   }, []);
 
+  // Larger invisible circle for hit area
+  const hitboxGeometry = useMemo(() => {
+    return new THREE.CircleGeometry(0.08, 32); // Adjust radius to match pupil size
+  }, []);
+
   const hoveredRef = useRef(false);
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef(
@@ -45,6 +50,14 @@ export default function ScenePlayButton({
     }),
   );
 
+  const hitboxMaterialRef = useRef(
+    new THREE.MeshBasicMaterial({
+      transparent: true,
+      opacity: 0, // Invisible
+      depthTest: false,
+    }),
+  );
+
   useFrame(() => {
     const targetColor = new THREE.Color(
       hoveredRef.current ? '#C7D3D3' : PLAY_BUTTON_COLOR,
@@ -52,25 +65,38 @@ export default function ScenePlayButton({
     materialRef.current.color.lerp(targetColor, 0.2);
   });
 
+  const handleInteraction = (e) => {
+    e.stopPropagation();
+    onClick();
+  };
+
+  const handlePointerOver = () => {
+    hoveredRef.current = true;
+    document.body.style.cursor = 'pointer';
+  };
+
+  const handlePointerOut = () => {
+    hoveredRef.current = false;
+    document.body.style.cursor = 'auto';
+  };
+
   return (
-    <mesh
-      ref={meshRef}
-      position={[0, 0, PLAY_BUTTON_Z]}
-      scale={[PLAY_BUTTON_SCALE, PLAY_BUTTON_SCALE, 1]}
-      geometry={triangleGeometry}
-      material={materialRef.current}
-      onClick={(e) => {
-        e.stopPropagation();
-        onClick();
-      }}
-      onPointerOver={() => {
-        hoveredRef.current = true;
-        document.body.style.cursor = 'pointer';
-      }}
-      onPointerOut={() => {
-        hoveredRef.current = false;
-        document.body.style.cursor = 'auto';
-      }}
-    />
+    <group position={[0, 0, PLAY_BUTTON_Z]}>
+      {/* Invisible larger hitbox */}
+      <mesh
+        geometry={hitboxGeometry}
+        material={hitboxMaterialRef.current}
+        onClick={handleInteraction}
+        onPointerOver={handlePointerOver}
+        onPointerOut={handlePointerOut}
+      />
+      {/* Visible triangle */}
+      <mesh
+        ref={meshRef}
+        scale={[PLAY_BUTTON_SCALE, PLAY_BUTTON_SCALE, 1]}
+        geometry={triangleGeometry}
+        material={materialRef.current}
+      />
+    </group>
   );
 }

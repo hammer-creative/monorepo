@@ -101,6 +101,7 @@ export function VideoModal({ videoItem, open, onOpenChange }: VideoModalProps) {
     } else if (!open && shouldRender) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   if (!shouldRender) return null;
