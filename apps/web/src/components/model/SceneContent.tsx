@@ -182,11 +182,6 @@ export default function SceneContent({
           environmentRotation={[0.4, 2.1, 2]} // <-- use these coordinates for production
         />
 
-        <Environment
-          files={`/model/environment/${ENVIRONMENT_MAP_SOURCE}`}
-          background={true}
-        />
-
         <SceneModel
           url={`/model/${GLB_SOURCE}`}
           isPaused={isPaused}
