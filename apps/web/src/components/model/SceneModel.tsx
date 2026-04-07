@@ -9,7 +9,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry';
 
-import { VIDEO_SOURCE } from './sceneConstants';
+import { VIDEO_SOURCE, TEASER_PLAYBACK_ID } from './sceneConstants';
 import * as C from './sceneConstants';
 import ScenePlayButton from './ScenePlayButton';
 
@@ -116,11 +116,21 @@ export default function SceneModel({ url, isPaused, onPlayClick }) {
   const gltf = useGLTF(url);
   const { camera } = useThree();
 
-  const videoTexture = useVideoTexture(`/video/${VIDEO_SOURCE}`, {
-    loop: true,
-    muted: true,
-    start: true,
-  });
+  // const videoTexture = useVideoTexture(`/video/${VIDEO_SOURCE}`, {
+  //   loop: true,
+  //   muted: true,
+  //   start: true,
+  // });
+  // videoTexture.flipY = false;
+
+  const videoTexture = useVideoTexture(
+    `https://stream.mux.com/${TEASER_PLAYBACK_ID}.m3u8`,
+    {
+      loop: true,
+      muted: true,
+      start: true,
+    }
+  );
   videoTexture.flipY = false;
 
   const [isPlaying, setIsPlaying] = useState(true);

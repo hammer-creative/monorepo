@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 
 export const GLB_SOURCE = 'model.glb';
-// export const GLB_SOURCE = 'Lv_EyeballExport_V5C_NewUV.glb';
 export const VIDEO_SOURCE = 'reel.mp4';
+export const TEASER_PLAYBACK_ID =
+  '9oZ7hjF901Jo9eaZGmPQXRxKj3006V37ImsUYnCdbLGDA';
 
-// export const VIDEO_SOURCE = 'Hammer_EyeballReel_1x1_gradient.mp4';
-
-export const ENVIRONMENT_MAP_SOURCE = 'studio_kontrast_04_4k-rev2.exr';
+export const ENVIRONMENT_MAP_SOURCE = 'studio2k.hdr';
+// export const ENVIRONMENT_MAP_SOURCE = 'studio4k.exr';
 
 // ==========================================
 // DEBUG
@@ -88,7 +88,6 @@ export const INERTIA_FACTOR = 0.15; // how fast group rotation catches up (lower
 export const DRIFT_SPEED = 0.008; // how fast target drifts when idle
 export const DRIFT_AMPLITUDE = 0.7; // how wide the drift wanders (0-1 multiplier of MAX_ROTATION)
 
-// LIGHTING_CONFIG — paste into sceneConstants.ts
 // LIGHTING_CONFIG — paste into sceneConstants.ts
 export const LIGHTING_CONFIG = {
   ambientLight: {

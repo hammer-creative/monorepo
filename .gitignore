@@ -23,3 +23,5 @@ apps/web/public/model/out
 
 scripts/favicon-source-*
 scripts/*image*
+
+*-orig
