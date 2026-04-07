@@ -1,5 +1,9 @@
 /* apps/web/src/styles/videos.css */
 
+.video-module video {
+  display: block;
+}
+
 /* MUTE BUTTON STATES */
 .single-video .video-modal-mute[data-muted='true'] {
   color: $color-aircutter;
