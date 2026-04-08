@@ -65,10 +65,12 @@ export default function Preloader({ progress }: { progress: number }) {
 
   if (!visible) return null;
 
+  console.log('exit value', exit, threeReady.current);
+
   return (
     <div
       className={`preloader${exit >= 100 && threeReady.current ? ' preloader--ready' : ''}`}
-      onTransitionEnd={() => setVisible(false)}
+      onTransitionEnd={(e) => e.target === e.currentTarget && setVisible(false)}
     >
       <div className="preloader__wordmark">
         <WordmarkSVGGradient enter={enter} exit={exit} />

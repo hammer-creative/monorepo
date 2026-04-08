@@ -10,11 +10,10 @@ import { Suspense, useEffect, useRef } from 'react';
 import { ENVIRONMENT_MAP_SOURCE, GLB_SOURCE } from './sceneConstants';
 import SceneModel from './SceneModel';
 
-useGLTF.preload(`/model/${GLB_SOURCE}`);
-
 const LC = C.LIGHTING_CONFIG;
 
 export default function SceneContent({
+  onProgress,
   wireframe = false,
   helpersVisible = false,
   orbitEnabled = false,
@@ -188,6 +187,7 @@ export default function SceneContent({
           url={`/model/${GLB_SOURCE}`}
           isPaused={isPaused}
           onPlayClick={onPlayClick}
+          onProgress={onProgress}
         />
       </Suspense>
 

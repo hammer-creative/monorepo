@@ -1,25 +1,17 @@
-/* .preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  opacity: 1;
-  transition: opacity 0.6s ease;
-  background: #0a0a0a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-
-.preloader--ready {
-  opacity: 0;
-}
-
 .preloader {
   position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10000;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+  background: var(--color-nightshade);
+}
+
+.preloader.preloader--ready {
+  opacity: 0;
 }
 
 .preloader__defs {
@@ -35,8 +27,3 @@
   height: auto;
   display: block;
 }
-
-/*
-/* header {
-  display: none;
-} */

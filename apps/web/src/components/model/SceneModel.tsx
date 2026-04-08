@@ -79,8 +79,14 @@ function makeCatchlightTexture(size = 128): THREE.CanvasTexture {
 }
 
 // ─── SceneModel ───────────────────────────────────────────────────────────────
-export default function SceneModel({ url, isPaused, onPlayClick }) {
+export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
   const gltf = useGLTF(url);
+
+  useEffect(() => {
+    console.log('gltf loaded', gltf);
+    if (gltf) onProgress?.(100);
+  }, [gltf]);
+
   const { camera } = useThree();
 
   const videoTexture = useVideoTexture(
