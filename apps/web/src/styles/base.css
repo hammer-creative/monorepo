@@ -2,9 +2,10 @@
 
 @import 'tokens.css';
 
-[data-animate-from='true'] > * {
+[data-animate-from='true']>* {
   will-change: transform, opacity;
-  transform: translateZ(0); /* Force GPU layer */
+  transform: translateZ(0);
+  /* Force GPU layer */
 }
 
 html {

@@ -181,7 +181,9 @@ export default function SceneContent({
           background={false}
           environmentRotation={[0.4, 2.1, 2]} // <-- use these coordinates for production
         />
+      </Suspense>
 
+      <Suspense fallback={null}>
         <SceneModel
           url={`/model/${GLB_SOURCE}`}
           isPaused={isPaused}

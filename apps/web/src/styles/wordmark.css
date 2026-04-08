@@ -9,7 +9,7 @@ footer {
 }
 
 /* Hide wordmark on homepage */
-body:has(.menu-overlay) header > .wordmark {
+body:has(.menu-overlay) header>.wordmark {
   visibility: hidden;
 }
 
@@ -39,3 +39,5 @@ footer svg {
 footer .wordmark {
   transform: translateY(0%);
 }
+
+/* Preloader */
