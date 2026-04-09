@@ -13,11 +13,12 @@
 
 .model {
   z-index: 10;
-  pointer-events: auto; /* Capture clicks for play button */
+  pointer-events: auto;
+  /* Capture clicks for play button */
 }
 
 /* Force canvas to allow scroll */
-.model > div {
+.model>div {
   touch-action: pan-y !important;
 }
 
@@ -27,17 +28,20 @@
 
 .model {
   mask-image: radial-gradient(circle at 50% 50%, black 47%, transparent 68%);
-  -webkit-mask-image: radial-gradient(
-    circle at 50% 50%,
-    black 47%,
-    transparent 68%
-  );
+  -webkit-mask-image: radial-gradient(circle at 50% 50%,
+      black 47%,
+      transparent 68%);
   mask-size: 94vh 94vh;
   -webkit-mask-size: 94vh 94vh;
   mask-position: center;
   -webkit-mask-position: center;
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
+}
+
+.bokeh-1,
+.bokeh-2 {
+  will-change: filter;
 }
 
 .bokeh-1 {
@@ -51,6 +55,7 @@
   background: radial-gradient(circle, #6b91a8 13%, #e4ecec 100%);
   opacity: 1;
   filter: blur(200px);
+  -webkit-filter: blur(200px);
   pointer-events: none;
 }
 
@@ -65,6 +70,7 @@
   background: radial-gradient(circle, #141515 0%, #facc98 100%);
   opacity: 0.5;
   filter: blur(498px);
+  -webkit-filter: blur(498px);
   pointer-events: none;
 }
 
@@ -86,11 +92,9 @@
   bottom: 3vh;
   left: 50%;
   transform: translateX(-50%);
-  background: radial-gradient(
-    ellipse,
-    rgba(20, 21, 21, 0.7) 0%,
-    transparent 60%
-  );
+  background: radial-gradient(ellipse,
+      rgba(20, 21, 21, 0.7) 0%,
+      transparent 60%);
   filter: blur(12px);
   pointer-events: none;
 }

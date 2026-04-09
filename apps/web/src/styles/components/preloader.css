@@ -19,11 +19,17 @@
 }
 
 .preloader__wordmark {
-  clip-path: url(#reveal);
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .preloader__wordmark svg {
   width: calc(var(--width-wordmark-header) * 1.9);
   height: auto;
   display: block;
+}
+
+.preloader__wordmark svg {
+  will-change: transform;
 }
