@@ -14,10 +14,6 @@
   opacity: 0;
 }
 
-.preloader__defs {
-  position: absolute;
-}
-
 .preloader__wordmark {
   display: flex;
   justify-content: center;
@@ -28,8 +24,5 @@
   width: calc(var(--width-wordmark-header) * 1.9);
   height: auto;
   display: block;
-}
-
-.preloader__wordmark svg {
   will-change: transform;
 }
