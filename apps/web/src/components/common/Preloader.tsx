@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const ENTER_DURATION = 2500;
 const EXIT_DURATION = 2500;
@@ -22,11 +22,18 @@ export default function Preloader({ progress }: { progress: number }) {
   const animationFrame = useRef<number>();
   const threeReady = useRef(false);
 
+  useLayoutEffect(() => {
+    const grad = gradientRef.current;
+    if (!grad) return;
+    grad.setAttribute('x1', pct(-PADDING - FALLOFF * 2));
+    grad.setAttribute('x2', pct(-PADDING - FALLOFF * 2));
+  }, []);
+
   useEffect(() => {
     if (progress === 100) threeReady.current = true;
   }, [progress]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const updateStops = (leadPos: number, trailPos: number) => {
       const grad = gradientRef.current;
       if (!grad) return;
@@ -98,9 +105,9 @@ export default function Preloader({ progress }: { progress: number }) {
             <linearGradient
               ref={gradientRef}
               id="hammerGrad"
-              x1="0%"
+              x1={pct(-PADDING - FALLOFF * 2)}
               y1="0%"
-              x2="100%"
+              x2={pct(-PADDING - FALLOFF * 2)}
               y2="0%"
             >
               <stop offset="0%" stopColor="#141515" stopOpacity="0" />
@@ -140,8 +147,22 @@ export default function Preloader({ progress }: { progress: number }) {
             y="0"
             width={TOTAL}
             height="94"
+            fill="rgba(255,0,0,0.2)"
+          />
+          <rect
+            x={-PADDING}
+            y="0"
+            width={TOTAL}
+            height="94"
             fill="url(#hammerGrad)"
             mask="url(#letterMask)"
+          />
+          <rect
+            x={-PADDING}
+            y="0"
+            width={TOTAL}
+            height="20"
+            fill="url(#hammerGrad)"
           />
         </svg>
       </div>
