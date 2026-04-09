@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const ENTER_DURATION = 2500;
 const EXIT_DURATION = 2500;
@@ -17,32 +17,31 @@ export default function Preloader({ progress }: { progress: number }) {
   const [visible, setVisible] = useState(true);
   const preloaderRef = useRef<HTMLDivElement>(null);
   const gradientRef = useRef<SVGLinearGradientElement>(null);
+  const rectRef = useRef<SVGRectElement>(null);
   const enterStart = useRef<number | null>(null);
   const exitStart = useRef<number | null>(null);
   const animationFrame = useRef<number>();
   const threeReady = useRef(false);
 
-  useLayoutEffect(() => {
-    const grad = gradientRef.current;
-    if (!grad) return;
-    grad.setAttribute('x1', pct(-PADDING - FALLOFF * 2));
-    grad.setAttribute('x2', pct(-PADDING - FALLOFF * 2));
-  }, []);
-
   useEffect(() => {
     if (progress === 100) threeReady.current = true;
   }, [progress]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const updateStops = (leadPos: number, trailPos: number) => {
       const grad = gradientRef.current;
       if (!grad) return;
       grad.setAttribute('x1', pct(trailPos - FALLOFF * 2));
       grad.setAttribute('x2', pct(leadPos + FALLOFF * 2));
+      const svg = grad.closest('svg') as SVGSVGElement;
+      if (svg) svg.setAttribute('transform', 'translate(0,0)');
     };
 
     const animate = (now: number) => {
-      if (!enterStart.current) enterStart.current = now;
+      if (!enterStart.current) {
+        enterStart.current = now;
+        if (rectRef.current) rectRef.current.style.visibility = 'visible';
+      }
       const enterElapsed = now - enterStart.current;
       const enterProgress = Math.min(1, enterElapsed / ENTER_DURATION);
       const enter = ease(enterProgress) * 100;
@@ -67,6 +66,7 @@ export default function Preloader({ progress }: { progress: number }) {
         if (!threeReady.current) {
           enterStart.current = null;
           exitStart.current = null;
+          if (rectRef.current) rectRef.current.style.visibility = 'hidden';
           requestAnimationFrame((t) => {
             enterStart.current = t;
             animationFrame.current = requestAnimationFrame(animate);
@@ -105,9 +105,9 @@ export default function Preloader({ progress }: { progress: number }) {
             <linearGradient
               ref={gradientRef}
               id="hammerGrad"
-              x1={pct(-PADDING - FALLOFF * 2)}
+              x1="0%"
               y1="0%"
-              x2={pct(-PADDING - FALLOFF * 2)}
+              x2="100%"
               y2="0%"
             >
               <stop offset="0%" stopColor="#141515" stopOpacity="0" />
@@ -143,26 +143,14 @@ export default function Preloader({ progress }: { progress: number }) {
             </mask>
           </defs>
           <rect
-            x={-PADDING}
-            y="0"
-            width={TOTAL}
-            height="94"
-            fill="rgba(255,0,0,0.2)"
-          />
-          <rect
+            ref={rectRef}
             x={-PADDING}
             y="0"
             width={TOTAL}
             height="94"
             fill="url(#hammerGrad)"
             mask="url(#letterMask)"
-          />
-          <rect
-            x={-PADDING}
-            y="0"
-            width={TOTAL}
-            height="20"
-            fill="url(#hammerGrad)"
+            style={{ visibility: 'hidden' }}
           />
         </svg>
       </div>
