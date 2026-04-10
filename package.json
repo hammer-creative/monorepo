@@ -13,6 +13,7 @@
     "dev:watch": "turbo run typegen && turbo run dev:watch",
     "dev:netlify": "turbo run typegen && concurrently \"turbo run --parallel\" \"netlify dev --cwd apps/web\"",
     "build": "turbo run build --force",
+    "analyze": "turbo analyze",
     "typecheck": "turbo run typecheck",
     "lint": "turbo run lint",
     "lint:summary": "turbo run lint:summary",

@@ -20,7 +20,7 @@ export default function Preloader({ progress }: { progress: number }) {
   const rectRef = useRef<SVGRectElement>(null);
   const enterStart = useRef<number | null>(null);
   const exitStart = useRef<number | null>(null);
-  const animationFrame = useRef<number>();
+  const animationFrame = useRef<number | undefined>(undefined);
   const threeReady = useRef(false);
 
   useEffect(() => {

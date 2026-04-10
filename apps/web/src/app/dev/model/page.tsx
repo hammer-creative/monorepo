@@ -1,7 +1,12 @@
 /* eslint-disable */
 // @ts-nocheck
 
+
 'use client';
+
+import { notFound } from 'next/navigation';
+
+if (!process.env.INCLUDE_DEV_ROUTES) notFound();
 
 import { TONE_MAPPING_EXPOSURE } from '@/components/model/sceneConstants';
 import * as C from '@/components/model/sceneConstants';
