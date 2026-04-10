@@ -1,10 +1,12 @@
 'use client';
 
 import Preloader from '@/components/common/Preloader';
-import Scene from '@/components/model/Scene';
 import { VideoModal } from '@/components/modules/Video/VideoModal';
 import type { VideoItem } from '@/types/sanity.generated';
-import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+
+const Scene = dynamic(() => import('@/components/model/Scene'), { ssr: false });
 
 const HOME_VIDEO = {
   _type: 'videoItem',
@@ -18,10 +20,6 @@ const HOME_VIDEO = {
 export function MarqueeScene() {
   const [modalOpen, setModalOpen] = useState(false);
   const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    console.log('progress changed', progress);
-  }, [progress]);
 
   return (
     <>
