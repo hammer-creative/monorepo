@@ -20,6 +20,7 @@ apps/web/public/model/assets
 apps/web/public/model/bak
 apps/web/public/model/out
 
+apps/web/app/dev
 
 scripts/favicon-source-*
 scripts/*image*

@@ -17,15 +17,13 @@ export async function fetchSanity<T>(
 ): Promise<T> {
   const {
     params = {},
-    cache = 'no-store',
     tags = [],
-    revalidate,
+    revalidate = 60,
     client = defaultClient,
   } = options;
 
   try {
     return await client.fetch<T>(query, params, {
-      cache,
       next: { tags, revalidate },
     });
   } catch (error) {
