@@ -14,7 +14,8 @@ import SceneContent from './SceneContent';
 
 const { TONE_MAPPING_EXPOSURE, LIGHTING_CONFIG: L, SHOW_HELPER_PANELS } = C;
 
-export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
+export default function Scene({ onPlayClick, onProgress }: { onPlayClick?: () => void; onProgress?: (p: number) => void }) {
+
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function Scene({ onPlayClick }: { onPlayClick?: () => void }) {
           }}
         >
           <SceneContent
+            onProgress={onProgress}
             helpersVisible={SHOW_HELPER_PANELS}
             orbitEnabled={SHOW_HELPER_PANELS}
             isPaused={isPaused}

@@ -1,0 +1,28 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+  background: var(--color-nightshade);
+}
+
+.preloader.preloader--ready {
+  opacity: 0;
+}
+
+.preloader__wordmark {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.preloader__wordmark svg {
+  width: calc(var(--width-wordmark-header) * 1.9);
+  height: auto;
+  display: block;
+  will-change: transform;
+}

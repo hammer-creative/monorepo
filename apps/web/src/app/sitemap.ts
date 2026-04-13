@@ -1,6 +1,16 @@
+import { client, getAllCaseStudyTeasers } from '@/lib/sanity';
 import type { MetadataRoute } from 'next';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const caseStudies = await getAllCaseStudyTeasers(client);
+
+  const workUrls = caseStudies.map((cs) => ({
+    url: `https://hammercreative.com/work/${cs.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
   return [
     {
       url: 'https://hammercreative.com',
@@ -10,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: 'https://hammercreative.com/work',
-      lastModified: new Date('2026-03-30'),
+      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
@@ -20,5 +30,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    ...workUrls,
   ];
 }

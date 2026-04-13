@@ -15,6 +15,7 @@
 @import './layout/overlay.css';
 
 /* COMPONENTS */
+@import './components/preloader';
 @import './components/arrow';
 @import './components/button';
 @import './components/client-icons';

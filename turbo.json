@@ -51,6 +51,19 @@
     },
     "clean": {
       "cache": false
+    },
+    "analyze": {
+      "dependsOn": [
+        "^build",
+        "typegen"
+      ],
+      "outputs": [
+        ".next/**"
+      ],
+      "cache": false,
+      "env": [
+        "ANALYZE"
+      ]
     }
   }
 }

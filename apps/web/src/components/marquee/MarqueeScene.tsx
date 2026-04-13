@@ -1,10 +1,12 @@
-// apps/web/src/components/modules/Marquee/MarqueeScene.tsx
 'use client';
 
-import Scene from '@/components/model/Scene';
+import Preloader from '@/components/common/Preloader';
 import { VideoModal } from '@/components/modules/Video/VideoModal';
 import type { VideoItem } from '@/types/sanity.generated';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
+
+const Scene = dynamic(() => import('@/components/model/Scene'), { ssr: false });
 
 const HOME_VIDEO = {
   _type: 'videoItem',
@@ -17,10 +19,12 @@ const HOME_VIDEO = {
 
 export function MarqueeScene() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   return (
     <>
-      <Scene onPlayClick={() => setModalOpen(true)} />
+      <Preloader progress={progress} />
+      <Scene onPlayClick={() => setModalOpen(true)} onProgress={setProgress} />
       <VideoModal
         videoItem={HOME_VIDEO}
         open={modalOpen}

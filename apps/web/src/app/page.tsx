@@ -12,19 +12,13 @@ import { MarqueeScene } from '@/components/marquee/MarqueeScene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
 import { buildMetadata } from '@/config/metadata';
-import {
-  client,
-  draftClient,
-  getHomePage,
-  resolveModuleColors,
-} from '@/lib/sanity';
+import { client, getHomePage, resolveModuleColors } from '@/lib/sanity';
 import type {
   CaseStudyCardModule as CaseStudyCardModuleType,
   HomePage as HomePageType,
   TextModule as TextModuleType,
 } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
-import { draftMode } from 'next/headers';
 import type { ReactElement } from 'react';
 
 import { homePageAnimations } from './page.animations';
@@ -85,9 +79,7 @@ export const metadata = buildMetadata('Home');
 export const revalidate = 60;
 
 async function getHomePageData(): Promise<{ homePage: HomePageType | null }> {
-  const draft = await draftMode();
-  const sanityClient = draft.isEnabled ? draftClient : client;
-  const homePage = await getHomePage(sanityClient);
+  const homePage = await getHomePage(client);
   return { homePage };
 }
 

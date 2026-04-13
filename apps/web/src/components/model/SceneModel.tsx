@@ -9,7 +9,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry';
 
-import { VIDEO_SOURCE } from './sceneConstants';
+import { VIDEO_SOURCE, TEASER_PLAYBACK_ID } from './sceneConstants';
 import * as C from './sceneConstants';
 import ScenePlayButton from './ScenePlayButton';
 
@@ -78,49 +78,25 @@ function makeCatchlightTexture(size = 128): THREE.CanvasTexture {
   return texture;
 }
 
-// ─── EyeLight via DecalGeometry ───────────────────────────────────────────────
-function EyeLight({ config, proceduralTexture, corneaMesh }) {
-  const pngTexture = config.png ? useTexture(config.png) : null;
-  const texture = pngTexture ?? proceduralTexture;
-
-  const decalMesh = useMemo(() => {
-    if (!corneaMesh) return null;
-
-    const position = new THREE.Vector3(...config.position);
-    const orientation = new THREE.Euler(
-      Math.atan2(config.position[1], config.position[2]),
-      Math.atan2(-config.position[0], config.position[2]),
-      0,
-    );
-    const size = new THREE.Vector3(config.size[0], config.size[1], 0.1);
-
-    const geometry = new DecalGeometry(corneaMesh, position, orientation, size);
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      opacity: config.opacity,
-      depthWrite: false,
-      polygonOffset: true,
-      polygonOffsetFactor: -1,
-    });
-
-    return new THREE.Mesh(geometry, material);
-  }, [corneaMesh, texture]);
-
-  if (!decalMesh) return null;
-  return <primitive object={decalMesh} renderOrder={999} />;
-}
-
 // ─── SceneModel ───────────────────────────────────────────────────────────────
-export default function SceneModel({ url, isPaused, onPlayClick }) {
+export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
   const gltf = useGLTF(url);
+
+  useEffect(() => {
+    console.log('gltf loaded', gltf);
+    if (gltf) onProgress?.(100);
+  }, [gltf]);
+
   const { camera } = useThree();
 
-  const videoTexture = useVideoTexture(`/video/${VIDEO_SOURCE}`, {
-    loop: true,
-    muted: true,
-    start: true,
-  });
+  const videoTexture = useVideoTexture(
+    `https://stream.mux.com/${TEASER_PLAYBACK_ID}.m3u8`,
+    {
+      loop: true,
+      muted: true,
+      start: true,
+    }
+  );
   videoTexture.flipY = false;
 
   const [isPlaying, setIsPlaying] = useState(true);
