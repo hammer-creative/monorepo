@@ -1,8 +1,6 @@
 // apps/web/src/config/metadata.ts
 import type { Metadata, Viewport } from 'next';
 
-const isStaging = process.env.CONTEXT !== 'production';
-
 /**
  * Base metadata merged into every page. Handles SEO, social cards, favicons,
  * PWA config, and staging noindex. Consumed directly by the root layout and
@@ -23,9 +21,8 @@ export const metadata: Metadata = {
     'video game marketing',
   ],
   referrer: 'origin-when-cross-origin',
-  robots: isStaging
-    ? 'noindex, nofollow'
-    : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+  robots:
+    'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
   formatDetection: {
     telephone: false,
     email: false,
