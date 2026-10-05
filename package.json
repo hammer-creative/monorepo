@@ -5,43 +5,31 @@
   "packageManager": "pnpm@10.12.4",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "lefthook install",
     "setup": "pnpm clean && pnpm install -w",
     "clean": "turbo run clean && rm -rf node_modules pnpm-lock.yaml .turbo",
-    "clean:cache": "turbo run clean && rm -rf node_modules pnpm-lock.yaml .turbo node_modules/.cache .eslintcache tsconfig.tsbuildinfo",
+    "clean:cache": "turbo run clean && rm -rf node_modules pnpm-lock.yaml .turbo node_modules/.cache tsconfig.tsbuildinfo",
     "typegen": "turbo run typegen",
     "dev:watch": "turbo run typegen && turbo run dev:watch",
     "dev:netlify": "turbo run typegen && concurrently \"turbo run --parallel\" \"netlify dev --cwd apps/web\"",
     "build": "turbo run build --force",
     "analyze": "turbo analyze",
     "typecheck": "turbo run typecheck",
-    "lint": "turbo run lint",
-    "lint:summary": "turbo run lint:summary",
-    "lint:verbose": "turbo run lint:verbose",
-    "lint:fix": "turbo run lint:fix",
-    "format": "prettier --write \"apps/**/*.{ts,tsx,md}\" \"packages/**/*.{ts,tsx,md}\""
+    "lint": "biome check . && oxlint .",
+    "lint:fix": "biome check --write . && oxlint --fix .",
+    "format": "biome format --write ."
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.5.15",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@hammercreative/eslint-react": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "@hammercreative/tsconfig": "workspace:*",
     "@types/node": "^20.19.21",
     "concurrently": "^9.2.1",
-    "eslint": "^9.16.0",
-    "eslint-config-prettier": "^9.1.2",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.5.2",
+    "lefthook": "^2.1.17",
     "netlify-cli": "^23.9.1",
-    "prettier": "^3.6.2",
+    "oxlint": "^1.87.0",
     "turbo": "^2.5.8",
     "typescript": "^5.9.3"
-  },
-  "lint-staged": {
-    "$verbose": true,
-    "*.{js,ts,tsx,jsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
   }
 }

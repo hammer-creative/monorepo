@@ -1,0 +1,9 @@
+{
+  "name": "@hammercreative/tsconfig",
+  "version": "0.1.0",
+  "description": "Shared TypeScript configuration for the Hammer monorepo",
+  "type": "module",
+  "private": true,
+  "license": "UNLICENSED",
+  "files": ["*.json"]
+}

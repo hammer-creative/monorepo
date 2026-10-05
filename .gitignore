@@ -12,8 +12,6 @@ node_modules/
 apps/text-image/.env
 
 mux-uploads
-.eslintcache
-**/.eslintcache
 
 apps/web/public/model/archive
 apps/web/public/model/assets

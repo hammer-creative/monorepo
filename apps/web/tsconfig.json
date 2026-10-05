@@ -1,43 +1,17 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@hammercreative/tsconfig/tsconfig.nextjs.json",
   "compilerOptions": {
-    "jsx": "preserve",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "target": "ES2017",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "allowJs": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "strict": true,
-    "noEmit": true,
-    "incremental": true,
-    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+      "@/*": ["./src/*"]
+    }
   },
   "include": [
     "next-env.d.ts",
     "next-seo.config.ts",
     "src/**/*",
     ".next/types/**/*.ts",
-    "robots.ts",
+    "robots.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

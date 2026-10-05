@@ -17,9 +17,9 @@
     "deploy:graphql": "sanity graphql deploy",
     "deploy:studio:no-validation": "SANITY_STUDIO_DISABLE_REQUIRED=true sanity deploy",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint": "biome check . && oxlint .",
+    "lint:fix": "biome check --write . && oxlint --fix .",
+    "format": "biome format --write ."
   },
   "keywords": [
     "sanity"
@@ -42,18 +42,10 @@
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
+    "@hammercreative/tsconfig": "workspace:*",
     "@hammercreative/ui": "workspace:^1.0.0",
-    "@sanity/eslint-config-studio": "^5.0.2",
     "@types/react": "^19.2.2",
     "@types/styled-components": "^5.1.35",
-    "eslint": "^9.28",
-    "prettier": "^3.5",
     "typescript": "^5.8"
-  },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "bracketSpacing": false,
-    "singleQuote": true
   }
 }

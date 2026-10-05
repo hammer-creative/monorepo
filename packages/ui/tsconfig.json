@@ -1,19 +1,9 @@
 {
+  "extends": "@hammercreative/tsconfig/tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "jsx": "preserve",
-    "target": "ESNext",
-    "module": "ESNext",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": ["node"],
-    "declaration": true,
     "outDir": "dist",
     "rootDir": "src",
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+# Inserts [branch] after the conventional-commit prefix of the first line.
+# Usage: branch-tag-commit.sh <commit-message-file>
 
 BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD | tr '/' '-')"
 MSG_FILE="$1"

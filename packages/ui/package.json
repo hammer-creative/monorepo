@@ -21,17 +21,15 @@
     "dev:watch": "pnpm build -- --watch",
     "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint \"**/*.{ts,tsx}\" --cache --fix --format stylish",
-    "lint:summary": "eslint \"**/*.{ts,tsx}\" --cache --format summary",
-    "lint:verbose": "eslint \"**/*.{ts,tsx}\" --cache --debug --format stylish",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint": "biome check . && oxlint .",
+    "format": "biome format --write ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.12.4",
   "devDependencies": {
-    "@hammercreative/eslint-base": "workspace:*",
+    "@hammercreative/tsconfig": "workspace:*",
     "tsup": "^7.3.0"
   }
 }

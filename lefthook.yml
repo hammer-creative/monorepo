@@ -1,0 +1,32 @@
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm exec commitlint --edit {1}
+
+prepare-commit-msg:
+  commands:
+    branch-tag:
+      run: scripts/branch-tag-commit.sh {1}
+
+pre-commit:
+  parallel: true
+  commands:
+    biome:
+      glob: '*.{js,jsx,ts,tsx,json,jsonc}'
+      run: pnpm exec biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    oxlint:
+      glob: '*.{js,jsx,ts,tsx}'
+      run: pnpm exec oxlint {staged_files}
+    typecheck:
+      run: pnpm run typecheck
+
+pre-push:
+  commands:
+    typecheck:
+      run: pnpm run typecheck
+
+post-merge:
+  commands:
+    install:
+      run: pnpm install

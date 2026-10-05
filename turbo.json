@@ -27,9 +27,6 @@
       "persistent": true
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ],
       "cache": true,
       "outputs": []
     },
