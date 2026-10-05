@@ -1,7 +1,46 @@
 /* apps/web/src/styles/videos.css */
 
+/* MUX PLAYER CONFIGURATION */
+mux-player {
+  --play-button: none;
+  --pause-button: none;
+  --seek-backward-button: none;
+  --seek-forward-button: none;
+  --mute-button: none;
+  --volume-range: none;
+  --time-display: none;
+  --duration-display: none;
+  --fullscreen-button: none;
+  --pip-button: none;
+  --airplay-button: none;
+  --cast-button: none;
+  --captions-button: none;
+  --rendition-selectmenu: none;
+  --playback-rate-button: none;
+  --media-range-track-height: var(--space-10);
+  --media-accent-color: $color-hyperbeam;
+  --media-control-height: 0;
+  --media-control-padding: 0;
+}
+
+.video-modal-content mux-player,
+.single-video mux-player {
+  pointer-events: none;
+}
+
 .video-module video {
   display: block;
+}
+
+/* OVERRIDE ELEMENT FOCUS */
+.video-modal-content:focus,
+.video-modal-content button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.video-modal-content button:focus-visible {
+  outline: 2px solid var(--color-hyperbeam);
+  outline-offset: 10px;
 }
 
 /* MUTE BUTTON STATES */
@@ -47,39 +86,10 @@
   color: $color-aircutter;
 }
 
-/* MUX PLAYER CONFIGURATION */
-mux-player {
-  --play-button: none;
-  --pause-button: none;
-  --seek-backward-button: none;
-  --seek-forward-button: none;
-  --mute-button: none;
-  --volume-range: none;
-  --time-display: none;
-  --duration-display: none;
-  --fullscreen-button: none;
-  --pip-button: none;
-  --airplay-button: none;
-  --cast-button: none;
-  --captions-button: none;
-  --rendition-selectmenu: none;
-  --playback-rate-button: none;
-  --media-range-track-height: var(--space-10);
-  --media-accent-color: $color-hyperbeam;
-  --media-control-height: 0;
-  --media-control-padding: 0;
-}
 
-.video-modal-content mux-player,
-.single-video mux-player {
-  pointer-events: none;
-}
 
 /* VIDEO MODULE LAYOUTS */
 .video-module .single-video {
-  /* TODO: remove */
-  /* @mixin single-video-border; */
-  /* border: 5px solid red; */
   padding: var(--flow-space-0);
 }
 
@@ -173,7 +183,7 @@ mux-player {
   position: fixed;
   inset: 0;
   background: $color-nightshade;
-  z-index: 2100;
+  z-index: var(--z-video-modal);
 }
 
 .video-modal-content {
@@ -185,7 +195,7 @@ mux-player {
   background: #000;
   overflow: visible;
   border: none;
-  z-index: 2200;
+  z-index: var(--z-video-modal-content);
 }
 
 html:has(.video-modal) {
@@ -193,13 +203,50 @@ html:has(.video-modal) {
 }
 
 /* VIDEO CONTROLS - BASE */
-.video-modal-content .video-modal-close,
-.video-modal-content .video-modal-pause,
-.video-modal-content .video-modal-play,
-.video-modal-content .video-modal-volume,
 .single-video .video-modal-pause,
 .single-video .video-modal-play,
 .single-video .video-modal-mute {
+  position: absolute;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $color-hyperbeam;
+  transition: color 300ms ease-in-out;
+}
+
+.single-video .video-modal-pause,
+.single-video .video-modal-play,
+.single-video .video-modal-mute {
+  font-size: clamp(1rem, 0.167rem + 2.604vw, 1.3rem);
+
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+.single-video .video-modal-pause,
+.single-video .video-modal-play,
+.single-video .video-modal-mute {
+  z-index: 10;
+}
+
+
+.single-video .video-modal-pause,
+.single-video .video-modal-play {
+  bottom: var(--space-fluid-20-40);
+  left: var(--space-fluid-20-40);
+}
+
+.single-video .video-modal-mute {
+  bottom: var(--space-fluid-20-40);
+  right: var(--space-fluid-20-40);
+}
+
+.video-modal-content .video-modal-close,
+.video-modal-content .video-modal-pause,
+.video-modal-content .video-modal-play,
+.video-modal-content .video-modal-volume {
   position: absolute;
   background: transparent;
   border: none;
@@ -226,61 +273,41 @@ html:has(.video-modal) {
 /* VIDEO CONTROLS - SIZING */
 .video-modal-content .video-modal-pause,
 .video-modal-content .video-modal-play,
-.video-modal-content .video-modal-volume,
-.single-video .video-modal-pause,
-.single-video .video-modal-play,
-.single-video .video-modal-mute {
-  font-size: var(--font-size-lg-fluid);
-}
+.video-modal-content .video-modal-volume {
+  font-size: clamp(1rem, 0.167rem + 2.604vw, 1.3rem);
 
-.video-modal-content .video-modal-pause svg,
-.video-modal-content .video-modal-play svg,
-.video-modal-content .video-modal-volume svg,
-.single-video .video-modal-pause svg,
-.single-video .video-modal-play svg,
-.single-video .video-modal-mute svg {
-  width: 1em;
-  height: 1em;
+  svg {
+    width: 1em;
+    height: 1em;
+  }
 }
 
 /* VIDEO CONTROLS - POSITIONING */
 .video-modal-content .video-modal-close {
-  top: var(--space-20);
-  right: var(--space-20);
+  top: 0;
+  right: 0;
+}
+
+.video-modal-content .video-modal-pause,
+.video-modal-content .video-modal-play,
+.video-modal-content .video-modal-volume {
+  bottom: 0;
+
 }
 
 .video-modal-content .video-modal-pause,
 .video-modal-content .video-modal-play {
-  bottom: var(--space-40);
-  left: var(--space-40);
-}
-
-.single-video .video-modal-pause,
-.single-video .video-modal-play {
-  bottom: var(--space-fluid-20-40);
-  left: var(--space-fluid-20-40);
+  left: 0;
 }
 
 .video-modal-content .video-modal-volume {
-  bottom: var(--space-fluid-20-40);
-  right: var(--space-fluid-20-40);
-}
-
-.single-video .video-modal-mute {
-  bottom: var(--space-fluid-20-40);
-  right: var(--space-fluid-20-40);
+  right: 0;
 }
 
 /* VIDEO CONTROLS - Z-INDEX */
 .video-modal-content button,
 .video-modal-progress {
-  z-index: 10;
-}
-
-.single-video .video-modal-pause,
-.single-video .video-modal-play,
-.single-video .video-modal-mute {
-  z-index: 10;
+  /* z-index: var(--z-video-modal-buttons); */
 }
 
 /* VIDEO PROGRESS BAR */
@@ -311,8 +338,4 @@ html:has(.video-modal) {
   background-color: $color-hyperbeam;
   transition: width 0.1s ease;
   pointer-events: none;
-}
-
-.video-modal-content button:focus:not(:focus-visible) {
-  outline: none;
 }

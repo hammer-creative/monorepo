@@ -130,6 +130,7 @@ export function VideoModal({ videoItem, open, onOpenChange }: VideoModalProps) {
         <Dialog.Content
           ref={contentRef}
           className="video-modal-content"
+          onOpenAutoFocus={(e) => e.preventDefault()}
           onClick={handleTogglePlay}
           onPointerDownOutside={(e) => {
             e.preventDefault();
