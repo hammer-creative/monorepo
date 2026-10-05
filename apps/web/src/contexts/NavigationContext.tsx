@@ -2,18 +2,10 @@
 
 'use client';
 
+import React, { createContext, type ReactNode, useCallback, useContext, useState } from 'react';
 import { type NavigationContextState } from '@/types/navigation';
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-  type ReactNode,
-} from 'react';
 
-const NavigationContext = createContext<NavigationContextState | undefined>(
-  undefined,
-);
+const NavigationContext = createContext<NavigationContextState | undefined>(undefined);
 
 interface NavigationProviderProps {
   children: ReactNode;
@@ -35,9 +27,7 @@ export function NavigationProvider({ children }: NavigationProviderProps) {
   }, []);
 
   return (
-    <NavigationContext.Provider
-      value={{ isOpen, toggleMenu, closeMenu, openMenu }}
-    >
+    <NavigationContext.Provider value={{ isOpen, toggleMenu, closeMenu, openMenu }}>
       {children}
     </NavigationContext.Provider>
   );

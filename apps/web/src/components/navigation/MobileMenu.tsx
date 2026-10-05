@@ -1,5 +1,8 @@
 'use client';
 
+import { stagger, useAnimate } from 'motion/react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Copyright } from '@/components/common';
 import { LinkList } from '@/components/common/LinkList';
 import { Wordmark } from '@/components/common/Wordmark';
@@ -7,9 +10,6 @@ import { Addresses } from '@/components/navigation';
 import { RadixMenu } from '@/components/navigation/RadixMenu';
 import { useNavigation } from '@/contexts/NavigationContext';
 import type { NavigationData } from '@/types/navigation';
-import { stagger, useAnimate } from 'motion/react';
-import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
 
 const ANIMATION = {
   overlay: {
@@ -79,11 +79,9 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
       copyrightRef.current,
     ].filter(Boolean) as HTMLElement[];
 
-    const allItems = [
-      ...radixItems,
-      ...secondarySections,
-      wordmarkRef.current,
-    ].filter(Boolean) as HTMLElement[];
+    const allItems = [...radixItems, ...secondarySections, wordmarkRef.current].filter(
+      Boolean
+    ) as HTMLElement[];
 
     allItems.forEach((item) => {
       item.style.opacity = '0';
@@ -95,22 +93,19 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
         duration: ANIMATION.overlay.duration * 1000,
         easing: 'ease-out',
         fill: 'forwards',
-      },
+      }
     ).finished;
 
     await animate(
       allItems,
       {
-        opacity: [
-          ANIMATION.items.enter.opacity.from,
-          ANIMATION.items.enter.opacity.to,
-        ],
+        opacity: [ANIMATION.items.enter.opacity.from, ANIMATION.items.enter.opacity.to],
       },
       {
         duration: ANIMATION.items.enter.duration,
         delay: stagger(ANIMATION.items.enter.stagger),
         ease: ANIMATION.items.enter.ease,
-      },
+      }
     );
   }, [animate]);
 
@@ -126,11 +121,9 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
       if (clickedHref) {
         const nonClickedRadixItems = radixItems.filter(
-          (item) => !item.hasAttribute('data-clicked'),
+          (item) => !item.hasAttribute('data-clicked')
         );
-        const clickedItem = radixItems.find((item) =>
-          item.hasAttribute('data-clicked'),
-        );
+        const clickedItem = radixItems.find((item) => item.hasAttribute('data-clicked'));
 
         const nonClickedItems = [
           ...nonClickedRadixItems,
@@ -142,16 +135,13 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           await animate(
             nonClickedItems,
             {
-              opacity: [
-                ANIMATION.items.exit.opacity.from,
-                ANIMATION.items.exit.opacity.to,
-              ],
+              opacity: [ANIMATION.items.exit.opacity.from, ANIMATION.items.exit.opacity.to],
             },
             {
               duration: ANIMATION.items.exit.duration,
               delay: stagger(ANIMATION.items.exit.stagger, { from: 'last' }),
               ease: ANIMATION.items.exit.ease,
-            },
+            }
           );
         }
 
@@ -159,43 +149,35 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           await animate(
             clickedItem,
             {
-              opacity: [
-                ANIMATION.items.exit.opacity.from,
-                ANIMATION.items.exit.opacity.to,
-              ],
+              opacity: [ANIMATION.items.exit.opacity.from, ANIMATION.items.exit.opacity.to],
             },
             {
               duration: ANIMATION.items.exit.duration,
               ease: ANIMATION.items.exit.ease,
-            },
+            }
           );
         }
       } else {
-        const allItems = [
-          ...radixItems,
-          ...secondarySections,
-          wordmarkRef.current,
-        ].filter(Boolean) as HTMLElement[];
+        const allItems = [...radixItems, ...secondarySections, wordmarkRef.current].filter(
+          Boolean
+        ) as HTMLElement[];
 
         if (allItems.length > 0) {
           await animate(
             allItems,
             {
-              opacity: [
-                ANIMATION.items.exit.opacity.from,
-                ANIMATION.items.exit.opacity.to,
-              ],
+              opacity: [ANIMATION.items.exit.opacity.from, ANIMATION.items.exit.opacity.to],
             },
             {
               duration: ANIMATION.items.exit.duration,
               delay: stagger(ANIMATION.items.exit.stagger, { from: 'last' }),
               ease: ANIMATION.items.exit.ease,
-            },
+            }
           );
         }
       }
     },
-    [animate],
+    [animate]
   );
 
   const exitOverlay = useCallback(async () => {
@@ -207,7 +189,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
         duration: ANIMATION.overlay.easeInDuration * 1000,
         easing: 'ease-in-out',
         fill: 'forwards',
-      },
+      }
     ).finished;
   }, []);
 
@@ -273,7 +255,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
 
       router.push(href);
     },
-    [exitItems, router, pathname, closeMenu],
+    [exitItems, router, pathname, closeMenu]
   );
 
   useEffect(() => {
@@ -345,10 +327,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
               <Addresses items={navigationData.addresses} />
             </div>
             <div ref={utilitiesRef} className="menu-secondary utilities">
-              <LinkList
-                items={navigationData.utilities}
-                onLinkClick={handleLinkClick}
-              />
+              <LinkList items={navigationData.utilities} onLinkClick={handleLinkClick} />
             </div>
             <div ref={socialRef} className="menu-secondary social">
               <LinkList items={navigationData.social} />
@@ -359,10 +338,7 @@ export function MobileMenu({ navigationData }: MobileMenuProps) {
           </div>
 
           <div ref={wordmarkRef} className="wordmark">
-            <Wordmark
-              text={navigationData.wordmark.text}
-              href={navigationData.wordmark.href}
-            />
+            <Wordmark text={navigationData.wordmark.text} href={navigationData.wordmark.href} />
           </div>
         </div>
       )}

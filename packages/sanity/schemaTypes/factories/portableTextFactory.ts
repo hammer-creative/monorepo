@@ -1,22 +1,22 @@
 // packages/sanity/schemaTypes/factories/portableTextFactory.ts
 
-import {defineField, type ArrayRule} from 'sanity'
-import {PortableTextWithCounter} from '../components/PortableTextWithCounter'
-import {addRequiredLabel} from '../utils/fieldHelpers'
-import {applyRequired} from '../utils/validation'
-import React from 'react'
-import {DEFAULT_COLORS} from '@hammercreative/ui'
+import { DEFAULT_COLORS } from '@hammercreative/ui';
+import React from 'react';
+import { type ArrayRule, defineField } from 'sanity';
+import { PortableTextWithCounter } from '../components/PortableTextWithCounter';
+import { addRequiredLabel } from '../utils/fieldHelpers';
+import { applyRequired } from '../utils/validation';
 
 interface PortableTextConfig {
-  name?: string
-  title?: string
-  required?: boolean
-  maxLength?: number
-  description?: string
-  blocks?: any[]
-  enableColorAnnotations?: boolean
-  enableImages?: boolean
-  enableTables?: boolean
+  name?: string;
+  title?: string;
+  required?: boolean;
+  maxLength?: number;
+  description?: string;
+  blocks?: any[];
+  enableColorAnnotations?: boolean;
+  enableImages?: boolean;
+  enableTables?: boolean;
 }
 
 /**
@@ -34,16 +34,16 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     enableColorAnnotations = false,
     enableImages = false,
     enableTables = false,
-  } = config
+  } = config;
 
   const annotations = [
     {
       name: 'link',
       type: 'object',
       title: 'Link',
-      fields: [{name: 'href', type: 'url', title: 'URL'}],
+      fields: [{ name: 'href', type: 'url', title: 'URL' }],
     },
-  ]
+  ];
 
   if (enableColorAnnotations) {
     annotations.push({
@@ -82,56 +82,56 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
                   }),
                   React.createElement(
                     'span',
-                    {key: `${key}-label`},
-                    key.charAt(0).toUpperCase() + key.slice(1),
+                    { key: `${key}-label` },
+                    key.charAt(0).toUpperCase() + key.slice(1)
                   ),
-                ],
+                ]
               ),
               value: key,
             })),
           },
         },
       ],
-    } as any)
+    } as any);
   }
 
   const defaultBlocks = [
     {
       type: 'block',
       styles: [
-        {title: 'Normal', value: 'normal'},
-        {title: 'Heading 2', value: 'h2'},
-        {title: 'Heading 3', value: 'h3'},
-        {title: 'Heading 4', value: 'h4'},
-        {title: 'Blockquote', value: 'blockquote'},
+        { title: 'Normal', value: 'normal' },
+        { title: 'Heading 2', value: 'h2' },
+        { title: 'Heading 3', value: 'h3' },
+        { title: 'Heading 4', value: 'h4' },
+        { title: 'Blockquote', value: 'blockquote' },
       ],
       lists: [
-        {title: 'Bullet', value: 'bullet'},
-        {title: 'Numbered', value: 'number'},
+        { title: 'Bullet', value: 'bullet' },
+        { title: 'Numbered', value: 'number' },
       ],
       marks: {
         decorators: [
-          {title: 'Bold', value: 'strong'},
-          {title: 'Italic', value: 'em'},
+          { title: 'Bold', value: 'strong' },
+          { title: 'Italic', value: 'em' },
         ],
         annotations,
       },
     },
-  ]
+  ];
 
-  const extendedBlocks = [...defaultBlocks]
+  const extendedBlocks = [...defaultBlocks];
 
   if (enableImages) {
     extendedBlocks.push({
       type: 'image',
-      options: {hotspot: true},
-    } as any)
+      options: { hotspot: true },
+    } as any);
   }
 
   if (enableTables) {
     extendedBlocks.push({
       type: 'table',
-    } as any)
+    } as any);
   }
 
   return defineField({
@@ -140,21 +140,21 @@ export const createPortableTextField = (config: PortableTextConfig = {}) => {
     type: 'array',
     of: blocks || extendedBlocks,
     description: addRequiredLabel(description, required),
-    components: {input: PortableTextWithCounter},
+    components: { input: PortableTextWithCounter },
     validation: (rule: ArrayRule<any>) => {
-      const baseRule = applyRequired(rule, required, `${title} is required`)
+      const baseRule = applyRequired(rule, required, `${title} is required`);
 
       return baseRule.max(maxLength).custom((value: any[] = []) => {
         const charCount = value
           .filter((block: any) => block._type === 'block')
           .map((block: any) => block.children?.map((child: any) => child.text || '').join('') || '')
-          .join('').length
+          .join('').length;
 
         if (charCount > maxLength) {
-          return `Must be ${maxLength} characters or less (currently ${charCount})`
+          return `Must be ${maxLength} characters or less (currently ${charCount})`;
         }
-        return true
-      })
+        return true;
+      });
     },
-  })
-}
+  });
+};

@@ -1,6 +1,7 @@
 // apps/web/src/lib/sanity/queries/servicesPage.ts
-import type { ServicesPage as ServicesPageType } from '@/types/sanity.generated';
+
 import type { SanityClient } from 'next-sanity';
+import type { ServicesPage as ServicesPageType } from '@/types/sanity.generated';
 
 import { moduleProjections, projections } from '../groq/builders';
 import { fetchOne } from '../groq/helpers';
@@ -21,10 +22,5 @@ export async function getServicesPage(sanityClient?: SanityClient) {
 
   return sanityClient
     ? sanityClient.fetch<ServicesPageType>(query)
-    : fetchOne<ServicesPageType>(
-        'servicesPage',
-        'services',
-        servicesPageProjection,
-        sanityClient,
-      );
+    : fetchOne<ServicesPageType>('servicesPage', 'services', servicesPageProjection, sanityClient);
 }

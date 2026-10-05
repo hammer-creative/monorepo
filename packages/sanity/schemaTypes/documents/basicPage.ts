@@ -1,6 +1,6 @@
 // schemaTypes/documents/basicPage.ts
-import {defineType} from 'sanity'
-import {titleField, slugField, portableTextField} from '../fields/textField'
+import { defineType } from 'sanity';
+import { portableTextField, slugField, titleField } from '../fields/textField';
 
 export const basicPage = defineType({
   name: 'basicPage',
@@ -15,4 +15,4 @@ export const basicPage = defineType({
       enableColorAnnotations: true,
     }),
   ],
-})
+});

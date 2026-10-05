@@ -1,10 +1,10 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
 import Preloader from '@/components/common/Preloader';
 import { VideoModal } from '@/components/modules/Video/VideoModal';
 import type { VideoItem } from '@/types/sanity.generated';
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
 
 const Scene = dynamic(() => import('@/components/model/Scene'), { ssr: false });
 
@@ -25,11 +25,7 @@ export function MarqueeScene() {
     <>
       <Preloader progress={progress} />
       <Scene onPlayClick={() => setModalOpen(true)} onProgress={setProgress} />
-      <VideoModal
-        videoItem={HOME_VIDEO}
-        open={modalOpen}
-        onOpenChange={setModalOpen}
-      />
+      <VideoModal videoItem={HOME_VIDEO} open={modalOpen} onOpenChange={setModalOpen} />
     </>
   );
 }

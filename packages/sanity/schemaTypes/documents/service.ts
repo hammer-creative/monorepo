@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/documents/service.ts
-import {CaseIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
+import { CaseIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
 
 export const service = defineType({
   name: 'service',
@@ -20,4 +20,4 @@ export const service = defineType({
       title: 'title',
     },
   },
-})
+});

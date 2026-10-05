@@ -1,21 +1,21 @@
 // packages/sanity/schemaTypes/factories/colorFieldFactory.ts
 
-import {defineField} from 'sanity'
-import type {ObjectRule} from 'sanity'
-import React from 'react'
-import {DEFAULT_COLORS} from '@hammercreative/ui'
-import {addRequiredLabel} from '../utils/fieldHelpers'
-import {applyRequired} from '../utils/validation'
+import { DEFAULT_COLORS } from '@hammercreative/ui';
+import React from 'react';
+import type { ObjectRule } from 'sanity';
+import { defineField } from 'sanity';
+import { addRequiredLabel } from '../utils/fieldHelpers';
+import { applyRequired } from '../utils/validation';
 
 interface ColorFieldConfig {
-  name?: string
-  title?: string
-  required?: boolean
-  includeLabel?: string
+  name?: string;
+  title?: string;
+  required?: boolean;
+  includeLabel?: string;
   initialValue?: {
-    enabled: boolean
-    name?: string
-  }
+    enabled: boolean;
+    name?: string;
+  };
 }
 
 /**
@@ -29,9 +29,9 @@ export const createColorField = (config: ColorFieldConfig = {}) => {
     required = false,
     includeLabel,
     initialValue,
-  } = config
+  } = config;
 
-  const isTextColor = name === 'textColor'
+  const isTextColor = name === 'textColor';
 
   return defineField({
     name,
@@ -76,17 +76,17 @@ export const createColorField = (config: ColorFieldConfig = {}) => {
                 }),
                 React.createElement(
                   'span',
-                  {key: `${key}-label`},
-                  key.charAt(0).toUpperCase() + key.slice(1),
+                  { key: `${key}-label` },
+                  key.charAt(0).toUpperCase() + key.slice(1)
                 ),
-              ],
+              ]
             ),
             value: key,
           })),
         },
-        hidden: ({parent}: any) => !parent?.enabled,
+        hidden: ({ parent }: any) => !parent?.enabled,
       },
     ],
     validation: (rule: ObjectRule) => applyRequired(rule, required, `${title} is required`),
-  })
-}
+  });
+};

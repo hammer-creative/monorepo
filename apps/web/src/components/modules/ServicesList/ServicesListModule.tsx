@@ -56,7 +56,7 @@ function ListRenderer({
 }: {
   items: unknown[];
   heading: string;
-  className?: string;
+  className?: string | undefined;
 }) {
   const validItems = items.filter(isValidListItem);
 

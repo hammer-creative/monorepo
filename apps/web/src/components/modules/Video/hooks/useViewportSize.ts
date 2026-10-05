@@ -8,9 +8,7 @@ export function useViewportSize() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(
-      `(max-width: ${VIDEO_CONFIG.MOBILE_BREAKPOINT})`,
-    );
+    const mediaQuery = window.matchMedia(`(max-width: ${VIDEO_CONFIG.MOBILE_BREAKPOINT})`);
 
     const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
       setIsMobile(e.matches);

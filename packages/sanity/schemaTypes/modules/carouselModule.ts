@@ -1,9 +1,9 @@
 // packages/sanity/schemaTypes/modules/carouselModule.ts
 
-import {VersionsIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
-import {createMultiImageField, createColorField} from '../factories'
-import {createImageDimensionValidation, applyRequired} from '../utils/validation'
+import { VersionsIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
+import { createColorField, createMultiImageField } from '../factories';
+import { applyRequired, createImageDimensionValidation } from '../utils/validation';
 
 /**
  * Carousel Module
@@ -17,7 +17,7 @@ export const carouselModule = defineType({
   icon: VersionsIcon,
   fields: [
     (() => {
-      const {validation: _, ...field} = createMultiImageField({
+      const { validation: _, ...field } = createMultiImageField({
         name: 'images',
         title: 'Images',
         description:
@@ -25,7 +25,7 @@ export const carouselModule = defineType({
         required: true,
         minImages: 3,
         maxImages: 20,
-      })
+      });
       return {
         ...field,
         validation: (Rule) =>
@@ -33,22 +33,22 @@ export const carouselModule = defineType({
             .min(3)
             .max(20)
             .custom(async (items: any[]) => {
-              if (!items?.length) return true
+              if (!items?.length) return true;
 
               const dimensionValidator = createImageDimensionValidation({
                 minWidth: 680,
                 minHeight: 680,
                 maxFileSize: 5,
-              })
+              });
 
               for (const item of items) {
-                const result = await dimensionValidator(item.image)
-                if (result !== true) return result
+                const result = await dimensionValidator(item.image);
+                if (result !== true) return result;
               }
 
-              return true
+              return true;
             }),
-      }
+      };
     })(),
     createColorField({
       name: 'backgroundColor',
@@ -60,12 +60,12 @@ export const carouselModule = defineType({
     select: {
       images: 'images',
     },
-    prepare({images}) {
-      const count = images?.length || 0
+    prepare({ images }) {
+      const count = images?.length || 0;
       return {
         title: `Image Carousel`,
         subtitle: `${count} image${count !== 1 ? 's' : ''}`,
-      }
+      };
     },
   },
-})
+});

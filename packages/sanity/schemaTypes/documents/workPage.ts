@@ -1,7 +1,7 @@
 // schemaTypes/documents/workPage.ts
 
-import {defineType} from 'sanity'
-import {titleField, slugField} from '../fields/textField'
+import { defineType } from 'sanity';
+import { slugField, titleField } from '../fields/textField';
 
 export const workPage = defineType({
   name: 'workPage',
@@ -14,7 +14,7 @@ export const workPage = defineType({
       name: 'modules',
       title: 'Case S',
       type: 'array',
-      of: [{type: 'caseStudyCardModule'}, {type: 'textModule'}],
+      of: [{ type: 'caseStudyCardModule' }, { type: 'textModule' }],
     },
   ],
   preview: {
@@ -22,12 +22,12 @@ export const workPage = defineType({
       title: 'title',
       modules: 'modules',
     },
-    prepare({title, modules}) {
-      const moduleCount = modules?.length || 0
+    prepare({ title, modules }) {
+      const moduleCount = modules?.length || 0;
       return {
         title: title || 'Untitled',
         subtitle: `${moduleCount} module${moduleCount !== 1 ? 's' : ''}`,
-      }
+      };
     },
   },
-})
+});

@@ -1,10 +1,10 @@
 // apps/web/src/components/modules/Carousel/CaseStudyCarousel.tsx
 'use client';
 
-import { SanityImageCarousel, Title } from '@/components/common';
-import type { CaseStudyTeaserItem } from '@/types/caseStudy';
 import Link from 'next/link';
 import { SwiperSlide } from 'swiper/react';
+import { SanityImageCarousel, Title } from '@/components/common';
+import type { CaseStudyTeaserItem } from '@/types/caseStudy';
 
 import { CarouselBase } from './CarouselBase';
 

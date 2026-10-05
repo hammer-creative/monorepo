@@ -1,4 +1,3 @@
-export { TwoKIcon } from './TwoKIcon';
 export { BandaiIcon } from './BandaiIcon';
 export { BethesedaIcon } from './BethesedaIcon';
 export { BlizzardIcon } from './BlizzardIcon';
@@ -10,5 +9,6 @@ export { EpicIcon } from './EpicIcon';
 export { MarvelIcon } from './MarvelIcon';
 export { RiotGamesIcon } from './RiotGamesIcon';
 export { SquareEnixIcon } from './SquareEnixIcon';
+export { TwoKIcon } from './TwoKIcon';
 export { UbisoftIcon } from './UbisoftIcon';
 export { WizardsIcon } from './WizardsIcon';

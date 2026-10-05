@@ -1,10 +1,10 @@
 // packages/sanity/schemaTypes/modules/heroModule.ts
 
-import {AsteriskIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
-import {titleField, portableTextField} from '../fields/textField'
-import {createSingleImageField, createColorField} from '../factories'
-import {createImageDimensionValidation, applyRequired} from '../utils/validation'
+import { AsteriskIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
+import { createColorField, createSingleImageField } from '../factories';
+import { portableTextField, titleField } from '../fields/textField';
+import { applyRequired, createImageDimensionValidation } from '../utils/validation';
 
 export const heroModule = defineType({
   name: 'heroModule',
@@ -13,12 +13,12 @@ export const heroModule = defineType({
   icon: AsteriskIcon,
   fields: [
     (() => {
-      const {validation: _, ...field} = titleField({required: true, rows: 3, maxLength: 150})
-      return field
+      const { validation: _, ...field } = titleField({ required: true, rows: 3, maxLength: 150 });
+      return field;
     })(),
     portableTextField(),
     (() => {
-      const {validation: _, ...imageField} = createSingleImageField({
+      const { validation: _, ...imageField } = createSingleImageField({
         name: 'image',
         title: 'Hero Image',
         required: true,
@@ -37,7 +37,7 @@ export const heroModule = defineType({
             ],
           },
         },
-      })
+      });
       return {
         ...imageField,
         validation: (Rule) =>
@@ -46,12 +46,12 @@ export const heroModule = defineType({
               minWidth: 3840,
               minHeight: 2160,
               maxFileSize: 20,
-            }),
+            })
           ),
-      }
+      };
     })(),
     (() => {
-      const {validation: _, ...imageField} = createSingleImageField({
+      const { validation: _, ...imageField } = createSingleImageField({
         name: 'teaserImage',
         title: 'Teaser Image',
         required: true,
@@ -59,12 +59,12 @@ export const heroModule = defineType({
         imageOptions: {
           hotspot: {
             previews: [
-              {title: '16:9 Landscape-ish', aspectRatio: 16 / 9},
-              {title: '1:1 Square', aspectRatio: 1 / 1},
+              { title: '16:9 Landscape-ish', aspectRatio: 16 / 9 },
+              { title: '1:1 Square', aspectRatio: 1 / 1 },
             ],
           },
         },
-      })
+      });
       return {
         ...imageField,
         validation: (Rule) =>
@@ -73,22 +73,22 @@ export const heroModule = defineType({
               minWidth: 1380,
               minHeight: 800,
               maxFileSize: 3,
-            }),
+            })
           ),
-      }
+      };
     })(),
     {
       name: 'services',
       title: 'Services',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'service'}]}],
+      of: [{ type: 'reference', to: [{ type: 'service' }] }],
       description: 'Services provided for this project',
     },
     {
       name: 'deliverables',
       title: 'Deliverables',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'deliverable'}]}],
+      of: [{ type: 'reference', to: [{ type: 'deliverable' }] }],
       description: 'Deliverables for this project',
     },
     createColorField({
@@ -111,12 +111,12 @@ export const heroModule = defineType({
       title: 'title',
       media: 'image',
     },
-    prepare({title, media}) {
+    prepare({ title, media }) {
       return {
         title: 'Hero Module',
         subtitle: title || undefined,
         media,
-      }
+      };
     },
   },
-})
+});

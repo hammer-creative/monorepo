@@ -7,8 +7,6 @@ export function parseAspectRatio(ratio: string | number | undefined): string {
   return typeof ratio === 'string' ? ratio : '16 / 9';
 }
 
-export function getPosterUrl(video: {
-  poster?: { asset?: { url?: string } };
-}): string {
+export function getPosterUrl(video: { poster?: { asset?: { url?: string } } }): string {
   return video.poster?.asset?.url || '';
 }

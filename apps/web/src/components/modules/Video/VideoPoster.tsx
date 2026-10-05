@@ -1,8 +1,5 @@
 // apps/web/src/components/Video/VideoPoster.tsx
-import {
-  SanityImageVideoPoster,
-  type SanityImageType,
-} from '@/components/common/SanityImage';
+import { type SanityImageType, SanityImageVideoPoster } from '@/components/common/SanityImage';
 
 export function VideoPoster({
   poster = null,

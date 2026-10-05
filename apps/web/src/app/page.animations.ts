@@ -1,11 +1,7 @@
 // apps/web/src/app/page.animations.ts
 
 import type { AnimateConfig } from '@/components/motion/AnimateOnScroll';
-import {
-  DELAY,
-  DURATION,
-  STATE,
-} from '@/components/motion/AnimateOnScroll/constants';
+import { DELAY, DURATION, STATE } from '@/components/motion/AnimateOnScroll/constants';
 
 export const homePageAnimations = {
   textModuleFirst: {

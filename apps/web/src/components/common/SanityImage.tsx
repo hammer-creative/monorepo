@@ -2,9 +2,9 @@
 
 // TODO: typechecking error and evaluate sizes for each component
 
+import Image from 'next/image';
 import { urlFor } from '@/lib/sanity/image';
 import type { ImageItem } from '@/types/sanity.generated';
-import Image from 'next/image';
 
 type SanityImageType = ImageItem['image'];
 
@@ -29,9 +29,9 @@ interface SanityImageProps {
   objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
   quality?: number;
   placeholder?: 'blur' | 'empty';
-  blurDataURL?: string;
-  onLoad?: () => void;
-  onError?: () => void;
+  blurDataURL?: string | undefined;
+  onLoad?: (() => void) | undefined;
+  onError?: (() => void) | undefined;
 }
 
 export function SanityImage({
@@ -54,9 +54,7 @@ export function SanityImage({
   if (!image?.asset) return null;
 
   const src = (() => {
-    const base = image.hotspot
-      ? urlFor(image).crop('focalpoint')
-      : urlFor(image);
+    const base = image.hotspot ? urlFor(image).crop('focalpoint') : urlFor(image);
 
     if (width && height) {
       return base.fit('crop').width(width).height(height).url();
@@ -80,9 +78,9 @@ export function SanityImage({
     ...(!priority && { loading }),
     quality,
     placeholder,
-    blurDataURL,
-    onLoad,
-    onError,
+    ...(blurDataURL && { blurDataURL }),
+    ...(onLoad && { onLoad }),
+    ...(onError && { onError }),
     style: { objectFit, objectPosition },
   };
 
@@ -105,32 +103,15 @@ export function SanityImage({
 }
 
 export const SanityImageHero = (
-  props: Partial<SanityImageProps> & { image: SanityImageType | null },
-) => (
-  <SanityImage
-    fill
-    sizes="100vw"
-    priority
-    quality={100}
-    variant="hero"
-    {...props}
-  />
-);
+  props: Partial<SanityImageProps> & { image: SanityImageType | null }
+) => <SanityImage fill sizes="100vw" priority quality={100} variant="hero" {...props} />;
 
 export const SanityImageFullWidth = (
-  props: Partial<SanityImageProps> & { image: SanityImageType | null },
-) => (
-  <SanityImage
-    fill
-    sizes="100vw"
-    quality={85}
-    variant="full-width"
-    {...props}
-  />
-);
+  props: Partial<SanityImageProps> & { image: SanityImageType | null }
+) => <SanityImage fill sizes="100vw" quality={85} variant="full-width" {...props} />;
 
 export const SanityImageTeaser = (
-  props: Partial<SanityImageProps> & { image: SanityImageType | null },
+  props: Partial<SanityImageProps> & { image: SanityImageType | null }
 ) => (
   <SanityImage
     fill
@@ -143,7 +124,7 @@ export const SanityImageTeaser = (
 );
 
 export const SanityImageVideoPoster = (
-  props: Partial<SanityImageProps> & { image: SanityImageType | null },
+  props: Partial<SanityImageProps> & { image: SanityImageType | null }
 ) => (
   <SanityImage
     fill
@@ -156,7 +137,7 @@ export const SanityImageVideoPoster = (
 );
 
 export const SanityImageCarousel = (
-  props: Partial<SanityImageProps> & { image: SanityImageType | null },
+  props: Partial<SanityImageProps> & { image: SanityImageType | null }
 ) => (
   <SanityImage
     fill
@@ -169,7 +150,7 @@ export const SanityImageCarousel = (
 );
 
 export const SanityImageHalfWidth = (
-  props: Partial<SanityImageProps> & { image: SanityImageType | null },
+  props: Partial<SanityImageProps> & { image: SanityImageType | null }
 ) => (
   <SanityImage
     fill
@@ -182,15 +163,7 @@ export const SanityImageHalfWidth = (
 );
 
 export const SanityImpactImage = (
-  props: Partial<SanityImageProps> & { image: SanityImageType | null },
-) => (
-  <SanityImage
-    fill
-    quality={85}
-    objectFit="cover"
-    variant="impact"
-    {...props}
-  />
-);
+  props: Partial<SanityImageProps> & { image: SanityImageType | null }
+) => <SanityImage fill quality={85} objectFit="cover" variant="impact" {...props} />;
 
 export type { SanityImageType };

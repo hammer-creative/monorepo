@@ -1,7 +1,7 @@
 // packages/sanity/schemaTypes/objects/imageItem.ts
 
-import {defineType} from 'sanity'
-import {createTextField} from '../factories'
+import { defineType } from 'sanity';
+import { createTextField } from '../factories';
 
 export const imageItem = defineType({
   name: 'imageItem',
@@ -40,12 +40,12 @@ export const imageItem = defineType({
       alt: 'image.alt',
       caption: 'caption',
     },
-    prepare({media, alt, caption}) {
+    prepare({ media, alt, caption }) {
       return {
         title: alt || 'Untitled Image',
         subtitle: caption,
         media: media,
-      }
+      };
     },
   },
-})
+});

@@ -1,7 +1,8 @@
 // components/navigation/RadixMenu.tsx
+
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { MenuArrowLarge } from '@/components/common/Arrow';
 import { ExtendedLink } from '@/components/common/ExtendedLink';
-import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
 interface MenuItem {
   id: string;

@@ -1,11 +1,7 @@
 // apps/web/src/app/page.tsx
 
-import {
-  ClientIcons,
-  ExtendedLink,
-  LinkArrowSmall,
-  Text,
-} from '@/components/common';
+import type { ReactElement } from 'react';
+import { ClientIcons, ExtendedLink, LinkArrowSmall, Text } from '@/components/common';
 import { Impressum } from '@/components/common/Impressum';
 import { WordmarkSVG } from '@/components/common/Wordmark';
 import { MarqueeScene } from '@/components/marquee/MarqueeScene';
@@ -19,7 +15,6 @@ import type {
   TextModule as TextModuleType,
 } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
-import type { ReactElement } from 'react';
 
 import { homePageAnimations } from './page.animations';
 
@@ -62,12 +57,7 @@ const INJECTED_CONTENT: InjectedContent[] = [
     moduleIndex: 2,
     position: 'after',
     content: [
-      <ExtendedLink
-        key="link-2"
-        href="/work"
-        className="label"
-        arrowComponent={<LinkArrowSmall />}
-      >
+      <ExtendedLink key="link-2" href="/work" className="label" arrowComponent={<LinkArrowSmall />}>
         View All Work
       </ExtendedLink>,
     ],
@@ -84,10 +74,8 @@ async function getHomePageData(): Promise<{ homePage: HomePageType | null }> {
 }
 
 function getAnimateConfig(type: string, index: number) {
-  if (type === 'textModule' && index === 0)
-    return homePageAnimations.textModuleFirst;
-  if (type === 'textModule' && index === 1)
-    return homePageAnimations.textModuleSecond;
+  if (type === 'textModule' && index === 0) return homePageAnimations.textModuleFirst;
+  if (type === 'textModule' && index === 1) return homePageAnimations.textModuleSecond;
   return null;
 }
 
@@ -113,18 +101,17 @@ export default async function HomePage() {
       </div>
       <div className={`${bem}__modules`}>
         {resolvedModules.flatMap((mod, index) => {
-          const Component =
-            moduleComponents[mod._type as keyof typeof moduleComponents];
+          const Component = moduleComponents[mod._type as keyof typeof moduleComponents];
           if (!Component) {
             console.warn(`No component found for module type "${mod._type}"`);
             return [];
           }
 
           const injectedBefore = INJECTED_CONTENT.filter(
-            (item) => item.moduleIndex === index && item.position === 'before',
+            (item) => item.moduleIndex === index && item.position === 'before'
           );
           const injectedAfter = INJECTED_CONTENT.filter(
-            (item) => item.moduleIndex === index && item.position === 'after',
+            (item) => item.moduleIndex === index && item.position === 'after'
           );
 
           const animateConfig = getAnimateConfig(mod._type, index);
@@ -132,12 +119,12 @@ export default async function HomePage() {
           const content = (
             <>
               {injectedBefore.flatMap((item) =>
-                Array.isArray(item.content) ? item.content : [item.content],
+                Array.isArray(item.content) ? item.content : [item.content]
               )}
               {/* @ts-expect-error - Dynamic module rendering */}
               <Component data={mod as ModuleData} />
               {injectedAfter.flatMap((item) =>
-                Array.isArray(item.content) ? item.content : [item.content],
+                Array.isArray(item.content) ? item.content : [item.content]
               )}
             </>
           );
@@ -155,9 +142,7 @@ export default async function HomePage() {
               }
             >
               {animateConfig ? (
-                <AnimateOnScroll config={animateConfig}>
-                  {content}
-                </AnimateOnScroll>
+                <AnimateOnScroll config={animateConfig}>{content}</AnimateOnScroll>
               ) : (
                 content
               )}
@@ -168,12 +153,9 @@ export default async function HomePage() {
 
           if (index === resolvedModules.length - 2) {
             sections.push(
-              <section
-                key="client-icons"
-                className="module client-icons-module"
-              >
+              <section key="client-icons" className="module client-icons-module">
                 <ClientIcons chyron />
-              </section>,
+              </section>
             );
           }
 

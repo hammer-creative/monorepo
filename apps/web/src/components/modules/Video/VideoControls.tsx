@@ -1,11 +1,5 @@
 // apps/web/src/components/Video/VideoControls.tsx
-import {
-  CloseIcon,
-  PauseIcon,
-  PlayIcon,
-  VolumeOffIcon,
-  VolumeOnIcon,
-} from './VideoIcons';
+import { CloseIcon, PauseIcon, PlayIcon, VolumeOffIcon, VolumeOnIcon } from './VideoIcons';
 
 interface PlayButtonProps {
   withLabel?: boolean;
@@ -21,12 +15,7 @@ export function PlayButton({
   className,
 }: PlayButtonProps) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={className}
-      aria-label="Play"
-    >
+    <button type="button" onClick={onClick} className={className} aria-label="Play">
       <PlayIcon />
       {withLabel && <span>{label}</span>}
     </button>
@@ -39,11 +28,7 @@ interface PauseButtonProps {
   paused?: boolean;
 }
 
-export function PauseButton({
-  onClick,
-  className,
-  paused = false,
-}: PauseButtonProps) {
+export function PauseButton({ onClick, className, paused = false }: PauseButtonProps) {
   return (
     <button
       type="button"
@@ -63,12 +48,7 @@ interface CloseButtonProps {
 
 export function CloseButton({ onClick, className }: CloseButtonProps) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={className}
-      aria-label="Close"
-    >
+    <button type="button" onClick={onClick} className={className} aria-label="Close">
       <CloseIcon />
     </button>
   );

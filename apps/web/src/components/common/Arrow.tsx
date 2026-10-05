@@ -19,11 +19,7 @@ const rotations = {
  * Standard arrow icon. Rotates via CSS transform to support all four
  * directions. Wraps in a `Link` when `href` is provided.
  */
-export function MenuArrowLarge({
-  direction = 'right',
-  className,
-  href,
-}: ArrowProps) {
+export function MenuArrowLarge({ direction = 'right', className, href }: ArrowProps) {
   const svg = (
     <svg
       className={className}
@@ -35,13 +31,7 @@ export function MenuArrowLarge({
       style={{ transform: `rotate(${rotations[direction]}deg)` }}
     >
       <rect x="2.00171" width="46" height="15" fill="currentColor" />
-      <rect
-        x="63.001"
-        width="61"
-        height="15"
-        transform="rotate(90 63.001 0)"
-        fill="currentColor"
-      />
+      <rect x="63.001" width="61" height="15" transform="rotate(90 63.001 0)" fill="currentColor" />
       <rect
         x="60.1846"
         y="14.3341"

@@ -37,8 +37,7 @@ export default async function WorkPage() {
         <Text as="h1" variant="primary" text="Our Work" />
       </div>
       {resolvedModules.map((mod) => {
-        const Component =
-          moduleComponents[mod._type as keyof typeof moduleComponents];
+        const Component = moduleComponents[mod._type as keyof typeof moduleComponents];
 
         if (!Component) {
           console.warn(`No component found for module type "${mod._type}"`);

@@ -1,45 +1,45 @@
 // packages/sanity/schemaTypes/factories/imageFieldFactory.ts
 
-import {defineField} from 'sanity'
-import {addRequiredLabel} from '../utils/fieldHelpers'
-import {applyRequired} from '../utils/validation'
-import {createTextField} from './textFieldFactory'
+import { defineField } from 'sanity';
+import { addRequiredLabel } from '../utils/fieldHelpers';
+import { applyRequired } from '../utils/validation';
+import { createTextField } from './textFieldFactory';
 
 interface HotspotPreview {
-  title: string
-  aspectRatio: number
+  title: string;
+  aspectRatio: number;
 }
 
-type ImageMetadataType = 'blurhash' | 'lqip' | 'palette' | 'exif' | 'location' | 'image'
+type ImageMetadataType = 'blurhash' | 'lqip' | 'palette' | 'exif' | 'location' | 'image';
 
 interface ImageOptions {
   hotspot?:
     | boolean
     | {
-        previews?: HotspotPreview[]
-      }
-  metadata?: ImageMetadataType[]
-  accept?: string
+        previews?: HotspotPreview[];
+      };
+  metadata?: ImageMetadataType[];
+  accept?: string;
 }
 
 interface SingleImageConfig {
-  name?: string
-  title?: string
-  required?: boolean
-  withCaption?: boolean
-  captionMaxLength?: number
-  description?: string
-  altMaxLength?: number
-  imageOptions?: ImageOptions
+  name?: string;
+  title?: string;
+  required?: boolean;
+  withCaption?: boolean;
+  captionMaxLength?: number;
+  description?: string;
+  altMaxLength?: number;
+  imageOptions?: ImageOptions;
 }
 
 interface MultiImageConfig {
-  name?: string
-  title?: string
-  required?: boolean
-  minImages?: number
-  maxImages?: number
-  description?: string
+  name?: string;
+  title?: string;
+  required?: boolean;
+  minImages?: number;
+  maxImages?: number;
+  description?: string;
 }
 
 /**
@@ -55,8 +55,8 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
     captionMaxLength = 200,
     description = '',
     altMaxLength = 150,
-    imageOptions = {hotspot: true},
-  } = config
+    imageOptions = { hotspot: true },
+  } = config;
 
   return defineField({
     name,
@@ -86,8 +86,8 @@ export const createSingleImageField = (config: SingleImageConfig = {}) => {
         : []),
     ],
     validation: (Rule) => applyRequired(Rule, required, `${title} is required`),
-  })
-}
+  });
+};
 
 /**
  * Creates a multi-image array field using the global imageItem type
@@ -101,20 +101,22 @@ export const createMultiImageField = (config: MultiImageConfig = {}) => {
     minImages = 2,
     maxImages = 20,
     description = '',
-  } = config
+  } = config;
 
   return defineField({
     name,
     title,
     type: 'array',
-    of: [{type: 'imageItem'}],
+    of: [{ type: 'imageItem' }],
     description: addRequiredLabel(description, required),
     validation: (Rule) => {
-      const baseRule = applyRequired(Rule, required, `${title} is required`)
+      const baseRule = applyRequired(Rule, required, `${title} is required`);
       return baseRule
         .min(minImages)
         .max(maxImages)
-        .error(`${title} must include ${minImages}-${maxImages} image${maxImages !== 1 ? 's' : ''}`)
+        .error(
+          `${title} must include ${minImages}-${maxImages} image${maxImages !== 1 ? 's' : ''}`
+        );
     },
-  })
-}
+  });
+};

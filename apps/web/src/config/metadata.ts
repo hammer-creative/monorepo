@@ -14,15 +14,9 @@ export const metadata: Metadata = {
   description: 'The Gaming Agency',
   applicationName: 'Hammer Creative',
   generator: 'Next.js',
-  keywords: [
-    'gaming agency',
-    'creative agency',
-    'game marketing',
-    'video game marketing',
-  ],
+  keywords: ['gaming agency', 'creative agency', 'game marketing', 'video game marketing'],
   referrer: 'origin-when-cross-origin',
-  robots:
-    'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+  robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
   formatDetection: {
     telephone: false,
     email: false,

@@ -30,10 +30,7 @@ export function Footer({ navigationData }: FooterProps) {
         </div>
       </div>
       <div className="wordmark">
-        <Wordmark
-          text={navigationData.wordmark.text}
-          href={navigationData.wordmark.href}
-        />
+        <Wordmark text={navigationData.wordmark.text} href={navigationData.wordmark.href} />
       </div>
     </footer>
   );

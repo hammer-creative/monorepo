@@ -11,10 +11,7 @@ export default {
     'postcss-simple-vars': {
       variables: {
         ...Object.fromEntries(
-          Object.entries(DEFAULT_COLORS).map(([key, value]) => [
-            `color-${key}`,
-            value,
-          ]),
+          Object.entries(DEFAULT_COLORS).map(([key, value]) => [`color-${key}`, value])
         ),
       },
     },

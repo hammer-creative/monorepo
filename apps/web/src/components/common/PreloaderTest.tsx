@@ -1,7 +1,7 @@
 'use client';
 
-import Preloader from '@/components/common/Preloader';
 import { useEffect, useState } from 'react';
+import Preloader from '@/components/common/Preloader';
 
 export default function PreloaderTestPage() {
   const [progress, setProgress] = useState(0);

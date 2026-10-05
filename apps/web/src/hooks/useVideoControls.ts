@@ -30,9 +30,7 @@ export function useVideoControls(options?: { stopOthersOnPlay?: boolean }) {
     if (!videoRef.current) return;
 
     if (videoRef.current.paused) {
-      videoRef.current
-        .play()
-        .catch((err: Error) => console.error('Play failed:', err));
+      videoRef.current.play().catch((err: Error) => console.error('Play failed:', err));
     } else {
       videoRef.current.pause();
     }

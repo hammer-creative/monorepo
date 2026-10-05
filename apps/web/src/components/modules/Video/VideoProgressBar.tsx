@@ -6,10 +6,7 @@ interface VideoProgressBarProps {
   className?: string;
 }
 
-export function VideoProgressBar({
-  videoElement,
-  className,
-}: VideoProgressBarProps) {
+export function VideoProgressBar({ videoElement, className }: VideoProgressBarProps) {
   const [progress, setProgress] = useState(0);
   const [buffered, setBuffered] = useState(0);
   const progressBarRef = useRef<HTMLDivElement>(null);
@@ -29,9 +26,7 @@ export function VideoProgressBar({
 
     const updateBuffered = () => {
       if (videoElement.buffered.length > 0) {
-        const bufferedEnd = videoElement.buffered.end(
-          videoElement.buffered.length - 1,
-        );
+        const bufferedEnd = videoElement.buffered.end(videoElement.buffered.length - 1);
         const { duration } = videoElement;
         if (duration > 0) {
           const newBuffered = (bufferedEnd / duration) * 100;

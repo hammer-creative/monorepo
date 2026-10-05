@@ -1,11 +1,10 @@
 // apps/web/src/components/common/PortableTextRenderer.tsx
 
+import { DEFAULT_COLORS } from '@hammercreative/ui';
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import type { PortableTextBlock } from '@portabletext/types';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-
-import { DEFAULT_COLORS } from '@hammercreative/ui';
 
 interface PortableTextRendererProps {
   value?: PortableTextBlock[];
@@ -69,17 +68,13 @@ export function PortableTextRenderer({ value }: PortableTextRendererProps) {
       h5: ({ children }) => <h5>{children}</h5>,
       h6: ({ children }) => <h6>{children}</h6>,
       normal: ({ children }) => <p>{children}</p>,
-      blockquote: ({ children }: { children?: ReactNode }) => (
-        <blockquote>{children}</blockquote>
-      ),
+      blockquote: ({ children }: { children?: ReactNode }) => <blockquote>{children}</blockquote>,
     },
     marks: {
       strong: ({ children }) => <strong>{children}</strong>,
       em: ({ children }) => <em>{children}</em>,
       code: ({ children }) => <code>{children}</code>,
-      underline: ({ children }) => (
-        <span className="underline">{children}</span>
-      ),
+      underline: ({ children }) => <span className="underline">{children}</span>,
       'strike-through': ({ children }) => <s>{children}</s>,
       color: ({ value, children }) => (
         <span

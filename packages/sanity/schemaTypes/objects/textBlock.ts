@@ -1,7 +1,7 @@
 // packages/sanity/schemaTypes/objects/textBlock.ts
 
-import {defineType} from 'sanity'
-import {titleField, portableTextField} from '../fields/textField'
+import { defineType } from 'sanity';
+import { portableTextField, titleField } from '../fields/textField';
 
 export const textBlock = defineType({
   name: 'textBlock',
@@ -12,10 +12,10 @@ export const textBlock = defineType({
     select: {
       title: 'title',
     },
-    prepare({title}) {
+    prepare({ title }) {
       return {
         title: title || 'Text Block',
-      }
+      };
     },
   },
-})
+});

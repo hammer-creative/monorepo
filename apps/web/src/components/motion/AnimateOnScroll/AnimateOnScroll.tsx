@@ -2,12 +2,11 @@
 'use client';
 
 import { useAnimate, useInView } from 'motion/react';
-import { useEffect, useRef, type ReactNode } from 'react';
+import { type ReactNode, useEffect, useRef } from 'react';
 
 import type { AnimateConfig } from './types';
 
-const DISABLE_ANIMATIONS =
-  process.env.NEXT_PUBLIC_DISABLE_ANIMATIONS === 'true';
+const DISABLE_ANIMATIONS = process.env.NEXT_PUBLIC_DISABLE_ANIMATIONS === 'true';
 
 interface AnimateOnScrollProps {
   children: ReactNode;
@@ -15,11 +14,7 @@ interface AnimateOnScrollProps {
   config?: AnimateConfig;
 }
 
-export function AnimateOnScroll({
-  children,
-  className,
-  config = {},
-}: AnimateOnScrollProps) {
+export function AnimateOnScroll({ children, className, config = {} }: AnimateOnScrollProps) {
   const [scope, animate] = useAnimate();
   const hasAnimated = useRef(false);
 

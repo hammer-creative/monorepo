@@ -1,13 +1,13 @@
 // packages/sanity/sanity.config.ts
 
-import {table} from '@sanity/table'
-import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import {presentationTool, defineDocuments, defineLocations} from 'sanity/presentation'
-import {schema} from './schemaTypes'
-import {muxInput} from 'sanity-plugin-mux-input'
-import {media} from 'sanity-plugin-media'
+import { table } from '@sanity/table';
+import { visionTool } from '@sanity/vision';
+import { defineConfig } from 'sanity';
+import { defineDocuments, defineLocations, presentationTool } from 'sanity/presentation';
+import { structureTool } from 'sanity/structure';
+import { media } from 'sanity-plugin-media';
+import { muxInput } from 'sanity-plugin-mux-input';
+import { schema } from './schemaTypes';
 
 export default defineConfig({
   name: 'hammer-creative-sanity-studio',
@@ -31,7 +31,7 @@ export default defineConfig({
                     S.documentTypeListItem('homePage').title('Home Page'),
                     S.documentTypeListItem('servicesPage').title('Services Page'),
                     S.documentTypeListItem('workPage').title('Work Page'),
-                  ]),
+                  ])
               ),
             S.divider(),
             S.listItem()
@@ -43,7 +43,7 @@ export default defineConfig({
                     S.documentTypeListItem('client').title('Clients'),
                     S.documentTypeListItem('deliverable').title('Deliverables'),
                     S.documentTypeListItem('service').title('Services'),
-                  ]),
+                  ])
               ),
           ]),
     }),
@@ -92,7 +92,7 @@ export default defineConfig({
               slug: 'slug.current',
             },
             resolve: (doc) => {
-              if (!doc?.slug) return {locations: []}
+              if (!doc?.slug) return { locations: [] };
 
               return {
                 locations: [
@@ -101,7 +101,7 @@ export default defineConfig({
                     href: `/work/${doc.slug}`,
                   },
                 ],
-              }
+              };
             },
           }),
         },
@@ -113,8 +113,8 @@ export default defineConfig({
   form: {
     image: {
       assetSources: (previousAssetSources) => {
-        return previousAssetSources.filter((assetSource) => assetSource.name !== 'sanity-default')
+        return previousAssetSources.filter((assetSource) => assetSource.name !== 'sanity-default');
       },
     },
   },
-})
+});

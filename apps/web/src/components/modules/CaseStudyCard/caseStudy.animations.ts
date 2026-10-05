@@ -1,11 +1,6 @@
 // apps/web/src/components/modules/CaseStudyCard/caseStudy.animations.ts
 
-import {
-  DELAY,
-  DURATION,
-  STATE,
-  type AnimateConfig,
-} from '@/components/motion/AnimateOnScroll';
+import { type AnimateConfig, DELAY, DURATION, STATE } from '@/components/motion/AnimateOnScroll';
 
 // Single card animation for mobile (scroll-into-view)
 export const caseStudyAnimations = {

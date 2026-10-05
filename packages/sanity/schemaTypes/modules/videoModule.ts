@@ -1,22 +1,22 @@
 // packages/sanity/schemaTypes/modules/videoModule.ts
 
-import {defineType} from 'sanity'
-import {PlayIcon} from '@sanity/icons'
-import {createColorField} from '../factories'
-import {applyRequired, requireWhen} from '../utils/validation'
+import { PlayIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
+import { createColorField } from '../factories';
+import { applyRequired, requireWhen } from '../utils/validation';
 
 interface VideoItem {
   poster?: {
     asset?: {
-      _ref?: string
-    }
-  }
+      _ref?: string;
+    };
+  };
 }
 
 interface LayoutRequirements {
-  minWidth: number
-  minHeight: number
-  label: string
+  minWidth: number;
+  minHeight: number;
+  label: string;
 }
 
 // Poster image requirements (3x display size for high-res derivatives)
@@ -32,49 +32,49 @@ interface LayoutRequirements {
 // - Bitrate: 25-50 Mbps
 // - Format: MP4
 const LAYOUT_REQUIREMENTS: Record<number, LayoutRequirements> = {
-  1: {minWidth: 3840, minHeight: 2160, label: 'single-video'},
-  2: {minWidth: 1880, minHeight: 1880, label: 'two-video'},
-  3: {minWidth: 1200, minHeight: 2000, label: 'three-video'},
-}
+  1: { minWidth: 3840, minHeight: 2160, label: 'single-video' },
+  2: { minWidth: 1880, minHeight: 1880, label: 'two-video' },
+  3: { minWidth: 1200, minHeight: 2000, label: 'three-video' },
+};
 
 const MOBILE_LANDSCAPE_REQUIREMENTS = {
   minWidth: 720,
   minHeight: 560,
   label: 'mobile-landscape',
-}
+};
 
-const DIMENSION_REGEX = /-(\d+)x(\d+)-/
+const DIMENSION_REGEX = /-(\d+)x(\d+)-/;
 
-function extractDimensions(ref: string): {width: number; height: number} | null {
-  const match = ref.match(DIMENSION_REGEX)
-  if (!match) return null
+function extractDimensions(ref: string): { width: number; height: number } | null {
+  const match = ref.match(DIMENSION_REGEX);
+  if (!match) return null;
   return {
     width: Number(match[1]),
     height: Number(match[2]),
-  }
+  };
 }
 
 function validateVideoPoster(video: VideoItem, requirements: LayoutRequirements): string | true {
-  const ref = video?.poster?.asset?._ref
+  const ref = video?.poster?.asset?._ref;
 
   if (!ref) {
-    return requireWhen(true, 'Poster image required')
+    return requireWhen(true, 'Poster image required');
   }
 
-  const dimensions = extractDimensions(ref)
+  const dimensions = extractDimensions(ref);
 
   if (!dimensions) {
-    return 'Poster dimensions missing'
+    return 'Poster dimensions missing';
   }
 
-  const {width, height} = dimensions
-  const {minWidth, minHeight, label} = requirements
+  const { width, height } = dimensions;
+  const { minWidth, minHeight, label } = requirements;
 
   if (width < minWidth || height < minHeight) {
-    return `Poster must be ≥ ${minWidth}×${minHeight} for ${label} layout`
+    return `Poster must be ≥ ${minWidth}×${minHeight} for ${label} layout`;
   }
 
-  return true
+  return true;
 }
 
 export const videoModule = defineType({
@@ -90,23 +90,23 @@ export const videoModule = defineType({
       type: 'array',
       description:
         'Add 1-3 videos. Poster images should be high-resolution (3x display size): 1 video requires 3840 × 2160 px, 2 videos require 1880 × 1880 px each, 3 videos require 1200 × 2000 px each. Videos should be 4K, H.264/H.265, MP4 format.',
-      of: [{type: 'videoItem'}],
+      of: [{ type: 'videoItem' }],
       validation: (Rule) =>
         applyRequired(Rule, true, 'Videos is required')
           .min(1)
           .max(3)
           .custom((videos: VideoItem[]) => {
-            if (!Array.isArray(videos)) return true
+            if (!Array.isArray(videos)) return true;
 
-            const requirements = LAYOUT_REQUIREMENTS[videos.length]
-            if (!requirements) return true
+            const requirements = LAYOUT_REQUIREMENTS[videos.length];
+            if (!requirements) return true;
 
             for (const video of videos) {
-              const result = validateVideoPoster(video, requirements)
-              if (result !== true) return result
+              const result = validateVideoPoster(video, requirements);
+              if (result !== true) return result;
             }
 
-            return true
+            return true;
           }),
     },
     {
@@ -115,32 +115,32 @@ export const videoModule = defineType({
       type: 'array',
       description:
         'Add 3 landscape-oriented videos for mobile display, 720 × 560 px (9:7 ratio). Poster images should be 720 × 560 px. Videos should be 4K, H.264/H.265, MP4 format.',
-      of: [{type: 'videoItem'}],
-      hidden: ({parent}: any) => {
-        const videoCount = parent?.videos?.length
-        return videoCount !== 3
+      of: [{ type: 'videoItem' }],
+      hidden: ({ parent }: any) => {
+        const videoCount = parent?.videos?.length;
+        return videoCount !== 3;
       },
       validation: (Rule) =>
         Rule.custom((mobileVideos: VideoItem[], context) => {
-          const parent = context.parent as any
-          const desktopVideoCount = parent?.videos?.length
+          const parent = context.parent as any;
+          const desktopVideoCount = parent?.videos?.length;
 
           // Only validate if we have exactly 3 desktop videos AND mobile videos are provided
-          if (desktopVideoCount !== 3) return true
-          if (!mobileVideos || mobileVideos.length === 0) return true
+          if (desktopVideoCount !== 3) return true;
+          if (!mobileVideos || mobileVideos.length === 0) return true;
 
           // If mobile videos are provided, must be exactly 3
           if (mobileVideos.length !== 3) {
-            return requireWhen(true, 'If providing mobile videos, must include all 3')
+            return requireWhen(true, 'If providing mobile videos, must include all 3');
           }
 
           // Validate each mobile video poster
           for (const video of mobileVideos) {
-            const result = validateVideoPoster(video, MOBILE_LANDSCAPE_REQUIREMENTS)
-            if (result !== true) return result
+            const result = validateVideoPoster(video, MOBILE_LANDSCAPE_REQUIREMENTS);
+            if (result !== true) return result;
           }
 
-          return true
+          return true;
         }),
     },
     createColorField({
@@ -154,22 +154,22 @@ export const videoModule = defineType({
     select: {
       videos: 'videos',
     },
-    prepare({videos}: any) {
-      const videoCount = videos?.length || 0
-      let subtitle = 'Video Module'
+    prepare({ videos }: any) {
+      const videoCount = videos?.length || 0;
+      let subtitle = 'Video Module';
 
       if (videoCount === 1) {
-        subtitle = '1 Horizontal Video'
+        subtitle = '1 Horizontal Video';
       } else if (videoCount === 2) {
-        subtitle = '2 Square Videos'
+        subtitle = '2 Square Videos';
       } else if (videoCount === 3) {
-        subtitle = '3 Vertical Videos'
+        subtitle = '3 Vertical Videos';
       }
 
       return {
         title: 'Video Module',
         subtitle,
-      }
+      };
     },
   },
-})
+});

@@ -5,12 +5,7 @@ interface LogoProps {
 
 export function EaIcon({ fill = 'currentColor', className = '' }: LogoProps) {
   return (
-    <svg
-      viewBox="0 0 85 42"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
+    <svg viewBox="0 0 85 42" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

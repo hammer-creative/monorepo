@@ -36,20 +36,56 @@ const nextConfig: NextConfig = {
       // case-study → work equivalents
       { source: '/case-study/hi-fi-rush', destination: '/work/hi-fi-rush', permanent: true },
       { source: '/case-study/starfield', destination: '/work/starfield', permanent: true },
-      { source: '/case-study/indiana-jones-and-the-great-circle', destination: '/work/indiana-jones-great-circle', permanent: true },
-      { source: '/case-study/magic-the-gathering-secret-lair', destination: '/work/magic-gathering-secret-lair', permanent: true },
-      { source: '/case-study/forza-motorsport', destination: '/work/forza-motorsport', permanent: true },
-      { source: '/case-study/metaphor-refantazio', destination: '/work/metaphor-refantazio', permanent: true },
-      { source: '/case-study/kingdom-come-deliverance-ii', destination: '/work/kingdom-come-deliverance-ii', permanent: true },
-      { source: '/case-study/south-of-midnight', destination: '/work/south-of-midnight', permanent: true },
-      { source: '/case-study/the-elder-scrolls-iv-oblivion-remaster', destination: '/work/the-elder-scrolls-oblivion-remaster', permanent: true },
+      {
+        source: '/case-study/indiana-jones-and-the-great-circle',
+        destination: '/work/indiana-jones-great-circle',
+        permanent: true,
+      },
+      {
+        source: '/case-study/magic-the-gathering-secret-lair',
+        destination: '/work/magic-gathering-secret-lair',
+        permanent: true,
+      },
+      {
+        source: '/case-study/forza-motorsport',
+        destination: '/work/forza-motorsport',
+        permanent: true,
+      },
+      {
+        source: '/case-study/metaphor-refantazio',
+        destination: '/work/metaphor-refantazio',
+        permanent: true,
+      },
+      {
+        source: '/case-study/kingdom-come-deliverance-ii',
+        destination: '/work/kingdom-come-deliverance-ii',
+        permanent: true,
+      },
+      {
+        source: '/case-study/south-of-midnight',
+        destination: '/work/south-of-midnight',
+        permanent: true,
+      },
+      {
+        source: '/case-study/the-elder-scrolls-iv-oblivion-remaster',
+        destination: '/work/the-elder-scrolls-oblivion-remaster',
+        permanent: true,
+      },
       { source: '/case-study/alan-wake-ii', destination: '/work/alan-wake-ii', permanent: true },
       { source: '/case-study/ready-or-not', destination: '/work/ready-or-not', permanent: true },
       { source: '/case-study/fortnite', destination: '/work/fortnite-social', permanent: true },
-      { source: '/case-study/unreal-editor-fortnite-uefn', destination: '/work/uefn', permanent: true },
+      {
+        source: '/case-study/unreal-editor-fortnite-uefn',
+        destination: '/work/uefn',
+        permanent: true,
+      },
       { source: '/case-study/2xko', destination: '/work/2xko', permanent: true },
       { source: '/case-study/splitgate-2', destination: '/work/splitgate-2', permanent: true },
-      { source: '/case-study/forza-horizon', destination: '/work/forza-horizon-6', permanent: true },
+      {
+        source: '/case-study/forza-horizon',
+        destination: '/work/forza-horizon-6',
+        permanent: true,
+      },
 
       // case-study → home (no equivalent)
       { source: '/case-study/cuphead', destination: '/', permanent: true },

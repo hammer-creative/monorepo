@@ -1,5 +1,8 @@
 // apps/web/src/app/work/[slug]/page.tsx
 
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { LongArrow, Text } from '@/components/common';
 import {
   CarouselModule,
@@ -28,9 +31,6 @@ import type {
   VideoModule as VideoModuleType,
 } from '@/types/sanity.generated';
 import { toKebab } from '@/utils/stringUtils';
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
 
 // Union type for all possible module data types
 type ModuleData =
@@ -91,11 +91,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function CaseStudyPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const caseStudy = await getCaseStudy(slug, client);
 
@@ -117,15 +113,10 @@ export default async function CaseStudyPage({
   // (React doesn't render undefined but throws warnings on null)
   const filteredModules = resolvedModules
     .filter(
-      (m: { _type: string }) =>
-        m._type !== 'servicesModule' && m._type !== 'deliverablesModule',
+      (m: { _type: string }) => m._type !== 'servicesModule' && m._type !== 'deliverablesModule'
     )
     .map((mod) => {
-      return JSON.parse(
-        JSON.stringify(mod, (_key, value) =>
-          value === null ? undefined : value,
-        ),
-      );
+      return JSON.parse(JSON.stringify(mod, (_key, value) => (value === null ? undefined : value)));
     });
 
   return (
@@ -138,8 +129,7 @@ export default async function CaseStudyPage({
           textColor?: { hex?: string };
         }) => {
           // Get the React component for this module type
-          const Component =
-            moduleComponents[mod._type as keyof typeof moduleComponents];
+          const Component = moduleComponents[mod._type as keyof typeof moduleComponents];
 
           // Skip if no component registered for this module type
           if (!Component) return null;
@@ -147,8 +137,7 @@ export default async function CaseStudyPage({
           const { _key, _type, backgroundColor, textColor } = mod;
 
           // Only hero and text modules receive client data
-          const moduleClients =
-            _type === 'heroModule' || _type === 'textModule' ? clients : [];
+          const moduleClients = _type === 'heroModule' || _type === 'textModule' ? clients : [];
 
           return (
             <section
@@ -166,7 +155,7 @@ export default async function CaseStudyPage({
               <Component data={mod as ModuleData} clients={moduleClients} />
             </section>
           );
-        },
+        }
       )}
 
       {/* Related case studies carousel */}

@@ -3,12 +3,11 @@
 
 'use client';
 
-import * as C from '@/components/model/sceneConstants';
 import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import { Suspense, useEffect, useRef } from 'react';
-
-import { ENVIRONMENT_MAP_SOURCE, GLB_SOURCE } from './sceneConstants';
+import * as C from '@/components/model/sceneConstants';
 import SceneModel from './SceneModel';
+import { ENVIRONMENT_MAP_SOURCE, GLB_SOURCE } from './sceneConstants';
 
 const LC = C.LIGHTING_CONFIG;
 
@@ -63,10 +62,7 @@ export default function SceneContent({
       )}
 
       {ambientLightEnabled && (
-        <ambientLight
-          intensity={ambientLightIntensity}
-          color={ambientLightColor}
-        />
+        <ambientLight intensity={ambientLightIntensity} color={ambientLightColor} />
       )}
 
       {directionalLightEnabled && (
@@ -191,11 +187,7 @@ export default function SceneContent({
         />
       </Suspense>
 
-      <OrbitControls
-        enabled={orbitEnabled}
-        enableDamping
-        dampingFactor={0.05}
-      />
+      <OrbitControls enabled={orbitEnabled} enableDamping dampingFactor={0.05} />
     </>
   );
 }

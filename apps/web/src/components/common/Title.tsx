@@ -17,20 +17,13 @@ interface TitleProps {
  * @param as - HTML element to render (default: h2)
  * @param className - Additional CSS classes
  */
-export function Title({
-  children,
-  variant,
-  as: Component = 'h2',
-  className,
-}: TitleProps) {
+export function Title({ children, variant, as: Component = 'h2', className }: TitleProps) {
   if (!children) return null;
 
   const titleText = typeof children === 'string' ? children : '';
   const lengthClass = titleText.length > 30 ? 'long' : 'short';
 
-  const classes = ['title', variant && `title--${variant}`, className]
-    .filter(Boolean)
-    .join(' ');
+  const classes = ['title', variant && `title--${variant}`, className].filter(Boolean).join(' ');
 
   return (
     <Component className={classes} data-length={lengthClass}>

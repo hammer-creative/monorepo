@@ -12,13 +12,7 @@ interface TextProps {
 
 const headings = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
-export function Text({
-  children,
-  text,
-  variant,
-  as: Component = 'div',
-  className,
-}: TextProps) {
+export function Text({ children, text, variant, as: Component = 'div', className }: TextProps) {
   const content = children ?? text;
   if (!content) return null;
 

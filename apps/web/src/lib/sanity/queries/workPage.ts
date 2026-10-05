@@ -1,6 +1,7 @@
 // apps/web/src/lib/sanity/queries/workPage.ts
-import type { WorkPage as WorkPageType } from '@/types/sanity.generated';
+
 import type { SanityClient } from 'next-sanity';
+import type { WorkPage as WorkPageType } from '@/types/sanity.generated';
 
 import { moduleProjections, projections } from '../groq/builders';
 import { fetchOne } from '../groq/helpers';
@@ -21,10 +22,5 @@ export async function getWorkPage(sanityClient?: SanityClient) {
 
   return sanityClient
     ? sanityClient.fetch<WorkPageType>(query)
-    : fetchOne<WorkPageType>(
-        'workPage',
-        'work',
-        workPageProjection,
-        sanityClient,
-      );
+    : fetchOne<WorkPageType>('workPage', 'work', workPageProjection, sanityClient);
 }

@@ -1,19 +1,18 @@
 /* eslint-disable */
 // @ts-nocheck
 
-
 'use client';
 
 import { notFound } from 'next/navigation';
 
 if (!process.env.INCLUDE_DEV_ROUTES) notFound();
 
-import { TONE_MAPPING_EXPOSURE } from '@/components/model/sceneConstants';
-import * as C from '@/components/model/sceneConstants';
-import SceneContent from '@/components/model/SceneContent';
 import { Canvas } from '@react-three/fiber';
 import { useState } from 'react';
 import * as THREE from 'three';
+import SceneContent from '@/components/model/SceneContent';
+import * as C from '@/components/model/sceneConstants';
+import { TONE_MAPPING_EXPOSURE } from '@/components/model/sceneConstants';
 
 const LC = C.LIGHTING_CONFIG;
 
@@ -84,69 +83,39 @@ export default function ModelDevPage() {
   const [presets, setPresets] = useState([]);
   const [presetCounter, setPresetCounter] = useState(1);
 
-  const [ambientLightEnabled, setAmbientLightEnabled] = useState(
-    LC.ambientLight.enabled,
-  );
-  const [ambientLightIntensity, setAmbientLightIntensity] = useState(
-    LC.ambientLight.intensity,
-  );
-  const [ambientLightColor, setAmbientLightColor] = useState(
-    LC.ambientLight.color,
-  );
+  const [ambientLightEnabled, setAmbientLightEnabled] = useState(LC.ambientLight.enabled);
+  const [ambientLightIntensity, setAmbientLightIntensity] = useState(LC.ambientLight.intensity);
+  const [ambientLightColor, setAmbientLightColor] = useState(LC.ambientLight.color);
 
   const [directionalLightEnabled, setDirectionalLightEnabled] = useState(
-    LC.directionalLight.enabled,
+    LC.directionalLight.enabled
   );
   const [directionalLightIntensity, setDirectionalLightIntensity] = useState(
-    LC.directionalLight.intensity,
+    LC.directionalLight.intensity
   );
-  const [directionalLightColor, setDirectionalLightColor] = useState(
-    LC.directionalLight.color,
-  );
+  const [directionalLightColor, setDirectionalLightColor] = useState(LC.directionalLight.color);
   const [directionalLightPosition, setDirectionalLightPosition] = useState(
-    LC.directionalLight.position,
+    LC.directionalLight.position
   );
 
-  const [spotLightEnabled, setSpotLightEnabled] = useState(
-    LC.spotLight.enabled,
-  );
-  const [spotLightIntensity, setSpotLightIntensity] = useState(
-    LC.spotLight.intensity,
-  );
+  const [spotLightEnabled, setSpotLightEnabled] = useState(LC.spotLight.enabled);
+  const [spotLightIntensity, setSpotLightIntensity] = useState(LC.spotLight.intensity);
   const [spotLightColor, setSpotLightColor] = useState(LC.spotLight.color);
-  const [spotLightPosition, setSpotLightPosition] = useState(
-    LC.spotLight.position,
-  );
+  const [spotLightPosition, setSpotLightPosition] = useState(LC.spotLight.position);
   const [spotLightAngle, setSpotLightAngle] = useState(LC.spotLight.angle);
-  const [spotLightPenumbra, setSpotLightPenumbra] = useState(
-    LC.spotLight.penumbra,
-  );
+  const [spotLightPenumbra, setSpotLightPenumbra] = useState(LC.spotLight.penumbra);
 
-  const [pointLightEnabled, setPointLightEnabled] = useState(
-    LC.pointLight.enabled,
-  );
-  const [pointLightIntensity, setPointLightIntensity] = useState(
-    LC.pointLight.intensity,
-  );
+  const [pointLightEnabled, setPointLightEnabled] = useState(LC.pointLight.enabled);
+  const [pointLightIntensity, setPointLightIntensity] = useState(LC.pointLight.intensity);
   const [pointLightColor, setPointLightColor] = useState(LC.pointLight.color);
-  const [pointLightPosition, setPointLightPosition] = useState(
-    LC.pointLight.position,
-  );
-  const [pointLightDistance, setPointLightDistance] = useState(
-    LC.pointLight.distance,
-  );
+  const [pointLightPosition, setPointLightPosition] = useState(LC.pointLight.position);
+  const [pointLightDistance, setPointLightDistance] = useState(LC.pointLight.distance);
   const [pointLightDecay, setPointLightDecay] = useState(LC.pointLight.decay);
 
-  const [cycloLightEnabled, setCycloLightEnabled] = useState(
-    LC.cycloLight.enabled,
-  );
-  const [cycloLightIntensity, setCycloLightIntensity] = useState(
-    LC.cycloLight.intensity,
-  );
+  const [cycloLightEnabled, setCycloLightEnabled] = useState(LC.cycloLight.enabled);
+  const [cycloLightIntensity, setCycloLightIntensity] = useState(LC.cycloLight.intensity);
   const [cycloLightColor, setCycloLightColor] = useState(LC.cycloLight.color);
-  const [cycloLightPosition, setCycloLightPosition] = useState(
-    LC.cycloLight.position,
-  );
+  const [cycloLightPosition, setCycloLightPosition] = useState(LC.cycloLight.position);
 
   const removeAllEffects = () => {
     setMaskEnabled(false);
@@ -418,11 +387,7 @@ export const LIGHTING_CONFIG = {
       }}
     >
       {label}
-      <input
-        type="color"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
+      <input type="color" value={value} onChange={(e) => onChange(e.target.value)} />
       <code style={{ fontSize: 10 }}>{hexToRgba(value)}</code>
     </label>
   );
@@ -490,16 +455,10 @@ export const LIGHTING_CONFIG = {
       {/* ── Effects panel ── */}
       {panelVisible && (
         <div style={{ ...panelStyle, top: 90, left: 10, width: 220 }}>
-          <button
-            onClick={copyCssToClipboard}
-            style={{ ...btnBase, background: '#4a9eff' }}
-          >
+          <button onClick={copyCssToClipboard} style={{ ...btnBase, background: '#4a9eff' }}>
             Copy CSS
           </button>
-          <button
-            onClick={savePreset}
-            style={{ ...btnBase, background: '#4a9e4a' }}
-          >
+          <button onClick={savePreset} style={{ ...btnBase, background: '#4a9e4a' }}>
             Save Preset
           </button>
 
@@ -549,12 +508,10 @@ export const LIGHTING_CONFIG = {
           {maskEnabled && (
             <>
               <label>
-                diameter {maskDiameter}vh/w{' '}
-                {slider(10, 150, 1, maskDiameter, setMaskDiameter)}
+                diameter {maskDiameter}vh/w {slider(10, 150, 1, maskDiameter, setMaskDiameter)}
               </label>
               <label>
-                solid end {maskStart}%{' '}
-                {slider(0, 100, 1, maskStart, setMaskStart)}
+                solid end {maskStart}% {slider(0, 100, 1, maskStart, setMaskStart)}
               </label>
               <label>
                 feather {maskEnd}% {slider(0, 100, 1, maskEnd, setMaskEnd)}
@@ -576,12 +533,10 @@ export const LIGHTING_CONFIG = {
           {bokeh1Enabled && (
             <>
               <label>
-                size {backdropSize1}{' '}
-                {slider(10, 200, 1, backdropSize1, setBackdropSize1)}
+                size {backdropSize1} {slider(10, 200, 1, backdropSize1, setBackdropSize1)}
               </label>
               <label>
-                blur {backdropBlur1}px{' '}
-                {slider(0, 200, 1, backdropBlur1, setBackdropBlur1)}
+                blur {backdropBlur1}px {slider(0, 200, 1, backdropBlur1, setBackdropBlur1)}
               </label>
               <label>
                 opacity {backdropOpacity1.toFixed(2)}{' '}
@@ -591,23 +546,11 @@ export const LIGHTING_CONFIG = {
               {colorRow('color 2', backdropColor1_2, setBackdropColor1_2)}
               <label>
                 grad start {backdropGradientStart1}%{' '}
-                {slider(
-                  0,
-                  100,
-                  1,
-                  backdropGradientStart1,
-                  setBackdropGradientStart1,
-                )}
+                {slider(0, 100, 1, backdropGradientStart1, setBackdropGradientStart1)}
               </label>
               <label>
                 grad end {backdropGradientEnd1}%{' '}
-                {slider(
-                  0,
-                  100,
-                  1,
-                  backdropGradientEnd1,
-                  setBackdropGradientEnd1,
-                )}
+                {slider(0, 100, 1, backdropGradientEnd1, setBackdropGradientEnd1)}
               </label>
             </>
           )}
@@ -626,12 +569,10 @@ export const LIGHTING_CONFIG = {
           {bokeh2Enabled && (
             <>
               <label>
-                size {backdropSize2}{' '}
-                {slider(10, 500, 1, backdropSize2, setBackdropSize2)}
+                size {backdropSize2} {slider(10, 500, 1, backdropSize2, setBackdropSize2)}
               </label>
               <label>
-                blur {backdropBlur2}px{' '}
-                {slider(0, 500, 1, backdropBlur2, setBackdropBlur2)}
+                blur {backdropBlur2}px {slider(0, 500, 1, backdropBlur2, setBackdropBlur2)}
               </label>
               <label>
                 opacity {backdropOpacity2.toFixed(2)}{' '}
@@ -641,23 +582,11 @@ export const LIGHTING_CONFIG = {
               {colorRow('color 2', backdropColor2_2, setBackdropColor2_2)}
               <label>
                 grad start {backdropGradientStart2}%{' '}
-                {slider(
-                  0,
-                  200,
-                  1,
-                  backdropGradientStart2,
-                  setBackdropGradientStart2,
-                )}
+                {slider(0, 200, 1, backdropGradientStart2, setBackdropGradientStart2)}
               </label>
               <label>
                 grad end {backdropGradientEnd2}%{' '}
-                {slider(
-                  0,
-                  200,
-                  1,
-                  backdropGradientEnd2,
-                  setBackdropGradientEnd2,
-                )}
+                {slider(0, 200, 1, backdropGradientEnd2, setBackdropGradientEnd2)}
               </label>
             </>
           )}
@@ -678,33 +607,18 @@ export const LIGHTING_CONFIG = {
               {colorRow('color', linearGradientColor, setLinearGradientColor)}
               <label>
                 height {linearGradientHeight}%{' '}
-                {slider(
-                  0,
-                  100,
-                  1,
-                  linearGradientHeight,
-                  setLinearGradientHeight,
-                )}
+                {slider(0, 100, 1, linearGradientHeight, setLinearGradientHeight)}
               </label>
               <label>
                 opacity {linearGradientOpacity.toFixed(2)}{' '}
-                {slider(
-                  0,
-                  1,
-                  0.05,
-                  linearGradientOpacity,
-                  setLinearGradientOpacity,
-                )}
+                {slider(0, 1, 0.05, linearGradientOpacity, setLinearGradientOpacity)}
               </label>
             </>
           )}
 
           <HR />
 
-          <button
-            onClick={removeAllEffects}
-            style={{ ...btnBase, background: '#a44' }}
-          >
+          <button onClick={removeAllEffects} style={{ ...btnBase, background: '#a44' }}>
             Remove All Effects
           </button>
         </div>
@@ -717,10 +631,7 @@ export const LIGHTING_CONFIG = {
           <p style={{ margin: 0, fontSize: 10, opacity: 0.6, lineHeight: 1.4 }}>
             Tweak here → Copy Config → paste into sceneConstants.ts
           </p>
-          <button
-            onClick={copyLightingToClipboard}
-            style={{ ...btnBase, background: '#4a9eff' }}
-          >
+          <button onClick={copyLightingToClipboard} style={{ ...btnBase, background: '#4a9eff' }}>
             Copy Lighting Config
           </button>
 
@@ -754,13 +665,7 @@ export const LIGHTING_CONFIG = {
             <>
               <label>
                 intensity {ambientLightIntensity.toFixed(1)}{' '}
-                {slider(
-                  0,
-                  10,
-                  0.1,
-                  ambientLightIntensity,
-                  setAmbientLightIntensity,
-                )}
+                {slider(0, 10, 0.1, ambientLightIntensity, setAmbientLightIntensity)}
               </label>
               {colorRow('color', ambientLightColor, setAmbientLightColor)}
             </>
@@ -781,23 +686,10 @@ export const LIGHTING_CONFIG = {
             <>
               <label>
                 intensity {directionalLightIntensity.toFixed(1)}{' '}
-                {slider(
-                  0,
-                  10,
-                  0.1,
-                  directionalLightIntensity,
-                  setDirectionalLightIntensity,
-                )}
+                {slider(0, 10, 0.1, directionalLightIntensity, setDirectionalLightIntensity)}
               </label>
-              {colorRow(
-                'color',
-                directionalLightColor,
-                setDirectionalLightColor,
-              )}
-              {xyzSliders(
-                directionalLightPosition,
-                setDirectionalLightPosition,
-              )}
+              {colorRow('color', directionalLightColor, setDirectionalLightColor)}
+              {xyzSliders(directionalLightPosition, setDirectionalLightPosition)}
             </>
           )}
 
@@ -846,13 +738,7 @@ export const LIGHTING_CONFIG = {
             <>
               <label>
                 intensity {pointLightIntensity.toFixed(1)}{' '}
-                {slider(
-                  0,
-                  20,
-                  0.1,
-                  pointLightIntensity,
-                  setPointLightIntensity,
-                )}
+                {slider(0, 20, 0.1, pointLightIntensity, setPointLightIntensity)}
               </label>
               {colorRow('color', pointLightColor, setPointLightColor)}
               <label>
@@ -882,13 +768,7 @@ export const LIGHTING_CONFIG = {
             <>
               <label>
                 intensity {cycloLightIntensity.toFixed(1)}{' '}
-                {slider(
-                  0,
-                  10,
-                  0.1,
-                  cycloLightIntensity,
-                  setCycloLightIntensity,
-                )}
+                {slider(0, 10, 0.1, cycloLightIntensity, setCycloLightIntensity)}
               </label>
               {colorRow('color', cycloLightColor, setCycloLightColor)}
               {xyzSliders(cycloLightPosition, setCycloLightPosition)}
@@ -905,10 +785,7 @@ export const LIGHTING_CONFIG = {
         <div className="bokeh-1" style={bokeh1Style} />
         <div className="bokeh-2" style={bokeh2Style} />
         <div className="linear-gradient" style={linearGradientStyle} />
-        <div
-          className="model"
-          style={{ position: 'relative', height: '100%', width: '100%' }}
-        >
+        <div className="model" style={{ position: 'relative', height: '100%', width: '100%' }}>
           <div
             style={{
               position: 'absolute',

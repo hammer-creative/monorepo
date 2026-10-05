@@ -3,10 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const iconsDir = path.join(__dirname, '../apps/web/public/icons');
-const outputDir = path.join(
-  __dirname,
-  '../apps/web/src/components/common/logos',
-);
+const outputDir = path.join(__dirname, '../apps/web/src/components/common/logos');
 
 // Ensure output directory exists
 if (!fs.existsSync(outputDir)) {

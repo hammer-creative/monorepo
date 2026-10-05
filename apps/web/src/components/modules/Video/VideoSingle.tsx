@@ -1,8 +1,8 @@
 // apps/web/src/components/modules/Video/VideoSingle.tsx
 
+import { useEffect, useState } from 'react';
 import { useVideoControls } from '@/hooks/useVideoControls';
 import type { VideoItem } from '@/types/sanity.generated';
-import { useEffect, useState } from 'react';
 
 import { MuxVideo } from './MuxVideo';
 import { MuteButton, PauseButton } from './VideoControls';
@@ -17,15 +17,8 @@ interface VideoSingleProps {
 export function VideoSingle({ video, isInView }: VideoSingleProps) {
   const [videoMounted, setVideoMounted] = useState(false);
   const [showPoster, setShowPoster] = useState(true);
-  const {
-    videoRef,
-    muted,
-    isPaused,
-    handlePlay,
-    handlePause,
-    handleTogglePlay,
-    handleToggleMute,
-  } = useVideoControls({ stopOthersOnPlay: true });
+  const { videoRef, muted, isPaused, handlePlay, handlePause, handleTogglePlay, handleToggleMute } =
+    useVideoControls({ stopOthersOnPlay: true });
 
   // Pause video when scrolled out of view
   useEffect(() => {
@@ -81,11 +74,7 @@ export function VideoSingle({ video, isInView }: VideoSingleProps) {
               paused={isPaused}
             />
 
-            <MuteButton
-              className="video-modal-mute"
-              muted={muted}
-              onToggle={handleToggleMute}
-            />
+            <MuteButton className="video-modal-mute" muted={muted} onToggle={handleToggleMute} />
 
             <MuxVideo
               ref={videoRef}
@@ -98,10 +87,7 @@ export function VideoSingle({ video, isInView }: VideoSingleProps) {
               onEnded={handleVideoEnded}
             />
 
-            <VideoProgressBar
-              videoElement={videoRef.current}
-              className="video-modal-progress"
-            />
+            <VideoProgressBar videoElement={videoRef.current} className="video-modal-progress" />
           </>
         )}
 

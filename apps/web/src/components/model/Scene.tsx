@@ -9,13 +9,18 @@ import * as THREE from 'three';
 
 import '../../styles/scene/model.css';
 
-import * as C from './sceneConstants';
 import SceneContent from './SceneContent';
+import * as C from './sceneConstants';
 
 const { TONE_MAPPING_EXPOSURE, LIGHTING_CONFIG: L, SHOW_HELPER_PANELS } = C;
 
-export default function Scene({ onPlayClick, onProgress }: { onPlayClick?: () => void; onProgress?: (p: number) => void }) {
-
+export default function Scene({
+  onPlayClick,
+  onProgress,
+}: {
+  onPlayClick?: () => void;
+  onProgress?: (p: number) => void;
+}) {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
@@ -41,10 +46,7 @@ export default function Scene({ onPlayClick, onProgress }: { onPlayClick?: () =>
       <div className="bokeh-2" />
       <div className="linear-gradient" />
       <div className="eye-shadow" />
-      <div
-        className="model"
-        style={{ position: 'relative', height: '100%', width: '100%' }}
-      >
+      <div className="model" style={{ position: 'relative', height: '100%', width: '100%' }}>
         <Canvas
           camera={{ position: [0, 0, 0.4], fov: 50 }}
           environmentrotation={[-2.7316, -0.5316, 2.5884]}

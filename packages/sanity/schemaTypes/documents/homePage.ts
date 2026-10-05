@@ -1,6 +1,6 @@
 // schemaTypes/documents/homePage.ts
 
-import {defineType} from 'sanity'
+import { defineType } from 'sanity';
 
 export const homePage = defineType({
   name: 'homePage',
@@ -11,7 +11,7 @@ export const homePage = defineType({
       name: 'modules',
       title: 'Content Modules',
       type: 'array',
-      of: [{type: 'caseStudyCardModule'}, {type: 'textModule'}],
+      of: [{ type: 'caseStudyCardModule' }, { type: 'textModule' }],
     },
   ],
   preview: {
@@ -19,12 +19,12 @@ export const homePage = defineType({
       title: 'title',
       modules: 'modules',
     },
-    prepare({title, modules}) {
-      const moduleCount = modules?.length || 0
+    prepare({ title, modules }) {
+      const moduleCount = modules?.length || 0;
       return {
         title: title || 'hammercreative.com',
         subtitle: `${moduleCount} module${moduleCount !== 1 ? 's' : ''}`,
-      }
+      };
     },
   },
-})
+});

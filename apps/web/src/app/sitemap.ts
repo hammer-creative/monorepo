@@ -1,5 +1,5 @@
-import { client, getAllCaseStudyTeasers } from '@/lib/sanity';
 import type { MetadataRoute } from 'next';
+import { client, getAllCaseStudyTeasers } from '@/lib/sanity';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const caseStudies = await getAllCaseStudyTeasers(client);

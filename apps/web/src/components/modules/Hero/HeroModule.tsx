@@ -1,28 +1,14 @@
 // apps/web/src/components/modules/Hero/HeroModule.tsx
 'use client';
 
-import {
-  ClientList,
-  LongArrow,
-  SanityImageHero,
-  TextBlock,
-  Title,
-} from '@/components/common';
-import {
-  DeliverablesListModule,
-  ServicesListModule,
-} from '@/components/modules/ServicesList';
+import { ClientList, LongArrow, SanityImageHero, TextBlock, Title } from '@/components/common';
+import { DeliverablesListModule, ServicesListModule } from '@/components/modules/ServicesList';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import type {
-  Client,
-  HeroModule as HeroModuleType,
-} from '@/types/sanity.generated';
+import type { Client, HeroModule as HeroModuleType } from '@/types/sanity.generated';
 
 const bem = 'hero-card';
 
-function isValidHeroModule(
-  data: HeroModuleType | null,
-): data is HeroModuleType {
+function isValidHeroModule(data: HeroModuleType | null): data is HeroModuleType {
   return data !== null;
 }
 
@@ -88,12 +74,7 @@ export function HeroModule({
         {/* TODO: Change image to hasImage  */}
         {image && (
           <>
-            <SanityImageHero
-              image={image}
-              fill
-              priority
-              className={`${bem}__image`}
-            />
+            <SanityImageHero image={image} fill priority className={`${bem}__image`} />
             {isWide && scrollButton}
           </>
         )}
@@ -123,9 +104,7 @@ export function HeroModule({
           <div className={`${bem}__details`}>
             {hasSummary && (
               <div className={`${bem}__summary`}>
-                {hasBody && (
-                  <TextBlock body={body} className={`${bem}__text`} />
-                )}
+                {hasBody && <TextBlock body={body} className={`${bem}__text`} />}
                 {hasClients && (
                   <div className={`${bem}__clients`}>
                     <ClientList clients={clients!} tag="Client" />
@@ -136,9 +115,7 @@ export function HeroModule({
             {hasLists && (
               <div className={`${bem}__lists`}>
                 {hasServices && <ServicesListModule services={services} />}
-                {hasDeliverables && (
-                  <DeliverablesListModule deliverables={deliverables} />
-                )}
+                {hasDeliverables && <DeliverablesListModule deliverables={deliverables} />}
               </div>
             )}
           </div>

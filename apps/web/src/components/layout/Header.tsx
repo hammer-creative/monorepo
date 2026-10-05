@@ -1,11 +1,11 @@
 // apps/web/src/components/layout/Header.tsx
 'use client';
 
+import { usePathname } from 'next/navigation';
+import Headroom from 'react-headroom';
 import { Wordmark } from '@/components/common/Wordmark';
 import { MenuToggle } from '@/components/navigation/MenuToggle';
 import type { NavigationData } from '@/types/navigation';
-import { usePathname } from 'next/navigation';
-import Headroom from 'react-headroom';
 
 /**
  * Header Component

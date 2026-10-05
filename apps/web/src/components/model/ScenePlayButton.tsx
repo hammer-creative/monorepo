@@ -18,10 +18,7 @@ interface ScenePlayButtonProps {
   isPlaying: boolean;
 }
 
-export default function ScenePlayButton({
-  onClick,
-  isPlaying,
-}: ScenePlayButtonProps) {
+export default function ScenePlayButton({ onClick, isPlaying }: ScenePlayButtonProps) {
   const triangleGeometry = useMemo(() => {
     const shape = new THREE.Shape();
     shape.moveTo(25.5 / 17.32, -8.66 / 17.32);
@@ -47,7 +44,7 @@ export default function ScenePlayButton({
       depthTest: false,
       transparent: true,
       opacity: 1,
-    }),
+    })
   );
 
   const hitboxMaterialRef = useRef(
@@ -55,13 +52,11 @@ export default function ScenePlayButton({
       transparent: true,
       opacity: 0, // Invisible
       depthTest: false,
-    }),
+    })
   );
 
   useFrame(() => {
-    const targetColor = new THREE.Color(
-      hoveredRef.current ? '#C7D3D3' : PLAY_BUTTON_COLOR,
-    );
+    const targetColor = new THREE.Color(hoveredRef.current ? '#C7D3D3' : PLAY_BUTTON_COLOR);
     materialRef.current.color.lerp(targetColor, 0.2);
   });
 

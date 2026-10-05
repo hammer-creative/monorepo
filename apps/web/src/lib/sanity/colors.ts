@@ -8,7 +8,7 @@ type ColorWithHex = {
 };
 
 export function resolveBackgroundColor(
-  backgroundColor: { enabled?: boolean; name?: string } | null | undefined,
+  backgroundColor: { enabled?: boolean; name?: string } | null | undefined
 ): ColorWithHex | undefined {
   if (!backgroundColor?.enabled || !backgroundColor?.name) {
     return undefined;
@@ -22,7 +22,7 @@ export function resolveBackgroundColor(
 }
 
 export function resolveTextColor(
-  textColor: { enabled?: boolean; name?: string } | null | undefined,
+  textColor: { enabled?: boolean; name?: string } | null | undefined
 ): ColorWithHex | undefined {
   if (!textColor?.enabled || !textColor?.name) {
     return undefined;
@@ -36,11 +36,11 @@ export function resolveTextColor(
 }
 
 export function resolveModuleColors<T extends Record<string, unknown>>(
-  module: T,
-): T & { backgroundColor?: ColorWithHex; textColor?: ColorWithHex } {
+  module: T
+): T & { backgroundColor?: ColorWithHex | undefined; textColor?: ColorWithHex | undefined } {
   const resolved = { ...module } as T & {
-    backgroundColor?: ColorWithHex;
-    textColor?: ColorWithHex;
+    backgroundColor?: ColorWithHex | undefined;
+    textColor?: ColorWithHex | undefined;
   };
 
   if (resolved.backgroundColor) {

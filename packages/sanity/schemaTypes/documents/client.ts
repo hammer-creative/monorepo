@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/documents/client.ts
-import {CaseIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
+import { CaseIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
 
 export const client = defineType({
   name: 'client',
@@ -31,4 +31,4 @@ export const client = defineType({
       media: 'logo',
     },
   },
-})
+});

@@ -1,5 +1,5 @@
 // packages/sanity/schemaTypes/fields/videoField.ts
 
-import {createVideoField} from '../factories/videoFieldFactory'
+import { createVideoField } from '../factories/videoFieldFactory';
 
-export const videoField = createVideoField()
+export const videoField = createVideoField();

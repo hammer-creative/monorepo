@@ -13,9 +13,7 @@ const LAYOUT_CLASS_MAP: Record<Layout, string> = {
   homePage: 'home',
 } as const;
 
-function isValidTextModule(
-  data: TextModuleType | null,
-): data is TextModuleType {
+function isValidTextModule(data: TextModuleType | null): data is TextModuleType {
   return data !== null;
 }
 
@@ -26,8 +24,7 @@ export function TextModule({ data }: { data: TextModuleType | null }) {
 
   const { title, body, layout, attribution, tag } = data;
 
-  if (!layout || (layout !== 'challenge' && !body && !attribution && !title))
-    return null;
+  if (!layout || (layout !== 'challenge' && !body && !attribution && !title)) return null;
 
   const layoutClass = LAYOUT_CLASS_MAP[layout] ?? '';
   const hasAttribution = attribution != null;
@@ -44,9 +41,7 @@ export function TextModule({ data }: { data: TextModuleType | null }) {
           {hasTitle && <Title className={`${bem}__title`}>{title}</Title>}
         </div>
       )}
-      {layout === 'challenge' && (
-        <Label className="centered small-caps">Challenge</Label>
-      )}
+      {layout === 'challenge' && <Label className="centered small-caps">Challenge</Label>}
       {hasBody && <TextBlock body={body} className={`${bem}__text`} />}
       {hasAttribution && <Label className={`${bem}`}>{attribution}</Label>}
       {/* {hasClients && <Label clients={clients} className={`${bem}__clients`} />} */}

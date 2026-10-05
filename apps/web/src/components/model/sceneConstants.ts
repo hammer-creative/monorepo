@@ -2,8 +2,7 @@ import * as THREE from 'three';
 
 export const GLB_SOURCE = 'model.glb';
 export const VIDEO_SOURCE = 'reel.mp4';
-export const TEASER_PLAYBACK_ID =
-  '9oZ7hjF901Jo9eaZGmPQXRxKj3006V37ImsUYnCdbLGDA';
+export const TEASER_PLAYBACK_ID = '9oZ7hjF901Jo9eaZGmPQXRxKj3006V37ImsUYnCdbLGDA';
 
 export const ENVIRONMENT_MAP_SOURCE = 'studio2k.hdr';
 // export const ENVIRONMENT_MAP_SOURCE = 'studio4k.exr';

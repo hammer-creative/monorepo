@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/documents/deliverable.ts
-import {PackageIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
+import { PackageIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
 
 export const deliverable = defineType({
   name: 'deliverable',
@@ -20,4 +20,4 @@ export const deliverable = defineType({
       title: 'title',
     },
   },
-})
+});

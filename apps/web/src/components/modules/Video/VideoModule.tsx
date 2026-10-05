@@ -2,16 +2,14 @@
 
 'use client';
 
-import type { VideoModule as VideoModuleType } from '@/types/sanity.generated';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { VideoModule as VideoModuleType } from '@/types/sanity.generated';
 
 import { useViewportSize } from './hooks/useViewportSize';
 import { VideoMulti } from './VideoMulti';
 import { VideoSingle } from './VideoSingle';
 
-function isValidVideoModule(
-  data: VideoModuleType | null,
-): data is VideoModuleType {
+function isValidVideoModule(data: VideoModuleType | null): data is VideoModuleType {
   return data !== null && Array.isArray(data.videos) && data.videos.length > 0;
 }
 
@@ -21,10 +19,7 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
   const [isInView, setIsInView] = useState(true);
 
   const videos = useMemo(() => data?.videos || [], [data?.videos]);
-  const mobileVideos = useMemo(
-    () => data?.mobileVideos || [],
-    [data?.mobileVideos],
-  );
+  const mobileVideos = useMemo(() => data?.mobileVideos || [], [data?.mobileVideos]);
 
   const activeVideos = useMemo(() => {
     const count = videos.length;
@@ -40,12 +35,12 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
+        if (entry) setIsInView(entry.isIntersecting);
       },
       {
         threshold: 0, // Trigger as soon as any part leaves viewport
         rootMargin: '0px',
-      },
+      }
     );
 
     observer.observe(element);
@@ -57,10 +52,11 @@ export function VideoModule({ data }: { data: VideoModuleType | null }) {
 
   if (!isValidVideoModule(data)) return null;
 
-  if (videos.length === 1) {
+  const [firstVideo] = videos;
+  if (videos.length === 1 && firstVideo) {
     return (
       <div ref={containerRef}>
-        <VideoSingle video={videos[0]} isInView={isInView} />
+        <VideoSingle video={firstVideo} isInView={isInView} />
       </div>
     );
   }

@@ -2,6 +2,8 @@
 
 import '@/styles/index.css';
 
+import { GoogleAnalytics } from '@next/third-parties/google';
+import NextTopLoader from 'nextjs-toploader';
 import { MobileMenu } from '@/components/navigation/MobileMenu';
 import { organizationJsonLd, websiteJsonLd } from '@/config';
 import { NavigationProvider } from '@/contexts/NavigationContext';
@@ -13,16 +15,10 @@ import {
   MOHOL_BOLD,
   MOHOL_REGULAR,
 } from '@/utils/fontConfig';
-import { GoogleAnalytics } from '@next/third-parties/google';
-import NextTopLoader from 'nextjs-toploader';
 
 export { metadata } from '@/config';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"

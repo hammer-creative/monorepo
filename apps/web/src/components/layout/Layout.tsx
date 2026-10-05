@@ -1,10 +1,10 @@
 // components/layout/Layout.tsx
 'use client';
 
+import type { ReactNode } from 'react';
 import { Footer, Header } from '@/components/layout';
 import navigationData from '@/data/navigation.json';
 import type { NavigationData } from '@/types/navigation';
-import type { ReactNode } from 'react';
 
 interface LayoutProps {
   children: ReactNode;

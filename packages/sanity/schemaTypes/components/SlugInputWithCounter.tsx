@@ -1,8 +1,7 @@
 // packages/sanity/schemaTypes/components/SlugInputWithCounter.tsx
-import {TextInput, Stack, Text, Button, Flex, Box} from '@sanity/ui'
-import {set, unset} from 'sanity'
-import type {SlugInputProps} from 'sanity'
-import {useFormValue} from 'sanity'
+import { Box, Button, Flex, Stack, Text, TextInput } from '@sanity/ui';
+import type { SlugInputProps } from 'sanity';
+import { set, unset, useFormValue } from 'sanity';
 
 /**
  * Common English stop words to exclude from slugs.
@@ -36,7 +35,7 @@ const STOP_WORDS = new Set([
   'up',
   'via',
   'with',
-])
+]);
 
 /**
  * Slug input with character counter and custom stop word filtering.
@@ -45,30 +44,30 @@ const STOP_WORDS = new Set([
  * and removes common stop words for cleaner URLs.
  */
 export function SlugInputWithCounter(props: SlugInputProps) {
-  const {value, schemaType, onChange} = props
-  const slugValue = value?.current || ''
-  const charCount = slugValue.length
-  const maxLength = schemaType.options?.maxLength || 96
+  const { value, schemaType, onChange } = props;
+  const slugValue = value?.current || '';
+  const charCount = slugValue.length;
+  const maxLength = schemaType.options?.maxLength || 96;
 
-  const document = useFormValue([]) as Record<string, any>
+  const document = useFormValue([]) as Record<string, any>;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.currentTarget.value
+    const newValue = event.currentTarget.value;
     if (newValue.length <= maxLength) {
-      onChange(newValue ? set({_type: 'slug', current: newValue}) : unset())
+      onChange(newValue ? set({ _type: 'slug', current: newValue }) : unset());
     }
-  }
+  };
 
   /**
    * Generate slug from source field with stop word filtering.
    * Uses Sanity's built-in slug generation then removes common stop words.
    */
   const handleGenerate = () => {
-    const sourceField = schemaType.options?.source as string
-    if (!sourceField || !document) return
+    const sourceField = schemaType.options?.source as string;
+    if (!sourceField || !document) return;
 
-    const sourceValue = document[sourceField] as string
-    if (!sourceValue) return
+    const sourceValue = document[sourceField] as string;
+    if (!sourceValue) return;
 
     // Simple slugify: lowercase, replace spaces with hyphens, remove special chars
     const baseSlug = sourceValue
@@ -77,16 +76,16 @@ export function SlugInputWithCounter(props: SlugInputProps) {
       .replace(/[^\w-]+/g, '')
       .replace(/--+/g, '-')
       .replace(/^-+/, '')
-      .replace(/-+$/, '')
+      .replace(/-+$/, '');
 
     // Remove stop words
     const filteredSlug = baseSlug
       .split('-')
       .filter((word: string) => !STOP_WORDS.has(word.toLowerCase()))
-      .join('-')
+      .join('-');
 
-    onChange(set({_type: 'slug', current: filteredSlug}))
-  }
+    onChange(set({ _type: 'slug', current: filteredSlug }));
+  };
 
   return (
     <Stack space={2}>
@@ -105,5 +104,5 @@ export function SlugInputWithCounter(props: SlugInputProps) {
         {charCount} / {maxLength} characters
       </Text>
     </Stack>
-  )
+  );
 }

@@ -1,11 +1,11 @@
 'use client';
 
-import { useVideoControls } from '@/hooks/useVideoControls';
-import type { VideoItem } from '@/types/sanity.generated';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { animate } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
+import { useVideoControls } from '@/hooks/useVideoControls';
+import type { VideoItem } from '@/types/sanity.generated';
 
 import { MuxVideo } from './MuxVideo';
 import { CloseButton, MuteButton, PauseButton } from './VideoControls';
@@ -35,15 +35,8 @@ export function VideoModal({ videoItem, open, onOpenChange }: VideoModalProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const isAnimating = useRef(false);
 
-  const {
-    videoRef,
-    muted,
-    isPaused,
-    handlePlay,
-    handlePause,
-    handleTogglePlay,
-    handleToggleMute,
-  } = useVideoControls();
+  const { videoRef, muted, isPaused, handlePlay, handlePause, handleTogglePlay, handleToggleMute } =
+    useVideoControls();
 
   const handleOpen = async () => {
     if (!overlayRef.current || !contentRef.current) return;
@@ -54,21 +47,20 @@ export function VideoModal({ videoItem, open, onOpenChange }: VideoModalProps) {
     await animate(
       overlayRef.current,
       { scaleY: [0, 1] },
-      { duration: ANIMATION.overlay.duration, ease: ANIMATION.overlay.ease },
+      { duration: ANIMATION.overlay.duration, ease: ANIMATION.overlay.ease }
     );
 
     await animate(
       contentRef.current,
       { opacity: [0, 1] },
-      { duration: ANIMATION.video.duration, ease: ANIMATION.video.ease },
+      { duration: ANIMATION.video.duration, ease: ANIMATION.video.ease }
     );
 
     videoRef.current?.play();
   };
 
   const handleClose = async () => {
-    if (!overlayRef.current || !contentRef.current || isAnimating.current)
-      return;
+    if (!overlayRef.current || !contentRef.current || isAnimating.current) return;
     isAnimating.current = true;
 
     videoRef.current?.pause();
@@ -76,13 +68,13 @@ export function VideoModal({ videoItem, open, onOpenChange }: VideoModalProps) {
     await animate(
       contentRef.current,
       { opacity: [1, 0] },
-      { duration: ANIMATION.video.duration, ease: ANIMATION.overlay.easeIn },
+      { duration: ANIMATION.video.duration, ease: ANIMATION.overlay.easeIn }
     );
 
     await animate(
       overlayRef.current,
       { scaleY: [1, 0] },
-      { duration: ANIMATION.overlay.duration, ease: ANIMATION.overlay.easeIn },
+      { duration: ANIMATION.overlay.duration, ease: ANIMATION.overlay.easeIn }
     );
 
     isAnimating.current = false;
@@ -165,20 +157,10 @@ export function VideoModal({ videoItem, open, onOpenChange }: VideoModalProps) {
               onClick={handleTogglePlay}
               paused={isPaused}
             />
-            <MuteButton
-              className="video-modal-volume"
-              muted={muted}
-              onToggle={handleToggleMute}
-            />
-            <VideoProgressBar
-              videoElement={videoRef.current}
-              className="video-modal-progress"
-            />
+            <MuteButton className="video-modal-volume" muted={muted} onToggle={handleToggleMute} />
+            <VideoProgressBar videoElement={videoRef.current} className="video-modal-progress" />
           </div>
-          <VideoProgressBar
-            videoElement={videoRef.current}
-            className="video-modal-progress"
-          />
+          <VideoProgressBar videoElement={videoRef.current} className="video-modal-progress" />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

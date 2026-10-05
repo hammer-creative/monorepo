@@ -5,7 +5,7 @@ import type { SingleImageModule as SingleImageModuleType } from '@/types/sanity.
 const bem = 'single-image-card';
 
 function isValidSingleImageModule(
-  data: SingleImageModuleType | null,
+  data: SingleImageModuleType | null
 ): data is SingleImageModuleType {
   return data !== null;
 }
@@ -16,11 +16,7 @@ function isValidSingleImageModule(
  * @param data - SingleImageModule data from Sanity
  * @param data.image - Full width image
  */
-export function SingleImageModule({
-  data,
-}: {
-  data: SingleImageModuleType | null;
-}) {
+export function SingleImageModule({ data }: { data: SingleImageModuleType | null }) {
   if (!isValidSingleImageModule(data)) return null;
 
   const { image } = data;

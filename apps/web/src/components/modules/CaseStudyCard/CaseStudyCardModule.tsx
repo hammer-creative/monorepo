@@ -1,20 +1,14 @@
 // apps/web/src/components/modules/CaseStudyCard/CaseStudyCardModule.tsx
 'use client';
 
+import Link from 'next/link';
 import { ClientList, SanityImageTeaser, Title } from '@/components/common';
 import type { CaseStudyTeaserItem } from '@/types/caseStudy';
 import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
-import Link from 'next/link';
 
 const bem = 'case-study';
 
-function CaseStudyCardItem({
-  item,
-  index,
-}: {
-  item: CaseStudyTeaserItem;
-  index: number;
-}) {
+function CaseStudyCardItem({ item, index }: { item: CaseStudyTeaserItem; index: number }) {
   const { slug, title, clients, teaserImage } = item;
 
   if (!title && !teaserImage) return null;
@@ -23,11 +17,7 @@ function CaseStudyCardItem({
     <div className={`${bem}__card`}>
       <Link href={`/work/${slug}`}>
         {teaserImage && (
-          <SanityImageTeaser
-            image={teaserImage}
-            className={`${bem}__image`}
-            priority={index < 4}
-          />
+          <SanityImageTeaser image={teaserImage} className={`${bem}__image`} priority={index < 4} />
         )}
         <div className={`${bem}__details`}>
           <ClientList clients={clients!} />
@@ -43,24 +33,16 @@ function CaseStudyCardItem({
 }
 
 function isValidCaseStudyCardModule(
-  data: CaseStudyCardModuleType | null,
+  data: CaseStudyCardModuleType | null
 ): data is CaseStudyCardModuleType & { caseStudies: CaseStudyTeaserItem[] } {
-  return (
-    data !== null &&
-    Array.isArray(data.caseStudies) &&
-    data.caseStudies.length > 0
-  );
+  return data !== null && Array.isArray(data.caseStudies) && data.caseStudies.length > 0;
 }
 
-export function CaseStudyCardModule({
-  data,
-}: {
-  data: CaseStudyCardModuleType | null;
-}) {
+export function CaseStudyCardModule({ data }: { data: CaseStudyCardModuleType | null }) {
   if (!isValidCaseStudyCardModule(data)) return null;
 
   const validCaseStudies = data.caseStudies.filter(
-    (cs) => !('_ref' in cs),
+    (cs) => !('_ref' in cs)
   ) as CaseStudyTeaserItem[];
 
   return (

@@ -1,9 +1,9 @@
 // packages/sanity/schemaTypes/modules/singleImageModule.ts
 
-import {ImageIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
-import {createSingleImageField, createColorField} from '../factories'
-import {createImageDimensionValidation, applyRequired} from '../utils/validation'
+import { ImageIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
+import { createColorField, createSingleImageField } from '../factories';
+import { applyRequired, createImageDimensionValidation } from '../utils/validation';
 
 export const singleImageModule = defineType({
   name: 'singleImageModule',
@@ -12,17 +12,17 @@ export const singleImageModule = defineType({
   icon: ImageIcon,
   fields: [
     (() => {
-      const {validation: _, ...imageField} = createSingleImageField({
+      const { validation: _, ...imageField } = createSingleImageField({
         name: 'image',
         title: 'Hero Image',
         required: true,
         description: 'Minimum dimensions 3840 px × 2160 px, maximum file size 10 MB.',
         imageOptions: {
           hotspot: {
-            previews: [{title: '16:9 Landscape', aspectRatio: 16 / 9}],
+            previews: [{ title: '16:9 Landscape', aspectRatio: 16 / 9 }],
           },
         },
-      })
+      });
       return {
         ...imageField,
         validation: (Rule) =>
@@ -31,9 +31,9 @@ export const singleImageModule = defineType({
               minWidth: 3840,
               minHeight: 2160,
               maxFileSize: 10,
-            }),
+            })
           ),
-      }
+      };
     })(),
     createColorField({
       name: 'backgroundColor',
@@ -46,14 +46,14 @@ export const singleImageModule = defineType({
       media: 'image',
       backgroundColor: 'backgroundColor',
     },
-    prepare({media, backgroundColor}) {
+    prepare({ media, backgroundColor }) {
       return {
         title: 'Single Image Module',
         subtitle: backgroundColor?.enabled
           ? `Background color: ${backgroundColor.name}`
           : 'Background color: none',
         media,
-      }
+      };
     },
   },
-})
+});

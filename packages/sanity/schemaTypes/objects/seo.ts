@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/objects/seo.ts
 
-import {defineType} from 'sanity'
+import { defineType } from 'sanity';
 
 export const seo = defineType({
   name: 'seo',
@@ -23,7 +23,7 @@ export const seo = defineType({
       name: 'keywords',
       title: 'Keywords',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [{ type: 'string' }],
       description: 'Keywords relevant to the content for SEO purposes',
     },
     {
@@ -33,4 +33,4 @@ export const seo = defineType({
       description: 'An image for SEO purposes (e.g., social sharing)',
     },
   ],
-})
+});

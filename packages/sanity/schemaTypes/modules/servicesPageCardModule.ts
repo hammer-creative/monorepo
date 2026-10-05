@@ -1,10 +1,10 @@
 // packages/sanity/schemaTypes/modules/ServicesPageCardModule.ts
 
-import {DocumentIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
-import {titleField, portableTextField} from '../fields/textField'
-import {createSingleImageField, createColorField} from '../factories'
-import {createImageDimensionValidation, applyRequired} from '../utils/validation'
+import { DocumentIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
+import { createColorField, createSingleImageField } from '../factories';
+import { portableTextField, titleField } from '../fields/textField';
+import { applyRequired, createImageDimensionValidation } from '../utils/validation';
 
 export const servicesPageCardModule = defineType({
   name: 'servicesPageCardModule',
@@ -13,12 +13,12 @@ export const servicesPageCardModule = defineType({
   icon: DocumentIcon,
   fields: [
     (() => {
-      const {validation: _, ...field} = titleField({required: false, rows: 4, maxLength: 150})
-      return field
+      const { validation: _, ...field } = titleField({ required: false, rows: 4, maxLength: 150 });
+      return field;
     })(),
-    portableTextField({maxLength: 200}),
+    portableTextField({ maxLength: 200 }),
     (() => {
-      const {validation: _, ...imageField} = createSingleImageField({
+      const { validation: _, ...imageField } = createSingleImageField({
         name: 'image',
         title: 'Background Image',
         required: false,
@@ -26,12 +26,12 @@ export const servicesPageCardModule = defineType({
         imageOptions: {
           hotspot: {
             previews: [
-              {title: '17:9 Landscape', aspectRatio: 17 / 9},
-              {title: '1:1 Square', aspectRatio: 1 / 1},
+              { title: '17:9 Landscape', aspectRatio: 17 / 9 },
+              { title: '1:1 Square', aspectRatio: 1 / 1 },
             ],
           },
         },
-      })
+      });
       return {
         ...imageField,
         validation: (Rule) =>
@@ -40,21 +40,21 @@ export const servicesPageCardModule = defineType({
               minWidth: 2040,
               minHeight: 1080,
               maxFileSize: 25,
-            }),
+            })
           ),
-      }
+      };
     })(),
     {
       name: 'services',
       title: 'Services',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'service'}]}],
+      of: [{ type: 'reference', to: [{ type: 'service' }] }],
       options: {
         filter: () => ({
           filter: '_type == "service"',
           params: {},
         }),
-        sort: [{field: 'title', direction: 'asc'}],
+        sort: [{ field: 'title', direction: 'asc' }],
       },
     },
     createColorField({
@@ -77,10 +77,10 @@ export const servicesPageCardModule = defineType({
       title: 'title',
       backgroundColor: 'backgroundColor',
     },
-    prepare({title}) {
+    prepare({ title }) {
       return {
         title: title || 'Services Card Module',
-      }
+      };
     },
   },
-})
+});

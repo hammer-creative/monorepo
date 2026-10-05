@@ -1,7 +1,7 @@
 // packages/sanity/schemaTypes/modules/caseStudyReferenceModule.ts
 
-import {DocumentsIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
+import { DocumentsIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
 
 export const caseStudyCardModule = defineType({
   name: 'caseStudyCardModule',
@@ -13,7 +13,7 @@ export const caseStudyCardModule = defineType({
       name: 'caseStudies',
       title: 'Case Studies',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'caseStudy'}]}],
+      of: [{ type: 'reference', to: [{ type: 'caseStudy' }] }],
       validation: (Rule) => Rule.required().min(1),
       description: 'Select case studies to display',
     },
@@ -22,12 +22,12 @@ export const caseStudyCardModule = defineType({
     select: {
       caseStudies: 'caseStudies',
     },
-    prepare({caseStudies}) {
-      const count = caseStudies?.length || 0
+    prepare({ caseStudies }) {
+      const count = caseStudies?.length || 0;
       return {
         title: 'Case Study List',
         subtitle: `${count} case stud${count !== 1 ? 'ies' : 'y'}`,
-      }
+      };
     },
   },
-})
+});

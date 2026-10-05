@@ -1,8 +1,8 @@
 // packages/sanity/schemaTypes/utils/LimitedArrayInput.tsx
 
-import React from 'react'
-import type {ArrayOfObjectsInputProps} from 'sanity'
-import {Stack, Card, Text} from '@sanity/ui'
+import { Card, Stack, Text } from '@sanity/ui';
+import React from 'react';
+import type { ArrayOfObjectsInputProps } from 'sanity';
 
 /**
  * Creates a custom array input that enforces a maximum item limit
@@ -10,9 +10,9 @@ import {Stack, Card, Text} from '@sanity/ui'
  */
 export function createLimitedArrayInput(limit: number, itemName = 'item') {
   return function LimitedArrayInput(props: ArrayOfObjectsInputProps) {
-    const {renderDefault, value = []} = props
-    const count = value.length
-    const atLimit = count >= limit
+    const { renderDefault, value = [] } = props;
+    const count = value.length;
+    const atLimit = count >= limit;
 
     return (
       <Stack space={3}>
@@ -25,6 +25,6 @@ export function createLimitedArrayInput(limit: number, itemName = 'item') {
           </Card>
         )}
       </Stack>
-    )
-  }
+    );
+  };
 }

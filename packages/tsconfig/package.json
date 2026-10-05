@@ -5,5 +5,7 @@
   "type": "module",
   "private": true,
   "license": "UNLICENSED",
-  "files": ["*.json"]
+  "files": [
+    "*.json"
+  ]
 }

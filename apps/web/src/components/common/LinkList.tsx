@@ -35,16 +35,10 @@ export function LinkList({
 }: LinkListProps) {
   const isActive = (href?: string) =>
     !!href &&
-    (href === '/'
-      ? currentPathname === '/'
-      : (currentPathname?.startsWith(href) ?? false));
+    (href === '/' ? currentPathname === '/' : (currentPathname?.startsWith(href) ?? false));
 
   const getLinkClassName = (item: LinkItem) => {
-    const classes = [
-      linkClassName,
-      item.className,
-      isActive(item.href) ? 'is-active' : '',
-    ]
+    const classes = [linkClassName, item.className, isActive(item.href) ? 'is-active' : '']
       .filter(Boolean)
       .join(' ');
     return classes || undefined;
@@ -52,10 +46,7 @@ export function LinkList({
 
   if (asList) {
     return (
-      <ul
-        {...(className && { className })}
-        {...(ariaLabel && { 'aria-label': ariaLabel })}
-      >
+      <ul {...(className && { className })} {...(ariaLabel && { 'aria-label': ariaLabel })}>
         {items.map((item) => (
           <li
             key={item.id}

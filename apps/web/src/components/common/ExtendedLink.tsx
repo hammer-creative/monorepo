@@ -5,12 +5,12 @@ import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 interface ExtendedLinkProps {
-  href?: string;
-  email?: string;
-  className?: string;
-  onClick?: (href: string, e: React.MouseEvent) => void;
-  preventNavigation?: boolean;
-  arrowComponent?: ReactNode;
+  href?: string | undefined;
+  email?: string | undefined;
+  className?: string | undefined;
+  onClick?: ((href: string, e: React.MouseEvent) => void) | undefined;
+  preventNavigation?: boolean | undefined;
+  arrowComponent?: ReactNode | undefined;
   children: ReactNode;
 }
 
@@ -57,11 +57,7 @@ export function ExtendedLink({
   if (email) {
     const mailtoHref = `mailto:${email}`;
     return (
-      <a
-        href={mailtoHref}
-        className={combinedClassName}
-        onClick={(e) => onClick?.(mailtoHref, e)}
-      >
+      <a href={mailtoHref} className={combinedClassName} onClick={(e) => onClick?.(mailtoHref, e)}>
         {content}
       </a>
     );
@@ -69,11 +65,7 @@ export function ExtendedLink({
 
   if (!href) {
     return (
-      <button
-        type="button"
-        className={combinedClassName}
-        onClick={(e) => onClick?.('', e)}
-      >
+      <button type="button" className={combinedClassName} onClick={(e) => onClick?.('', e)}>
         {content}
       </button>
     );
@@ -120,23 +112,14 @@ export function ExtendedLink({
 
 interface ServerLinkProps {
   href: string;
-  className?: string;
-  arrowComponent?: ReactNode;
+  className?: string | undefined;
+  arrowComponent?: ReactNode | undefined;
   children: ReactNode;
 }
 
-export function ServerLink({
-  href,
-  className,
-  arrowComponent,
-  children,
-}: ServerLinkProps) {
+export function ServerLink({ href, className, arrowComponent, children }: ServerLinkProps) {
   return (
-    <ExtendedLink
-      href={href}
-      className={className}
-      arrowComponent={arrowComponent}
-    >
+    <ExtendedLink href={href} className={className} arrowComponent={arrowComponent}>
       {children}
     </ExtendedLink>
   );

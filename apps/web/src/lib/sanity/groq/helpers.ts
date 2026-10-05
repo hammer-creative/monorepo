@@ -8,19 +8,11 @@ type FetchOptions = {
   cache?: RequestCache;
   tags?: string[];
   revalidate?: number;
-  client?: SanityClient;
+  client?: SanityClient | undefined;
 };
 
-export async function fetchSanity<T>(
-  query: string,
-  options: FetchOptions = {},
-): Promise<T> {
-  const {
-    params = {},
-    tags = [],
-    revalidate = 60,
-    client = defaultClient,
-  } = options;
+export async function fetchSanity<T>(query: string, options: FetchOptions = {}): Promise<T> {
+  const { params = {}, tags = [], revalidate = 60, client = defaultClient } = options;
 
   try {
     return await client.fetch<T>(query, params, {
@@ -36,7 +28,7 @@ export async function fetchOne<T>(
   type: string,
   slug: string,
   projection: string,
-  client?: SanityClient,
+  client?: SanityClient
 ): Promise<T | null> {
   const query = `*[_type == $type && slug.current == $slug][0]{ ${projection} }`;
 
@@ -51,7 +43,7 @@ export async function fetchAll<T>(
   type: string,
   projection: string,
   ordering: string = '| order(_createdAt desc)',
-  client?: SanityClient,
+  client?: SanityClient
 ): Promise<T[]> {
   const query = `*[_type == $type] ${ordering} { ${projection} }`;
 
@@ -62,10 +54,7 @@ export async function fetchAll<T>(
   });
 }
 
-export async function fetchSlugs(
-  type: string,
-  client?: SanityClient,
-): Promise<{ slug: string }[]> {
+export async function fetchSlugs(type: string, client?: SanityClient): Promise<{ slug: string }[]> {
   const query = `*[_type == $type]{ "slug": slug.current }`;
 
   return fetchSanity<{ slug: string }[]>(query, {

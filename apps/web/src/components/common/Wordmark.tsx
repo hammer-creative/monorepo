@@ -7,11 +7,7 @@ interface WordmarkProps {
   className?: string | null;
 }
 
-export function Wordmark({
-  text = null,
-  href = null,
-  className = '',
-}: WordmarkProps) {
+export function Wordmark({ text = null, href = null, className = '' }: WordmarkProps) {
   if (!text || !href) return null;
 
   return (
@@ -60,13 +56,7 @@ export function WordmarkSVG() {
   );
 }
 
-export function WordmarkSVGGradient({
-  enter,
-  exit,
-}: {
-  enter: number;
-  exit: number;
-}) {
+export function WordmarkSVGGradient({ enter, exit }: { enter: number; exit: number }) {
   const FALLOFF = 100;
   const PADDING = FALLOFF * 2 + 20;
   const WIDTH = 700;
@@ -86,19 +76,10 @@ export function WordmarkSVGGradient({
       <defs>
         <linearGradient id="hammerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset={pct(trailPos)} stopColor="#141515" stopOpacity="0" />
-          <stop
-            offset={pct(Math.min(TOTAL, trailPos + FALLOFF))}
-            stopColor="#778888"
-          />
-          <stop
-            offset={pct(Math.min(TOTAL, trailPos + FALLOFF * 2))}
-            stopColor="#FFCC98"
-          />
+          <stop offset={pct(Math.min(TOTAL, trailPos + FALLOFF))} stopColor="#778888" />
+          <stop offset={pct(Math.min(TOTAL, trailPos + FALLOFF * 2))} stopColor="#FFCC98" />
           <stop offset={pct(leadPos)} stopColor="#FFCC98" />
-          <stop
-            offset={pct(Math.min(TOTAL, leadPos + FALLOFF))}
-            stopColor="#778888"
-          />
+          <stop offset={pct(Math.min(TOTAL, leadPos + FALLOFF))} stopColor="#778888" />
           <stop
             offset={pct(Math.min(TOTAL, leadPos + FALLOFF * 2))}
             stopColor="#141515"

@@ -1,7 +1,7 @@
 // packages/sanity/schemaTypes/components/TextAreaWithCounter.tsx
 
-import {Stack, Text} from '@sanity/ui'
-import type {StringInputProps} from 'sanity'
+import { Stack, Text } from '@sanity/ui';
+import type { StringInputProps } from 'sanity';
 
 /**
  * Text area input with character counter.
@@ -10,13 +10,13 @@ import type {StringInputProps} from 'sanity'
  * Uses Sanity's default text area component with counter below.
  */
 export function TextAreaWithCounter(props: StringInputProps) {
-  const {renderDefault, value = '', schemaType} = props
-  const charCount = value.length
+  const { renderDefault, value = '', schemaType } = props;
+  const charCount = value.length;
 
   // Extract max length from validation rules (with safe type casting)
-  const validation = schemaType.validation as any
+  const validation = schemaType.validation as any;
   const maxLength =
-    validation?.[0]?._rules?.find((rule: any) => rule.flag === 'max')?.constraint || 500
+    validation?.[0]?._rules?.find((rule: any) => rule.flag === 'max')?.constraint || 500;
 
   return (
     <Stack space={2}>
@@ -30,5 +30,5 @@ export function TextAreaWithCounter(props: StringInputProps) {
         {charCount} / {maxLength} characters
       </Text>
     </Stack>
-  )
+  );
 }

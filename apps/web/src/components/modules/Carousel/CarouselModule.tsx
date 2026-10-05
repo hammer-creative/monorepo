@@ -4,9 +4,9 @@
 
 'use client';
 
+import { SwiperSlide } from 'swiper/react';
 import { SanityImageCarousel } from '@/components/common/SanityImage';
 import type { CarouselModule as CarouselModuleType } from '@/types/sanity.generated';
-import { SwiperSlide } from 'swiper/react';
 
 import { CarouselBase } from './CarouselBase';
 
@@ -14,9 +14,7 @@ const bem = 'image';
 
 type CarouselImageItem = NonNullable<CarouselModuleType['images']>[number];
 
-function isValidCarouselModule(
-  data: CarouselModuleType | null,
-): data is CarouselModuleType {
+function isValidCarouselModule(data: CarouselModuleType | null): data is CarouselModuleType {
   return data !== null;
 }
 

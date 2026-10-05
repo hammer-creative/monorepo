@@ -1,10 +1,10 @@
 // apps/web/src/components/Video/MuxVideo.tsx
 'use client';
 
-import { urlFor } from '@/lib/sanity/image';
-import type { MuxVideoAsset, VideoItem } from '@/types/sanity.generated';
 import dynamic from 'next/dynamic';
 import { forwardRef, useCallback, useRef } from 'react';
+import { urlFor } from '@/lib/sanity/image';
+import type { MuxVideoAsset, VideoItem } from '@/types/sanity.generated';
 
 import { parseAspectRatio } from './utils';
 
@@ -43,14 +43,12 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
       onPause,
       onLoadedMetadata,
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const internalRef = useRef<HTMLVideoElement | null>(null);
 
     const setRefs = useCallback(
-      (
-        element: HTMLVideoElement | { el: HTMLVideoElement } | null | undefined,
-      ) => {
+      (element: HTMLVideoElement | { el: HTMLVideoElement } | null | undefined) => {
         if (!element) {
           internalRef.current = null;
           if (typeof forwardedRef === 'function') {
@@ -70,7 +68,7 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
           forwardedRef.current = videoElement;
         }
       },
-      [forwardedRef],
+      [forwardedRef]
     );
 
     // Guard: Early return if no valid playback ID
@@ -87,9 +85,7 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
 
     // Generate aspect ratio and poster URL
     const aspectRatio = parseAspectRatio(videoAsset?.data?.aspect_ratio);
-    const posterUrl = poster?.asset
-      ? urlFor(poster).auto('format').url()
-      : undefined;
+    const posterUrl = poster?.asset ? urlFor(poster).auto('format').url() : undefined;
 
     return (
       <div
@@ -122,7 +118,7 @@ export const MuxVideo = forwardRef<HTMLVideoElement, MuxVideoProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 MuxVideo.displayName = 'MuxVideo';

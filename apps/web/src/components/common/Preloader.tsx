@@ -102,14 +102,7 @@ export default function Preloader({ progress }: { progress: number }) {
           aria-hidden="true"
         >
           <defs>
-            <linearGradient
-              ref={gradientRef}
-              id="hammerGrad"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="0%"
-            >
+            <linearGradient ref={gradientRef} id="hammerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#141515" stopOpacity="0" />
               <stop offset="20%" stopColor="#778888" />
               <stop offset="40%" stopColor="#FFCC98" />

@@ -1,5 +1,5 @@
-import {defineType} from 'sanity'
-import {PlayIcon} from '@sanity/icons'
+import { PlayIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
 
 export const videoItem = defineType({
   name: 'videoItem',
@@ -23,7 +23,7 @@ export const videoItem = defineType({
       name: 'poster',
       title: 'Poster Image',
       type: 'image',
-      options: {hotspot: true},
+      options: { hotspot: true },
       fields: [
         {
           name: 'alt',
@@ -41,4 +41,4 @@ export const videoItem = defineType({
       media: 'poster',
     },
   },
-})
+});

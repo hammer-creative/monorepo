@@ -1,27 +1,27 @@
 // packages/sanity/schemaTypes/factories/clientReferenceFactory.ts
 
-import {defineField} from 'sanity'
-import {UsersIcon} from '@sanity/icons'
-import {addRequiredLabel} from '../utils/fieldHelpers'
-import {applyRequired} from '../utils/validation'
-import type {ReferenceRule} from 'sanity'
+import { UsersIcon } from '@sanity/icons';
+import type { ReferenceRule } from 'sanity';
+import { defineField } from 'sanity';
+import { addRequiredLabel } from '../utils/fieldHelpers';
+import { applyRequired } from '../utils/validation';
 
 interface ClientFieldConfig {
-  name?: string
-  title?: string
-  required?: boolean
-  description?: string
+  name?: string;
+  title?: string;
+  required?: boolean;
+  description?: string;
 }
 
-export const createClientField = (config: ClientFieldConfig & {hidden?: any} = {}) => {
-  const {name = 'client', title = 'Client', required = false, description = '', hidden} = config
+export const createClientField = (config: ClientFieldConfig & { hidden?: any } = {}) => {
+  const { name = 'client', title = 'Client', required = false, description = '', hidden } = config;
 
   return defineField({
     name,
     title,
     type: 'reference',
     icon: UsersIcon,
-    to: [{type: 'client'}],
+    to: [{ type: 'client' }],
     description: addRequiredLabel(description, required),
     options: {
       disableNew: false,
@@ -29,11 +29,11 @@ export const createClientField = (config: ClientFieldConfig & {hidden?: any} = {
         return {
           filter: '_type == "client"',
           params: {},
-        }
+        };
       },
-      sort: [{field: 'name', direction: 'asc'}],
+      sort: [{ field: 'name', direction: 'asc' }],
     },
     validation: (rule: ReferenceRule) => applyRequired(rule, required, `${title} is required`),
-    ...(hidden && {hidden}),
-  })
-}
+    ...(hidden && { hidden }),
+  });
+};

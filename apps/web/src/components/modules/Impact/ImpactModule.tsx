@@ -13,15 +13,11 @@ const LAYOUT_CLASS_MAP: Record<Layout, string> = {
   oneTextOneImage: 'one-text-one-image',
 } as const;
 
-function isValidImpactModule(
-  data: ImpactModuleType | null,
-): data is ImpactModuleType {
+function isValidImpactModule(data: ImpactModuleType | null): data is ImpactModuleType {
   return data !== null && data.layout !== undefined;
 }
 
-function isValidTextBlock(
-  block: TextBlock | undefined,
-): block is NonNullable<TextBlock> {
+function isValidTextBlock(block: TextBlock | undefined): block is NonNullable<TextBlock> {
   return block !== undefined && (Boolean(block.title) || Boolean(block.body));
 }
 
@@ -49,30 +45,19 @@ export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
   const bemContainer = 'impact-cards';
   const bemWrapper = 'impact-card';
 
-  const textBlocks = [textBlock1, textBlock2, textBlock3].filter(
-    isValidTextBlock,
-  );
+  const textBlocks = [textBlock1, textBlock2, textBlock3].filter(isValidTextBlock);
   const hasImage = image?.asset != null && layout !== 'threeText';
 
   return (
     <div className={`${bemContainer} ${bemContainer}--${layoutClass}`}>
       {textBlocks.map((block, i) => (
-        <div
-          key={i}
-          className={`${bemWrapper}__item ${bemWrapper}__item--text`}
-        >
+        <div key={i} className={`${bemWrapper}__item ${bemWrapper}__item--text`}>
           {block.title && (
-            <Title
-              as="h3"
-              variant="tertiary"
-              className={`${bemWrapper}__title`}
-            >
+            <Title as="h3" variant="tertiary" className={`${bemWrapper}__title`}>
               {block.title}
             </Title>
           )}
-          {block.body && (
-            <TextBlock body={block.body} className={`${bemWrapper}__text`} />
-          )}
+          {block.body && <TextBlock body={block.body} className={`${bemWrapper}__text`} />}
         </div>
       ))}
       {hasImage && (

@@ -2,8 +2,8 @@
 
 'use client';
 
-import { Layout } from '@/components/layout/Layout';
 import { usePathname } from 'next/navigation';
+import { Layout } from '@/components/layout/Layout';
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

@@ -1,10 +1,10 @@
 // packages/sanity/schemaTypes/modules/textImageModule.ts
 
-import {ImageIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
-import {portableTextField} from '../fields/textField'
-import {createSingleImageField, createColorField} from '../factories'
-import {createImageDimensionValidation, applyRequired} from '../utils/validation'
+import { ImageIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
+import { createColorField, createSingleImageField } from '../factories';
+import { portableTextField } from '../fields/textField';
+import { applyRequired, createImageDimensionValidation } from '../utils/validation';
 
 export const textImageModule = defineType({
   name: 'textImageModule',
@@ -18,17 +18,17 @@ export const textImageModule = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Text Right + Image Left', value: 'textRight'},
-          {title: 'Text Left + Image Right', value: 'textLeft'},
+          { title: 'Text Right + Image Left', value: 'textRight' },
+          { title: 'Text Left + Image Right', value: 'textLeft' },
         ],
         layout: 'radio',
       },
       initialValue: 'textRight',
       validation: (Rule) => applyRequired(Rule, true, 'Layout is required'),
     },
-    portableTextField({enableColorAnnotations: true, maxLength: 1000}),
+    portableTextField({ enableColorAnnotations: true, maxLength: 1000 }),
     (() => {
-      const {validation: _, ...imageField} = createSingleImageField({
+      const { validation: _, ...imageField } = createSingleImageField({
         name: 'image',
         title: 'Image',
         required: true,
@@ -36,12 +36,12 @@ export const textImageModule = defineType({
         imageOptions: {
           hotspot: {
             previews: [
-              {title: '14:10 Rectangle', aspectRatio: 14 / 10},
-              {title: '1:1 Square', aspectRatio: 1 / 1},
+              { title: '14:10 Rectangle', aspectRatio: 14 / 10 },
+              { title: '1:1 Square', aspectRatio: 1 / 1 },
             ],
           },
         },
-      })
+      });
       return {
         ...imageField,
         validation: (Rule) =>
@@ -50,9 +50,9 @@ export const textImageModule = defineType({
               minWidth: 1960,
               minHeight: 1400,
               maxFileSize: 5,
-            }),
+            })
           ),
-      }
+      };
     })(),
     createColorField({
       name: 'backgroundColor',
@@ -75,27 +75,27 @@ export const textImageModule = defineType({
       layout: 'layout',
       media: 'image',
     },
-    prepare({layout, body, media}) {
+    prepare({ layout, body, media }) {
       const layoutLabels: Record<string, string> = {
         textRight: 'Text Right → Image Left',
         textLeft: 'Text Left → Image Right',
-      }
+      };
 
       const bodyText = body
         ?.map((block: any) =>
           block._type === 'block' && block.children
             ? block.children.map((child: any) => child.text).join('')
-            : '',
+            : ''
         )
-        .join(' ')
+        .join(' ');
 
-      const words = bodyText?.split(/\s+/).filter(Boolean).slice(0, 10).join(' ')
+      const words = bodyText?.split(/\s+/).filter(Boolean).slice(0, 10).join(' ');
 
       return {
         title: 'Text + Image Module',
-        subtitle: words ? `${words}...` : layoutLabels[layout] || undefined,
+        subtitle: words ? `${words}...` : layoutLabels[layout] || '',
         media,
-      }
+      };
     },
   },
-})
+});

@@ -14,7 +14,7 @@ import type { ServicesPageHeroModule as ServicesPageHeroModuleType } from '@/typ
  * Type guard to validate ServicesPageHeroModule data
  */
 function isValidServicesPageHeroModule(
-  data: ServicesPageHeroModuleType | null,
+  data: ServicesPageHeroModuleType | null
 ): data is ServicesPageHeroModuleType {
   return data !== null;
 }
@@ -73,14 +73,7 @@ export function ServicesPageHeroModule({
   return (
     <div className={`${bem}__image-wrapper`}>
       {/* Hero Image */}
-      {hasImage && (
-        <SanityImageHero
-          image={image}
-          fill
-          priority
-          className={`${bem}__image`}
-        />
-      )}
+      {hasImage && <SanityImageHero image={image} fill priority className={`${bem}__image`} />}
 
       {/* Wide viewport: button over image */}
       {/* {isWide && scrollButton} */}

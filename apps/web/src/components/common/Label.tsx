@@ -11,14 +11,6 @@ interface LabelProps {
   as?: 'span' | 'div' | 'p';
 }
 
-export function Label({
-  children,
-  className,
-  as: Component = 'div',
-}: LabelProps) {
-  return (
-    <Component className={[bem, className].filter(Boolean).join(' ')}>
-      {children}
-    </Component>
-  );
+export function Label({ children, className, as: Component = 'div' }: LabelProps) {
+  return <Component className={[bem, className].filter(Boolean).join(' ')}>{children}</Component>;
 }

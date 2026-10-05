@@ -1,8 +1,8 @@
 // schemaTypes/documents/servicesPage.ts
 
-import {defineType} from 'sanity'
-import {titleField, slugField} from '../fields/textField'
-import {ModulesArrayInput} from '../components/ModulesArrayInput'
+import { defineType } from 'sanity';
+import { ModulesArrayInput } from '../components/ModulesArrayInput';
+import { slugField, titleField } from '../fields/textField';
 
 export const servicesPage = defineType({
   name: 'servicesPage',
@@ -15,33 +15,33 @@ export const servicesPage = defineType({
       name: 'modules',
       title: 'Content Modules',
       type: 'array',
-      components: {input: ModulesArrayInput},
-      of: [{type: 'servicesPageHeroModule'}, {type: 'servicesPageCardModule'}],
+      components: { input: ModulesArrayInput },
+      of: [{ type: 'servicesPageHeroModule' }, { type: 'servicesPageCardModule' }],
       validation: (Rule) =>
         Rule.required()
           .min(1)
           .custom((modules: any[] | undefined) => {
             if (!modules || modules.length === 0) {
-              return 'At least one module is required'
+              return 'At least one module is required';
             }
 
             const servicesPageHeroCount = modules.filter(
-              (m) => m._type === 'servicesPageHeroModule',
-            ).length
+              (m) => m._type === 'servicesPageHeroModule'
+            ).length;
 
             if (servicesPageHeroCount === 0) {
-              return 'Exactly one Hero Module is required'
+              return 'Exactly one Hero Module is required';
             }
 
             if (servicesPageHeroCount > 1) {
-              return 'Only one Hero Module is allowed'
+              return 'Only one Hero Module is allowed';
             }
 
             if (modules[0]._type !== 'servicesPageHeroModule') {
-              return 'Hero Module must be the first module'
+              return 'Hero Module must be the first module';
             }
 
-            return true
+            return true;
           }),
     },
   ],
@@ -50,12 +50,12 @@ export const servicesPage = defineType({
       title: 'title',
       modules: 'modules',
     },
-    prepare({title, modules}) {
-      const moduleCount = modules?.length || 0
+    prepare({ title, modules }) {
+      const moduleCount = modules?.length || 0;
       return {
         title: title || 'Untitled',
         subtitle: `${moduleCount} module${moduleCount !== 1 ? 's' : ''}`,
-      }
+      };
     },
   },
-})
+});

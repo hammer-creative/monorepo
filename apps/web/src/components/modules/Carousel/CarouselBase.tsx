@@ -39,7 +39,7 @@ export function CarouselBase({
           }
         });
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     );
 
     if (containerRef.current) {

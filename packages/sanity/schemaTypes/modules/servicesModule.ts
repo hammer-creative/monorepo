@@ -1,7 +1,7 @@
 // packages/sanity/schemaTypes/modules/servicesModule.ts
 
-import {CaseIcon} from '@sanity/icons'
-import {defineType} from 'sanity'
+import { CaseIcon } from '@sanity/icons';
+import { defineType } from 'sanity';
 
 export const servicesModule = defineType({
   name: 'servicesModule',
@@ -13,7 +13,7 @@ export const servicesModule = defineType({
       name: 'services',
       title: 'Services',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'service'}]}],
+      of: [{ type: 'reference', to: [{ type: 'service' }] }],
       validation: (Rule) => Rule.required().min(1),
     },
   ],
@@ -21,15 +21,15 @@ export const servicesModule = defineType({
     select: {
       services: 'services',
     },
-    prepare({services}) {
-      const serviceCount = services?.length || 0
+    prepare({ services }) {
+      const serviceCount = services?.length || 0;
 
       return {
         title: 'Services Module',
         subtitle: [`${serviceCount} service${serviceCount !== 1 ? 's' : ''}`]
           .filter(Boolean)
           .join(' • '),
-      }
+      };
     },
   },
-})
+});

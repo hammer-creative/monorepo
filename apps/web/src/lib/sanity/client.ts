@@ -10,7 +10,7 @@ export const client = createClient({
   dataset,
   apiVersion,
   useCdn: false,
-  token: process.env.SANITY_API_PREVIEW_TOKEN,
+  ...(process.env.SANITY_API_PREVIEW_TOKEN && { token: process.env.SANITY_API_PREVIEW_TOKEN }),
   perspective: 'published',
   stega: {
     studioUrl:
@@ -25,7 +25,7 @@ export const draftClient = createClient({
   dataset,
   apiVersion,
   useCdn: false,
-  token: process.env.SANITY_API_PREVIEW_TOKEN,
+  ...(process.env.SANITY_API_PREVIEW_TOKEN && { token: process.env.SANITY_API_PREVIEW_TOKEN }),
   perspective: 'previewDrafts',
   stega: {
     enabled: true,

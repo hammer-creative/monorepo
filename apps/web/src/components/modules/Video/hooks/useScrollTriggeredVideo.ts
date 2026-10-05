@@ -9,10 +9,7 @@ interface UseScrollTriggeredVideoProps {
   videoCount: number;
 }
 
-export function useScrollTriggeredVideo({
-  enabled,
-  videoCount,
-}: UseScrollTriggeredVideoProps) {
+export function useScrollTriggeredVideo({ enabled, videoCount }: UseScrollTriggeredVideoProps) {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const playedVideosRef = useRef(new Set<number>());
@@ -24,10 +21,7 @@ export function useScrollTriggeredVideo({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const index = parseInt(
-            entry.target.getAttribute('data-video-index') || '0',
-            10,
-          );
+          const index = parseInt(entry.target.getAttribute('data-video-index') || '0', 10);
           const video = videoRefs.current[index];
 
           if (!video) return;
@@ -63,7 +57,7 @@ export function useScrollTriggeredVideo({
       {
         threshold: VIDEO_CONFIG.INTERSECTION_THRESHOLD,
         rootMargin: VIDEO_CONFIG.INTERSECTION_ROOT_MARGIN,
-      },
+      }
     );
 
     containerRefs.current.forEach((container) => {

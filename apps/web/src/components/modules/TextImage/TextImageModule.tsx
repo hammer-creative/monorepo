@@ -2,9 +2,7 @@
 import { SanityImageHalfWidth, TextBlock } from '@/components/common';
 import type { TextImageModule as TextImageModuleType } from '@/types/sanity.generated';
 
-function isValidTextImageModule(
-  data: TextImageModuleType | null,
-): data is TextImageModuleType {
+function isValidTextImageModule(data: TextImageModuleType | null): data is TextImageModuleType {
   return data !== null;
 }
 
@@ -18,11 +16,7 @@ function isValidTextImageModule(
  * @param data.image - Optional image object
  * @param data.layout - Layout variant key (textLeft, textRight)
  */
-export function TextImageModule({
-  data,
-}: {
-  data: TextImageModuleType | null;
-}) {
+export function TextImageModule({ data }: { data: TextImageModuleType | null }) {
   if (!isValidTextImageModule(data)) return null;
 
   const { body = null, image = null, layout = null } = data;
@@ -34,15 +28,9 @@ export function TextImageModule({
 
   return (
     <div className={`${bem}`}>
-      {textLeft && body && (
-        <TextBlock body={body} className={`is-first ${bem}__text`} />
-      )}
-      {image && (
-        <SanityImageHalfWidth image={image} className={`${bem}__image`} fill />
-      )}
-      {!textLeft && body && (
-        <TextBlock body={body} className={`${bem}__text`} />
-      )}
+      {textLeft && body && <TextBlock body={body} className={`is-first ${bem}__text`} />}
+      {image && <SanityImageHalfWidth image={image} className={`${bem}__image`} fill />}
+      {!textLeft && body && <TextBlock body={body} className={`${bem}__text`} />}
     </div>
   );
 }

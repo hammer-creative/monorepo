@@ -1,15 +1,15 @@
 // packages/sanity/schemaTypes/fields/textField.ts
 
-import {defineField} from 'sanity'
-import {SlugInputWithCounter} from '../components/SlugInputWithCounter'
-import {createTextField} from '../factories/textFieldFactory'
-import {createPortableTextField} from '../factories/portableTextFactory'
-import {addRequiredLabel} from '../utils/fieldHelpers'
+import { defineField } from 'sanity';
+import { SlugInputWithCounter } from '../components/SlugInputWithCounter';
+import { createPortableTextField } from '../factories/portableTextFactory';
+import { createTextField } from '../factories/textFieldFactory';
+import { addRequiredLabel } from '../utils/fieldHelpers';
 
 /**
  * Standard title text field with character counter
  */
-export const titleField = (options?: {maxLength?: number; required?: boolean; rows?: number}) =>
+export const titleField = (options?: { maxLength?: number; required?: boolean; rows?: number }) =>
   createTextField({
     name: 'title',
     title: 'Title',
@@ -18,17 +18,17 @@ export const titleField = (options?: {maxLength?: number; required?: boolean; ro
     multiline: !!options?.rows, // This gets used in: type: multiline ? 'text' : 'string'
     rows: options?.rows,
     withCounter: true,
-  })
+  });
 
 /**
  * Rich text body field with optional length limit
  */
 export const portableTextField = (options?: {
-  maxLength?: number
-  required?: boolean
-  enableColorAnnotations?: boolean
-  enableImages?: boolean
-  enableTables?: boolean
+  maxLength?: number;
+  required?: boolean;
+  enableColorAnnotations?: boolean;
+  enableImages?: boolean;
+  enableTables?: boolean;
 }) => {
   return createPortableTextField({
     name: 'body',
@@ -38,13 +38,13 @@ export const portableTextField = (options?: {
     enableColorAnnotations: options?.enableColorAnnotations ?? false,
     enableImages: options?.enableImages ?? false,
     enableTables: options?.enableTables ?? false,
-  })
-}
+  });
+};
 
 /**
  * Optional image/video caption text field
  */
-export const captionField = (options?: {maxLength?: number}) =>
+export const captionField = (options?: { maxLength?: number }) =>
   createTextField({
     name: 'caption',
     title: 'Caption',
@@ -52,7 +52,7 @@ export const captionField = (options?: {maxLength?: number}) =>
     rows: 2,
     maxLength: options?.maxLength ?? 200,
     withCounter: true,
-  })
+  });
 
 /**
  * Standard slug field, auto-generated from title
@@ -79,4 +79,4 @@ export const slugField = () =>
           .replace(/-+$/, ''),
     },
     validation: (rule) => rule.required().error('Slug is required'),
-  })
+  });

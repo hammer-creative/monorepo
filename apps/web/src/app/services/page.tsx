@@ -1,19 +1,11 @@
 // apps/web/src/app/services/page.tsx
 
+import Link from 'next/link';
 import { LongArrow, Text } from '@/components/common';
-import {
-  ServicesPageCardModule,
-  ServicesPageHeroModule,
-} from '@/components/modules';
+import { ServicesPageCardModule, ServicesPageHeroModule } from '@/components/modules';
 import { CaseStudyCarousel } from '@/components/modules/Carousel';
 import { buildMetadata } from '@/config/metadata';
-import {
-  client,
-  getAllCaseStudyTeasers,
-  getServicesPage,
-  resolveModuleColors,
-} from '@/lib/sanity';
-import Link from 'next/link';
+import { client, getAllCaseStudyTeasers, getServicesPage, resolveModuleColors } from '@/lib/sanity';
 
 const bem = 'services-page';
 
@@ -50,9 +42,7 @@ export default async function ServicesPage() {
       {hero && (
         <section
           className={`module ${bem}__hero`}
-          style={
-            { '--module-text': hero.textColor?.hex } as React.CSSProperties
-          }
+          style={{ '--module-text': hero.textColor?.hex } as React.CSSProperties}
         >
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <ServicesPageHeroModule data={hero as any} />
@@ -103,9 +93,7 @@ export default async function ServicesPage() {
             <Text as="h3" variant="tertiary" text="Case Studies" />
             <LongArrow className="cta-link" direction="right" />
           </Link>
-          <CaseStudyCarousel
-            data={{ _type: 'caseStudyCarousel', caseStudies: allCaseStudies }}
-          />
+          <CaseStudyCarousel data={{ _type: 'caseStudyCarousel', caseStudies: allCaseStudies }} />
         </section>
       )}
     </div>

@@ -8,10 +8,9 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry';
-
-import { VIDEO_SOURCE, TEASER_PLAYBACK_ID } from './sceneConstants';
-import * as C from './sceneConstants';
 import ScenePlayButton from './ScenePlayButton';
+import * as C from './sceneConstants';
+import { TEASER_PLAYBACK_ID, VIDEO_SOURCE } from './sceneConstants';
 
 const {
   MAX_ROTATION,
@@ -89,14 +88,11 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
 
   const { camera } = useThree();
 
-  const videoTexture = useVideoTexture(
-    `https://stream.mux.com/${TEASER_PLAYBACK_ID}.m3u8`,
-    {
-      loop: true,
-      muted: true,
-      start: true,
-    }
-  );
+  const videoTexture = useVideoTexture(`https://stream.mux.com/${TEASER_PLAYBACK_ID}.m3u8`, {
+    loop: true,
+    muted: true,
+    start: true,
+  });
   videoTexture.flipY = false;
 
   const [isPlaying, setIsPlaying] = useState(true);
@@ -143,7 +139,7 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
           video.pause();
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     );
 
     const modelElement = document.querySelector('.model');
@@ -205,7 +201,7 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
               diffuseColor.rgb = (diffuseColor.rgb - 0.5) * contrast + 0.5;
               diffuseColor.rgb = clamp(diffuseColor.rgb, 0.0, 1.0);
             #endif
-            `,
+            `
           );
         };
         child.material.needsUpdate = true;
@@ -239,7 +235,7 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
                 edgeFade
               );
             #endif
-            `,
+            `
           );
         };
 
@@ -303,7 +299,7 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
         float scleraFade = smoothstep(${SCLERA_INNER_FADE_START.toFixed(2)}, ${SCLERA_INNER_FADE_END.toFixed(2)}, scleraDist);
         diffuseColor.rgb *= scleraFade;
       #endif
-      `,
+      `
           );
         };
         child.material.needsUpdate = true;
@@ -317,13 +313,7 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
 
       console.log('--- Scene Graph ---');
       gltf.scene.traverse((child) => {
-        console.log(
-          child.type,
-          '|',
-          child.name,
-          '|',
-          child.material?.name ?? 'no mat',
-        );
+        console.log(child.type, '|', child.name, '|', child.material?.name ?? 'no mat');
       });
 
       console.log('--- Mesh Details ---');
@@ -357,7 +347,7 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
             `verts: ${child.geometry.attributes.position.count}`,
             `bbox z: ${box.min.z.toFixed(4)}→${box.max.z.toFixed(4)}`,
             `visible: ${child.visible}`,
-          ].join(' | '),
+          ].join(' | ')
         );
       });
 
@@ -367,34 +357,23 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
         const corneaSize = new THREE.Vector3();
         corneaBox.getSize(corneaSize);
         console.log('--- Cornea Analysis ---');
-        console.log(
-          'cornea z range:',
-          corneaBox.min.z.toFixed(4),
-          '→',
-          corneaBox.max.z.toFixed(4),
-        );
-        console.log(
-          'sclera z range:',
-          scleraBox.min.z.toFixed(4),
-          '→',
-          scleraBox.max.z.toFixed(4),
-        );
+        console.log('cornea z range:', corneaBox.min.z.toFixed(4), '→', corneaBox.max.z.toFixed(4));
+        console.log('sclera z range:', scleraBox.min.z.toFixed(4), '→', scleraBox.max.z.toFixed(4));
         console.log(
           'cornea is full sphere (z symmetric):',
-          Math.abs(corneaBox.min.z + corneaBox.max.z) < 0.01,
+          Math.abs(corneaBox.min.z + corneaBox.max.z) < 0.01
         );
         console.log(
           'cornea wraps entire model:',
-          corneaBox.min.z < scleraBox.min.z &&
-            corneaBox.max.z > scleraBox.max.z,
+          corneaBox.min.z < scleraBox.min.z && corneaBox.max.z > scleraBox.max.z
         );
         console.log(
           'cornea extends behind sclera by:',
-          (scleraBox.min.z - corneaBox.min.z).toFixed(4),
+          (scleraBox.min.z - corneaBox.min.z).toFixed(4)
         );
         console.log(
           'cornea extends in front of sclera by:',
-          (corneaBox.max.z - scleraBox.max.z).toFixed(4),
+          (corneaBox.max.z - scleraBox.max.z).toFixed(4)
         );
       }
 
@@ -412,8 +391,7 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
     }
 
     const currentTime = state.clock.elapsedTime;
-    const deltaTime =
-      lastTime.current === 0 ? 0 : currentTime - lastTime.current;
+    const deltaTime = lastTime.current === 0 ? 0 : currentTime - lastTime.current;
     lastTime.current = currentTime;
 
     const hasMouseMoved =
@@ -432,15 +410,9 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
       if (idleFrames.current > 60) {
         const time = state.clock.elapsedTime;
         const driftX =
-          Math.sin(time * 0.41) *
-          Math.sin(time * 0.17) *
-          MAX_ROTATION_RAD *
-          DRIFT_AMPLITUDE;
+          Math.sin(time * 0.41) * Math.sin(time * 0.17) * MAX_ROTATION_RAD * DRIFT_AMPLITUDE;
         const driftY =
-          Math.sin(time * 0.37) *
-          Math.sin(time * 0.23) *
-          MAX_ROTATION_RAD *
-          DRIFT_AMPLITUDE;
+          Math.sin(time * 0.37) * Math.sin(time * 0.23) * MAX_ROTATION_RAD * DRIFT_AMPLITUDE;
 
         // Blend factor: 0 = hold position, 1 = full drift
         const blendFactor = Math.min((idleFrames.current - 60) / 60, 1);
@@ -448,12 +420,12 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
         targetRotation.current.x = THREE.MathUtils.lerp(
           -lastPointer.current.y * MAX_ROTATION_RAD,
           driftX,
-          blendFactor,
+          blendFactor
         );
         targetRotation.current.y = THREE.MathUtils.lerp(
           lastPointer.current.x * MAX_ROTATION_RAD,
           driftY,
-          blendFactor,
+          blendFactor
         );
       } else {
         // Hold position when just stopped moving
@@ -469,11 +441,9 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
 
     if (groupRef.current) {
       groupRef.current.rotation.x +=
-        (currentRotation.current.x - groupRef.current.rotation.x) *
-        INERTIA_FACTOR;
+        (currentRotation.current.x - groupRef.current.rotation.x) * INERTIA_FACTOR;
       groupRef.current.rotation.y +=
-        (currentRotation.current.y - groupRef.current.rotation.y) *
-        INERTIA_FACTOR;
+        (currentRotation.current.y - groupRef.current.rotation.y) * INERTIA_FACTOR;
     }
 
     if (corneaGroupRef.current) {
@@ -482,11 +452,8 @@ export default function SceneModel({ url, isPaused, onPlayClick, onProgress }) {
     }
 
     if (ENABLE_IRIS_ROTATION && irisMeshRef.current && deltaTime > 0) {
-      const targetSpeed = hasMouseMoved
-        ? IRIS_ROTATION_SPEED_ON_MOVE
-        : IRIS_ROTATION_SPEED;
-      currentIrisSpeed.current +=
-        (targetSpeed - currentIrisSpeed.current) * IRIS_SPEED_LERP;
+      const targetSpeed = hasMouseMoved ? IRIS_ROTATION_SPEED_ON_MOVE : IRIS_ROTATION_SPEED;
+      currentIrisSpeed.current += (targetSpeed - currentIrisSpeed.current) * IRIS_SPEED_LERP;
       irisRotationAccumulator.current += currentIrisSpeed.current * deltaTime;
       irisMeshRef.current.rotation.z = irisRotationAccumulator.current;
     }

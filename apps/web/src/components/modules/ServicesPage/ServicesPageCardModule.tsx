@@ -20,7 +20,7 @@ interface ServicesPageCardModuleProps {
  * Type guard to validate `ServicesPageCardModule` data.
  */
 function isValidServicesPageCardModule(
-  data: ServicesPageCardModuleType | null,
+  data: ServicesPageCardModuleType | null
 ): data is ServicesPageCardModuleType {
   return data !== null;
 }
@@ -52,11 +52,7 @@ export function ServicesPageCardModule({
       {!showClientIcons && (
         <div className={`${bem}__content`}>
           <div className={`${bem}__image-container`}>
-            <SanityImageFullWidth
-              image={image}
-              fill
-              className={`${bem}__image`}
-            />
+            <SanityImageFullWidth image={image} fill className={`${bem}__image`} />
             {title && (
               <Title as="h2" className={`${bem}__title title--wide`}>
                 {title}
@@ -71,10 +67,7 @@ export function ServicesPageCardModule({
             )}
             {services && (
               <div className={`${bem}__services`}>
-                <ServicesListModule
-                  services={services as unknown[]}
-                  className="services-list"
-                />
+                <ServicesListModule services={services as unknown[]} className="services-list" />
               </div>
             )}
           </div>

@@ -1,6 +1,7 @@
 // apps/web/src/lib/sanity/queries/homePage.ts
-import type { HomePage as HomePageType } from '@/types/sanity.generated';
+
 import type { SanityClient } from 'next-sanity';
+import type { HomePage as HomePageType } from '@/types/sanity.generated';
 
 import { moduleProjections, projections } from '../groq/builders';
 import { fetchOne } from '../groq/helpers';
@@ -21,10 +22,5 @@ export async function getHomePage(sanityClient?: SanityClient) {
 
   return sanityClient
     ? sanityClient.fetch<HomePageType>(query)
-    : fetchOne<HomePageType>(
-        'servicesPage',
-        'services',
-        homePageProjection,
-        sanityClient,
-      );
+    : fetchOne<HomePageType>('servicesPage', 'services', homePageProjection, sanityClient);
 }

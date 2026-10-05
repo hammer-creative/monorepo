@@ -2,9 +2,9 @@
 
 'use client';
 
-import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useEffect, useState } from 'react';
 import Marquee from 'react-fast-marquee';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 import {
   BandaiIcon,
@@ -67,11 +67,7 @@ export function ClientIcons({
       return (
         <Marquee speed={50} gradient={false} className="fade-in-marquee">
           {ICONS.map((Icon, index) => (
-            <div
-              key={index}
-              className="icon-item"
-              style={{ animationDelay: `${index * 0.05}s` }}
-            >
+            <div key={index} className="icon-item" style={{ animationDelay: `${index * 0.05}s` }}>
               <Icon fill={fill} />
             </div>
           ))}
@@ -86,27 +82,14 @@ export function ClientIcons({
       <>
         <Marquee speed={50} gradient={false} className="fade-in-marquee">
           {evenIcons.map((Icon, index) => (
-            <div
-              key={index}
-              className="icon-item"
-              style={{ animationDelay: `${index * 0.05}s` }}
-            >
+            <div key={index} className="icon-item" style={{ animationDelay: `${index * 0.05}s` }}>
               <Icon fill={fill} />
             </div>
           ))}
         </Marquee>
-        <Marquee
-          speed={50}
-          gradient={false}
-          direction="right"
-          className="fade-in-marquee"
-        >
+        <Marquee speed={50} gradient={false} direction="right" className="fade-in-marquee">
           {oddIcons.map((Icon, index) => (
-            <div
-              key={index}
-              className="icon-item"
-              style={{ animationDelay: `${index * 0.05}s` }}
-            >
+            <div key={index} className="icon-item" style={{ animationDelay: `${index * 0.05}s` }}>
               <Icon fill={fill} />
             </div>
           ))}
