@@ -169,3 +169,18 @@ Work the cloud container cannot do (it has no Sanity network access); do these l
 Main risk: draft mode inside the Presentation iframe needs `SameSite=None; Secure` cookies.
 `defineEnableDraftMode` from `next-sanity/draft-mode` sets this; check it first if the preview
 shows published content only.
+
+### Findings from reading the web app (2026-10-07)
+
+- Pages (`app/page.tsx`, `services`, `work`, `work/[slug]`) and `sitemap.ts` pass the published `client`
+  straight into the `getX(client)` queries, which call `sanityClient.fetch` directly. `fetchSanity`'s
+  `revalidate` and tags are bypassed on that path, so draft switching has to happen where the client
+  is chosen (for example one `getSanityClient()` that returns a draft client when `draftMode()` is
+  enabled), not only inside `fetchSanity`.
+- `getHomePage` falls back to `fetchOne('servicesPage', 'services', ...)` when no client is passed.
+  That looks like a copy-paste bug; the home page should query `homePage`.
+- `app/work/[slug]/page.tsx` sets `dynamic = 'force-static'`. Check that `draftMode()` still works
+  there; remove it if draft content doesn't appear.
+- `draftClient` uses `perspective: 'previewDrafts'`; with `next-sanity` 11.6.x prefer
+  `resolvePerspectiveFromCookies` from `next-sanity/draft-mode` and `perspective: 'drafts'`.
+- `next-sanity` 11.6.12 exports `./draft-mode`, `./visual-editing`, `./live`, `./hooks`, `./studio`.
