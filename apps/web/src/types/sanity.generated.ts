@@ -14,86 +14,86 @@
 
 // Source: schema.json
 export type VideoItem = {
-  _type: 'videoItem';
+  _type: "videoItem";
   title?: string;
   video?: MuxVideo;
   poster?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
 };
 
 export type TextBlock = {
-  _type: 'textBlock';
+  _type: "textBlock";
   title?: string;
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: 'span';
+      _type: "span";
       _key: string;
     }>;
-    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-    listItem?: 'bullet' | 'number';
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
-      _type: 'link';
+      _type: "link";
       _key: string;
     }>;
     level?: number;
-    _type: 'block';
+    _type: "block";
     _key: string;
   }>;
 };
 
 export type ImageItem = {
-  _type: 'imageItem';
+  _type: "imageItem";
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
   caption?: string;
 };
 
 export type Seo = {
-  _type: 'seo';
+  _type: "seo";
   title?: string;
   description?: string;
   keywords?: Array<string>;
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
   };
 };
 
 export type SanityImageCrop = {
-  _type: 'sanity.imageCrop';
+  _type: "sanity.imageCrop";
   top?: number;
   bottom?: number;
   left?: number;
@@ -101,7 +101,7 @@ export type SanityImageCrop = {
 };
 
 export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot';
+  _type: "sanity.imageHotspot";
   x?: number;
   y?: number;
   height?: number;
@@ -109,275 +109,214 @@ export type SanityImageHotspot = {
 };
 
 export type VideoModule = {
-  _type: 'videoModule';
-  videos?: Array<
-    {
-      _key: string;
-    } & VideoItem
-  >;
-  mobileVideos?: Array<
-    {
-      _key: string;
-    } & VideoItem
-  >;
+  _type: "videoModule";
+  videos?: Array<{
+    _key: string;
+  } & VideoItem>;
+  mobileVideos?: Array<{
+    _key: string;
+  } & VideoItem>;
   backgroundColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
 };
 
 export type DeliverablesModule = {
-  _type: 'deliverablesModule';
+  _type: "deliverablesModule";
   deliverables?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'deliverable';
+    [internalGroqTypeReferenceTo]?: "deliverable";
   }>;
 };
 
 export type ServicesModule = {
-  _type: 'servicesModule';
+  _type: "servicesModule";
   services?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'service';
+    [internalGroqTypeReferenceTo]?: "service";
   }>;
 };
 
 export type ServicesPageHeroModule = {
-  _type: 'servicesPageHeroModule';
+  _type: "servicesPageHeroModule";
   title?: string;
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: 'span';
+      _type: "span";
       _key: string;
     }>;
-    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-    listItem?: 'bullet' | 'number';
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
-      _type: 'link';
+      _type: "link";
       _key: string;
     }>;
     level?: number;
-    _type: 'block';
+    _type: "block";
     _key: string;
   }>;
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
   backgroundColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
   textColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
 };
 
 export type ServicesPageCardModule = {
-  _type: 'servicesPageCardModule';
+  _type: "servicesPageCardModule";
   title?: string;
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: 'span';
+      _type: "span";
       _key: string;
     }>;
-    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-    listItem?: 'bullet' | 'number';
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
-      _type: 'link';
+      _type: "link";
       _key: string;
     }>;
     level?: number;
-    _type: 'block';
+    _type: "block";
     _key: string;
   }>;
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
   services?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'service';
+    [internalGroqTypeReferenceTo]?: "service";
   }>;
   backgroundColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
   textColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
 };
 
 export type SingleImageModule = {
-  _type: 'singleImageModule';
+  _type: "singleImageModule";
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
   backgroundColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
 };
 
 export type TextImageModule = {
-  _type: 'textImageModule';
-  layout?: 'textRight' | 'textLeft';
+  _type: "textImageModule";
+  layout?: "textRight" | "textLeft";
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: 'span';
+      _type: "span";
       _key: string;
     }>;
-    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-    listItem?: 'bullet' | 'number';
-    markDefs?: Array<
-      | {
-          href?: string;
-          _type: 'link';
-          _key: string;
-        }
-      | {
-          name?:
-            | 'nightshade'
-            | 'sandstorm'
-            | 'aircutter'
-            | 'hyperbeam'
-            | 'hydroblast'
-            | 'vinewhip';
-          _type: 'color';
-          _key: string;
-        }
-    >;
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    } | {
+      name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
+      _type: "color";
+      _key: string;
+    }>;
     level?: number;
-    _type: 'block';
+    _type: "block";
     _key: string;
   }>;
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
   backgroundColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
   textColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
 };
 
 export type TextModule = {
-  _type: 'textModule';
-  layout?: 'challenge' | 'headlineLeft' | 'testimonial' | 'homePage';
+  _type: "textModule";
+  layout?: "challenge" | "headlineLeft" | "testimonial" | "homePage";
   clients?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'client';
+    [internalGroqTypeReferenceTo]?: "client";
   }>;
   attribution?: string;
   tag?: string;
@@ -386,119 +325,81 @@ export type TextModule = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: 'span';
+      _type: "span";
       _key: string;
     }>;
-    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-    listItem?: 'bullet' | 'number';
-    markDefs?: Array<
-      | {
-          href?: string;
-          _type: 'link';
-          _key: string;
-        }
-      | {
-          name?:
-            | 'nightshade'
-            | 'sandstorm'
-            | 'aircutter'
-            | 'hyperbeam'
-            | 'hydroblast'
-            | 'vinewhip';
-          _type: 'color';
-          _key: string;
-        }
-    >;
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    } | {
+      name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
+      _type: "color";
+      _key: string;
+    }>;
     level?: number;
-    _type: 'block';
+    _type: "block";
     _key: string;
   }>;
   backgroundColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
   textColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
 };
 
 export type CaseStudyCardModule = {
-  _type: 'caseStudyCardModule';
+  _type: "caseStudyCardModule";
   caseStudies?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'caseStudy';
+    [internalGroqTypeReferenceTo]?: "caseStudy";
   }>;
 };
 
 export type CarouselModule = {
-  _type: 'carouselModule';
-  images?: Array<
-    {
-      _key: string;
-    } & ImageItem
-  >;
+  _type: "carouselModule";
+  images?: Array<{
+    _key: string;
+  } & ImageItem>;
   backgroundColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
 };
 
 export type ImpactModule = {
-  _type: 'impactModule';
-  layout?: 'threeText' | 'twoTextOneImage' | 'oneTextOneImage';
+  _type: "impactModule";
+  layout?: "threeText" | "twoTextOneImage" | "oneTextOneImage";
   textBlock1?: {
     title?: string;
     body?: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: 'span';
+        _type: "span";
         _key: string;
       }>;
-      style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-      listItem?: 'bullet' | 'number';
-      markDefs?: Array<
-        | {
-            href?: string;
-            _type: 'link';
-            _key: string;
-          }
-        | {
-            name?:
-              | 'nightshade'
-              | 'sandstorm'
-              | 'aircutter'
-              | 'hyperbeam'
-              | 'hydroblast'
-              | 'vinewhip';
-            _type: 'color';
-            _key: string;
-          }
-      >;
+      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      } | {
+        name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
+        _type: "color";
+        _key: string;
+      }>;
       level?: number;
-      _type: 'block';
+      _type: "block";
       _key: string;
     }>;
   };
@@ -508,31 +409,22 @@ export type ImpactModule = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: 'span';
+        _type: "span";
         _key: string;
       }>;
-      style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-      listItem?: 'bullet' | 'number';
-      markDefs?: Array<
-        | {
-            href?: string;
-            _type: 'link';
-            _key: string;
-          }
-        | {
-            name?:
-              | 'nightshade'
-              | 'sandstorm'
-              | 'aircutter'
-              | 'hyperbeam'
-              | 'hydroblast'
-              | 'vinewhip';
-            _type: 'color';
-            _key: string;
-          }
-      >;
+      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      } | {
+        name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
+        _type: "color";
+        _key: string;
+      }>;
       level?: number;
-      _type: 'block';
+      _type: "block";
       _key: string;
     }>;
   };
@@ -542,197 +434,158 @@ export type ImpactModule = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: 'span';
+        _type: "span";
         _key: string;
       }>;
-      style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-      listItem?: 'bullet' | 'number';
-      markDefs?: Array<
-        | {
-            href?: string;
-            _type: 'link';
-            _key: string;
-          }
-        | {
-            name?:
-              | 'nightshade'
-              | 'sandstorm'
-              | 'aircutter'
-              | 'hyperbeam'
-              | 'hydroblast'
-              | 'vinewhip';
-            _type: 'color';
-            _key: string;
-          }
-      >;
+      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      } | {
+        name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
+        _type: "color";
+        _key: string;
+      }>;
       level?: number;
-      _type: 'block';
+      _type: "block";
       _key: string;
     }>;
   };
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
   backgroundColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
   textColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
 };
 
 export type HeroModule = {
-  _type: 'heroModule';
+  _type: "heroModule";
   title?: string;
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: 'span';
+      _type: "span";
       _key: string;
     }>;
-    style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-    listItem?: 'bullet' | 'number';
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
-      _type: 'link';
+      _type: "link";
       _key: string;
     }>;
     level?: number;
-    _type: 'block';
+    _type: "block";
     _key: string;
   }>;
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
   teaserImage?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
   services?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'service';
+    [internalGroqTypeReferenceTo]?: "service";
   }>;
   deliverables?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'deliverable';
+    [internalGroqTypeReferenceTo]?: "deliverable";
   }>;
   backgroundColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
   textColor?: {
     enabled?: boolean;
-    name?:
-      | 'nightshade'
-      | 'sandstorm'
-      | 'aircutter'
-      | 'hyperbeam'
-      | 'hydroblast'
-      | 'vinewhip';
+    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
   };
 };
 
 export type WorkPage = {
   _id: string;
-  _type: 'workPage';
+  _type: "workPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
   slug?: Slug;
-  modules?: Array<
-    | ({
-        _key: string;
-      } & CaseStudyCardModule)
-    | ({
-        _key: string;
-      } & TextModule)
-  >;
+  modules?: Array<{
+    _key: string;
+  } & CaseStudyCardModule | {
+    _key: string;
+  } & TextModule>;
 };
 
 export type Slug = {
-  _type: 'slug';
+  _type: "slug";
   current?: string;
   source?: string;
 };
 
 export type ServicesPage = {
   _id: string;
-  _type: 'servicesPage';
+  _type: "servicesPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
   slug?: Slug;
-  modules?: Array<
-    | ({
-        _key: string;
-      } & ServicesPageHeroModule)
-    | ({
-        _key: string;
-      } & ServicesPageCardModule)
-  >;
+  modules?: Array<{
+    _key: string;
+  } & ServicesPageHeroModule | {
+    _key: string;
+  } & ServicesPageCardModule>;
 };
 
 export type Service = {
   _id: string;
-  _type: 'service';
+  _type: "service";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -741,23 +594,20 @@ export type Service = {
 
 export type HomePage = {
   _id: string;
-  _type: 'homePage';
+  _type: "homePage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  modules?: Array<
-    | ({
-        _key: string;
-      } & CaseStudyCardModule)
-    | ({
-        _key: string;
-      } & TextModule)
-  >;
+  modules?: Array<{
+    _key: string;
+  } & CaseStudyCardModule | {
+    _key: string;
+  } & TextModule>;
 };
 
 export type Deliverable = {
   _id: string;
-  _type: 'deliverable';
+  _type: "deliverable";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -766,7 +616,7 @@ export type Deliverable = {
 
 export type CaseStudy = {
   _id: string;
-  _type: 'caseStudy';
+  _type: "caseStudy";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -774,49 +624,41 @@ export type CaseStudy = {
   slug?: Slug;
   clients?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'client';
+    [internalGroqTypeReferenceTo]?: "client";
   }>;
-  modules?: Array<
-    | ({
-        _key: string;
-      } & HeroModule)
-    | ({
-        _key: string;
-      } & TextImageModule)
-    | ({
-        _key: string;
-      } & VideoModule)
-    | ({
-        _key: string;
-      } & TextModule)
-    | ({
-        _key: string;
-      } & SingleImageModule)
-    | ({
-        _key: string;
-      } & CarouselModule)
-    | ({
-        _key: string;
-      } & ImpactModule)
-  >;
+  modules?: Array<{
+    _key: string;
+  } & HeroModule | {
+    _key: string;
+  } & TextImageModule | {
+    _key: string;
+  } & VideoModule | {
+    _key: string;
+  } & TextModule | {
+    _key: string;
+  } & SingleImageModule | {
+    _key: string;
+  } & CarouselModule | {
+    _key: string;
+  } & ImpactModule>;
 };
 
 export type MuxVideo = {
-  _type: 'mux.video';
+  _type: "mux.video";
   asset?: {
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: 'mux.videoAsset';
+    [internalGroqTypeReferenceTo]?: "mux.videoAsset";
   };
 };
 
 export type Client = {
   _id: string;
-  _type: 'client';
+  _type: "client";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -824,81 +666,67 @@ export type Client = {
   logo?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
   };
   website?: string;
 };
 
 export type BasicPage = {
   _id: string;
-  _type: 'basicPage';
+  _type: "basicPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
   slug?: Slug;
-  body?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: 'span';
-          _key: string;
-        }>;
-        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote';
-        listItem?: 'bullet' | 'number';
-        markDefs?: Array<
-          | {
-              href?: string;
-              _type: 'link';
-              _key: string;
-            }
-          | {
-              name?:
-                | 'nightshade'
-                | 'sandstorm'
-                | 'aircutter'
-                | 'hyperbeam'
-                | 'hydroblast'
-                | 'vinewhip';
-              _type: 'color';
-              _key: string;
-            }
-        >;
-        level?: number;
-        _type: 'block';
-        _key: string;
-      }
-    | ({
-        _key: string;
-      } & Table)
-  >;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    } | {
+      name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
+      _type: "color";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    _key: string;
+  } & Table>;
 };
 
 export type Table = {
-  _type: 'table';
-  rows?: Array<
-    {
-      _key: string;
-    } & TableRow
-  >;
+  _type: "table";
+  rows?: Array<{
+    _key: string;
+  } & TableRow>;
 };
 
 export type TableRow = {
-  _type: 'tableRow';
+  _type: "tableRow";
   cells?: Array<string>;
 };
 
 export type MediaTag = {
   _id: string;
-  _type: 'media.tag';
+  _type: "media.tag";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -907,7 +735,7 @@ export type MediaTag = {
 
 export type MuxVideoAsset = {
   _id: string;
-  _type: 'mux.videoAsset';
+  _type: "mux.videoAsset";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -920,7 +748,7 @@ export type MuxVideoAsset = {
 };
 
 export type MuxAssetData = {
-  _type: 'mux.assetData';
+  _type: "mux.assetData";
   resolution_tier?: string;
   upload_id?: string;
   created_at?: string;
@@ -936,31 +764,25 @@ export type MuxAssetData = {
   max_stored_frame_rate?: number;
   mp4_support?: string;
   max_resolution_tier?: string;
-  tracks?: Array<
-    {
-      _key: string;
-    } & MuxTrack
-  >;
-  playback_ids?: Array<
-    {
-      _key: string;
-    } & MuxPlaybackId
-  >;
+  tracks?: Array<{
+    _key: string;
+  } & MuxTrack>;
+  playback_ids?: Array<{
+    _key: string;
+  } & MuxPlaybackId>;
   static_renditions?: MuxStaticRenditions;
 };
 
 export type MuxStaticRenditions = {
-  _type: 'mux.staticRenditions';
+  _type: "mux.staticRenditions";
   status?: string;
-  files?: Array<
-    {
-      _key: string;
-    } & MuxStaticRenditionFile
-  >;
+  files?: Array<{
+    _key: string;
+  } & MuxStaticRenditionFile>;
 };
 
 export type MuxStaticRenditionFile = {
-  _type: 'mux.staticRenditionFile';
+  _type: "mux.staticRenditionFile";
   name?: string;
   ext?: string;
   height?: number;
@@ -976,13 +798,13 @@ export type MuxStaticRenditionFile = {
 };
 
 export type MuxPlaybackId = {
-  _type: 'mux.playbackId';
+  _type: "mux.playbackId";
   id?: string;
   policy?: string;
 };
 
 export type MuxTrack = {
-  _type: 'mux.track';
+  _type: "mux.track";
   id?: string;
   type?: string;
   max_width?: number;
@@ -997,7 +819,7 @@ export type MuxTrack = {
 };
 
 export type SanityImagePaletteSwatch = {
-  _type: 'sanity.imagePaletteSwatch';
+  _type: "sanity.imagePaletteSwatch";
   background?: string;
   foreground?: string;
   population?: number;
@@ -1005,7 +827,7 @@ export type SanityImagePaletteSwatch = {
 };
 
 export type SanityImagePalette = {
-  _type: 'sanity.imagePalette';
+  _type: "sanity.imagePalette";
   darkMuted?: SanityImagePaletteSwatch;
   lightVibrant?: SanityImagePaletteSwatch;
   darkVibrant?: SanityImagePaletteSwatch;
@@ -1016,14 +838,14 @@ export type SanityImagePalette = {
 };
 
 export type SanityImageDimensions = {
-  _type: 'sanity.imageDimensions';
+  _type: "sanity.imageDimensions";
   height?: number;
   width?: number;
   aspectRatio?: number;
 };
 
 export type SanityImageMetadata = {
-  _type: 'sanity.imageMetadata';
+  _type: "sanity.imageMetadata";
   location?: Geopoint;
   dimensions?: SanityImageDimensions;
   palette?: SanityImagePalette;
@@ -1035,7 +857,7 @@ export type SanityImageMetadata = {
 
 export type SanityFileAsset = {
   _id: string;
-  _type: 'sanity.fileAsset';
+  _type: "sanity.fileAsset";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -1056,7 +878,7 @@ export type SanityFileAsset = {
 };
 
 export type SanityAssetSourceData = {
-  _type: 'sanity.assetSourceData';
+  _type: "sanity.assetSourceData";
   name?: string;
   id?: string;
   url?: string;
@@ -1064,7 +886,7 @@ export type SanityAssetSourceData = {
 
 export type SanityImageAsset = {
   _id: string;
-  _type: 'sanity.imageAsset';
+  _type: "sanity.imageAsset";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -1086,56 +908,11 @@ export type SanityImageAsset = {
 };
 
 export type Geopoint = {
-  _type: 'geopoint';
+  _type: "geopoint";
   lat?: number;
   lng?: number;
   alt?: number;
 };
 
-export type AllSanitySchemaTypes =
-  | VideoItem
-  | TextBlock
-  | ImageItem
-  | Seo
-  | SanityImageCrop
-  | SanityImageHotspot
-  | VideoModule
-  | DeliverablesModule
-  | ServicesModule
-  | ServicesPageHeroModule
-  | ServicesPageCardModule
-  | SingleImageModule
-  | TextImageModule
-  | TextModule
-  | CaseStudyCardModule
-  | CarouselModule
-  | ImpactModule
-  | HeroModule
-  | WorkPage
-  | Slug
-  | ServicesPage
-  | Service
-  | HomePage
-  | Deliverable
-  | CaseStudy
-  | MuxVideo
-  | Client
-  | BasicPage
-  | Table
-  | TableRow
-  | MediaTag
-  | MuxVideoAsset
-  | MuxAssetData
-  | MuxStaticRenditions
-  | MuxStaticRenditionFile
-  | MuxPlaybackId
-  | MuxTrack
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityImageMetadata
-  | SanityFileAsset
-  | SanityAssetSourceData
-  | SanityImageAsset
-  | Geopoint;
+export type AllSanitySchemaTypes = VideoItem | TextBlock | ImageItem | Seo | SanityImageCrop | SanityImageHotspot | VideoModule | DeliverablesModule | ServicesModule | ServicesPageHeroModule | ServicesPageCardModule | SingleImageModule | TextImageModule | TextModule | CaseStudyCardModule | CarouselModule | ImpactModule | HeroModule | WorkPage | Slug | ServicesPage | Service | HomePage | Deliverable | CaseStudy | MuxVideo | Client | BasicPage | Table | TableRow | MediaTag | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
