@@ -17,6 +17,13 @@
 [context.branch-deploy.environment]
   NEXT_PUBLIC_ENVIRONMENT = "staging"
 
+# Long-lived `preview` branch, served at preview.hammercreative.com: fetches Sanity drafts on every
+# request. Set SANITY_API_PREVIEW_TOKEN (Viewer) for this branch in the Netlify UI; the token stays
+# server-side. Never set SANITY_PREVIEW_SITE in the production context.
+[context.preview.environment]
+  NEXT_PUBLIC_ENVIRONMENT = "staging"
+  SANITY_PREVIEW_SITE = "true"
+
 [dev]
   command = "pnpm --filter @hammercreative/web dev"
   framework = "#custom"
