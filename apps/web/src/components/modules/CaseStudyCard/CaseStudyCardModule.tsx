@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import { stegaClean } from 'next-sanity';
 import { ClientList, SanityImageTeaser, Title } from '@/components/common';
 import type { CaseStudyTeaserItem } from '@/types/caseStudy';
 import type { CaseStudyCardModule as CaseStudyCardModuleType } from '@/types/sanity.generated';
@@ -15,7 +16,7 @@ function CaseStudyCardItem({ item, index }: { item: CaseStudyTeaserItem; index: 
 
   return (
     <div className={`${bem}__card`}>
-      <Link href={`/work/${slug}`}>
+      <Link href={`/work/${stegaClean(slug)}`}>
         {teaserImage && (
           <SanityImageTeaser image={teaserImage} className={`${bem}__image`} priority={index < 4} />
         )}

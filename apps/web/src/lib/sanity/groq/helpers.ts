@@ -15,9 +15,13 @@ export async function fetchSanity<T>(query: string, options: FetchOptions = {}):
   const { params = {}, tags = [], revalidate = 60, client = defaultClient } = options;
 
   try {
-    return await client.fetch<T>(query, params, {
-      next: { tags, revalidate },
-    });
+    // Draft fetches (token + drafts perspective) must never hit the Next data cache.
+    const isDraft = client.config().perspective === 'drafts';
+    return await client.fetch<T>(
+      query,
+      params,
+      isDraft ? { cache: 'no-store' } : { next: { tags, revalidate } }
+    );
   } catch (error) {
     console.error('Sanity fetch error:', query, error);
     throw error;
@@ -35,6 +39,20 @@ export async function fetchOne<T>(
   return fetchSanity<T | null>(query, {
     params: { type, slug },
     tags: [type, slug],
+    client,
+  });
+}
+
+export async function fetchSingleton<T>(
+  type: string,
+  projection: string,
+  client?: SanityClient
+): Promise<T | null> {
+  const query = `*[_type == $type][0]{ ${projection} }`;
+
+  return fetchSanity<T | null>(query, {
+    params: { type },
+    tags: [type],
     client,
   });
 }

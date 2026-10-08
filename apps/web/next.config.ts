@@ -5,6 +5,17 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
+// Only the production context is indexable; branch deploys and previews set
+// NEXT_PUBLIC_ENVIRONMENT=staging (see netlify.toml).
+const isProduction = (process.env.NEXT_PUBLIC_ENVIRONMENT ?? 'production') === 'production';
+
+// Origins allowed to embed the site in the Presentation tool's iframe.
+const studioOrigins = [
+  'http://localhost:3333',
+  'https://hammercreative-cms.sanity.studio',
+  ...(process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ? [process.env.NEXT_PUBLIC_SANITY_STUDIO_URL] : []),
+];
+
 const nextConfig: NextConfig = {
   distDir: '.next',
   compiler: {
@@ -20,6 +31,16 @@ const nextConfig: NextConfig = {
   crossOrigin: 'anonymous',
   async headers() {
     return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: `frame-ancestors 'self' ${studioOrigins.join(' ')}`,
+          },
+          ...(isProduction ? [] : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]),
+        ],
+      },
       {
         source: '/model/:path*',
         headers: [

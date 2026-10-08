@@ -5,7 +5,8 @@ import { LongArrow, Text } from '@/components/common';
 import { ServicesPageCardModule, ServicesPageHeroModule } from '@/components/modules';
 import { CaseStudyCarousel } from '@/components/modules/Carousel';
 import { buildMetadata } from '@/config/metadata';
-import { client, getAllCaseStudyTeasers, getServicesPage, resolveModuleColors } from '@/lib/sanity';
+import { getAllCaseStudyTeasers, getServicesPage, resolveModuleColors } from '@/lib/sanity';
+import { getSanityClient } from '@/lib/sanity/server';
 
 const bem = 'services-page';
 
@@ -25,6 +26,7 @@ export const revalidate = 30;
  * site. Consider accepting a plain `caseStudies` prop to remove the coupling.
  */
 export default async function ServicesPage() {
+  const client = await getSanityClient();
   const [servicesPage, allCaseStudies] = await Promise.all([
     getServicesPage(client),
     getAllCaseStudyTeasers(client),

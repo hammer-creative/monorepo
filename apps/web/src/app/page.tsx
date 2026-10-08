@@ -8,7 +8,8 @@ import { MarqueeScene } from '@/components/marquee/MarqueeScene';
 import { CaseStudyCardModule, TextModule } from '@/components/modules';
 import { AnimateOnScroll } from '@/components/motion/AnimateOnScroll';
 import { buildMetadata } from '@/config/metadata';
-import { client, getHomePage, resolveModuleColors } from '@/lib/sanity';
+import { getHomePage, resolveModuleColors } from '@/lib/sanity';
+import { getSanityClient } from '@/lib/sanity/server';
 import type {
   CaseStudyCardModule as CaseStudyCardModuleType,
   HomePage as HomePageType,
@@ -69,7 +70,7 @@ export const metadata = buildMetadata('Home');
 export const revalidate = 60;
 
 async function getHomePageData(): Promise<{ homePage: HomePageType | null }> {
-  const homePage = await getHomePage(client);
+  const homePage = await getHomePage(await getSanityClient());
   return { homePage };
 }
 

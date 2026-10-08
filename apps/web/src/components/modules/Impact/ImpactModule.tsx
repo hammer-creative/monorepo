@@ -1,4 +1,5 @@
 // apps/web/src/components/modules/Impact/ImpactModule.tsx
+import { stegaClean } from 'next-sanity';
 import { Title } from '@/components/common';
 import { SanityImpactImage } from '@/components/common/SanityImage';
 import { TextBlock } from '@/components/common/TextBlock';
@@ -37,7 +38,8 @@ function isValidTextBlock(block: TextBlock | undefined): block is NonNullable<Te
 export function ImpactModule({ data }: { data: ImpactModuleType | null }) {
   if (!isValidImpactModule(data)) return null;
 
-  const { layout, textBlock1, textBlock2, textBlock3, image } = data;
+  const { textBlock1, textBlock2, textBlock3, image } = data;
+  const layout = stegaClean(data.layout);
 
   if (!layout) return null;
 

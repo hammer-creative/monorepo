@@ -1,4 +1,5 @@
 // apps/web/src/components/modules/TextImage/TextImageModule.tsx
+import { stegaClean } from 'next-sanity';
 import { SanityImageHalfWidth, TextBlock } from '@/components/common';
 import type { TextImageModule as TextImageModuleType } from '@/types/sanity.generated';
 
@@ -19,7 +20,8 @@ function isValidTextImageModule(data: TextImageModuleType | null): data is TextI
 export function TextImageModule({ data }: { data: TextImageModuleType | null }) {
   if (!isValidTextImageModule(data)) return null;
 
-  const { body = null, image = null, layout = null } = data;
+  const { body = null, image = null } = data;
+  const layout = stegaClean(data.layout) ?? null;
 
   if (!layout || (!body && !image)) return null;
 

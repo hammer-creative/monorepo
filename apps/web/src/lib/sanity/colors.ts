@@ -1,5 +1,6 @@
 // apps/web/src/lib/sanity/colors.ts
 import { DEFAULT_COLORS } from '@hammercreative/ui';
+import { stegaClean } from 'next-sanity';
 
 type ColorWithHex = {
   enabled: boolean;
@@ -16,8 +17,8 @@ export function resolveBackgroundColor(
 
   return {
     enabled: true,
-    name: backgroundColor.name,
-    hex: DEFAULT_COLORS[backgroundColor.name as keyof typeof DEFAULT_COLORS],
+    name: stegaClean(backgroundColor.name),
+    hex: DEFAULT_COLORS[stegaClean(backgroundColor.name) as keyof typeof DEFAULT_COLORS],
   };
 }
 
@@ -30,8 +31,8 @@ export function resolveTextColor(
 
   return {
     enabled: true,
-    name: textColor.name,
-    hex: DEFAULT_COLORS[textColor.name as keyof typeof DEFAULT_COLORS],
+    name: stegaClean(textColor.name),
+    hex: DEFAULT_COLORS[stegaClean(textColor.name) as keyof typeof DEFAULT_COLORS],
   };
 }
 

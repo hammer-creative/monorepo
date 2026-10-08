@@ -3,8 +3,11 @@
 import '@/styles/index.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { draftMode } from 'next/headers';
+import { VisualEditing } from 'next-sanity/visual-editing';
 import NextTopLoader from 'nextjs-toploader';
 import { MobileMenu } from '@/components/navigation/MobileMenu';
+import { DisableDraftMode } from '@/components/preview/DisableDraftMode';
 import { organizationJsonLd, websiteJsonLd } from '@/config';
 import { NavigationProvider } from '@/contexts/NavigationContext';
 import navigationData from '@/data/navigation.json';
@@ -18,7 +21,9 @@ import {
 
 export { metadata } from '@/config';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { isEnabled: isDraftMode } = await draftMode();
+
   return (
     <html
       lang="en"
@@ -68,7 +73,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               navigationData={navigationData as NavigationData}
             />
           </NavigationProvider>
-          <GoogleAnalytics gaId="G-TYV27501GB" />
+          {isDraftMode ? (
+            <>
+              <VisualEditing />
+              <DisableDraftMode />
+            </>
+          ) : (
+            <GoogleAnalytics gaId="G-TYV27501GB" />
+          )}
         </>
       </body>
     </html>

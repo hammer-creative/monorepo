@@ -4,4 +4,4 @@ export * from './colors';
 export * from './groq';
 export * from './image';
 export * from './queries';
-// export * from './ssr';
+// `./server` is server-only (reads draftMode) and is imported directly: '@/lib/sanity/server'

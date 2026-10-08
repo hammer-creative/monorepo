@@ -3,6 +3,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { stegaClean } from 'next-sanity';
 import { LongArrow, Text } from '@/components/common';
 import {
   CarouselModule,
@@ -15,12 +16,12 @@ import {
 } from '@/components/modules';
 import { CaseStudyCarousel } from '@/components/modules/Carousel';
 import {
-  client,
   getAllCaseStudyTeasers,
   getCaseStudy,
   getCaseStudySlugs,
   resolveModuleColors,
 } from '@/lib/sanity';
+import { getSanityClient } from '@/lib/sanity/server';
 import type {
   CarouselModule as CarouselModuleType,
   HeroModule as HeroModuleType,
@@ -57,8 +58,6 @@ const moduleComponents = {
 export const dynamicParams = true;
 // Revalidate every 60 seconds for ISR
 export const revalidate = 30;
-// Force static generation at build time
-export const dynamic = 'force-static';
 
 // Generate static paths for all case study slugs at build time
 export async function generateStaticParams() {
@@ -76,7 +75,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
 
-  const caseStudy = await getCaseStudy(slug, client);
+  const caseStudy = await getCaseStudy(slug, await getSanityClient());
 
   if (!caseStudy) return {};
 
@@ -93,6 +92,7 @@ export async function generateMetadata({
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const client = await getSanityClient();
   const caseStudy = await getCaseStudy(slug, client);
 
   // Return 404 if case study not found
@@ -102,7 +102,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const allCaseStudies = await getAllCaseStudyTeasers(client);
 
   // Filter out current case study
-  const otherCaseStudies = allCaseStudies.filter((cs) => cs.slug !== slug);
+  const otherCaseStudies = allCaseStudies.filter((cs) => stegaClean(cs.slug) !== slug);
   // Use empty array if no clients (allows incomplete drafts)
   const { clients = [] } = caseStudy;
 

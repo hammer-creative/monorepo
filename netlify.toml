@@ -6,8 +6,19 @@
   NODE_VERSION = "22"
   PNPM_VERSION = "10.12.4"
 
+# Branch deploys and deploy previews are non-production: noindex, staging robots.txt, and a
+# preview-capable build. Set SANITY_API_PREVIEW_TOKEN (Viewer role) per context in the Netlify UI.
+[context.production.environment]
+  NEXT_PUBLIC_ENVIRONMENT = "production"
+
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_ENVIRONMENT = "staging"
+
+[context.branch-deploy.environment]
+  NEXT_PUBLIC_ENVIRONMENT = "staging"
+
 [dev]
-  command = "pnpm --filter @hammer/web dev"
+  command = "pnpm --filter @hammercreative/web dev"
   framework = "#custom"
   targetPort = 3000
   port = 8888

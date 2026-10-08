@@ -1,4 +1,5 @@
 // apps/web/src/components/modules/Text/TextModule.tsx
+import { stegaClean } from 'next-sanity';
 import { Label, TextBlock, Title } from '@/components/common';
 import type { TextModule as TextModuleType } from '@/types/sanity.generated';
 
@@ -22,7 +23,8 @@ export function TextModule({ data }: { data: TextModuleType | null }) {
 
   // const { title, body, layout, attribution, tag, clients } = data;
 
-  const { title, body, layout, attribution, tag } = data;
+  const { title, body, attribution, tag } = data;
+  const layout = stegaClean(data.layout);
 
   if (!layout || (layout !== 'challenge' && !body && !attribution && !title)) return null;
 

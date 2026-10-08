@@ -68,6 +68,14 @@ export default defineConfig({
             filter: `_type == "homePage"`,
           },
           {
+            route: '/services',
+            filter: `_type == "servicesPage"`,
+          },
+          {
+            route: '/work',
+            filter: `_type == "workPage"`,
+          },
+          {
             route: '/work/:slug',
             filter: `_type == "caseStudy" && slug.current == $slug`,
           },
@@ -85,6 +93,14 @@ export default defineConfig({
                 },
               ],
             }),
+          }),
+          servicesPage: defineLocations({
+            select: { title: 'title' },
+            resolve: () => ({ locations: [{ title: 'Services', href: '/services' }] }),
+          }),
+          workPage: defineLocations({
+            select: { title: 'title' },
+            resolve: () => ({ locations: [{ title: 'Work', href: '/work' }] }),
           }),
           caseStudy: defineLocations({
             select: {

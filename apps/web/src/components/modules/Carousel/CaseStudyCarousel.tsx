@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import { stegaClean } from 'next-sanity';
 import { SwiperSlide } from 'swiper/react';
 import { SanityImageCarousel, Title } from '@/components/common';
 import type { CaseStudyTeaserItem } from '@/types/caseStudy';
@@ -36,7 +37,7 @@ export function CaseStudyCarousel({ data }: CaseStudyCarouselProps) {
 
         return (
           <SwiperSlide key={_id} className={`${bem}__card`}>
-            <Link href={`/work/${slug ?? ''}`}>
+            <Link href={`/work/${stegaClean(slug) ?? ''}`}>
               <SanityImageCarousel image={teaserImage} />
               <div className={`${bem}__details`}>
                 {title && (
