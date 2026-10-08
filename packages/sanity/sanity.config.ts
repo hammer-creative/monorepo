@@ -9,6 +9,11 @@ import { media } from 'sanity-plugin-media';
 import { muxInput } from 'sanity-plugin-mux-input';
 import { schema } from './schemaTypes';
 
+// Presentation always opens the always-drafts preview site (production never serves drafts), local
+// or hosted. allowOrigins also permits localhost so editors can switch to a local site for testing.
+// Switch to https://preview.hammercreative.com once that domain is live.
+const previewUrl = 'https://preview--hammercreative.netlify.app';
+
 export default defineConfig({
   name: 'hammer-creative-sanity-studio',
   title: 'Hammer Creative Sanity Studio',
@@ -55,12 +60,18 @@ export default defineConfig({
     table(),
     presentationTool({
       previewUrl: {
-        origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localhost:3000',
-        draftMode: {
+        initial: previewUrl,
+        previewMode: {
           enable: '/api/enable-draft',
           disable: '/api/disable-draft',
         },
       },
+      allowOrigins: [
+        previewUrl,
+        'https://preview--hammercreative.netlify.app',
+        'https://preview.hammercreative.com',
+        'http://localhost:*',
+      ],
       resolve: {
         mainDocuments: defineDocuments([
           {
