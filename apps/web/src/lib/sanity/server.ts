@@ -19,17 +19,17 @@ const previewSiteClient = client.withConfig({
   stega: { enabled: false },
 });
 
-// SANITY_PREVIEW_SITE=true is set only for the `preview` branch deploy (see netlify.toml). It is
+// NEXT_PUBLIC_SANITY_PREVIEW_SITE=true is set only for the `preview` branch deploy (see netlify.toml). It is
 // ignored on production builds so the live site can never serve drafts.
 const isPreviewSite =
-  process.env.SANITY_PREVIEW_SITE === 'true' &&
+  process.env.NEXT_PUBLIC_SANITY_PREVIEW_SITE === 'true' &&
   process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production';
 
 /**
  * Picks the Sanity client for this request. Call from server components and `generateMetadata`;
  * pass the result to the `getX(client)` queries.
  * - Studio Presentation (Next.js draft mode on): drafts, stega on, for click-to-edit.
- * - Preview site (`SANITY_PREVIEW_SITE`): drafts on every request, stega off, no login.
+ * - Preview site (`NEXT_PUBLIC_SANITY_PREVIEW_SITE`): drafts on every request, stega off, no login.
  * - Otherwise: the published client.
  */
 export async function getSanityClient(): Promise<SanityClient> {

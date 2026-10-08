@@ -16,7 +16,7 @@ export async function GET(request: Request) {
     : null;
 
   return NextResponse.json({
-    previewFlag: process.env.SANITY_PREVIEW_SITE ?? null,
+    previewFlag: process.env.NEXT_PUBLIC_SANITY_PREVIEW_SITE ?? null,
     environment: process.env.NEXT_PUBLIC_ENVIRONMENT ?? null,
     tokenPresent: Boolean(process.env.SANITY_API_PREVIEW_TOKEN),
     perspective: client.config().perspective,
