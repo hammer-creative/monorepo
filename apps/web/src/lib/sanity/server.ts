@@ -1,6 +1,7 @@
 // lib/sanity/server.ts
 // Server-only: reads the Viewer token and `draftMode()`. Never import from a client component.
 import { draftMode } from 'next/headers';
+import { connection } from 'next/server';
 import type { SanityClient } from 'next-sanity';
 import { client, studioUrl } from './client';
 
@@ -34,5 +35,8 @@ const isPreviewSite =
 export async function getSanityClient(): Promise<SanityClient> {
   const { isEnabled } = await draftMode();
   if (isEnabled) return draftClient;
-  return isPreviewSite ? previewSiteClient : client;
+  if (!isPreviewSite) return client;
+  // Opt this request out of static/ISR caching so every view fetches current drafts.
+  await connection();
+  return previewSiteClient;
 }
