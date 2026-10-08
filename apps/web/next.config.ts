@@ -9,10 +9,13 @@ const withBundleAnalyzer = bundleAnalyzer({
 // NEXT_PUBLIC_ENVIRONMENT=preview (see netlify.toml).
 const isProduction = (process.env.NEXT_PUBLIC_ENVIRONMENT ?? 'production') === 'production';
 
-// Origins allowed to embed the site in the Presentation tool's iframe.
+// Origins allowed to embed the site in the Presentation tool's iframe: any local Studio port, any
+// Sanity-hosted studio, and the Sanity dashboard.
 const studioOrigins = [
-  'http://localhost:3333',
+  'http://localhost:*',
   'https://hammercreative-cms.sanity.studio',
+  'https://*.sanity.studio',
+  'https://www.sanity.io',
   ...(process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ? [process.env.NEXT_PUBLIC_SANITY_STUDIO_URL] : []),
 ];
 
