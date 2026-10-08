@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from 'next';
 
 /**
  * Base metadata merged into every page. Handles SEO, social cards, favicons,
- * PWA config, and staging noindex. Consumed directly by the root layout and
+ * PWA config, and preview noindex. Consumed directly by the root layout and
  * extended per-page via `buildMetadata`.
  */
 export const metadata: Metadata = {

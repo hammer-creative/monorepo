@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const isStaging = process.env.NEXT_PUBLIC_ENVIRONMENT === 'staging';
+const isPreview = process.env.NEXT_PUBLIC_ENVIRONMENT === 'preview';
 
 const AI_BOTS = [
   'AddSearchBot',
@@ -114,7 +114,7 @@ const AI_BOTS = [
 ];
 
 export default function robots(): MetadataRoute.Robots {
-  if (isStaging) {
+  if (isPreview) {
     return {
       rules: { userAgent: '*', disallow: '/' },
     };

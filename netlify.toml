@@ -6,22 +6,22 @@
   NODE_VERSION = "22"
   PNPM_VERSION = "10.12.4"
 
-# Branch deploys and deploy previews are non-production: noindex, staging robots.txt, and a
+# Branch deploys and deploy previews are non-production: noindex, preview robots.txt, and a
 # preview-capable build. Set SANITY_API_PREVIEW_TOKEN (Viewer role) per context in the Netlify UI.
 [context.production.environment]
   NEXT_PUBLIC_ENVIRONMENT = "production"
 
 [context.deploy-preview.environment]
-  NEXT_PUBLIC_ENVIRONMENT = "staging"
+  NEXT_PUBLIC_ENVIRONMENT = "preview"
 
 [context.branch-deploy.environment]
-  NEXT_PUBLIC_ENVIRONMENT = "staging"
+  NEXT_PUBLIC_ENVIRONMENT = "preview"
 
 # Long-lived `preview` branch, served at preview.hammercreative.com: fetches Sanity drafts on every
 # request. Set SANITY_API_PREVIEW_TOKEN (Viewer) for this branch in the Netlify UI; the token stays
 # server-side. Never set SANITY_PREVIEW_SITE in the production context.
 [context.preview.environment]
-  NEXT_PUBLIC_ENVIRONMENT = "staging"
+  NEXT_PUBLIC_ENVIRONMENT = "preview"
   SANITY_PREVIEW_SITE = "true"
 
 [dev]

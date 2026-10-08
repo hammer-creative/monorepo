@@ -6,7 +6,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 // Only the production context is indexable; branch deploys and previews set
-// NEXT_PUBLIC_ENVIRONMENT=staging (see netlify.toml).
+// NEXT_PUBLIC_ENVIRONMENT=preview (see netlify.toml).
 const isProduction = (process.env.NEXT_PUBLIC_ENVIRONMENT ?? 'production') === 'production';
 
 // Origins allowed to embed the site in the Presentation tool's iframe.
