@@ -184,3 +184,38 @@ shows published content only.
 - `draftClient` uses `perspective: 'previewDrafts'`; with `next-sanity` 11.6.x prefer
   `resolvePerspectiveFromCookies` from `next-sanity/draft-mode` and `perspective: 'drafts'`.
 - `next-sanity` 11.6.12 exports `./draft-mode`, `./visual-editing`, `./live`, `./hooks`, `./studio`.
+
+### Preview-site click-to-edit outlines (2026-10-09, branch `preview`)
+
+Goal: visiting the deployed preview site (`preview` branch, `NEXT_PUBLIC_SANITY_PREVIEW_SITE=true`)
+directly in a normal browser tab shows an outline around editable fields; clicking one opens that
+field in Sanity Studio. This is not the Presentation iframe flow.
+
+State:
+- Committed on `preview` (and `origin/preview`, head `4a56eea`): the preview site fetches drafts with
+  stega **off** (`previewSiteClient`, added in `3f1b60f`), and `<VisualEditing />` renders only when
+  Next draft mode is on. So a direct visit gets no outlines. This is why the outlines are missing.
+- Uncommitted, not yet pushed: `apps/web/src/lib/sanity/server.ts` (preview site now uses
+  `draftClient`, stega on; `isPreviewSite` exported) and `apps/web/src/app/layout.tsx` (renders
+  `<VisualEditing />` when `isDraftMode || isPreviewSite`; `DisableDraftMode` only in draft mode).
+  These are the intended fix. Not yet deployed or verified.
+- Earlier discussion about this was in a lost chat; nothing from it is in git.
+
+What the Sanity docs say (https://www.sanity.io/docs/overlays-package): overlays render when the site
+is opened directly in a tab. Outside the iframe there is no Studio to message, so clicking opens the
+field in the Studio in a new tab (the overlay label is an "Open in Studio" link). It needs stega on in
+the fetched content, `<VisualEditing />` rendered, and `stega.studioUrl` pointing at the real Studio.
+My earlier claim that overlays only work inside the iframe/popup was wrong; only drag-and-drop and
+the context menu are gated on that. No custom overlay is needed.
+
+Next steps:
+1. Review, commit and push the two uncommitted files; let Netlify rebuild `preview`.
+2. If outlines still don't show: check `SANITY_API_PREVIEW_TOKEN` is set in the Netlify `preview`
+   context, the flag is baked in at build time (rebuild after changing it), and the deployed
+   `studioUrl` is `https://hammercreative-cms.sanity.studio` (from `lib/sanity/client.ts`).
+3. Once outlines work, audit stega leakage into logic (slugs, hrefs, `layout`/`variant`, keys) with
+   `stegaClean`; none is used anywhere yet.
+4. `sitemap.ts` still uses the published `client`, which is fine.
+
+Working notes: the user does not want files changed without a go-ahead, and wants answers from the
+Sanity docs rather than from reading `node_modules` source.

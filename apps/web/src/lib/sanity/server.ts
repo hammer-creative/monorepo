@@ -11,17 +11,9 @@ export const draftClient = client.withConfig({
   stega: { enabled: true, studioUrl },
 });
 
-// Reviewer-facing client for the dedicated preview site: drafts and the server-side token, but no
-// stega, so reviewers see clean text instead of invisible edit-overlay characters.
-const previewSiteClient = client.withConfig({
-  ...(process.env.SANITY_API_PREVIEW_TOKEN && { token: process.env.SANITY_API_PREVIEW_TOKEN }),
-  perspective: 'drafts',
-  stega: { enabled: false },
-});
-
 // NEXT_PUBLIC_SANITY_PREVIEW_SITE=true is set only for the `preview` branch deploy (see netlify.toml). It is
 // ignored on production builds so the live site can never serve drafts.
-const isPreviewSite =
+export const isPreviewSite =
   process.env.NEXT_PUBLIC_SANITY_PREVIEW_SITE === 'true' &&
   process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production';
 
@@ -29,7 +21,8 @@ const isPreviewSite =
  * Picks the Sanity client for this request. Call from server components and `generateMetadata`;
  * pass the result to the `getX(client)` queries.
  * - Studio Presentation (Next.js draft mode on): drafts, stega on, for click-to-edit.
- * - Preview site (`NEXT_PUBLIC_SANITY_PREVIEW_SITE`): drafts on every request, stega off, no login.
+ * - Preview site (`NEXT_PUBLIC_SANITY_PREVIEW_SITE`): drafts on every request with stega on, so the
+ *   click-to-edit outlines work on direct visits, no draft-mode cookie needed.
  * - Otherwise: the published client.
  */
 export async function getSanityClient(): Promise<SanityClient> {
@@ -38,5 +31,5 @@ export async function getSanityClient(): Promise<SanityClient> {
   if (!isPreviewSite) return client;
   // Opt this request out of static/ISR caching so every view fetches current drafts.
   await connection();
-  return previewSiteClient;
+  return draftClient;
 }

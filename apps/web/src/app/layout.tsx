@@ -11,6 +11,7 @@ import { DisableDraftMode } from '@/components/preview/DisableDraftMode';
 import { organizationJsonLd, websiteJsonLd } from '@/config';
 import { NavigationProvider } from '@/contexts/NavigationContext';
 import navigationData from '@/data/navigation.json';
+import { isPreviewSite } from '@/lib/sanity/server';
 import type { NavigationData } from '@/types/navigation';
 import {
   DIATYPE_MEDIUM,
@@ -73,10 +74,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               navigationData={navigationData as NavigationData}
             />
           </NavigationProvider>
-          {isDraftMode ? (
+          {isDraftMode || isPreviewSite ? (
             <>
               <VisualEditing />
-              <DisableDraftMode />
+              {isDraftMode && <DisableDraftMode />}
             </>
           ) : (
             <GoogleAnalytics gaId="G-TYV27501GB" />
