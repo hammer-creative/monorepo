@@ -15,6 +15,7 @@
     "**/dist/**",
     "**/out/**",
     "**/*.generated.ts",
+    "apps/web/src/app/docs/html.ts",
     "packages/sanity/sanity.types.ts"
   ],
   "rules": {

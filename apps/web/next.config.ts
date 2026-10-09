@@ -45,6 +45,13 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // Editor guide (app/docs, preview branch only): never indexed.
+        source: '/docs/:path*',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, nosnippet, noimageindex' },
+        ],
+      },
+      {
         source: '/model/:path*',
         headers: [
           {

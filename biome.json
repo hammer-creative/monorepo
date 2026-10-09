@@ -53,6 +53,7 @@
       "!pnpm-lock.yaml",
       "!placeholders",
       "!apps/web/public",
+      "!apps/web/src/app/docs/html.ts",
       "!*.code-workspace"
     ]
   }
