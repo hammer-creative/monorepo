@@ -8,6 +8,7 @@ import { VisualEditing } from 'next-sanity/visual-editing';
 import NextTopLoader from 'nextjs-toploader';
 import { MobileMenu } from '@/components/navigation/MobileMenu';
 import { DisableDraftMode } from '@/components/preview/DisableDraftMode';
+import { PreviewBanner } from '@/components/preview/PreviewBanner';
 import { organizationJsonLd, websiteJsonLd } from '@/config';
 import { NavigationProvider } from '@/contexts/NavigationContext';
 import navigationData from '@/data/navigation.json';
@@ -67,6 +68,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             zIndex={1600}
             showAtBottom={false}
           />
+          {(isDraftMode || isPreviewSite) && <PreviewBanner />}
           <NavigationProvider>
             {children}
             <MobileMenu
