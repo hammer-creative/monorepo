@@ -3,6 +3,7 @@
 import { defineType } from 'sanity';
 import { ModulesArrayInput } from '../components/ModulesArrayInput';
 import { slugField, titleField } from '../fields/textField';
+import { formatPacific } from '../utils/formatPacific';
 import { applyRequired } from '../utils/validation';
 
 export const caseStudyPage = defineType({
@@ -74,13 +75,12 @@ export const caseStudyPage = defineType({
   preview: {
     select: {
       title: 'title',
-      modules: 'modules',
+      updatedAt: '_updatedAt',
     },
-    prepare({ title, modules }) {
-      const moduleCount = modules?.length || 0;
+    prepare({ title, updatedAt }) {
       return {
         title: title || 'Untitled',
-        subtitle: `${moduleCount} module${moduleCount !== 1 ? 's' : ''}`,
+        subtitle: updatedAt ? `Last edited ${formatPacific(updatedAt)}` : '',
       };
     },
   },
