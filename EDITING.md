@@ -5,7 +5,17 @@ the bottom.
 
 Last updated 2026-10-09.
 
-### Before you start
+**Contents**
+
+1. [Before you start](#1-before-you-start)
+2. [Find what you want to edit](#2-find-what-you-want-to-edit)
+3. [Edit a Case Study](#3-edit-a-case-study)
+4. [Edit with a Live Preview inside the Studio (Presentation)](#4-edit-with-a-live-preview-inside-the-studio-presentation)
+5. [Add a new Case Study](#5-add-a-new-case-study)
+6. [WIP: Jump from the Preview Site to the right field](#6-wip-jump-from-the-preview-site-to-the-right-field)
+7. [FAQ: If something looks wrong](#7-faq-if-something-looks-wrong)
+
+### 1. Before you start
 
 - You edit content in the **Studio**: https://hammercreative-cms.sanity.studio
 - You check your changes on the **Preview Site**: https://preview--hammercreative.netlify.app
@@ -15,7 +25,7 @@ Last updated 2026-10-09.
 
 <hr style="border:0;border-top:1px solid #d9d9d9;margin:20px 0">
 
-### Find what you want to edit
+### 2. Find what you want to edit
 
 In the Studio's left-hand list, from top to bottom:
 
@@ -44,7 +54,7 @@ A small dot beside a row tells you its state:
 
 <hr style="border:0;border-top:1px solid #d9d9d9;margin:20px 0">
 
-### Edit a Case Study
+### 3. Edit a Case Study
 
 When you open a Case Study, the tabs at the top of the editor switch between its
 <span style="background:#d7f5e1;color:#1d7a43;border:1px solid #43d675;border-radius:999px;padding:1px 9px;font-size:0.85em;font-weight:600;white-space:nowrap;display:inline-block;line-height:1.5">Published</span> version and its <span style="background:#fdeccb;color:#8a5200;border:1px solid #f5a623;border-radius:999px;padding:1px 9px;font-size:0.85em;font-weight:600;white-space:nowrap;display:inline-block;line-height:1.5">Draft</span>. Edit on the <span style="background:#fdeccb;color:#8a5200;border:1px solid #f5a623;border-radius:999px;padding:1px 9px;font-size:0.85em;font-weight:600;white-space:nowrap;display:inline-block;line-height:1.5">Draft</span> tab.
@@ -62,7 +72,7 @@ When you open a Case Study, the tabs at the top of the editor switch between its
 
 <hr style="border:0;border-top:1px solid #d9d9d9;margin:20px 0">
 
-### Edit with a live preview inside the Studio (Presentation)
+### 4. Edit with a Live Preview inside the Studio (Presentation)
 
 **Presentation** shows the **Preview Site** inside the Studio, with the editing form beside it, so you can
 click what you want to change and see the result as you type.
@@ -83,7 +93,7 @@ once you click Publish.
 
 <hr style="border:0;border-top:1px solid #d9d9d9;margin:20px 0">
 
-### Add a new Case Study
+### 5. Add a new Case Study
 
 1. In the Studio, go to the Case Study list and use the **+** (create) button.
 2. Fill in the fields and add the content modules. The first module must be a Hero.
@@ -92,7 +102,7 @@ once you click Publish.
 
 <hr style="border:0;border-top:1px solid #d9d9d9;margin:20px 0">
 
-### WIP: Jump from the Preview Site to the right field
+### 6. WIP: Jump from the Preview Site to the right field
 
 This works when you open the **Preview Site** on its own in your browser, outside the Studio. It is set
 up but has **not been checked on the Preview Site yet**, so treat these steps as what should
@@ -107,7 +117,7 @@ If you see no outlines, tell a developer. See "If the outlines don't show up" be
 
 <hr style="border:0;border-top:1px solid #d9d9d9;margin:20px 0">
 
-### FAQ: If something looks wrong
+### 7. FAQ: If something looks wrong
 
 - **Why isn't my edit on the Preview Site?**
   - Refresh the page.

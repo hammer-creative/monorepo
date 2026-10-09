@@ -16,6 +16,18 @@ const require = createRequire(store + dir + '/node_modules/markdown-it/');
 const MarkdownIt = require('markdown-it');
 const md = new MarkdownIt({ html: true, linkify: true, typographer: false });
 
+// Heading ids that match GitHub's anchors, so the Contents links work here and in EDITING.md.
+const slug = (text) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9 _-]/g, '')
+    .replaceAll(' ', '-');
+md.renderer.rules.heading_open = (tokens, idx, options, _env, self) => {
+  const text = (tokens[idx + 1]?.children ?? []).map((c) => c.content).join('');
+  tokens[idx]?.attrSet('id', slug(text));
+  return self.renderToken(tokens, idx, options);
+};
+
 const full = readFileSync(`${root}/EDITING.md`, 'utf8');
 const guide = full.slice(0, full.indexOf('\n---\n'));
 const withImages = guide
@@ -35,7 +47,8 @@ const css = `
 body{margin:0;background:#fff;color:#1b1d23;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif}
 main{max-width:760px;margin:0 auto;padding:40px 20px 96px}
 h1{font-size:2rem;line-height:1.2;margin:0 0 .5em;border:0}
-h3{font-size:1.25rem;line-height:1.3;margin:1.6em 0 .5em;border:0}
+html{scroll-behavior:smooth}
+h3{scroll-margin-top:16px;font-size:1.25rem;line-height:1.3;margin:1.6em 0 .5em;border:0}
 h4{font-size:1.1rem;margin:1.6em 0 .5em;border:0}
 h5{font-size:1rem;margin:1.4em 0 .4em;border:0}
 p,ul,ol{margin:.7em 0}
