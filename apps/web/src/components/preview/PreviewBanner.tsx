@@ -45,7 +45,7 @@ const STYLES: Record<Status, { text: string; background: string; color: string; 
 export function PreviewBanner() {
   const standalone = useSyncExternalStore(subscribe, isStandalone, () => true);
   const pathname = usePathname() ?? '/';
-  const [status, setStatus] = useState<Status>('other');
+  const [status, setStatus] = useState<Status | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -67,7 +67,11 @@ export function PreviewBanner() {
 
   if (!standalone) return null;
 
-  const { text, background, color, border } = STYLES[status];
+  // Until the status arrives, render an empty bar of the same height so the page does not jump
+  // and the wrong message never flashes.
+  const { text, background, color, border } = status
+    ? STYLES[status]
+    : { text: '\u00a0', background: 'transparent', color: 'transparent', border: 'transparent' };
 
   return (
     <output
