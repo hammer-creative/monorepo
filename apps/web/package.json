@@ -14,6 +14,7 @@
     "format": "biome format --write ."
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.9.15",
     "@hammercreative/ui": "workspace:*",
     "@mux/mux-player-react": "^3.8.0",
     "@mux/mux-video-react": "^0.29.0",
