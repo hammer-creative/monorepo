@@ -70,14 +70,6 @@ export function PreviewBanner() {
     };
   }, [pathname]);
 
-  // The fixed header (headroom pinned/unpinned) offsets itself by this variable so it sits below
-  // the banner instead of under it. See styles/layout/header.css.
-  useEffect(() => {
-    if (!standalone) return;
-    document.documentElement.style.setProperty('--preview-banner-height', `${BANNER_HEIGHT}px`);
-    return () => document.documentElement.style.removeProperty('--preview-banner-height');
-  }, [standalone]);
-
   if (!standalone) return null;
 
   const { text, background, color, border } = STYLES[status];

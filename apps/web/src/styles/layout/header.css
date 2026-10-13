@@ -59,13 +59,11 @@ header {
 /* Hidden state - scrolling down */
 .headroom--unpinned {
   position: fixed;
-  top: var(--preview-banner-height, 0);
   transform: translateY(-200%);
 }
 
 /* Visible state - scrolling up */
 .headroom--pinned {
   position: fixed;
-  top: var(--preview-banner-height, 0);
   transform: translateY(0%);
 }
