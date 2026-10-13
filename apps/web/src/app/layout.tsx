@@ -25,6 +25,7 @@ export { metadata } from '@/config';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled: isDraftMode } = await draftMode();
+  const showBanner = isDraftMode || isPreviewSite;
 
   return (
     <html
@@ -68,9 +69,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             zIndex={1600}
             showAtBottom={false}
           />
-          {(isDraftMode || isPreviewSite) && <PreviewBanner />}
+          {showBanner && <PreviewBanner />}
           <NavigationProvider>
-            {children}
+            {/* The site header is `position: absolute; inset: 0` with no positioned ancestor, so it
+                sits at the top of the page and would cover the banner. A positioned wrapper makes
+                it start below the banner instead. */}
+            {showBanner ? <div style={{ position: 'relative' }}>{children}</div> : children}
             <MobileMenu
               key="mobile-menu-persistent"
               navigationData={navigationData as NavigationData}
