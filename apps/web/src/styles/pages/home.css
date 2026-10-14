@@ -35,6 +35,7 @@
 [data-page='/'] [data-module-index='0'] .text-card__text,
 [data-page='/'] [data-module-index='3'] .text-card__text {
   padding-inline-end: var(--space-20);
+
   @media screen and (min-width: 50em) {
     max-width: 900px;
     padding-inline-end: initial;
@@ -48,17 +49,19 @@
 }
 
 /* Chyron */
-.home__modules .client-icons-module > :first-child {
+.home__modules .client-icons-module> :first-child {
   margin-block-end: var(--space-fluid-20-40);
+
   @media screen and (min-width: 50em) {
     margin-block-end: initial;
   }
 }
 
 /* View all work cta */
-.home__modules .case-study-card-module > .label {
+.home__modules .case-study-card-module>.label {
   padding-inline: var(--space-fluid-gutter-sm);
   display: block;
+
   @media screen and (min-width: 50em) {
     text-align: right;
   }
@@ -75,6 +78,7 @@
 [data-page='/'] [data-module-index='1'] .text-card__text {
   margin-block-end: var(--space-fluid-10-20);
   width: 75vw;
+
   @media screen and (min-width: 50em) {
     width: 320px;
     margin-block-end: var(--space-20);
@@ -127,7 +131,7 @@
       color: $color-sandstorm;
     }
 
-    > svg {
+    >svg {
       color: inherit;
       vertical-align: 0.15em;
       margin-left: 0.75ch;
