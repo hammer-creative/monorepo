@@ -19,8 +19,14 @@ const studioOrigins = [
   ...(process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ? [process.env.NEXT_PUBLIC_SANITY_STUDIO_URL] : []),
 ];
 
+// The `preview` branch deploy (netlify.toml) is behind a per-person login. `preview.ts` in
+// pageExtensions is what makes Next pick up src/middleware.preview.ts; other builds, production
+// included, ship no middleware.
+const isPreviewSite = process.env.NEXT_PUBLIC_SANITY_PREVIEW_SITE === 'true' && !isProduction;
+
 const nextConfig: NextConfig = {
   distDir: '.next',
+  ...(isPreviewSite && { pageExtensions: ['preview.ts', 'tsx', 'ts', 'jsx', 'js'] }),
   compiler: {
     removeConsole: false,
   },
