@@ -12,7 +12,7 @@ import { schema } from './schemaTypes';
 // Presentation always opens the always-drafts preview site (production never serves drafts), local
 // or hosted. allowOrigins also permits localhost so editors can switch to a local site for testing.
 // Switch to https://preview.hammercreative.com once that domain is live.
-const previewUrl = 'https://preview--hammercreative.netlify.app';
+const previewUrl = 'https://preview.hammercreative.com';
 
 // One-page document types, listed by the route they render and opened straight into the document.
 const pageItem = (S: StructureBuilder, title: string, type: string, id: string) =>
