@@ -4,10 +4,10 @@ import '@/styles/index.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { draftMode } from 'next/headers';
-import { VisualEditing } from 'next-sanity/visual-editing';
 import NextTopLoader from 'nextjs-toploader';
 import { MobileMenu } from '@/components/navigation/MobileMenu';
 import { DisableDraftMode } from '@/components/preview/DisableDraftMode';
+import { LiveVisualEditing } from '@/components/preview/LiveVisualEditing';
 import { PreviewBanner } from '@/components/preview/PreviewBanner';
 import { organizationJsonLd, websiteJsonLd } from '@/config';
 import { NavigationProvider } from '@/contexts/NavigationContext';
@@ -82,7 +82,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </NavigationProvider>
           {isDraftMode || isPreviewSite ? (
             <>
-              <VisualEditing />
+              <LiveVisualEditing />
               {isDraftMode && <DisableDraftMode />}
             </>
           ) : (
