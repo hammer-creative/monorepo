@@ -24,6 +24,10 @@
   NEXT_PUBLIC_ENVIRONMENT = "preview"
   NEXT_PUBLIC_SANITY_PREVIEW_SITE = "true"
 
+[context.chore-sanity-6.environment]
+  NEXT_PUBLIC_ENVIRONMENT = "preview"
+  NEXT_PUBLIC_SANITY_PREVIEW_SITE = "true"
+
 [dev]
   command = "pnpm --filter @hammercreative/web dev"
   framework = "#custom"
