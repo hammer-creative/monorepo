@@ -21,12 +21,14 @@ const studioOrigins = [
 
 // The `preview` branch deploy (netlify.toml) is behind a per-person login. `preview.ts` in
 // pageExtensions is what makes Next pick up src/middleware.preview.ts; other builds, production
-// included, ship no middleware.
+// included, ship no middleware. Set PREVIEW_AUTH=off (Netlify UI, not netlify.toml) to drop the
+// login while keeping everything else about the preview site.
 const isPreviewSite = process.env.NEXT_PUBLIC_SANITY_PREVIEW_SITE === 'true' && !isProduction;
+const isPreviewAuthOn = isPreviewSite && process.env.PREVIEW_AUTH !== 'off';
 
 const nextConfig: NextConfig = {
   distDir: '.next',
-  ...(isPreviewSite && { pageExtensions: ['preview.ts', 'tsx', 'ts', 'jsx', 'js'] }),
+  ...(isPreviewAuthOn && { pageExtensions: ['preview.ts', 'tsx', 'ts', 'jsx', 'js'] }),
   compiler: {
     removeConsole: false,
   },
