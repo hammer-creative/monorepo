@@ -3,7 +3,7 @@
   publish = "apps/web/.next"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"
   PNPM_VERSION = "10.12.4"
 
 # Branch deploys and deploy previews are non-production: noindex, preview robots.txt, and a

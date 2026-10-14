@@ -27,7 +27,7 @@ export function PortableTextWithCounter(props: ArrayOfObjectsInputProps) {
   // console.log('maxLength found:', maxLength)
 
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       {renderDefault(props)}
       <Text
         size={1}

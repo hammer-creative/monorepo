@@ -30,6 +30,7 @@
   "packageManager": "pnpm@10.12.4",
   "devDependencies": {
     "@hammercreative/tsconfig": "workspace:*",
-    "tsup": "^7.3.0"
+    "tsup": "^7.3.0",
+    "typescript": "^5.9.3"
   }
 }

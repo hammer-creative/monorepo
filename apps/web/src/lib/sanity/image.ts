@@ -1,6 +1,5 @@
 // apps/web/lib/sanity/image.ts
-import imageUrlBuilder from '@sanity/image-url';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { createImageUrlBuilder, type SanityImageSource } from '@sanity/image-url';
 import { createClient } from 'next-sanity';
 
 // Create a minimal client just for image URLs with public env vars
@@ -11,7 +10,7 @@ const imageClient = createClient({
   useCdn: true,
 });
 
-const builder = imageUrlBuilder(imageClient);
+const builder = createImageUrlBuilder(imageClient);
 
 export function urlFor(source: SanityImageSource) {
   const imageBuilder = builder.image(source);

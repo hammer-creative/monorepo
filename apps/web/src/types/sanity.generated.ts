@@ -12,18 +12,292 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: schema.json
+export type BackgroundColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type TextColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type TextImageModuleBackgroundColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type TextImageModuleTextColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type VideoModuleBackgroundColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type TextModuleBackgroundColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type TextModuleTextColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type SingleImageModuleBackgroundColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type CarouselModuleBackgroundColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type TextBlock1 = {
+  title?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<
+      | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }
+      | {
+          name?:
+            | "nightshade"
+            | "sandstorm"
+            | "aircutter"
+            | "hyperbeam"
+            | "hydroblast"
+            | "vinewhip";
+          _type: "color";
+          _key: string;
+        }
+    >;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type TextBlock2 = {
+  title?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<
+      | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }
+      | {
+          name?:
+            | "nightshade"
+            | "sandstorm"
+            | "aircutter"
+            | "hyperbeam"
+            | "hydroblast"
+            | "vinewhip";
+          _type: "color";
+          _key: string;
+        }
+    >;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type TextBlock3 = {
+  title?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<
+      | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }
+      | {
+          name?:
+            | "nightshade"
+            | "sandstorm"
+            | "aircutter"
+            | "hyperbeam"
+            | "hydroblast"
+            | "vinewhip";
+          _type: "color";
+          _key: string;
+        }
+    >;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type ImpactModuleBackgroundColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type ImpactModuleTextColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type ServicesPageHeroModuleBackgroundColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type ServicesPageHeroModuleTextColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type ServicesPageCardModuleBackgroundColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type ServicesPageCardModuleTextColor = {
+  enabled?: boolean;
+  name?:
+    | "nightshade"
+    | "sandstorm"
+    | "aircutter"
+    | "hyperbeam"
+    | "hydroblast"
+    | "vinewhip";
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
 export type VideoItem = {
   _type: "videoItem";
   title?: string;
   video?: MuxVideo;
   poster?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -58,12 +332,7 @@ export type TextBlock = {
 export type ImageItem = {
   _type: "imageItem";
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -79,12 +348,7 @@ export type Seo = {
   description?: string;
   keywords?: Array<string>;
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -110,38 +374,49 @@ export type SanityImageHotspot = {
 
 export type VideoModule = {
   _type: "videoModule";
-  videos?: Array<{
-    _key: string;
-  } & VideoItem>;
-  mobileVideos?: Array<{
-    _key: string;
-  } & VideoItem>;
-  backgroundColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
+  videos?: Array<
+    {
+      _key: string;
+    } & VideoItem
+  >;
+  mobileVideos?: Array<
+    {
+      _key: string;
+    } & VideoItem
+  >;
+  backgroundColor?: VideoModuleBackgroundColor;
+};
+
+export type DeliverableReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "deliverable";
 };
 
 export type DeliverablesModule = {
   _type: "deliverablesModule";
-  deliverables?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "deliverable";
-  }>;
+  deliverables?: Array<
+    {
+      _key: string;
+    } & DeliverableReference
+  >;
+};
+
+export type ServiceReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "service";
 };
 
 export type ServicesModule = {
   _type: "servicesModule";
-  services?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "service";
-  }>;
+  services?: Array<
+    {
+      _key: string;
+    } & ServiceReference
+  >;
 };
 
 export type ServicesPageHeroModule = {
@@ -166,26 +441,15 @@ export type ServicesPageHeroModule = {
     _key: string;
   }>;
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
   };
-  backgroundColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
-  textColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
+  backgroundColor?: ServicesPageHeroModuleBackgroundColor;
+  textColor?: ServicesPageHeroModuleTextColor;
 };
 
 export type ServicesPageCardModule = {
@@ -210,54 +474,33 @@ export type ServicesPageCardModule = {
     _key: string;
   }>;
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
   };
-  services?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "service";
-  }>;
-  backgroundColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
-  textColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
+  services?: Array<
+    {
+      _key: string;
+    } & ServiceReference
+  >;
+  backgroundColor?: ServicesPageCardModuleBackgroundColor;
+  textColor?: ServicesPageCardModuleTextColor;
 };
 
 export type SingleImageModule = {
   _type: "singleImageModule";
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
   };
-  backgroundColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
+  backgroundColor?: SingleImageModuleBackgroundColor;
 };
 
 export type TextImageModule = {
@@ -272,52 +515,55 @@ export type TextImageModule = {
     }>;
     style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
     listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    } | {
-      name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-      _type: "color";
-      _key: string;
-    }>;
+    markDefs?: Array<
+      | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }
+      | {
+          name?:
+            | "nightshade"
+            | "sandstorm"
+            | "aircutter"
+            | "hyperbeam"
+            | "hydroblast"
+            | "vinewhip";
+          _type: "color";
+          _key: string;
+        }
+    >;
     level?: number;
     _type: "block";
     _key: string;
   }>;
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
   };
-  backgroundColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
-  textColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
+  backgroundColor?: TextImageModuleBackgroundColor;
+  textColor?: TextImageModuleTextColor;
+};
+
+export type ClientReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "client";
 };
 
 export type TextModule = {
   _type: "textModule";
   layout?: "challenge" | "headlineLeft" | "testimonial" | "homePage";
-  clients?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "client";
-  }>;
+  clients?: Array<
+    {
+      _key: string;
+    } & ClientReference
+  >;
   attribution?: string;
   tag?: string;
   title?: string;
@@ -330,150 +576,74 @@ export type TextModule = {
     }>;
     style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
     listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    } | {
-      name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-      _type: "color";
-      _key: string;
-    }>;
+    markDefs?: Array<
+      | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }
+      | {
+          name?:
+            | "nightshade"
+            | "sandstorm"
+            | "aircutter"
+            | "hyperbeam"
+            | "hydroblast"
+            | "vinewhip";
+          _type: "color";
+          _key: string;
+        }
+    >;
     level?: number;
     _type: "block";
     _key: string;
   }>;
-  backgroundColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
-  textColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
+  backgroundColor?: TextModuleBackgroundColor;
+  textColor?: TextModuleTextColor;
+};
+
+export type CaseStudyReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "caseStudy";
 };
 
 export type CaseStudyCardModule = {
   _type: "caseStudyCardModule";
-  caseStudies?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "caseStudy";
-  }>;
+  caseStudies?: Array<
+    {
+      _key: string;
+    } & CaseStudyReference
+  >;
 };
 
 export type CarouselModule = {
   _type: "carouselModule";
-  images?: Array<{
-    _key: string;
-  } & ImageItem>;
-  backgroundColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
+  images?: Array<
+    {
+      _key: string;
+    } & ImageItem
+  >;
+  backgroundColor?: CarouselModuleBackgroundColor;
 };
 
 export type ImpactModule = {
   _type: "impactModule";
   layout?: "threeText" | "twoTextOneImage" | "oneTextOneImage";
-  textBlock1?: {
-    title?: string;
-    body?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      } | {
-        name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-        _type: "color";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }>;
-  };
-  textBlock2?: {
-    title?: string;
-    body?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      } | {
-        name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-        _type: "color";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }>;
-  };
-  textBlock3?: {
-    title?: string;
-    body?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      } | {
-        name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-        _type: "color";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }>;
-  };
+  textBlock1?: TextBlock1;
+  textBlock2?: TextBlock2;
+  textBlock3?: TextBlock3;
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
   };
-  backgroundColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
-  textColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
+  backgroundColor?: ImpactModuleBackgroundColor;
+  textColor?: ImpactModuleTextColor;
 };
 
 export type HeroModule = {
@@ -498,12 +668,7 @@ export type HeroModule = {
     _key: string;
   }>;
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -511,40 +676,25 @@ export type HeroModule = {
     _type: "image";
   };
   teaserImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
   };
-  services?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "service";
-  }>;
-  deliverables?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "deliverable";
-  }>;
-  backgroundColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
-  textColor?: {
-    enabled?: boolean;
-    name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-  };
+  services?: Array<
+    {
+      _key: string;
+    } & ServiceReference
+  >;
+  deliverables?: Array<
+    {
+      _key: string;
+    } & DeliverableReference
+  >;
+  backgroundColor?: BackgroundColor;
+  textColor?: TextColor;
 };
 
 export type WorkPage = {
@@ -555,11 +705,14 @@ export type WorkPage = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  modules?: Array<{
-    _key: string;
-  } & CaseStudyCardModule | {
-    _key: string;
-  } & TextModule>;
+  modules?: Array<
+    | ({
+        _key: string;
+      } & CaseStudyCardModule)
+    | ({
+        _key: string;
+      } & TextModule)
+  >;
 };
 
 export type Slug = {
@@ -576,11 +729,14 @@ export type ServicesPage = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  modules?: Array<{
-    _key: string;
-  } & ServicesPageHeroModule | {
-    _key: string;
-  } & ServicesPageCardModule>;
+  modules?: Array<
+    | ({
+        _key: string;
+      } & ServicesPageHeroModule)
+    | ({
+        _key: string;
+      } & ServicesPageCardModule)
+  >;
 };
 
 export type Service = {
@@ -598,11 +754,14 @@ export type HomePage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  modules?: Array<{
-    _key: string;
-  } & CaseStudyCardModule | {
-    _key: string;
-  } & TextModule>;
+  modules?: Array<
+    | ({
+        _key: string;
+      } & CaseStudyCardModule)
+    | ({
+        _key: string;
+      } & TextModule)
+  >;
 };
 
 export type Deliverable = {
@@ -622,38 +781,46 @@ export type CaseStudy = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  clients?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "client";
-  }>;
-  modules?: Array<{
-    _key: string;
-  } & HeroModule | {
-    _key: string;
-  } & TextImageModule | {
-    _key: string;
-  } & VideoModule | {
-    _key: string;
-  } & TextModule | {
-    _key: string;
-  } & SingleImageModule | {
-    _key: string;
-  } & CarouselModule | {
-    _key: string;
-  } & ImpactModule>;
+  clients?: Array<
+    {
+      _key: string;
+    } & ClientReference
+  >;
+  modules?: Array<
+    | ({
+        _key: string;
+      } & HeroModule)
+    | ({
+        _key: string;
+      } & TextImageModule)
+    | ({
+        _key: string;
+      } & VideoModule)
+    | ({
+        _key: string;
+      } & TextModule)
+    | ({
+        _key: string;
+      } & SingleImageModule)
+    | ({
+        _key: string;
+      } & CarouselModule)
+    | ({
+        _key: string;
+      } & ImpactModule)
+  >;
+};
+
+export type MuxVideoAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "mux.videoAsset";
 };
 
 export type MuxVideo = {
   _type: "mux.video";
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "mux.videoAsset";
-  };
+  asset?: MuxVideoAssetReference;
 };
 
 export type Client = {
@@ -664,12 +831,7 @@ export type Client = {
   _rev: string;
   name?: string;
   logo?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -686,42 +848,73 @@ export type BasicPage = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    } | {
-      name?: "nightshade" | "sandstorm" | "aircutter" | "hyperbeam" | "hydroblast" | "vinewhip";
-      _type: "color";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-  } & Table>;
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<
+          | {
+              href?: string;
+              _type: "link";
+              _key: string;
+            }
+          | {
+              name?:
+                | "nightshade"
+                | "sandstorm"
+                | "aircutter"
+                | "hyperbeam"
+                | "hydroblast"
+                | "vinewhip";
+              _type: "color";
+              _key: string;
+            }
+        >;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & Table)
+  >;
 };
 
 export type Table = {
   _type: "table";
-  rows?: Array<{
-    _key: string;
-  } & TableRow>;
+  rows?: Array<
+    {
+      _key: string;
+    } & TableRow
+  >;
 };
 
 export type TableRow = {
   _type: "tableRow";
   cells?: Array<string>;
+};
+
+export type MediaFolderReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "media.folder";
+};
+
+export type MediaFolder = {
+  _id: string;
+  _type: "media.folder";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  parent?: MediaFolderReference;
 };
 
 export type MediaTag = {
@@ -764,21 +957,34 @@ export type MuxAssetData = {
   max_stored_frame_rate?: number;
   mp4_support?: string;
   max_resolution_tier?: string;
-  tracks?: Array<{
-    _key: string;
-  } & MuxTrack>;
-  playback_ids?: Array<{
-    _key: string;
-  } & MuxPlaybackId>;
+  tracks?: Array<
+    {
+      _key: string;
+    } & MuxTrack
+  >;
+  playback_ids?: Array<
+    {
+      _key: string;
+    } & MuxPlaybackId
+  >;
   static_renditions?: MuxStaticRenditions;
+  master?: MuxMasterFile;
+};
+
+export type MuxMasterFile = {
+  _type: "mux.masterFile";
+  status?: string;
+  url?: string;
 };
 
 export type MuxStaticRenditions = {
   _type: "mux.staticRenditions";
   status?: string;
-  files?: Array<{
-    _key: string;
-  } & MuxStaticRenditionFile>;
+  files?: Array<
+    {
+      _key: string;
+    } & MuxStaticRenditionFile
+  >;
 };
 
 export type MuxStaticRenditionFile = {
@@ -851,6 +1057,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette;
   lqip?: string;
   blurHash?: string;
+  thumbHash?: string;
   hasAlpha?: boolean;
   isOpaque?: boolean;
 };
@@ -914,5 +1121,76 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = VideoItem | TextBlock | ImageItem | Seo | SanityImageCrop | SanityImageHotspot | VideoModule | DeliverablesModule | ServicesModule | ServicesPageHeroModule | ServicesPageCardModule | SingleImageModule | TextImageModule | TextModule | CaseStudyCardModule | CarouselModule | ImpactModule | HeroModule | WorkPage | Slug | ServicesPage | Service | HomePage | Deliverable | CaseStudy | MuxVideo | Client | BasicPage | Table | TableRow | MediaTag | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
-export declare const internalGroqTypeReferenceTo: unique symbol;
+export type AllSanitySchemaTypes =
+  | BackgroundColor
+  | TextColor
+  | TextImageModuleBackgroundColor
+  | TextImageModuleTextColor
+  | VideoModuleBackgroundColor
+  | TextModuleBackgroundColor
+  | TextModuleTextColor
+  | SingleImageModuleBackgroundColor
+  | CarouselModuleBackgroundColor
+  | TextBlock1
+  | TextBlock2
+  | TextBlock3
+  | ImpactModuleBackgroundColor
+  | ImpactModuleTextColor
+  | ServicesPageHeroModuleBackgroundColor
+  | ServicesPageHeroModuleTextColor
+  | ServicesPageCardModuleBackgroundColor
+  | ServicesPageCardModuleTextColor
+  | SanityImageAssetReference
+  | VideoItem
+  | TextBlock
+  | ImageItem
+  | Seo
+  | SanityImageCrop
+  | SanityImageHotspot
+  | VideoModule
+  | DeliverableReference
+  | DeliverablesModule
+  | ServiceReference
+  | ServicesModule
+  | ServicesPageHeroModule
+  | ServicesPageCardModule
+  | SingleImageModule
+  | TextImageModule
+  | ClientReference
+  | TextModule
+  | CaseStudyReference
+  | CaseStudyCardModule
+  | CarouselModule
+  | ImpactModule
+  | HeroModule
+  | WorkPage
+  | Slug
+  | ServicesPage
+  | Service
+  | HomePage
+  | Deliverable
+  | CaseStudy
+  | MuxVideoAssetReference
+  | MuxVideo
+  | Client
+  | BasicPage
+  | Table
+  | TableRow
+  | MediaFolderReference
+  | MediaFolder
+  | MediaTag
+  | MuxVideoAsset
+  | MuxAssetData
+  | MuxMasterFile
+  | MuxStaticRenditions
+  | MuxStaticRenditionFile
+  | MuxPlaybackId
+  | MuxTrack
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;

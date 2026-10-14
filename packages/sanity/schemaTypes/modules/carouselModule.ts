@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/carouselModule.ts
 
-import { VersionsIcon } from '@sanity/icons';
+import { VersionsIcon } from '@sanity/icons/Versions';
 import { defineType } from 'sanity';
 import { createColorField, createMultiImageField } from '../factories';
 import { applyRequired, createImageDimensionValidation } from '../utils/validation';

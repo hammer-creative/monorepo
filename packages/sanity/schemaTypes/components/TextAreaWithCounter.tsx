@@ -19,7 +19,7 @@ export function TextAreaWithCounter(props: StringInputProps) {
     validation?.[0]?._rules?.find((rule: any) => rule.flag === 'max')?.constraint || 500;
 
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       {renderDefault?.(props)}
       <Text
         size={1}

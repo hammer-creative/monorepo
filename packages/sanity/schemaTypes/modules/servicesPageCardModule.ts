@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/ServicesPageCardModule.ts
 
-import { DocumentIcon } from '@sanity/icons';
+import { DocumentIcon } from '@sanity/icons/Document';
 import { defineType } from 'sanity';
 import { createColorField, createSingleImageField } from '../factories';
 import { portableTextField, titleField } from '../fields/textField';

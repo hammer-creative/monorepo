@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/textModule.ts
 
-import { TextIcon } from '@sanity/icons';
+import { TextIcon } from '@sanity/icons/Text';
 import { defineType } from 'sanity';
 import { createColorField, createTextField } from '../factories';
 import { portableTextField, titleField } from '../fields/textField';

@@ -15,7 +15,7 @@ export function createLimitedArrayInput(limit: number, itemName = 'item') {
     const atLimit = count >= limit;
 
     return (
-      <Stack space={3}>
+      <Stack gap={3}>
         {renderDefault(props)}
         {atLimit && (
           <Card tone="caution" padding={3} radius={2}>

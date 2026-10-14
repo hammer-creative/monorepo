@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/videoModule.ts
 
-import { PlayIcon } from '@sanity/icons';
+import { PlayIcon } from '@sanity/icons/Play';
 import { defineType } from 'sanity';
 import { createColorField } from '../factories';
 import { applyRequired, requireWhen } from '../utils/validation';

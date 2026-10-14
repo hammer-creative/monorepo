@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/components/ModulesArrayInput.tsx
 
-import { WarningOutlineIcon } from '@sanity/icons';
+import { WarningOutlineIcon } from '@sanity/icons/WarningOutline';
 import { Box, Card, Stack, Text } from '@sanity/ui';
 import { ArrayOfObjectsInputProps } from 'sanity';
 
@@ -35,10 +35,10 @@ export function ModulesArrayInput(props: ArrayOfObjectsInputProps) {
   }
 
   return (
-    <Stack space={3}>
+    <Stack gap={3}>
       {errorMessage && (
         <Card tone="critical" padding={3} radius={2}>
-          <Stack space={2}>
+          <Stack gap={2}>
             <Box>
               <Text size={1}>
                 <WarningOutlineIcon style={{ marginRight: 8 }} />

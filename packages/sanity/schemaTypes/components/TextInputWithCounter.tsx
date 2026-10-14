@@ -20,7 +20,7 @@ export function TextInputWithCounter(props: StringInputProps) {
   const maxLength = validation?.[0]?._rules?.find((r: any) => r.flag === 'max')?.constraint || 100;
 
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       {renderDefault?.(props)}
       <Text size={1} style={{ color: charCount > maxLength ? '#f03e2f' : '#666' }}>
         {charCount} / {maxLength} characters

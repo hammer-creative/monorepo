@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/factories/clientReferenceFactory.ts
 
-import { UsersIcon } from '@sanity/icons';
+import { UsersIcon } from '@sanity/icons/Users';
 import type { ReferenceRule } from 'sanity';
 import { defineField } from 'sanity';
 import { addRequiredLabel } from '../utils/fieldHelpers';

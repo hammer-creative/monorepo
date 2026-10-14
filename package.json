@@ -24,7 +24,7 @@
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@hammercreative/tsconfig": "workspace:*",
-    "@types/node": "^20.19.21",
+    "@types/node": "^22.20.5",
     "concurrently": "^9.2.1",
     "lefthook": "^2.1.17",
     "netlify-cli": "^23.9.1",

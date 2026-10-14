@@ -1,5 +1,5 @@
 // packages/sanity/schemaTypes/documents/client.ts
-import { CaseIcon } from '@sanity/icons';
+import { CaseIcon } from '@sanity/icons/Case';
 import { defineType } from 'sanity';
 
 export const client = defineType({

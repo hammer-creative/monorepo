@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/heroModule.ts
 
-import { AsteriskIcon } from '@sanity/icons';
+import { AsteriskIcon } from '@sanity/icons/Asterisk';
 import { defineType } from 'sanity';
 import { createColorField, createSingleImageField } from '../factories';
 import { portableTextField, titleField } from '../fields/textField';

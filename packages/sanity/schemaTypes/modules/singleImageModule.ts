@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/singleImageModule.ts
 
-import { ImageIcon } from '@sanity/icons';
+import { ImageIcon } from '@sanity/icons/Image';
 import { defineType } from 'sanity';
 import { createColorField, createSingleImageField } from '../factories';
 import { applyRequired, createImageDimensionValidation } from '../utils/validation';

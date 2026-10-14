@@ -1,5 +1,1502 @@
 [
   {
+    "type": "type",
+    "name": "backgroundColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "textColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "textImageModule.backgroundColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "textImageModule.textColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "videoModule.backgroundColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "textModule.backgroundColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "textModule.textColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "singleImageModule.backgroundColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "carouselModule.backgroundColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "textBlock1",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "body": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "children": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "array",
+                    "of": {
+                      "type": "object",
+                      "attributes": {
+                        "marks": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "array",
+                            "of": {
+                              "type": "string"
+                            }
+                          },
+                          "optional": true
+                        },
+                        "text": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "_type": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string",
+                            "value": "span"
+                          }
+                        }
+                      },
+                      "rest": {
+                        "type": "object",
+                        "attributes": {
+                          "_key": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "optional": true
+                },
+                "style": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "normal"
+                      },
+                      {
+                        "type": "string",
+                        "value": "h2"
+                      },
+                      {
+                        "type": "string",
+                        "value": "h3"
+                      },
+                      {
+                        "type": "string",
+                        "value": "h4"
+                      },
+                      {
+                        "type": "string",
+                        "value": "blockquote"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "listItem": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "bullet"
+                      },
+                      {
+                        "type": "string",
+                        "value": "number"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "markDefs": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "array",
+                    "of": {
+                      "type": "union",
+                      "of": [
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "href": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              },
+                              "optional": true
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "link"
+                              }
+                            }
+                          },
+                          "rest": {
+                            "type": "object",
+                            "attributes": {
+                              "_key": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "name": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "union",
+                                "of": [
+                                  {
+                                    "type": "string",
+                                    "value": "nightshade"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "sandstorm"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "aircutter"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "hyperbeam"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "hydroblast"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "vinewhip"
+                                  }
+                                ]
+                              },
+                              "optional": true
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "color"
+                              }
+                            }
+                          },
+                          "rest": {
+                            "type": "object",
+                            "attributes": {
+                              "_key": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "optional": true
+                },
+                "level": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "number"
+                  },
+                  "optional": true
+                },
+                "_type": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string",
+                    "value": "block"
+                  }
+                }
+              },
+              "rest": {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "textBlock2",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "body": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "children": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "array",
+                    "of": {
+                      "type": "object",
+                      "attributes": {
+                        "marks": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "array",
+                            "of": {
+                              "type": "string"
+                            }
+                          },
+                          "optional": true
+                        },
+                        "text": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "_type": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string",
+                            "value": "span"
+                          }
+                        }
+                      },
+                      "rest": {
+                        "type": "object",
+                        "attributes": {
+                          "_key": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "optional": true
+                },
+                "style": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "normal"
+                      },
+                      {
+                        "type": "string",
+                        "value": "h2"
+                      },
+                      {
+                        "type": "string",
+                        "value": "h3"
+                      },
+                      {
+                        "type": "string",
+                        "value": "h4"
+                      },
+                      {
+                        "type": "string",
+                        "value": "blockquote"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "listItem": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "bullet"
+                      },
+                      {
+                        "type": "string",
+                        "value": "number"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "markDefs": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "array",
+                    "of": {
+                      "type": "union",
+                      "of": [
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "href": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              },
+                              "optional": true
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "link"
+                              }
+                            }
+                          },
+                          "rest": {
+                            "type": "object",
+                            "attributes": {
+                              "_key": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "name": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "union",
+                                "of": [
+                                  {
+                                    "type": "string",
+                                    "value": "nightshade"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "sandstorm"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "aircutter"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "hyperbeam"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "hydroblast"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "vinewhip"
+                                  }
+                                ]
+                              },
+                              "optional": true
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "color"
+                              }
+                            }
+                          },
+                          "rest": {
+                            "type": "object",
+                            "attributes": {
+                              "_key": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "optional": true
+                },
+                "level": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "number"
+                  },
+                  "optional": true
+                },
+                "_type": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string",
+                    "value": "block"
+                  }
+                }
+              },
+              "rest": {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "textBlock3",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "body": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "children": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "array",
+                    "of": {
+                      "type": "object",
+                      "attributes": {
+                        "marks": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "array",
+                            "of": {
+                              "type": "string"
+                            }
+                          },
+                          "optional": true
+                        },
+                        "text": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "_type": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string",
+                            "value": "span"
+                          }
+                        }
+                      },
+                      "rest": {
+                        "type": "object",
+                        "attributes": {
+                          "_key": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "optional": true
+                },
+                "style": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "normal"
+                      },
+                      {
+                        "type": "string",
+                        "value": "h2"
+                      },
+                      {
+                        "type": "string",
+                        "value": "h3"
+                      },
+                      {
+                        "type": "string",
+                        "value": "h4"
+                      },
+                      {
+                        "type": "string",
+                        "value": "blockquote"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "listItem": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "bullet"
+                      },
+                      {
+                        "type": "string",
+                        "value": "number"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "markDefs": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "array",
+                    "of": {
+                      "type": "union",
+                      "of": [
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "href": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              },
+                              "optional": true
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "link"
+                              }
+                            }
+                          },
+                          "rest": {
+                            "type": "object",
+                            "attributes": {
+                              "_key": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "name": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "union",
+                                "of": [
+                                  {
+                                    "type": "string",
+                                    "value": "nightshade"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "sandstorm"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "aircutter"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "hyperbeam"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "hydroblast"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "value": "vinewhip"
+                                  }
+                                ]
+                              },
+                              "optional": true
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "color"
+                              }
+                            }
+                          },
+                          "rest": {
+                            "type": "object",
+                            "attributes": {
+                              "_key": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "optional": true
+                },
+                "level": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "number"
+                  },
+                  "optional": true
+                },
+                "_type": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string",
+                    "value": "block"
+                  }
+                }
+              },
+              "rest": {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "impactModule.backgroundColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "impactModule.textColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "servicesPageHeroModule.backgroundColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "servicesPageHeroModule.textColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "servicesPageCardModule.backgroundColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "servicesPageCardModule.textColor",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "nightshade"
+              },
+              {
+                "type": "string",
+                "value": "sandstorm"
+              },
+              {
+                "type": "string",
+                "value": "aircutter"
+              },
+              {
+                "type": "string",
+                "value": "hyperbeam"
+              },
+              {
+                "type": "string",
+                "value": "hydroblast"
+              },
+              {
+                "type": "string",
+                "value": "vinewhip"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "sanity.imageAsset.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "sanity.imageAsset"
+    }
+  },
+  {
     "name": "videoItem",
     "type": "type",
     "value": {
@@ -35,30 +1532,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -317,30 +1792,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -440,30 +1893,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -652,53 +2083,42 @@
         "backgroundColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "videoModule.backgroundColor"
           },
           "optional": true
         }
       }
+    }
+  },
+  {
+    "type": "type",
+    "name": "deliverable.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "deliverable"
     }
   },
   {
@@ -721,44 +2141,52 @@
             "of": {
               "type": "object",
               "attributes": {
-                "_ref": {
+                "_key": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
                   }
-                },
-                "_type": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string",
-                    "value": "reference"
-                  }
-                },
-                "_weak": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "boolean"
-                  },
-                  "optional": true
                 }
               },
-              "dereferencesTo": "deliverable",
               "rest": {
-                "type": "object",
-                "attributes": {
-                  "_key": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
+                "type": "inline",
+                "name": "deliverable.reference"
               }
             }
           },
           "optional": true
         }
       }
+    }
+  },
+  {
+    "type": "type",
+    "name": "service.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "service"
     }
   },
   {
@@ -781,38 +2209,16 @@
             "of": {
               "type": "object",
               "attributes": {
-                "_ref": {
+                "_key": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
                   }
-                },
-                "_type": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string",
-                    "value": "reference"
-                  }
-                },
-                "_weak": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "boolean"
-                  },
-                  "optional": true
                 }
               },
-              "dereferencesTo": "service",
               "rest": {
-                "type": "object",
-                "attributes": {
-                  "_key": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
+                "type": "inline",
+                "name": "service.reference"
               }
             }
           },
@@ -1016,30 +2422,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -1087,98 +2471,16 @@
         "backgroundColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "servicesPageHeroModule.backgroundColor"
           },
           "optional": true
         },
         "textColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "servicesPageHeroModule.textColor"
           },
           "optional": true
         }
@@ -1380,30 +2682,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -1455,38 +2735,16 @@
             "of": {
               "type": "object",
               "attributes": {
-                "_ref": {
+                "_key": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
                   }
-                },
-                "_type": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string",
-                    "value": "reference"
-                  }
-                },
-                "_weak": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "boolean"
-                  },
-                  "optional": true
                 }
               },
-              "dereferencesTo": "service",
               "rest": {
-                "type": "object",
-                "attributes": {
-                  "_key": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
+                "type": "inline",
+                "name": "service.reference"
               }
             }
           },
@@ -1495,98 +2753,16 @@
         "backgroundColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "servicesPageCardModule.backgroundColor"
           },
           "optional": true
         },
         "textColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "servicesPageCardModule.textColor"
           },
           "optional": true
         }
@@ -1614,30 +2790,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -1685,49 +2839,8 @@
         "backgroundColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "singleImageModule.backgroundColor"
           },
           "optional": true
         }
@@ -2000,30 +3113,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -2071,102 +3162,50 @@
         "backgroundColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "textImageModule.backgroundColor"
           },
           "optional": true
         },
         "textColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "textImageModule.textColor"
           },
           "optional": true
         }
       }
+    }
+  },
+  {
+    "type": "type",
+    "name": "client.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "client"
     }
   },
   {
@@ -2214,38 +3253,16 @@
             "of": {
               "type": "object",
               "attributes": {
-                "_ref": {
+                "_key": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
                   }
-                },
-                "_type": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string",
-                    "value": "reference"
-                  }
-                },
-                "_weak": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "boolean"
-                  },
-                  "optional": true
                 }
               },
-              "dereferencesTo": "client",
               "rest": {
-                "type": "object",
-                "attributes": {
-                  "_key": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
+                "type": "inline",
+                "name": "client.reference"
               }
             }
           },
@@ -2503,102 +3520,50 @@
         "backgroundColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "textModule.backgroundColor"
           },
           "optional": true
         },
         "textColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "textModule.textColor"
           },
           "optional": true
         }
       }
+    }
+  },
+  {
+    "type": "type",
+    "name": "caseStudy.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "caseStudy"
     }
   },
   {
@@ -2621,38 +3586,16 @@
             "of": {
               "type": "object",
               "attributes": {
-                "_ref": {
+                "_key": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
                   }
-                },
-                "_type": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string",
-                    "value": "reference"
-                  }
-                },
-                "_weak": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "boolean"
-                  },
-                  "optional": true
                 }
               },
-              "dereferencesTo": "caseStudy",
               "rest": {
-                "type": "object",
-                "attributes": {
-                  "_key": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
+                "type": "inline",
+                "name": "caseStudy.reference"
               }
             }
           },
@@ -2699,49 +3642,8 @@
         "backgroundColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "carouselModule.backgroundColor"
           },
           "optional": true
         }
@@ -2785,732 +3687,24 @@
         "textBlock1": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "title": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": true
-              },
-              "body": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "array",
-                  "of": {
-                    "type": "object",
-                    "attributes": {
-                      "children": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "array",
-                          "of": {
-                            "type": "object",
-                            "attributes": {
-                              "marks": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "array",
-                                  "of": {
-                                    "type": "string"
-                                  }
-                                },
-                                "optional": true
-                              },
-                              "text": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "string"
-                                },
-                                "optional": true
-                              },
-                              "_type": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "string",
-                                  "value": "span"
-                                }
-                              }
-                            },
-                            "rest": {
-                              "type": "object",
-                              "attributes": {
-                                "_key": {
-                                  "type": "objectAttribute",
-                                  "value": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "optional": true
-                      },
-                      "style": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "union",
-                          "of": [
-                            {
-                              "type": "string",
-                              "value": "normal"
-                            },
-                            {
-                              "type": "string",
-                              "value": "h2"
-                            },
-                            {
-                              "type": "string",
-                              "value": "h3"
-                            },
-                            {
-                              "type": "string",
-                              "value": "h4"
-                            },
-                            {
-                              "type": "string",
-                              "value": "blockquote"
-                            }
-                          ]
-                        },
-                        "optional": true
-                      },
-                      "listItem": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "union",
-                          "of": [
-                            {
-                              "type": "string",
-                              "value": "bullet"
-                            },
-                            {
-                              "type": "string",
-                              "value": "number"
-                            }
-                          ]
-                        },
-                        "optional": true
-                      },
-                      "markDefs": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "array",
-                          "of": {
-                            "type": "union",
-                            "of": [
-                              {
-                                "type": "object",
-                                "attributes": {
-                                  "href": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "string"
-                                    },
-                                    "optional": true
-                                  },
-                                  "_type": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "link"
-                                    }
-                                  }
-                                },
-                                "rest": {
-                                  "type": "object",
-                                  "attributes": {
-                                    "_key": {
-                                      "type": "objectAttribute",
-                                      "value": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "attributes": {
-                                  "name": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "union",
-                                      "of": [
-                                        {
-                                          "type": "string",
-                                          "value": "nightshade"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "sandstorm"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "aircutter"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "hyperbeam"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "hydroblast"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "vinewhip"
-                                        }
-                                      ]
-                                    },
-                                    "optional": true
-                                  },
-                                  "_type": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "color"
-                                    }
-                                  }
-                                },
-                                "rest": {
-                                  "type": "object",
-                                  "attributes": {
-                                    "_key": {
-                                      "type": "objectAttribute",
-                                      "value": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        "optional": true
-                      },
-                      "level": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "number"
-                        },
-                        "optional": true
-                      },
-                      "_type": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string",
-                          "value": "block"
-                        }
-                      }
-                    },
-                    "rest": {
-                      "type": "object",
-                      "attributes": {
-                        "_key": {
-                          "type": "objectAttribute",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "textBlock1"
           },
           "optional": true
         },
         "textBlock2": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "title": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": true
-              },
-              "body": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "array",
-                  "of": {
-                    "type": "object",
-                    "attributes": {
-                      "children": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "array",
-                          "of": {
-                            "type": "object",
-                            "attributes": {
-                              "marks": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "array",
-                                  "of": {
-                                    "type": "string"
-                                  }
-                                },
-                                "optional": true
-                              },
-                              "text": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "string"
-                                },
-                                "optional": true
-                              },
-                              "_type": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "string",
-                                  "value": "span"
-                                }
-                              }
-                            },
-                            "rest": {
-                              "type": "object",
-                              "attributes": {
-                                "_key": {
-                                  "type": "objectAttribute",
-                                  "value": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "optional": true
-                      },
-                      "style": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "union",
-                          "of": [
-                            {
-                              "type": "string",
-                              "value": "normal"
-                            },
-                            {
-                              "type": "string",
-                              "value": "h2"
-                            },
-                            {
-                              "type": "string",
-                              "value": "h3"
-                            },
-                            {
-                              "type": "string",
-                              "value": "h4"
-                            },
-                            {
-                              "type": "string",
-                              "value": "blockquote"
-                            }
-                          ]
-                        },
-                        "optional": true
-                      },
-                      "listItem": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "union",
-                          "of": [
-                            {
-                              "type": "string",
-                              "value": "bullet"
-                            },
-                            {
-                              "type": "string",
-                              "value": "number"
-                            }
-                          ]
-                        },
-                        "optional": true
-                      },
-                      "markDefs": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "array",
-                          "of": {
-                            "type": "union",
-                            "of": [
-                              {
-                                "type": "object",
-                                "attributes": {
-                                  "href": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "string"
-                                    },
-                                    "optional": true
-                                  },
-                                  "_type": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "link"
-                                    }
-                                  }
-                                },
-                                "rest": {
-                                  "type": "object",
-                                  "attributes": {
-                                    "_key": {
-                                      "type": "objectAttribute",
-                                      "value": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "attributes": {
-                                  "name": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "union",
-                                      "of": [
-                                        {
-                                          "type": "string",
-                                          "value": "nightshade"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "sandstorm"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "aircutter"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "hyperbeam"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "hydroblast"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "vinewhip"
-                                        }
-                                      ]
-                                    },
-                                    "optional": true
-                                  },
-                                  "_type": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "color"
-                                    }
-                                  }
-                                },
-                                "rest": {
-                                  "type": "object",
-                                  "attributes": {
-                                    "_key": {
-                                      "type": "objectAttribute",
-                                      "value": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        "optional": true
-                      },
-                      "level": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "number"
-                        },
-                        "optional": true
-                      },
-                      "_type": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string",
-                          "value": "block"
-                        }
-                      }
-                    },
-                    "rest": {
-                      "type": "object",
-                      "attributes": {
-                        "_key": {
-                          "type": "objectAttribute",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "textBlock2"
           },
           "optional": true
         },
         "textBlock3": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "title": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": true
-              },
-              "body": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "array",
-                  "of": {
-                    "type": "object",
-                    "attributes": {
-                      "children": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "array",
-                          "of": {
-                            "type": "object",
-                            "attributes": {
-                              "marks": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "array",
-                                  "of": {
-                                    "type": "string"
-                                  }
-                                },
-                                "optional": true
-                              },
-                              "text": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "string"
-                                },
-                                "optional": true
-                              },
-                              "_type": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "string",
-                                  "value": "span"
-                                }
-                              }
-                            },
-                            "rest": {
-                              "type": "object",
-                              "attributes": {
-                                "_key": {
-                                  "type": "objectAttribute",
-                                  "value": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "optional": true
-                      },
-                      "style": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "union",
-                          "of": [
-                            {
-                              "type": "string",
-                              "value": "normal"
-                            },
-                            {
-                              "type": "string",
-                              "value": "h2"
-                            },
-                            {
-                              "type": "string",
-                              "value": "h3"
-                            },
-                            {
-                              "type": "string",
-                              "value": "h4"
-                            },
-                            {
-                              "type": "string",
-                              "value": "blockquote"
-                            }
-                          ]
-                        },
-                        "optional": true
-                      },
-                      "listItem": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "union",
-                          "of": [
-                            {
-                              "type": "string",
-                              "value": "bullet"
-                            },
-                            {
-                              "type": "string",
-                              "value": "number"
-                            }
-                          ]
-                        },
-                        "optional": true
-                      },
-                      "markDefs": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "array",
-                          "of": {
-                            "type": "union",
-                            "of": [
-                              {
-                                "type": "object",
-                                "attributes": {
-                                  "href": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "string"
-                                    },
-                                    "optional": true
-                                  },
-                                  "_type": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "link"
-                                    }
-                                  }
-                                },
-                                "rest": {
-                                  "type": "object",
-                                  "attributes": {
-                                    "_key": {
-                                      "type": "objectAttribute",
-                                      "value": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "attributes": {
-                                  "name": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "union",
-                                      "of": [
-                                        {
-                                          "type": "string",
-                                          "value": "nightshade"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "sandstorm"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "aircutter"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "hyperbeam"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "hydroblast"
-                                        },
-                                        {
-                                          "type": "string",
-                                          "value": "vinewhip"
-                                        }
-                                      ]
-                                    },
-                                    "optional": true
-                                  },
-                                  "_type": {
-                                    "type": "objectAttribute",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "color"
-                                    }
-                                  }
-                                },
-                                "rest": {
-                                  "type": "object",
-                                  "attributes": {
-                                    "_key": {
-                                      "type": "objectAttribute",
-                                      "value": {
-                                        "type": "string"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        "optional": true
-                      },
-                      "level": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "number"
-                        },
-                        "optional": true
-                      },
-                      "_type": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string",
-                          "value": "block"
-                        }
-                      }
-                    },
-                    "rest": {
-                      "type": "object",
-                      "attributes": {
-                        "_key": {
-                          "type": "objectAttribute",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "textBlock3"
           },
           "optional": true
         },
@@ -3522,30 +3716,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -3593,98 +3765,16 @@
         "backgroundColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "impactModule.backgroundColor"
           },
           "optional": true
         },
         "textColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "impactModule.textColor"
           },
           "optional": true
         }
@@ -3886,30 +3976,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -3962,30 +4030,8 @@
               "asset": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "object",
-                  "attributes": {
-                    "_ref": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "reference"
-                      }
-                    },
-                    "_weak": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "boolean"
-                      },
-                      "optional": true
-                    }
-                  },
-                  "dereferencesTo": "sanity.imageAsset"
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
                 },
                 "optional": true
               },
@@ -4037,38 +4083,16 @@
             "of": {
               "type": "object",
               "attributes": {
-                "_ref": {
+                "_key": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
                   }
-                },
-                "_type": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string",
-                    "value": "reference"
-                  }
-                },
-                "_weak": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "boolean"
-                  },
-                  "optional": true
                 }
               },
-              "dereferencesTo": "service",
               "rest": {
-                "type": "object",
-                "attributes": {
-                  "_key": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
+                "type": "inline",
+                "name": "service.reference"
               }
             }
           },
@@ -4081,38 +4105,16 @@
             "of": {
               "type": "object",
               "attributes": {
-                "_ref": {
+                "_key": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
                   }
-                },
-                "_type": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string",
-                    "value": "reference"
-                  }
-                },
-                "_weak": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "boolean"
-                  },
-                  "optional": true
                 }
               },
-              "dereferencesTo": "deliverable",
               "rest": {
-                "type": "object",
-                "attributes": {
-                  "_key": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
+                "type": "inline",
+                "name": "deliverable.reference"
               }
             }
           },
@@ -4121,98 +4123,16 @@
         "backgroundColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "backgroundColor"
           },
           "optional": true
         },
         "textColor": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "enabled": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              },
-              "name": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "nightshade"
-                    },
-                    {
-                      "type": "string",
-                      "value": "sandstorm"
-                    },
-                    {
-                      "type": "string",
-                      "value": "aircutter"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hyperbeam"
-                    },
-                    {
-                      "type": "string",
-                      "value": "hydroblast"
-                    },
-                    {
-                      "type": "string",
-                      "value": "vinewhip"
-                    }
-                  ]
-                },
-                "optional": true
-              }
-            }
+            "type": "inline",
+            "name": "textColor"
           },
           "optional": true
         }
@@ -4661,38 +4581,16 @@
           "of": {
             "type": "object",
             "attributes": {
-              "_ref": {
+              "_key": {
                 "type": "objectAttribute",
                 "value": {
                   "type": "string"
                 }
-              },
-              "_type": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string",
-                  "value": "reference"
-                }
-              },
-              "_weak": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
               }
             },
-            "dereferencesTo": "client",
             "rest": {
-              "type": "object",
-              "attributes": {
-                "_key": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
+              "type": "inline",
+              "name": "client.reference"
             }
           }
         },
@@ -4818,6 +4716,36 @@
     }
   },
   {
+    "type": "type",
+    "name": "mux.videoAsset.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "mux.videoAsset"
+    }
+  },
+  {
     "name": "mux.video",
     "type": "type",
     "value": {
@@ -4833,30 +4761,8 @@
         "asset": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "_ref": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              },
-              "_type": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string",
-                  "value": "reference"
-                }
-              },
-              "_weak": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              }
-            },
-            "dereferencesTo": "mux.videoAsset"
+            "type": "inline",
+            "name": "mux.videoAsset.reference"
           },
           "optional": true
         }
@@ -4913,30 +4819,8 @@
             "asset": {
               "type": "objectAttribute",
               "value": {
-                "type": "object",
-                "attributes": {
-                  "_ref": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  },
-                  "_type": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string",
-                      "value": "reference"
-                    }
-                  },
-                  "_weak": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "boolean"
-                    },
-                    "optional": true
-                  }
-                },
-                "dereferencesTo": "sanity.imageAsset"
+                "type": "inline",
+                "name": "sanity.imageAsset.reference"
               },
               "optional": true
             },
@@ -5348,6 +5232,88 @@
     }
   },
   {
+    "type": "type",
+    "name": "media.folder.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "media.folder"
+    }
+  },
+  {
+    "name": "media.folder",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "media.folder"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "name": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "parent": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "media.folder.reference"
+        },
+        "optional": true
+      }
+    }
+  },
+  {
     "name": "media.tag",
     "type": "document",
     "attributes": {
@@ -5639,6 +5605,44 @@
           "value": {
             "type": "inline",
             "name": "mux.staticRenditions"
+          },
+          "optional": true
+        },
+        "master": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "mux.masterFile"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "mux.masterFile",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "mux.masterFile"
+          }
+        },
+        "status": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "url": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
           },
           "optional": true
         }
@@ -6111,6 +6115,13 @@
           "optional": true
         },
         "blurHash": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "thumbHash": {
           "type": "objectAttribute",
           "value": {
             "type": "string"

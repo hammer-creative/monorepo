@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/caseStudyReferenceModule.ts
 
-import { DocumentsIcon } from '@sanity/icons';
+import { DocumentsIcon } from '@sanity/icons/Documents';
 import { defineType } from 'sanity';
 
 export const caseStudyCardModule = defineType({

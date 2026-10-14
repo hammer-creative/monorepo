@@ -88,7 +88,7 @@ export function SlugInputWithCounter(props: SlugInputProps) {
   };
 
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       <Flex gap={2} align="center">
         <Box flex={1}>
           <TextInput value={slugValue} onChange={handleChange} />

@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/deliverablesModule.ts
 
-import { CaseIcon } from '@sanity/icons';
+import { CaseIcon } from '@sanity/icons/Case';
 import { defineType } from 'sanity';
 
 export const deliverablesModule = defineType({

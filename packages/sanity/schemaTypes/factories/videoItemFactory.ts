@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/factories/videoItemFactory.ts
 
-import { PlayIcon } from '@sanity/icons';
+import { PlayIcon } from '@sanity/icons/Play';
 import { defineType } from 'sanity';
 import { createSingleImageField, createTextField } from '../factories';
 import { applyRequired } from '../utils/validation';

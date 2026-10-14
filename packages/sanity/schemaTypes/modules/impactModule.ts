@@ -1,6 +1,6 @@
 // packages/sanity/schemaTypes/modules/impactModule.ts
 
-import { VersionsIcon } from '@sanity/icons';
+import { VersionsIcon } from '@sanity/icons/Versions';
 import { defineType } from 'sanity';
 import { createColorField, createSingleImageField } from '../factories';
 import { portableTextField, titleField } from '../fields/textField';
