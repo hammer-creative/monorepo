@@ -8,6 +8,7 @@ import { type StructureBuilder, structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
 import { muxInput } from 'sanity-plugin-mux-input';
 import { schema } from './schemaTypes';
+import { openInPresentation } from './src/openInPresentation';
 
 // Presentation always opens the always-drafts preview site (production never serves drafts), local
 // or hosted. allowOrigins also permits localhost so editors can switch to a local site for testing.
@@ -168,6 +169,10 @@ export default defineConfig({
   ],
 
   schema,
+  document: {
+    actions: (prev, { schemaType }) =>
+      schemaType === 'caseStudy' ? [...prev, openInPresentation] : prev,
+  },
   form: {
     image: {
       assetSources: (previousAssetSources) => {
