@@ -37,8 +37,8 @@ const STYLES: Record<Status, { text: string; background: string; color: string; 
  * unpublished changes, green when it matches the published version. Status comes from
  * `/api/preview-status`.
  *
- * It is a normal block at the top of the page, so it pushes the whole site down instead of
- * overlaying it, and scrolls away with the page.
+ * It stays fixed at the top of the viewport; an in-flow spacer pushes the site down so nothing is
+ * covered.
  * Hidden inside the Studio's Presentation iframe, where editors already know they are in a preview.
  * Server render assumes standalone so direct visits do not shift when the page hydrates.
  */
@@ -73,20 +73,28 @@ export function PreviewBanner() {
     ? STYLES[status]
     : { text: '\u00a0', background: 'transparent', color: 'transparent', border: 'transparent' };
 
+  const barStyle = {
+    display: 'block',
+    boxSizing: 'border-box',
+    background,
+    color,
+    borderBottom: `1px solid ${border}`,
+    padding: '8px 16px',
+    font: '600 13px/18px sans-serif',
+    textAlign: 'center',
+  } as const;
+
+  // `html` and `body` set `overflow-x: hidden`, which turns body into a scroll container and
+  // breaks `position: sticky`. So the visible bar is fixed, and a hidden copy in the flow holds its
+  // space so the page still starts below it, even when the text wraps on narrow screens.
   return (
-    <output
-      style={{
-        display: 'block',
-        boxSizing: 'border-box',
-        background,
-        color,
-        borderBottom: `1px solid ${border}`,
-        padding: '8px 16px',
-        font: '600 13px/18px sans-serif',
-        textAlign: 'center',
-      }}
-    >
-      {text}
-    </output>
+    <>
+      <div aria-hidden style={{ ...barStyle, visibility: 'hidden' }}>
+        {text}
+      </div>
+      <output style={{ ...barStyle, position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1500 }}>
+        {text}
+      </output>
+    </>
   );
 }
