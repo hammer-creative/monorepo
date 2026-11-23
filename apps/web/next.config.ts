@@ -38,17 +38,22 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   crossOrigin: 'anonymous',
   async headers() {
+    // Only the preview site is framed by the Studio; production sends no CSP header. Next rejects a
+    // rule with an empty `headers` array, so production gets no catch-all rule at all.
+    const siteHeaders = [
+      ...(isPreviewSite
+        ? [
+            {
+              key: 'Content-Security-Policy',
+              value: `frame-ancestors 'self' ${studioOrigins.join(' ')}`,
+            },
+          ]
+        : []),
+      ...(isProduction ? [] : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]),
+    ];
+
     return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: `frame-ancestors 'self' ${studioOrigins.join(' ')}`,
-          },
-          ...(isProduction ? [] : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]),
-        ],
-      },
+      ...(siteHeaders.length > 0 ? [{ source: '/:path*', headers: siteHeaders }] : []),
       {
         // Editor guide (app/docs, preview branch only): never indexed.
         source: '/docs/:path*',
